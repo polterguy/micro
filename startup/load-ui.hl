@@ -1,22 +1,48 @@
 ﻿
 
 /*
- * Default startup file for Micro, feel free to change as you see fit.
- *
- * Will include the "main.css" file from Micro, and create some default example widget.
+ * Default startup file for Micro.
+ * Will showcase all the main widgets in Micro.
  */
 
 
 /*
- * Include main CSS file for Micro-Widgets, and setting the "container" CSS class on main "cnt" widget.
+ * Include main CSS file for Micro, and setting the "container" CSS class on main "cnt" widget.
  */
 p5.web.include-css-file:@MICRO/media/main.css
-set-widget-property:cnt
+create-container-widget:content
   class:container
 
 
+/*
+ * Introduction
+ */
 create-widget
+  parent:content
   class:row
+  widgets
+    div
+      class:col
+      widgets
+        h1
+          innerValue:Micro
+        p
+          innerValue:@"Welcome to the Micro 'kitchen sink' example. Micro is a microscopic Ajax widget library for Phosphorus Five. 
+Below are examples of Micro in usage."
+        p
+          innerValue:@"Micro is created to be as little in your way as possible, allowing you to control most aspects yourselves, while still
+solving all the common problems, which are probably common for most web apps. For instance, by modifying a handful of simple CSS variables,
+you can override its entire colorprofile. It doesn't use any fancy (downloadable) fonts, leaving this up to you, etc, etc, etc."
+        p
+          innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', and solves only the common tasks, needed for all web apps."
+
+
+/*
+ * Typography widgets.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
   widgets
     div
       class:col
@@ -34,292 +60,555 @@ create-widget
         h6
           innerValue:H6 header for something
         p
-          innerValue:This is some arbitrary piece of text
+          innerValue:This is some arbitrary piece of text in a paragraph
+        p
+          widgets
+            strong
+              innerValue:This is some arbitrary strong text
+            em
+              innerValue:This is some arbitrary emphasized text
+            code
+              innerValue:This is some inline code
+            small
+              innerValue:This is some arbitrary small text
         blockquote
-          innerValue:This is some arbitrary piece of text
+          innerValue:This is some arbitrary piece of text in a blockquote
+        pre
+          innerValue:@"This is
+  some preformatted
+ text   -"
 
 
+/*
+ * The grid system
+ */
 create-widget
-  class:row
+  parent:content
+  class:row prepend-top
   widgets
-    div
-      class:col-100
-      widgets
-        select
-          widgets
-            option
-              value:foo
-              innerValue:Foo
-            option
-              value:bar
-              innerValue:Bar
-        button
-          class:hollow
-          innerValue:Click me!
-    div
-      class:col-100 strip
-      widgets
-        label
-          innerValue:$
-          for:foo-bar
-        span
-          widgets
-            input
-              type:checkbox
-        select:foo-bar
-          widgets
-            option
-              value:foo
-              innerValue:Foo
-            option
-              value:bar
-              innerValue:Bar
-    div
-      class:col-100 strip
-      widgets
-        label
-          innerValue:$
-          for:foo-bar-2
-        span
-          widgets
-            input
-              type:checkbox
-        input:foo-bar-2
-          placeholder:SDfoihsdf...
-    div
-      class:col-100 strip
-      widgets
-        span
-          widgets
-            input
-              type:checkbox
-        select
-          widgets
-            option
-              value:foo
-              innerValue:Foo
-            option
-              value:bar
-              innerValue:Bar
-    div
-      class:col-100 strip
-      widgets
-        span
-          widgets
-            input
-              type:checkbox
-        input
-          placeholder:SDfoihsdf...
-    div
-      class:col-100
-      widgets
-        select
-          class:wider
-          widgets
-            option
-              value:foo
-              innerValue:Foo
-            option
-              value:bar
-              innerValue:Bar
-        button
-          class:hollow
-          innerValue:Click me!
-    div
-      class:col-100 strip
-      widgets
-        input
-          type:text
-          placeholder:Data ...
-        select
-          class:smaller
-          widgets
-            option
-              value:foo
-              innerValue:Foo
-            option
-              value:bar
-              innerValue:Bar
-        button
-          class:hollow
-          innerValue:Click me!
     div
       class:col
       widgets
-        button
-          innerValue:Click me!
-        button
-          innerValue:Click me 2!
-          class:hollow
-        input
-          type:text
-          class:smaller
-          placeholder:Some input element ...
-        div
-          class:strip
-          widgets
-            button
-              innerValue:First
-            button
-              innerValue:Second
-        div
-          class:strip
-          widgets
-            button
-              innerValue:First
-              class:hollow
-            button
-              innerValue:Second
-              class:hollow
-            button
-              innerValue:Third
-              class:hollow
-        div
-          class:strip
-          widgets
-            button
-              innerValue:First
-            button
-              innerValue:Second
-            button
-              innerValue:Third
+        h3
+          innerValue:The grid system
 
 
+/*
+ * Grid system, floating columns.
+ */
 create-widget
+  parent:content
   class:row
   widgets
-    div
-      class:col-70
-      widgets
-        input
-          type:text
-          class:fill
-          placeholder:Some other input element ...
-    div
+    p
       class:col
-      widgets
-        button
-          class:fill
-          innerValue:When done!
+      innerValue:@"The grid system is created using the flexbox model, which allows you to create any number of columns, as you see fit.
+Your content should normally be embedded inside of a 'col', which should be inside a 'row', which should be inside a 'container'."
+    p
+      class:col
+      innerValue:For instance this row, contains 3 columns, which will simply divide the available space into 3.
+    p
+      class:col
+      innerValue:While if you resize your page, below 800px, it will 'pop' such that each column takes up 100% of the width for small devices.
 
 
+/*
+ * Grid system, fixed size.
+ */
 create-widget
+  parent:content
   class:row
   widgets
+    p
+      class:col-33
+      innerValue:This column use the 'col-33' class, which means it will use 33% of the available space.
+    p
+      class:col-67
+      innerValue:While this will use 'col-67' and hence 67%. There are explicit column widths for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 75, 80 and 90 percent in the grid system.
+
+
+/*
+ * Grid system, offsetting columns.
+ */
+create-widget
+  parent:content
+  class:row
+  widgets
+    p
+      class:col-25
+      innerValue:This column use the 'col-25' class, which means it will use 25% of the available space.
+    p
+      class:col-50 offset-25
+      innerValue:@"While this will use 'col-50'and 'offset-25', which means it will be moved forward by 25% of the available space.
+There exists offset classes for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 80 and 90 percent in Micro."
+
+
+/*
+ * Forms, buttons
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
     div
-      class:col-100 strip
+      class:col-100
       widgets
-        label
-          for:my-input
-          innerValue:€
-        input:my-input
-          type:text
-          class:wider
-          placeholder:Some other input element ...
-        button
-          innerValue:When done!
-        button
-          innerValue:Or this bugger!
+        h3
+          innerValue:Buttons
+        p
+          innerValue:There exists 2 basic buttons in Micro, the default button, and the 'hollow' button. Below is an example of both.
     div
-      class:col-100 strip
+      class:col-100
+      widgets
+        button
+          innerValue:Default
+        button
+          innerValue:Hollow
+          class:hollow
+
+
+/*
+ * Forms, controlling size.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Text input elements
+        p
+          innerValue:Below is an example of 3 different text input elements.
+    div
+      class:col-100
       widgets
         input
-          type:text
-          placeholder:Some other input element ...
-        button
-          innerValue:When done!
           class:wider
+          placeholder:Wider text input ...
+    div
+      class:col-100
+      widgets
+        input
+          placeholder:Default text input ...
+    div
+      class:col-100
+      widgets
+        input
+          class:smaller
+          placeholder:Smaller ...
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:Most elements can be made either wider or smaller, by adding the 'wider' or 'smaller' class to them.
 
 
+/*
+ * Select widgets.
+ */
 create-widget
-  class:row
+  parent:content
+  class:row prepend-top
   widgets
     div
       class:col-100
       widgets
-        literal
-          element:textarea
-          placeholder:Some textarea ...
-          rows:7
+        h3
+          innerValue:Select form elements
+        p
+          innerValue:Below is an example of 3 different select form elements.
     div
       class:col-100
       widgets
-        literal
-          element:textarea
+        select
           class:wider
-          placeholder:Another textarea ...
-          rows:7
+          widgets
+            option
+              innerValue:Option 1
+            option
+              innerValue:Option 2
     div
       class:col-100
       widgets
-        literal
-          element:textarea
-          class:smaller
-          placeholder:Another textarea ...
-          rows:3
+        select
+          widgets
+            option
+              innerValue:Option 1
+            option
+              innerValue:Option 2
     div
-      class:col-100 right
+      class:col-100
       widgets
-        literal
-          element:textarea
-          class:fill
-          placeholder:Another textarea ...
-          rows:7
+        select
+          class:smaller
+          widgets
+            option
+              innerValue:Option 1
+            option
+              innerValue:Option 2
+
+
+/*
+ * Mixing form elements
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Mixing form elements
+        p
+          innerValue:You can mix form elements, and they will float next to each other, according to the available space.
+    div
+      class:col-100
+      widgets
+        input
+          class:smaller
+          placeholder:Text input ...
+        select
+          widgets
+            option
+              innerValue:Option 1
+            option
+              innerValue:Option 2
         button
           innerValue:OK
+
+
+/*
+ * Textareas
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Textareas
+        p
+          innerValue:Below are the 3 basic textareas in Micro
+    div
+      class:col-100
+      widgets
+        literal
+          element:textarea
+          class:wider
+          placeholder:Wider ...
+    div
+      class:col-100
+      widgets
+        literal
+          element:textarea
+          placeholder:Default ...
+    div
+      class:col-100
+      widgets
+        literal
+          element:textarea
+          class:smaller
+          placeholder:Smaller ...
+
+
+/*
+ * Checkboxes
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Checkboxes
+        p
+          innerValue:@"Checkboxes are rendered such that they become slightly larger, and they're styled.
+You can also add a label, either before or after a checkbox."
     div
       class:col-100
       widgets
         label
-          for:my-check
-          innerValue:Some checkbox
-        input:my-check
-          type:checkbox
-        label
-          for:my-check-2
-          innerValue:Some other checkbox
-        input:my-check-2
+          for:check-1
+          innerValue:Checkbox 1
+        input:check-1
           type:checkbox
     div
       class:col-100
       widgets
-        input:my-check-4
+        input:check-2
           type:checkbox
+          checked
         label
-          for:my-check-4
-          innerValue:Some checkbox
-        input:my-check-5
-          type:checkbox
-        label
-          for:my-check-5
-          innerValue:Some other checkbox
+          for:check-2
+          innerValue:Checkbox 2
+
+
+/*
+ * Radio buttons
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Radio buttons
+        p
+          innerValue:@"Radio buttons are rendered such that they become slightly larger, and they're styled.
+You can also add a label, either before or after a radio button, just like you can with checkboxes."
     div
       class:col-100
       widgets
         label
-          for:my-rdo1
-          innerValue:Some radio
-        input:my-rdo1
+          for:radio-1
+          innerValue:Radio button 1
+        input:radio-1
           type:radio
-          name:foo-rdo
-        label
-          for:my-rdo2
-          innerValue:Some other radio
-        input:my-rdo2
-          type:radio
-          name:foo-rdo
+          name:radio-group-1
     div
       class:col-100
       widgets
-        input:my-rdo3
+        input:radio-2
           type:radio
-          name:foo-rdo2
+          checked
+          name:radio-group-1
         label
-          for:my-rdo3
-          innerValue:Some radio
-        input:my-rdo4
-          type:radio
-          name:foo-rdo2
+          for:radio-2
+          innerValue:Radio button 2
+
+
+/*
+ * Strips
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Strips
+        p
+          innerValue:You can add mostly any form element inside of a 'strip' which will group relevant form elements together.
+    div
+      class:col-100 strip
+      widgets
+        button
+          innerValue:OK
+        button
+          innerValue:Cancel
+        button
+          innerValue:X
+    div
+      class:col-100 strip
+      widgets
+        input
+          placeholder:Text input ...
+          class:smaller
+        select
+          class:smaller
+          widgets
+            option
+              innerValue:Option 1
+            option
+              innerValue:Option 2
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:When you create a 'strip' you can also add labels, which will be rendered as a part of the strip itself.
+    div
+      class:col-100
+      widgets
+        div
+          class:strip
+          widgets
+            label
+              for:input-1
+              innerValue:$
+            input:input-1
+              type:number
+              min:5
+              max:25
+              value:7
+              placeholder:Number input ...
+              class:smaller
+    div
+      class:col-100
+      widgets
+        div
+          class:strip
+          widgets
+            input:input-2
+              placeholder:Text input ...
+              class:smaller
+            label
+              for:input-2
+              innerValue:Foo
+    div
+      class:col-100
+      widgets
+        div
+          class:strip
+          widgets
+            label
+              for:select-1
+              innerValue:$
+            select:select-1
+              class:smaller
+              widgets
+                option
+                  innerValue:Option 1
+                option
+                  innerValue:Option 2
+    div
+      class:col-100
+      widgets
+        div
+          class:strip
+          widgets
+            select:select-2
+              class:smaller
+              widgets
+                option
+                  innerValue:Option 1
+                option
+                  innerValue:Option 2
+            label
+              for:select-2
+              innerValue:$
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:@"You can also combine checkboxes, labels, text input elements, and select elements as you see fit, in the same strip.
+However, if you add a checkbox or a radio button to a 'strip', you need to put it into a span HTML element."
+    div
+      class:col-100 strip
+      widgets
+        input:input-4
+          class:smaller
+          placeholder:Bar ...
         label
-          for:my-rdo4
-          innerValue:Some other radio
+          for:chk-5
+          innerValue:C
+        span
+          widgets
+            input:chk-5
+              type:checkbox
+              checked
+    div
+      class:col-100 strip
+      widgets
+        label
+          for:radio-5
+          innerValue:$
+        span
+          widgets
+            input:radio-5
+              type:radio
+              checked
+              name:radio-group-2
+        label
+          for:radio-6
+          innerValue:€
+        span
+          widgets
+            input:radio-6
+              type:radio
+              name:radio-group-2
+    div
+      class:col-100 strip
+      widgets
+        label
+          for:input-6
+          innerValue:$
+        input:input-6
+          class:smaller
+          placeholder:Foo ...
+        span
+          widgets
+            input:check-7
+              type:checkbox
+    div
+      class:col-100 strip
+      widgets
+        label
+          for:sel-6
+          innerValue:$
+        select:sel-6
+          class:smaller
+          widgets
+            option
+              innerValue:Option 1
+            option
+              innerValue:Option 2
+        button
+          innerValue:!
+
+
+/*
+ * More size control over form elements.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:More form size control
+        p
+          innerValue:@"You can combine the grid system with form elements, and use the 'fill' class on most form elements, to have them fill the entire
+available width of their parent column. This also makes your form elements become responsive, since the column themselves will resize to 100% width,
+if the viewport becomes less than 800px."
+    div
+      class:col-75
+      widgets
+        input
+          class:fill
+          placeholder:Fills parent column ...
+    div
+      class:col-25
+      widgets
+        button
+          class:fill
+          innerValue:OK
+
+
+/*
+ * Misc. classes.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Misc. classes
+        p
+          innerValue:@"Use the 'prepend-top' to add some additional 25px of top margin, to create some spacing between for instance rows."
+    div
+      class:col-100 green
+      widgets
+        p
+          innerValue:@"This column has the 'green' class added to it, to make it 'pop out' and be emphasized as important information.
+Notice, this will move your elements, such as text, 1em inwards into the center of your screen, and create a border-radius around your column."
+    div
+      class:col-100 red
+      widgets
+        p
+          innerValue:@"This column has the 'red' class added to it, which can be used to signify danger or a warning of some sort."
