@@ -662,9 +662,276 @@ create-container-widget:content-fullscreen
       class:row
       widgets
         div
-          class:col prepend-top air
+          class:col-100 prepend-top air
           innerValue:@"
 <h3 class=""center"">Fullscreen containers</h3>
-<p>This is a fullscreen container. As you can se, you can add as many containers as you wish onto your page.</p>
+<p>This is a fullscreen container. You can add as many containers as you wish onto your page.</p>
 <p>This container also has the 'grey' class associated with it. The header has the 'center' class. And the columns themselves has the 'air' class
-associated with them, to create some margin between the borders and the content.</p>"
+associated with them, to create some margin between the borders of the container, and its columns.</p>
+<p>Below you can find all the explicitly sized grid column classes, for your reference.</p>"
+
+
+/*
+ * All col classes for reference purposes.
+ */
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-10 air
+      widgets
+        p
+          innerValue:@"col-10"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-20 air
+      widgets
+        p
+          innerValue:@"col-20"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-25 air
+      widgets
+        p
+          innerValue:@"col-25"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-30 air
+      widgets
+        p
+          innerValue:@"col-30"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-33 air
+      widgets
+        p
+          innerValue:@"col-33"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-40 air
+      widgets
+        p
+          innerValue:@"col-40"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-50 air
+      widgets
+        p
+          innerValue:@"col-50"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-60 air
+      widgets
+        p
+          innerValue:@"col-60"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-67 air
+      widgets
+        p
+          innerValue:@"col-67"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-70 air
+      widgets
+        p
+          innerValue:@"col-70"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-75 air
+      widgets
+        p
+          innerValue:@"col-75"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-80 air
+      widgets
+        p
+          innerValue:@"col-80"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-90 air
+      widgets
+        p
+          innerValue:@"col-90"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-100 air
+      widgets
+        p
+          innerValue:@"col-100"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col air prepend-top
+      widgets
+        h3
+          class:center
+          innerValue:Floating cols.
+        p
+          innerValue:Below is an example of using the undefined columns together.
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 1/2"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 2/2"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 1/3"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 2/3"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 3/3"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 1/4"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 2/4"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 3/4"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 4/4"
+          style:"background:#d0d0d0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 1/5"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 2/5"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 3/5"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 4/5"
+          style:"background:#d0d0d0;"
+    div
+      class:col air
+      widgets
+        p
+          innerValue:@"col 5/5"
+          style:"background:#d0d0d0;"
+    div
+      class:col-100 air
+      innerValue:@"<p>Etc ...</p>"
+    div
+      class:col-100 air center
+      widgets
+        button
+          innerValue:Advanced widgets
+          onclick
