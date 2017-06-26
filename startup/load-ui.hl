@@ -32,9 +32,10 @@ Below are examples of Micro in usage."
         p
           innerValue:@"Micro is created to be as little in your way as possible, allowing you to control most aspects yourselves, while still
 solving all the common problems, which are probably common for most web apps. For instance, by modifying a handful of simple CSS variables,
-you can override its entire colorprofile. It doesn't use any fancy (downloadable) fonts, leaving this up to you, etc, etc, etc."
+you can override its entire color profile. It doesn't use any fancy (downloadable) fonts, leaving this up to you, etc, etc, etc."
         p
-          innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', and solves only the common tasks, needed for all web apps."
+          innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', be as small as possible, 
+and solves only the common tasks needed for all web apps."
 
 
 /*
@@ -75,8 +76,9 @@ create-widget
           innerValue:This is some arbitrary piece of text in a blockquote
         pre
           innerValue:@"This is
-  some preformatted
- text   -"
+     some preformatted
+ text
+Notice, text is aligned with the rest of the text on page"
 
 
 /*
@@ -399,7 +401,7 @@ create-widget
         h3
           innerValue:Strips
         p
-          innerValue:You can add mostly any form element inside of a 'strip' which will group relevant form elements together.
+          innerValue:You can add mostly any form element inside of a 'strip' which will group relevant form elements together. First a button strip.
     div
       class:col-100 strip
       widgets
@@ -409,6 +411,11 @@ create-widget
           innerValue:Cancel
         button
           innerValue:X
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:Then a text input and a select list.
     div
       class:col-100 strip
       widgets
@@ -454,7 +461,7 @@ create-widget
               class:smaller
             label
               for:input-2
-              innerValue:Foo
+              innerValue:$
     div
       class:col-100
       widgets
@@ -492,7 +499,8 @@ create-widget
       widgets
         p
           innerValue:@"You can also combine checkboxes, labels, text input elements, and select elements as you see fit, in the same strip.
-However, if you add a checkbox or a radio button to a 'strip', you need to put it into a span HTML element."
+However, if you add a checkbox or a radio button to a 'strip', you need to put it into a span HTML element. First a text input, a label and a checkbox grouped
+together in a strip."
     div
       class:col-100 strip
       widgets
@@ -507,6 +515,11 @@ However, if you add a checkbox or a radio button to a 'strip', you need to put i
             input:chk-5
               type:checkbox
               checked
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:Then a couple of radio buttons, with a label each.
     div
       class:col-100 strip
       widgets
@@ -528,6 +541,11 @@ However, if you add a checkbox or a radio button to a 'strip', you need to put i
               type:radio
               name:radio-group-2
     div
+      class:col-100
+      widgets
+        p
+          innerValue:Then a label, text input element and a checkbox.
+    div
       class:col-100 strip
       widgets
         label
@@ -540,6 +558,11 @@ However, if you add a checkbox or a radio button to a 'strip', you need to put i
           widgets
             input:check-7
               type:checkbox
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:Then a label, select list and button.
     div
       class:col-100 strip
       widgets
@@ -602,13 +625,28 @@ create-widget
         p
           innerValue:@"Use the 'prepend-top' to add some additional 25px of top margin, to create some spacing between for instance rows."
     div
-      class:col-100 green
+      class:col-100 emphasized
       widgets
         p
-          innerValue:@"This column has the 'green' class added to it, to make it 'pop out' and be emphasized as important information.
-Notice, this will move your elements, such as text, 1em inwards into the center of your screen, and create a border-radius around your column."
+          innerValue:@"This column has the 'emphasized' class added to it, which can be used to signify something important.
+Notice, all of these classes will move your column 1em outwards from the center of your screen, such that the text content is still nicely aligned
+with the other content on your page. It also creates a border-radius around your column.
+These classes don't mix well with other content, unless you use the 'col-100' class, such that they take up the entire available width."
+        p
+          innerValue:@"Inside of this column, we also have a button, which is right-aligned, by using the 'right' class on the parent element."
+        div
+          class:right
+          widgets
+            button
+              class:hollow
+              innerValue:OK
     div
-      class:col-100 red
+      class:col-100 success
       widgets
         p
-          innerValue:@"This column has the 'red' class added to it, which can be used to signify danger or a warning of some sort."
+          innerValue:@"This column has the 'success' class added to it, which can be used to signify success."
+    div
+      class:col-100 warning
+      widgets
+        p
+          innerValue:@"This column has the 'warning' class added to it, which can be used to signify danger, or a warning of some sort."

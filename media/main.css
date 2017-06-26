@@ -22,7 +22,7 @@ h4{font-size:1.125em;line-height:1.11111111;}
 blockquote{font-size:1.25em;line-height:1.25;color:#aaa;margin-left:1rem;}
 label{display:block;float:left;user-select:none;}
 .right{text-align:right;}
-pre{background:#f5f5f5;padding:25px;border-radius:5px;}
+pre{background:#f5f5f5;padding:15px;border-radius:5px;margin:0 0 0 -15px;}
 code{background:#f5f5f5;}
 pre,code{font-family:Consolas, Monaco, monospace}
 
@@ -69,12 +69,6 @@ input[type=radio]{border-radius:15px;}
 /* Form elements filling available space */
 *.fill{display:table-cell;width:100%;}
 
-/* Misc. classes */
-.prepend-top{margin-top:25px;}
-.green,.red{padding:1rem 1rem 0 1rem;border-radius:5px;margin-bottom:1rem;}
-.green{background:#cfc;}
-.red{background:#fcc;}
-
 /* Media queries for devices more than 800px in width */
 @media screen and (min-width:800px){
 .col{flex:1;}.col-10{flex:10%;max-width:10%;}.col-20{flex:20%;max-width:20%;}.col-25{flex:25%;max-width:25%;}.col-30{flex:30%;max-width:30%}.col-33{flex:33%;max-width:33%}.col-40{flex:40%;max-width:40%;}.col-50{flex:50%;max-width:50%;}.col-60{flex:60%;max-width:60%;}.col-67{flex:67%;max-width:67%;}.col-70{flex:70%;max-width:70%;}.col-75{flex:75%;max-width:75%;}.col-80{flex:80%;max-width:80%;}.col-90{flex:90%;max-width:90%}.col-100{flex:100%;max-width:100%;}
@@ -90,3 +84,10 @@ button,input,.strip label,select{font-size:1.1em;}
 input,select,textarea{width:350px;}
 *.wider{width:550px;}
 *.smaller{width:200px;}}
+
+/* Misc. classes */
+.prepend-top{margin-top:25px;}
+.success,.warning,.emphasized{padding:15px 15px 0 15px;border-radius:5px;margin:0 -15px 15px -15px;}
+.success{background:#cfc;}
+.warning{background:#fcc;}
+.emphasized{background:#fafafe;}
