@@ -1,0 +1,15 @@
+﻿
+
+/*
+ * Default startup file for Micro, will simply load the "load-ui.hl" file in the current folder, and
+ * evaluate it, passing in all arguments passed into this event, in order of appearance.
+ */
+create-event:p5.web.load-ui
+
+  /*
+   * Loading "load-ui.hl" file, and evaluates it.
+   */
+  add:x:/../*/eval
+    src:x:/./--/<-
+  load-file:@MICRO/startup/load-ui.hl
+  eval:x:/@load-file/*

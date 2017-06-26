@@ -1,0 +1,325 @@
+﻿
+
+/*
+ * Default startup file for Micro, feel free to change as you see fit.
+ *
+ * Will include the "main.css" file from Micro, and create some default example widget.
+ */
+
+
+/*
+ * Include main CSS file for Micro-Widgets, and setting the "container" CSS class on main "cnt" widget.
+ */
+p5.web.include-css-file:@MICRO/media/main.css
+set-widget-property:cnt
+  class:container
+
+
+create-widget
+  class:row
+  widgets
+    div
+      class:col
+      widgets
+        h1
+          innerValue:H1 header for something
+        h2
+          innerValue:H2 header for something
+        h3
+          innerValue:H3 header for something
+        h4
+          innerValue:H4 header for something
+        h5
+          innerValue:H5 header for something
+        h6
+          innerValue:H6 header for something
+        p
+          innerValue:This is some arbitrary piece of text
+        blockquote
+          innerValue:This is some arbitrary piece of text
+
+
+create-widget
+  class:row
+  widgets
+    div
+      class:col-100
+      widgets
+        select
+          widgets
+            option
+              value:foo
+              innerValue:Foo
+            option
+              value:bar
+              innerValue:Bar
+        button
+          class:hollow
+          innerValue:Click me!
+    div
+      class:col-100 strip
+      widgets
+        label
+          innerValue:$
+          for:foo-bar
+        span
+          widgets
+            input
+              type:checkbox
+        select:foo-bar
+          widgets
+            option
+              value:foo
+              innerValue:Foo
+            option
+              value:bar
+              innerValue:Bar
+    div
+      class:col-100 strip
+      widgets
+        label
+          innerValue:$
+          for:foo-bar-2
+        span
+          widgets
+            input
+              type:checkbox
+        input:foo-bar-2
+          placeholder:SDfoihsdf...
+    div
+      class:col-100 strip
+      widgets
+        span
+          widgets
+            input
+              type:checkbox
+        select
+          widgets
+            option
+              value:foo
+              innerValue:Foo
+            option
+              value:bar
+              innerValue:Bar
+    div
+      class:col-100 strip
+      widgets
+        span
+          widgets
+            input
+              type:checkbox
+        input
+          placeholder:SDfoihsdf...
+    div
+      class:col-100
+      widgets
+        select
+          class:wider
+          widgets
+            option
+              value:foo
+              innerValue:Foo
+            option
+              value:bar
+              innerValue:Bar
+        button
+          class:hollow
+          innerValue:Click me!
+    div
+      class:col-100 strip
+      widgets
+        input
+          type:text
+          placeholder:Data ...
+        select
+          class:smaller
+          widgets
+            option
+              value:foo
+              innerValue:Foo
+            option
+              value:bar
+              innerValue:Bar
+        button
+          class:hollow
+          innerValue:Click me!
+    div
+      class:col
+      widgets
+        button
+          innerValue:Click me!
+        button
+          innerValue:Click me 2!
+          class:hollow
+        input
+          type:text
+          class:smaller
+          placeholder:Some input element ...
+        div
+          class:strip
+          widgets
+            button
+              innerValue:First
+            button
+              innerValue:Second
+        div
+          class:strip
+          widgets
+            button
+              innerValue:First
+              class:hollow
+            button
+              innerValue:Second
+              class:hollow
+            button
+              innerValue:Third
+              class:hollow
+        div
+          class:strip
+          widgets
+            button
+              innerValue:First
+            button
+              innerValue:Second
+            button
+              innerValue:Third
+
+
+create-widget
+  class:row
+  widgets
+    div
+      class:col-70
+      widgets
+        input
+          type:text
+          class:fill
+          placeholder:Some other input element ...
+    div
+      class:col
+      widgets
+        button
+          class:fill
+          innerValue:When done!
+
+
+create-widget
+  class:row
+  widgets
+    div
+      class:col-100 strip
+      widgets
+        label
+          for:my-input
+          innerValue:€
+        input:my-input
+          type:text
+          class:wider
+          placeholder:Some other input element ...
+        button
+          innerValue:When done!
+        button
+          innerValue:Or this bugger!
+    div
+      class:col-100 strip
+      widgets
+        input
+          type:text
+          placeholder:Some other input element ...
+        button
+          innerValue:When done!
+          class:wider
+
+
+create-widget
+  class:row
+  widgets
+    div
+      class:col-100
+      widgets
+        literal
+          element:textarea
+          placeholder:Some textarea ...
+          rows:7
+    div
+      class:col-100
+      widgets
+        literal
+          element:textarea
+          class:wider
+          placeholder:Another textarea ...
+          rows:7
+    div
+      class:col-100
+      widgets
+        literal
+          element:textarea
+          class:smaller
+          placeholder:Another textarea ...
+          rows:3
+    div
+      class:col-100 right
+      widgets
+        literal
+          element:textarea
+          class:fill
+          placeholder:Another textarea ...
+          rows:7
+        button
+          innerValue:OK
+    div
+      class:col-100
+      widgets
+        label
+          for:my-check
+          innerValue:Some checkbox
+        input:my-check
+          type:checkbox
+        label
+          for:my-check-2
+          innerValue:Some other checkbox
+        input:my-check-2
+          type:checkbox
+    div
+      class:col-100
+      widgets
+        input:my-check-4
+          type:checkbox
+        label
+          for:my-check-4
+          innerValue:Some checkbox
+        input:my-check-5
+          type:checkbox
+        label
+          for:my-check-5
+          innerValue:Some other checkbox
+    div
+      class:col-100
+      widgets
+        label
+          for:my-rdo1
+          innerValue:Some radio
+        input:my-rdo1
+          type:radio
+          name:foo-rdo
+        label
+          for:my-rdo2
+          innerValue:Some other radio
+        input:my-rdo2
+          type:radio
+          name:foo-rdo
+    div
+      class:col-100
+      widgets
+        input:my-rdo3
+          type:radio
+          name:foo-rdo2
+        label
+          for:my-rdo3
+          innerValue:Some radio
+        input:my-rdo4
+          type:radio
+          name:foo-rdo2
+        label
+          for:my-rdo4
+          innerValue:Some other radio

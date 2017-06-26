@@ -1,0 +1,34 @@
+
+/*
+ * File responsible for initializing Micro.
+ *
+ * Creates one Active Event [p5.io.unroll-path.@MICRO] - Which evaluates to the "/micro/" folder, 
+ * and is used as a "path variable".
+ */
+
+
+/*
+ * Creates the "path" Active Event that points to our "/micro/" folder.
+ * This is done in such a way that we can install Micro in any folder we wish.
+ */
+split:x:/..?name
+  =:/
+set:x:/@split/0/-
+join:x:/@split/*?name
+  sep:/
+eval-x:x:/+/*
+create-event:p5.io.unroll-path.@MICRO
+  return:/{0}
+    :x:/@join?value
+
+
+
+
+
+/*
+ * Evaluates all Hyperlambda files in the "startup" folder.
+ */
+list-files:@MICRO/startup/
+  filter:.hl
+load-file:x:/@list-files/*?name
+eval:x:/@load-file/*
