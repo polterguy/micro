@@ -6,6 +6,7 @@ html{box-sizing:border-box;}*,*:before,*:after{box-sizing:inherit;}
 
 /* Main "container" CSS class */
 .container{margin:0 auto;padding: 25px 25px 0 25px;max-width:1120px;overflow:auto;position:relative;}
+.container-fullscreen{width:100%;position:relative;}
 
 /* Grid system, based upon flexbox */
 .row{display:flex;flex-wrap: wrap;}
@@ -21,7 +22,6 @@ h3{font-size:1.375em;line-height:1.13636364;}
 h4{font-size:1.125em;line-height:1.11111111;}
 blockquote{font-size:1.25em;line-height:1.25;color:#aaa;margin-left:1rem;}
 label{display:block;float:left;user-select:none;}
-.right{text-align:right;}
 pre{background:#f5f5f5;padding:15px;border-radius:5px;margin:0 0 0 -15px;}
 code{background:#f5f5f5;}
 pre,code{font-family:Consolas, Monaco, monospace}
@@ -91,3 +91,7 @@ input,select,textarea{width:350px;}
 .success{background:#cfc;}
 .warning{background:#fcc;}
 .emphasized{background:#fafafe;}
+.gray{background:#fafafa;}
+.right{text-align:right;}
+.center{text-align:center;}
+.air{margin-left:1rem;margin-right:1rem;}

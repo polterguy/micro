@@ -650,3 +650,21 @@ These classes don't mix well with other content, unless you use the 'col-100' cl
       widgets
         p
           innerValue:@"This column has the 'warning' class added to it, which can be used to signify danger, or a warning of some sort."
+
+
+/*
+ * Fullscreen container
+ */
+create-container-widget:content-fullscreen
+  class:container-fullscreen prepend-top gray
+  widgets
+    div
+      class:row
+      widgets
+        div
+          class:col prepend-top air
+          innerValue:@"
+<h3 class=""center"">Fullscreen containers</h3>
+<p>This is a fullscreen container. As you can se, you can add as many containers as you wish onto your page.</p>
+<p>This container also has the 'grey' class associated with it. The header has the 'center' class. And the columns themselves has the 'air' class
+associated with them, to create some margin between the borders and the content.</p>"
