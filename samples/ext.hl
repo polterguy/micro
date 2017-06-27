@@ -29,8 +29,25 @@ create-widget:content-menu
             li
               widgets
                 a
-                  href:"https://gaiasoul.com"
-                  innerValue:GaiaSoul
+                  role:button
+                  href:#
+                  innerValue:Menu widget
+                  onclick
+                    create-widgets
+                      micro.widgets.modal:modal-widget-1
+                        class:micro-modal
+                        widgets
+                          h3
+                            innerValue:Menu widget
+                          p
+                            innerValue:You just clicked a link in the menu widget.
+                          div
+                            class:right
+                            widgets
+                              button
+                                innerValue:Close
+                                onclick
+                                  delete-widget:modal-widget-1
             li
               widgets
                 a
@@ -148,33 +165,29 @@ create-widget
 
             /*
              * Creating our modal widget.
-             * Notice, we append it into main "cnt", since semantically that makes more sense, 
-             * because the window will be shown in fullscreen anyway.
              */
-            create-widget
-              parent:cnt
-              widgets
-                micro.widgets.modal:modal-widget-1
-                  class:micro-modal
-                  widgets
-                    h3
-                      innerValue:Modal widget
-                    p
-                      innerValue:@"Notice, there is no custom JavaScript for the modal widget in Micro.
+            create-widgets
+              micro.widgets.modal:modal-widget-2
+                class:micro-modal
+                widgets
+                  h3
+                    innerValue:Modal widget
+                  p
+                    innerValue:@"Notice, there is no custom JavaScript for the modal widget in Micro.
 By intelligently combining CSS with the Managed Ajax parts of P5, we're able to get away with creating a modal widget, 
 without adding any overhead to our page at all."
-                    p
-                      innerValue:@"Which is in stark contrast to Bootstrap, that requires jQuery and hundreds
+                  p
+                    innerValue:@"Which is in stark contrast to Bootstrap, that requires jQuery and hundreds
 of kilobytes of custom JavaScript and CSS to display a simple modal window."
-                    p
-                      innerValue:@"You can put any other widgets you wish into the modal widget in Micro."
-                    div
-                      class:right
-                      widgets
-                        button
-                          innerValue:Close
-                          onclick
-                            delete-widget:modal-widget-1
+                  p
+                    innerValue:@"You can put any other widgets you wish into the modal widget in Micro."
+                  div
+                    class:right
+                    widgets
+                      button
+                        innerValue:Close
+                        onclick
+                          delete-widget:modal-widget-2
         
 
 
