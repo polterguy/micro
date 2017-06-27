@@ -43,6 +43,9 @@ create-event:micro.widgets.modal
       widgets
         container
           class:micro-modal-content
+
+          // To stop propagation clicking the obscurer, which would close the modal widget, we need to trap onclick here.
+          onclick:"event.stopPropagation();return false;"
           widgets
             container
               widgets:widgets

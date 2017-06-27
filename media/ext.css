@@ -10,4 +10,64 @@
 /* Micro tab widget */
 .micro-tab .micro-tab-buttons button{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
 .micro-tab-active{background:var(--hover-color)}
-.micro-tab .micro-tab-views{border-top:solid 1px var(--txt-color);padding-top:.5rem;}
+.micro-tab .micro-tab-views{border-top:solid 1px var(--txt-color);padding-top:1rem;}
+.micro-tab-border .micro-tab-views{border:solid 1px var(--txt-color);border-radius:0 5px 0 0;padding:1rem 1rem 0 1rem;}
+
+/* Navbar */
+nav{
+    background:var(--txt-color);
+    color:var(--inverted-color);
+    font-size:1.5rem;
+}
+nav:after {
+    content:'';
+    display:table;
+    clear:both;
+}
+nav ul{
+    list-style-type:none;
+    margin:0;
+}
+nav ul li{
+    float:left;
+    display:block;
+    position:relative;
+}
+nav ul li a{
+    padding:1rem 1rem 1rem 25px;
+    display:block;
+    color:inherit;
+    white-space:nowrap;
+}
+nav ul li a:focus,nav ul li a:active{
+    color:inherit;
+    background:inherit;
+}
+nav ul li a:hover{
+    color:inherit;
+    background:var(--hover-color);
+}
+nav ul li ul{
+    background:var(--txt-color);
+    position:absolute;
+    z-index:1;
+    display:none;
+    box-shadow:0 8px 16px 0px rgba(0,0,0,0.5);
+    min-width:200px;
+}
+nav ul li:hover>ul{
+    display:block;
+}
+nav>ul>li>ul>li>ul{
+    left:100%;
+    top:0;
+    margin-left:-5px;
+}
+nav ul li>ul li{
+    width:100%;
+}
+nav ul li>ul hr{
+    width:80%;
+    border:solid 1px rgba(0,0,0,.1);
+    margin:0 auto;
+}

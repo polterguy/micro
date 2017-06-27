@@ -85,6 +85,18 @@ create-widget
             a
               href:https://google.com
               innerValue:Hyperlinks
+        ul
+          widgets
+            li
+              innerValue:Bulleted list 1
+            li
+              innerValue:Bulleted list 2
+        ol
+          widgets
+            li
+              innerValue:Ordered list
+            li
+              innerValue:Ordered list
         blockquote
           innerValue:This is some arbitrary piece of text in a blockquote
         pre

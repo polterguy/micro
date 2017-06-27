@@ -1,6 +1,6 @@
 ﻿
 /*
- * Will showcase all the advanced widgets in Micro.
+ * Will showcase all the extended widgets in Micro.
  */
 
 
@@ -11,9 +11,98 @@ p5.web.include-css-file:@MICRO/media/main.css
 
 
 /*
- * Clears container for any previous things.
+ * Clears container for any previous widgets.
  */
 clear-widget:cnt
+
+
+/*
+ * Creates our fullscreen container first, for holding our navbar.
+ */
+create-widget:content-menu
+  class:container-fullscreen
+  widgets
+    nav
+      widgets
+        ul
+          widgets
+            li
+              widgets
+                a
+                  href:"https://gaiasoul.com"
+                  innerValue:GaiaSoul
+            li
+              widgets
+                a
+                  role:button
+                  href:#
+                  innerValue:DropDown
+                  onclick:"event.stopPropagation();return false;"
+                ul
+                  widgets
+                    li
+                      widgets
+                        a
+                          href:"https://github.com/polterguy/phosphorusfive"
+                          innerValue:Phosphorus Five
+            li
+              widgets
+                a
+                  role:button
+                  href:#
+                  innerValue:DropDown 2
+                  onclick:"event.stopPropagation();return false;"
+                ul
+                  widgets
+                    li
+                      widgets
+                        a
+                          href:"https://gaiasoul.com"
+                          innerValue:GaiaSoul
+                    li
+                      widgets
+                        a
+                          href:#
+                          role:button
+                          innerValue:Nested dropdown
+                          onclick:"event.stopPropagation();return false;"
+                        ul
+                          widgets
+                            li
+                              widgets
+                                a
+                                  href:#
+                                  role:button
+                                  innerValue:Show modal
+                                  onclick
+                                    p5.web.widgets.ajax-events.raise:show-modal-button
+                                      onclick
+                            li
+                              widgets
+                                a
+                                  href:"https://gaiasoul.com"
+                                  innerValue:GaiaSoul
+                    li
+                      widgets
+                        a
+                          role:button
+                          href:#
+                          innerValue:Show modal
+                          onclick
+                            p5.web.widgets.ajax-events.raise:show-modal-button
+                              onclick
+                    li
+                      widgets
+                        hr
+                    li
+                      widgets
+                        a
+                          role:button
+                          href:#
+                          innerValue:Click me!
+                          onclick
+                            set-widget-property:x:/../*/_event?value
+                              innerValue:I was clicked
 
 
 /*
@@ -34,9 +123,9 @@ create-widget
       class:col
       widgets
         h1
-          innerValue:Micro advanced widgets
+          innerValue:Micro extended widgets
         p
-          innerValue:@"These are the 'advanced' widgets in Micro, such as modal widgets, tabview widgets, etc."
+          innerValue:@"These are the 'extended' widgets in Micro, such as modal widgets, tab widgets, etc."
 
 
 /*
@@ -53,7 +142,7 @@ create-widget
           innerValue:Modal widget
         p
           innerValue:Below is an example of a modal widget. When you click the button below, a modal widget will be created and shown.
-        button
+        button:show-modal-button
           innerValue:Show modal
           onclick
 
@@ -111,21 +200,49 @@ create-widget
           view
             name:First
             widgets
-              h3
+              h4
                 innerValue:First view
               p
                 innerValue:This is the first view in your tab.
           view
             name:Second
             widgets
-              h3
+              h4
                 innerValue:Second view
               p
-                innerValue:This is the second view in your tab.
+                innerValue:@"This is the second view in your tab. By default, there are no borders around the tab widget, since this
+would imply having to create padding for its content, which would move the text layout outwards into the page, making it not align nicely
+with the rest of your content. If you wish, this is easily added with a single CSS class addition to the main tab widget."
           view
             name:Third
             widgets
-              h3
+              h4
                 innerValue:Third view
               p
-                innerValue:This is the third view in your tab.
+                innerValue:@"This is the third view in your tab. You can add any other widgets you wish into your views.
+Below is an example of a button."
+              div
+                class:right
+                widgets
+                  button
+                    innerValue:Click me!
+                    onclick
+                      set-widget-property:x:/../*/_event?value
+                        innerValue:I was clicked
+    div
+      class:col-100 prepend-top
+      widgets
+        micro.widgets.tab
+          class:micro-tab micro-tab-border
+          view
+            name:First
+            widgets
+              p
+                innerValue:@"This tab widget has the 'micro-tab-border' CSS class added to it, which makes it have a border, 
+making it more easily seen as a single component on your page."
+          view
+            name:Second
+            widgets
+              p
+                innerValue:@"This makes your tab widget look more similar to traditional tabs, but also unfortunately aligns its
+content not in accordance with the rest of the content on your page. Which you prefer, is probably a matter of taste."
