@@ -1,0 +1,101 @@
+
+/*
+ * Creates the tab extension widget.
+ *
+ * A tab widget needs at least one child of type [view]. Each view becomes
+ * a single tab in the tab widget. Each view must have at least a [name] and a [widgets] collection.
+ *
+ * Unless you wish to override the default CSS class, you should also at the very least supply a [class]
+ * property for your [micro.widgets.tab] widget with the value of "micro-tab".
+ */
+create-event:micro.widgets.tab
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Databinding the buttons of our tab.
+   */
+  apply:x:/../*/return/**/widgets/=buttons
+    src:x:/@.signal/--/<-/view/*/name
+    template
+      button
+        {innerValue}:x:?value
+        onclick
+
+          /*
+           * Making sure we set all other views to invisible, 
+           * and the currently clicked button's view to visible.
+           */
+          {_name}:x:?value
+          p5.web.widgets.find-first-ancestor:x:/../*/_event?value
+            _tab
+          p5.web.widgets.find:x:/@p5.web.widgets.find-first-ancestor/*/*?value
+            _name
+          set-widget-property:x:/@p5.web.widgets.find/*/*?value
+            visible:false
+          p5.web.widgets.find:x:/@p5.web.widgets.find-first-ancestor/*/*?value
+            _name:x:/@_name?value
+          set-widget-property:x:/@p5.web.widgets.find/*/*?value
+            visible:true
+
+          /*
+           * Removing active state from all buttons, and adding for currently clicked afterwards.
+           */
+          p5.web.widgets.find-first:x:/@p5.web.widgets.find-first-ancestor/*/*?value
+            class:micro-tab-buttons
+          p5.web.widgets.get-children:x:/@p5.web.widgets.find-first/*/*?value
+          delete-widget-property:x:/@p5.web.widgets.get-children/*/*?value
+            class
+          set-widget-property:x:/../*/_event?value
+            class:micro-tab-active
+
+  /*
+   * Databinding the views of our tab.
+   */
+  for-each:x:/@.signal/--/<-/view/*/widgets
+    add:x:/+2/*/*/*/widgets
+      src:x:/@_dp/#/*
+    eval-x:x:/+/*/*/*/_name
+    add:x:/../*/return/**/widgets/=views
+      src
+        container
+          _name:x:/@_dp/#/./*/name?value
+          visible:false
+          widgets
+
+  /*
+   * Adding the rest of the arguments into return widget.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--(!/view)
+
+  /*
+   * Making sure our first view becomes visible.
+   */
+  set:x:/../*/return/**/widgets/=views/0/*/visible
+
+  /*
+   * Making sure our first view's button has the 'active' CSS class.
+   */
+  add:x:/../*/return/**/widgets/=buttons/0
+    src
+      class:micro-tab-active
+
+  /*
+   * Returning widget to caller.
+   */
+  return
+    container
+      _tab
+      oninit
+        p5.web.include-css-file:@MICRO/media/ext.css
+      widgets
+        container
+          class:micro-tab-buttons
+          widgets:buttons
+        container
+          class:micro-tab-views
+          widgets:views

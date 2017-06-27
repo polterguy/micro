@@ -36,7 +36,7 @@ create-widget
         h1
           innerValue:Micro advanced widgets
         p
-          innerValue:@"These are the 'advanced' widgets in Micro, such as an Ajax TreeView, TabControl, etc."
+          innerValue:@"These are the 'advanced' widgets in Micro, such as modal widgets, tabview widgets, etc."
 
 
 /*
@@ -52,7 +52,7 @@ create-widget
         h3
           innerValue:Modal widget
         p
-          innerValue:Here is an example of a simple modal widget. Click the button to show the modal widget.
+          innerValue:Below is an example of a modal widget. When you click the button below, a modal widget will be created and shown.
         button
           innerValue:Show modal
           onclick
@@ -87,3 +87,45 @@ of kilobytes of custom JavaScript and CSS to display a simple modal window."
                           onclick
                             delete-widget:modal-widget-1
         
+
+
+/*
+ * Tab widget example.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Tab widget
+        p
+          innerValue:Below is an example of a tab widget.
+    div
+      class:col-100
+      widgets
+        micro.widgets.tab
+          class:micro-tab
+          view
+            name:First
+            widgets
+              h3
+                innerValue:First view
+              p
+                innerValue:This is the first view in your tab.
+          view
+            name:Second
+            widgets
+              h3
+                innerValue:Second view
+              p
+                innerValue:This is the second view in your tab.
+          view
+            name:Third
+            widgets
+              h3
+                innerValue:Third view
+              p
+                innerValue:This is the third view in your tab.

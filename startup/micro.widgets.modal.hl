@@ -1,9 +1,14 @@
 
 /*
  * Creates the Modal extension widget.
+ *
+ * Notice, the [widget] collection of this widget, will be appended into the actual content parts
+ * of the widget, while all other arguments will be simply appended as is into the root widget,
+ * which actually is an "obscurer" that is shown in fixed position, obscuring all other widgets on page.
+ *
+ * Unless you want to explicitly override the default CSS classes, you should at the very least supply
+ * a [class] argument, having a value of "micro-modal".
  */
-
-
 create-event:micro.widgets.modal
 
   /*
