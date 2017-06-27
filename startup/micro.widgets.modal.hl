@@ -1,0 +1,43 @@
+
+/*
+ * Creates the Modal extension widget.
+ */
+
+
+create-event:micro.widgets.modal
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Adding all [widgets] into container widget for modal window.
+   */
+  add:x:/../*/return/**/widgets/=widgets
+    src:x:/@.signal/--/widgets/*
+
+  /*
+   * Adding the rest of the arguments into return widget.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--(!/widgets)
+
+  /*
+   * Returning widget to caller.
+   */
+  return
+    container
+
+      // Hack to make sure window doesn't flicker during initial display.
+      style:"display:none;"
+      oninit
+        p5.web.include-css-file:@MICRO/media/ext.css
+      onclick
+        delete-widget:x:/../*/_event?value
+      widgets
+        container
+          class:micro-modal-content
+          widgets
+            container
+              widgets:widgets

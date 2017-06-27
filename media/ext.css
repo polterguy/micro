@@ -1,0 +1,10 @@
+/* Extension widgets for Micro */
+
+/* Micro modal window */
+.micro-modal{display:block !important;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1000;animation-name:micro-modal;animation-duration:.5s;animation-fill-mode:forwards;animation-iteration-count:1;animation-timing-function:ease-out;}
+.micro-modal .micro-modal-content{width:90%;margin-left:auto;margin-right:auto;background:#fff;border-radius:5px;padding:1rem 2rem;animation-name:micro-modal-content;animation-duration:.5s;animation-fill-mode:forwards;animation-iteration-count:1;animation-timing-function:ease-out;}
+@media screen and (min-width:800px){.micro-modal .micro-modal-content{width:800px;}}
+
+/* Animations */
+@keyframes micro-modal{from{opacity:.1;}to{opacity:1;}}
+@keyframes micro-modal-content{from{margin-top:-1000px;opacity:.1;}to{margin-top:2rem;opacity:1;}}

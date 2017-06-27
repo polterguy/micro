@@ -7,9 +7,19 @@
 
 
 /*
- * Include main CSS file for Micro, and setting the "container" CSS class on main "cnt" widget.
+ * Include main CSS file for Micro.
  */
 p5.web.include-css-file:@MICRO/media/main.css
+p5.web.page.set-title:Micro basic examples
+
+
+/*
+ * Checking if another "content" widget exists, and if so, deleting it, before we create our own.
+ */
+if
+  fetch:x:/0/0?value
+    widget-exists:content
+  delete-widget:content
 create-container-widget:content
   class:container
 
@@ -72,6 +82,9 @@ create-widget
               innerValue:This is some inline code
             small
               innerValue:This is some arbitrary small text
+            a
+              href:https://google.com
+              innerValue:Hyperlinks
         blockquote
           innerValue:This is some arbitrary piece of text in a blockquote
         pre
@@ -611,6 +624,36 @@ if the viewport becomes less than 800px."
 
 
 /*
+ * Table HTML elements.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Tables
+        p
+          innerValue:@"Tables will be pulled slightly to the left, to allow for the first column's content to align with the rest of the content on the page. 
+A default table looks like the following."
+    div
+      class:col-100
+      widgets
+        table
+          widgets
+            thead
+              innerValue:@"<tr><th>First column</th><th>Second column</th></tr>"
+            tbody
+              widgets
+                tr
+                  innerValue:"<td>First cell</td><td>Second cell</td>"
+                tr
+                  innerValue:"<td>Third cell</td><td>Fourth cell</td>"
+
+
+/*
  * Misc. classes.
  */
 create-widget
@@ -929,9 +972,3 @@ create-widget
     div
       class:col-100 air
       innerValue:@"<p>Etc ...</p>"
-    div
-      class:col-100 air center
-      widgets
-        button
-          innerValue:Advanced widgets
-          onclick

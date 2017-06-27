@@ -1,0 +1,89 @@
+﻿
+/*
+ * Will showcase all the advanced widgets in Micro.
+ */
+
+
+/*
+ * Includes the main CSS for Micro on page.
+ */
+p5.web.include-css-file:@MICRO/media/main.css
+
+
+/*
+ * Clears container for any previous things.
+ */
+clear-widget:cnt
+
+
+/*
+ * Creates a default container.
+ */
+create-container-widget:content
+  class:container
+
+
+/*
+ * Creates the main header and information.
+ */
+create-widget
+  parent:content
+  class:row
+  widgets
+    div
+      class:col
+      widgets
+        h1
+          innerValue:Micro advanced widgets
+        p
+          innerValue:@"These are the 'advanced' widgets in Micro, such as an Ajax TreeView, TabControl, etc."
+
+
+/*
+ * Modal window widget example.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col
+      widgets
+        h3
+          innerValue:Modal widget
+        p
+          innerValue:Here is an example of a simple modal widget. Click the button to show the modal widget.
+        button
+          innerValue:Show modal
+          onclick
+
+            /*
+             * Creating our modal widget.
+             * Notice, we append it into main "cnt", since semantically that makes more sense, 
+             * because the window will be shown in fullscreen anyway.
+             */
+            create-widget
+              parent:cnt
+              widgets
+                micro.widgets.modal:modal-widget-1
+                  class:micro-modal
+                  widgets
+                    h3
+                      innerValue:Modal widget
+                    p
+                      innerValue:@"Notice, there is no custom JavaScript for the modal widget in Micro.
+By intelligently combining CSS with the Managed Ajax parts of P5, we're able to get away with creating a modal widget, 
+without adding any overhead to our page at all."
+                    p
+                      innerValue:@"Which is in stark contrast to Bootstrap, that requires jQuery and hundreds
+of kilobytes of custom JavaScript and CSS to display a simple modal window."
+                    p
+                      innerValue:@"You can put any other widgets you wish into the modal widget in Micro."
+                    div
+                      class:right
+                      widgets
+                        button
+                          innerValue:Close
+                          onclick
+                            delete-widget:modal-widget-1
+        

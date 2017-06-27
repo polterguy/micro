@@ -25,13 +25,15 @@ label{display:block;float:left;user-select:none;}
 pre{background:#f5f5f5;padding:15px;border-radius:5px;margin:0 0 0 -15px;}
 code{background:#f5f5f5;}
 pre,code{font-family:Consolas, Monaco, monospace}
+a{text-decoration:none;color:var(--main-color);}
+a:hover,a:active,a:focus{color:var(--hover-color);}
 
-/* Form elements */
+/* Form elements, first general things */
 ::-webkit-input-placeholder{color:var(--placeholder-txt);}
 ::-moz-placeholder{color:var(--placeholder-txt);}
 ::-ms-input-placeholder{color:var(--placeholder-txt);}
 
-/* Buttons first */
+/* Then buttons */
 button{border-radius:5px;border:solid 1px var(--border-color);background:var(--main-color);color:var(--inverted-color);padding:7px 25px;outline:none;margin-bottom:1rem;}
 button:hover,button:focus,button:active{background:var(--hover-color);}
 button.hollow{color:var(--main-color);background:var(--inverted-color);}
@@ -68,6 +70,14 @@ input[type=radio]{border-radius:15px;}
 
 /* Form elements filling available space */
 *.fill{display:table-cell;width:100%;}
+
+/* Tables */
+table{width:100%;margin-left:-1rem;}
+table th,table td{padding:.5rem 1rem;}
+table th{text-align:left;background:var(--form-txt-bg);}
+table th:first-child{border-top-left-radius:5px;}
+table th:last-child{border-top-right-radius:5px;}
+table tr:hover td{background:var(--inverted-color);}
 
 /* Media queries for devices more than 800px in width */
 @media screen and (min-width:800px){
