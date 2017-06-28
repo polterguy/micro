@@ -12,15 +12,16 @@ its _"template"_ settings to _"empty"_.
 
 Micro creates a default layout, not based upon CSS classes for the most parts, which means it does not
 mix well with other CSS frameworks, such as e.g. Bootstrap. It is tiny in size, and contains most
-of the widgets you'd need in your day to day work with Phosphorus Five. It contains 2 CSS files.
+of the widgets you'll need in your day to day work with Phosphorus Five. It contains 2 CSS files.
 
 * _"/micro/media/main.css"_ Styles most common elements, such as buttons, checkboxes, etc.
-* _"/micro/media/ext.css"_ Styles the extension widgets, such as the modal widget, tab widget, navbar menu widget, etc.
+* _"/micro/media/ext.css"_ Styles the extension widgets, such as the modal widget, tab widget, etc.
 
 ## General layout
 
 In general, Micro does as little as possible. However, most of your HTML elements, will have some sort of sane styling applied
-to them. Below is a screenshot of what you may expect.
+to them. This means that it becomes tiny, while at the same time, leaving the design parts of your page up to you.
+Below is a screenshot of what you may expect.
 
 ![alt screenshot](screenshot-1.png)
 
@@ -31,6 +32,9 @@ will create a sane starting ground for your web apps. Below is another screensho
 
 The above shows how your form elements will end up looking like, if they're embedded inside of a _"strip"_. All form elements can
 also obviously be instantiated as stand-alone elements.
+
+The color profile of Miro is easily overridden by changing a couple of CSS variables, allowing you to change the colors of all elements,
+by changing only a handful of variables.
 
 ### Grid system
 
@@ -68,11 +72,16 @@ Notice, you need to embed your content inside of either a _"container"_ or a _"c
 done either by changing the CSS class of your main root widget, or appending a widget with the mentioned CSS classes inside of this widget
 again. In the above example, we change the main root widget _"cnt"_ CSS class to container.
 
-Then inside of each _"container"_ you'll need a _"row"_. Each row can have as many _"col"_ items as you wish. Each col will share the
+Inside of each _"container"_ you'll need a _"row"_. Each row can have as many _"col"_ items as you wish. Each col will share the
 total available width, according to how many columns you add to a specific row.
 
-The _"container"_ element will have a maximum width of 1120px. The _"container-fullscreen"_ will use all available width. You can have
-as many containers as you wish on your page, and as many rows as you wish inside of each container.
+The _"container"_ element will have a maximum width of 1120px and automatic margins to the left and right. The _"container-fullscreen"_ will 
+use all available width. You can have as many containers as you wish on your page, and as many rows as you wish inside of each container.
+
+#### Responsive rendering
+
+Micro does feature _"responsive rendering"_, which means that if your screen resolution drops below 800px, each column, regardless of its definition,
+will automatically pop out, and require 100% of the available width. Micro is created with the _"mobile first"_ approach.
 
 #### Explicit column width
 
@@ -130,25 +139,22 @@ create-widget
   class:row
   widgets
     container
-      class:col-100
+      class:col-100 strip
       widgets
-        container
-          class:strip
+        label
+          innerValue:Foo
+        input
+          type:text
+          placeholder:Foo ...
+        span
           widgets
-            label
-              innerValue:Foo
-            input
-              type:text
-              placeholder:Foo ...
-            span
-              widgets
-                input:my-check
-                  type:checkbox
-            label
-              innerValue:Check
-              for:my-check
-            button
-              innerValue:OK
+            input:my-check
+              type:checkbox
+        label
+          innerValue:Check
+          for:my-check
+        button
+          innerValue:OK
 ```
 
 The above will result in something resembling the following.
@@ -158,7 +164,7 @@ The above will result in something resembling the following.
 ## Menu navbar navigation
 
 Micro will create CSS rules for the _"nav"_ element, allowing you to easily create a menu or navigation menu for your pages. Notice, you'll need
-to include _"ext.css"_ for the navbar to be included. This allows you to create responsive menus for your page. Below is an example.
+to include _"ext.css"_ for the navbar to be rendered correctly. This allows you to create responsive menus for your page. Below is an example.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -279,6 +285,11 @@ If you toggle the above "hamburger" element, the same menu as above will look li
 
 ![alt screenshot](screenshot-6.png)
 
+Notice, the navbar element in Micro, relies upon hover effects for clients with more than 800px in width. This might not
+always be the effect you wish, but will work correctly for most sites, where you need responsive rendering, for both desktop
+clients, and mobile clients. If this becomes a problem though, you can easily trap **[onclick]** on your dropdown widgets,
+and explicitly show the associated _"ul"_ element for its children menu items.
+
 ## Extension widgets
 
 Micro contains some extension widgets which are documented below. All of these extension widgets, will automatically include
@@ -312,6 +323,10 @@ that will become the "content" parts of your modal widget.
 
 All other arguments, such as for instance the above **[class]** argument, will be automatically appended into the 
 root element of your widget. The modal window expects a **[class]** property of _"micro-modal"_.
+
+Below is a screenshot of how this will end up looking like.
+
+![alt screenshot](screenshot-7.png)
 
 ### [micro.widgets.tab]
 
@@ -362,5 +377,10 @@ The tab widget needs a **[class]** property of _"micro-tab"_ to function correct
 to it, to create borders around the tab widget. If you want to have borders, make sure you also add the _"micro-tab-border"_ CSS class 
 to it when instantiating it. This will create some additional padding for your tab widgets though, which means that the content of your 
 tab views will not be perfectly aligned with the rest of the content on your page.
+
+Below is a screenshot of how the above code will end up appearing on your site.
+
+![alt screenshot](screenshot-8.png)
+
 
 
