@@ -330,7 +330,7 @@ Below is a screenshot of how this will end up looking like.
 
 ### [micro.widgets.tab]
 
-This is a tab control type of widget, and an example of usage can be found below.
+This is a tab control type of widget. An example of usage can be found below.
 
 ```
 create-widget
@@ -382,5 +382,16 @@ Below is a screenshot of how the above code will end up appearing on your site.
 
 ![alt screenshot](screenshot-8.png)
 
+## Performance
 
+Micro really is **microscopic**. Among other things, the total bandwidth usage of the kitchen sink example for its extension widgets
+is **21.5KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load of your page in total. The number
+of HTTP requests is 4. Compare this to most other Ajax control vendors, who often has several megabytes of bandwidth in their initial
+rendering, and often hundreds of HTTP requests.
+
+In fact, also clicking every single widget on the kitchen sink example, triggering an Ajax callback to the server for each interaction,
+result in no more than **29.5KB** and **15 HTTP requests**. This includes toggling the menu, showing multiple modal windows, switching
+between tab views in the tab widget multiple times, etc.
+
+In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there!
 
