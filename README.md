@@ -23,12 +23,12 @@ In general, Micro does as little as possible. However, most of your HTML element
 to them. This means that it becomes tiny, while at the same time, leaving the design parts of your page up to you.
 Below is a screenshot of what you may expect.
 
-![alt screenshot](screenshot-1.png)
+![alt screenshot](screenshots/screenshot-1.png)
 
 In addition to a general sane default styling of your HTML elements, most form HTML elements also have some styling for you, that
 will create a sane starting ground for your web apps. Below is another screenshot showing you what you may expect.
 
-![alt screenshot](screenshot-2.png)
+![alt screenshot](screenshots/screenshot-2.png)
 
 The above shows how your form elements will end up looking like, if they're embedded inside of a _"strip"_. All form elements can
 also obviously be instantiated as stand-alone elements.
@@ -159,7 +159,7 @@ create-widget
 
 The above will result in something resembling the following.
 
-![alt screenshot](screenshot-3.png)
+![alt screenshot](screenshots/screenshot-3.png)
 
 ## Menu navbar navigation
 
@@ -274,16 +274,16 @@ create-widget:content-menu
 
 The above will result in something like the following.
 
-![alt screenshot](screenshot-4.png)
+![alt screenshot](screenshots/screenshot-4.png)
 
 Notice, a nav element will also render responsively, which means that if the resolution for your screen is reduced below 800px,
 it will end up looking like the following.
 
-![alt screenshot](screenshot-5.png)
+![alt screenshot](screenshots/screenshot-5.png)
 
 If you toggle the above "hamburger" element, the same menu as above will look like this.
 
-![alt screenshot](screenshot-6.png)
+![alt screenshot](screenshots/screenshot-6.png)
 
 Notice, the navbar element in Micro, relies upon hover effects for clients with more than 800px in width. This might not
 always be the type of logic you need, but will work correctly for most sites, where you need responsive rendering, for both desktop
@@ -331,7 +331,7 @@ root element of your widget. The modal window expects a **[class]** property of 
 
 Below is a screenshot of how this will end up looking like.
 
-![alt screenshot](screenshot-7.png)
+![alt screenshot](screenshots/screenshot-7.png)
 
 ### [micro.widgets.tab]
 
@@ -385,7 +385,7 @@ tab views will not be perfectly aligned with the rest of the content on your pag
 
 Below is a screenshot of how the above code will end up appearing on your site.
 
-![alt screenshot](screenshot-8.png)
+![alt screenshot](screenshots/screenshot-8.png)
 
 ## Performance
 
