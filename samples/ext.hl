@@ -22,8 +22,26 @@ clear-widget:cnt
 create-widget:content-menu
   class:container-fullscreen
   widgets
-    nav
+    nav:navbar
       widgets
+        a
+          href:#
+          role:button
+          innerValue:=
+          onclick
+
+            /*
+             * Toggling expanded class on main navbar element.
+             */
+            get-widget-property:navbar
+              class
+            if:x:/@get-widget-property/*/*?value
+              =:expanded
+              delete-widget-property:navbar
+                class
+            else
+              set-widget-property:navbar
+                class:expanded
         ul
           widgets
             li
@@ -33,6 +51,8 @@ create-widget:content-menu
                   href:#
                   innerValue:Menu widget
                   onclick
+                    delete-widget-property:navbar
+                      class
                     create-widgets
                       micro.widgets.modal:modal-widget-1
                         class:micro-modal
@@ -92,6 +112,8 @@ create-widget:content-menu
                                   role:button
                                   innerValue:Show modal
                                   onclick
+                                    delete-widget-property:navbar
+                                      class
                                     p5.web.widgets.ajax-events.raise:show-modal-button
                                       onclick
                             li
@@ -106,6 +128,8 @@ create-widget:content-menu
                           href:#
                           innerValue:Show modal
                           onclick
+                            delete-widget-property:navbar
+                              class
                             p5.web.widgets.ajax-events.raise:show-modal-button
                               onclick
                     li
@@ -118,6 +142,8 @@ create-widget:content-menu
                           href:#
                           innerValue:Click me!
                           onclick
+                            delete-widget-property:navbar
+                              class
                             set-widget-property:x:/../*/_event?value
                               innerValue:I was clicked
 
