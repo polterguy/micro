@@ -37,6 +37,7 @@ create-event:micro.widgets.modal
       // Hack to make sure window doesn't flicker during initial display.
       style:"display:none;"
       oninit
+        p5.web.include-css-file:@MICRO/media/main.css
         p5.web.include-css-file:@MICRO/media/ext.css
       onclick
         delete-widget:x:/../*/_event?value

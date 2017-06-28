@@ -56,6 +56,8 @@ create-event:micro.widgets.tab
    * Databinding the views of our tab.
    */
   for-each:x:/@.signal/--/<-/view/*/widgets
+    add:x:/+3/*/*
+      src:x:/@_dp/#/./*(!/widgets!/name)
     add:x:/+2/*/*/*/widgets
       src:x:/@_dp/#/*
     eval-x:x:/+/*/*/*/_name
@@ -91,6 +93,7 @@ create-event:micro.widgets.tab
     container
       _tab
       oninit
+        p5.web.include-css-file:@MICRO/media/main.css
         p5.web.include-css-file:@MICRO/media/ext.css
       widgets
         container
