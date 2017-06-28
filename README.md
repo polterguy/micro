@@ -391,7 +391,7 @@ Below is a screenshot of how the above code will end up appearing on your site.
 
 Micro really is **microscopic**. Among other things, the total bandwidth usage of the kitchen sink example for its extension widgets
 is **21.5KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load of your page in total. The number
-of HTTP requests is 4. Compare this to most other Ajax control vendors, who often has several megabytes of bandwidth in their initial
+of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their initial
 rendering, and often hundreds of HTTP requests.
 
 In fact, also clicking every single widget on the kitchen sink example, triggering an Ajax callback to the server for each interaction,
