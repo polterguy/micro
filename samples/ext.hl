@@ -142,8 +142,6 @@ create-widget:content-menu
                           href:#
                           innerValue:Click me!
                           onclick
-                            delete-widget-property:navbar
-                              class
                             set-widget-property:x:/../*/_event?value
                               innerValue:I was clicked
 
