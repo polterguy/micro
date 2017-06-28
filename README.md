@@ -286,9 +286,14 @@ If you toggle the above "hamburger" element, the same menu as above will look li
 ![alt screenshot](screenshot-6.png)
 
 Notice, the navbar element in Micro, relies upon hover effects for clients with more than 800px in width. This might not
-always be the effect you wish, but will work correctly for most sites, where you need responsive rendering, for both desktop
-clients, and mobile clients. If this becomes a problem though, you can easily trap **[onclick]** on your dropdown widgets,
-and explicitly show the associated _"ul"_ element for its children menu items.
+always be the type of logic you need, but will work correctly for most sites, where you need responsive rendering, for both desktop
+clients, and (most) mobile clients. If this becomes a problem though, you can easily trap **[onclick]** on your dropdown widgets,
+and explicitly show the associated _"ul"_ element for its children menu items. This would only be a problem with touch screen
+devices, which does not post focus correctly, and have a screen resolution above 800px.
+
+To create a manu/navbar by "hand" as we do above, is also quite verbose. If you wish, you could easily create an Active Events, simply
+taking your items, either with a **[url]** property or an **[onclick]** event handler. This would easily reduce its amount of code
+by 70-90 percent. This is left as an exercise for you though.
 
 ## Extension widgets
 
