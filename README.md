@@ -151,13 +151,137 @@ create-widget
               innerValue:OK
 ```
 
-The above will result ins something resembling the following.
+The above will result in something resembling the following.
 
 ![alt screenshot](screenshot-3.png)
 
+## Menu navbar navigation
+
+Micro will create CSS rules for the _"nav"_ element, allowing you to easily create a menu or navigation menu for your pages. Notice, you'll need
+to include _"ext.css"_ for the navbar to be included. This allows you to create responsive menus for your page. Below is an example.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/ext.css
+
+create-widget:content-menu
+  class:container-fullscreen
+  widgets
+    nav:navbar
+      widgets
+        a
+          href:#
+          role:button
+          innerValue:=
+          onclick
+
+            /*
+             * Toggling expanded class on main navbar element.
+             */
+            get-widget-property:navbar
+              class
+            if:x:/@get-widget-property/*/*?value
+              =:expanded
+              delete-widget-property:navbar
+                class
+            else
+              set-widget-property:navbar
+                class:expanded
+        ul
+          widgets
+            li
+              widgets
+                a
+                  role:button
+                  href:#
+                  innerValue:Menu widget
+                  onclick
+            li
+              widgets
+                a
+                  role:button
+                  href:#
+                  innerValue:DropDown
+                  onclick:"event.stopPropagation();return false;"
+                ul
+                  widgets
+                    li
+                      widgets
+                        a
+                          href:"https://github.com/polterguy/phosphorusfive"
+                          innerValue:Phosphorus Five
+            li
+              widgets
+                a
+                  role:button
+                  href:#
+                  innerValue:DropDown 2
+                  onclick:"event.stopPropagation();return false;"
+                ul
+                  widgets
+                    li
+                      widgets
+                        a
+                          href:"https://gaiasoul.com"
+                          innerValue:GaiaSoul
+                    li
+                      widgets
+                        a
+                          href:#
+                          role:button
+                          innerValue:Nested dropdown
+                          onclick:"event.stopPropagation();return false;"
+                        ul
+                          widgets
+                            li
+                              widgets
+                                a
+                                  href:#
+                                  role:button
+                                  innerValue:Show modal
+                                  onclick
+                            li
+                              widgets
+                                a
+                                  href:"https://gaiasoul.com"
+                                  innerValue:GaiaSoul
+                    li
+                      widgets
+                        a
+                          role:button
+                          href:#
+                          innerValue:Show modal
+                          onclick
+                    li
+                      widgets
+                        hr
+                    li
+                      widgets
+                        a
+                          role:button
+                          href:#
+                          innerValue:Click me!
+                          onclick
+                            set-widget-property:x:/../*/_event?value
+                              innerValue:I was clicked
+```
+
+The above will result in something like the following.
+
+![alt screenshot](screenshot-4.png)
+
+Notice, a nav element will also render responsively, which means that if the resolution for your screen is reduced below 800px,
+it will end up looking like the following.
+
+![alt screenshot](screenshot-5.png)
+
+If you toggle the above "hamburger" element, the same menu as above will look like this.
+
+![alt screenshot](screenshot-6.png)
+
 ## Extension widgets
 
-It contains some extension widgets which are documented below. All of these extension widgets, will automatically include
+Micro contains some extension widgets which are documented below. All of these extension widgets, will automatically include
 the relevant CSS files.
 
 ### [micro.widgets.modal]
