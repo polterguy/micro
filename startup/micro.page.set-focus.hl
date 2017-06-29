@@ -1,0 +1,8 @@
+
+/*
+ * Helper Active Event to set focus to the given [_arg] widget.
+ */
+create-event:micro.page.set-focus
+
+  p5.web.send-javascript:@"p5.$('{0}').el.focus();"
+    :x:/../*/_arg?value
