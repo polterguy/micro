@@ -40,6 +40,9 @@ create-widget:content-menu
               widgets
                 button
                   innerValue:Close
+                  oninit
+                    p5.web.send-javascript:@"p5.$('{0}').el.focus();"
+                      :x:/../*/_event?value
                   onclick
                     delete-widget:menu-modal
 
@@ -132,6 +135,9 @@ of kilobytes of custom JavaScript and CSS to display a simple modal window."
                     widgets
                       button
                         innerValue:Close
+                        oninit
+                          p5.web.send-javascript:@"p5.$('{0}').el.focus();"
+                            :x:/../*/_event?value
                         onclick
                           delete-widget:modal-widget-2
         
