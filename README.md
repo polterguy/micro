@@ -3,7 +3,7 @@
 Micro is a microscopic CSS framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
-necessary features, and most of the CSS framework were too JavaScript centric - Including Bootstrap.
+necessary features. Most of the existing CSS framework were also too JavaScript centric - Including Bootstrap.
 
 **Notice**, Micro does *not* mix well with Bootstrap, which among other things implies that
 none of these examples can be seen very well in System42's Executor. If you wish to reproduce
@@ -14,8 +14,8 @@ Micro creates a default layout, not based upon CSS classes for the most parts, w
 mix well with other CSS frameworks, such as e.g. Bootstrap. It is tiny in size, and contains most
 of the widgets you'll need in your day to day work with Phosphorus Five. It contains 2 CSS files.
 
-* _"/micro/media/main.css"_ Styles most common elements, such as buttons, checkboxes, etc.
-* _"/micro/media/ext.css"_ Styles the extension widgets, such as the modal widget, tab widget, etc.
+* _"/micro/media/main.css"_ - Styles most common elements, such as buttons, checkboxes, etc.
+* _"/micro/media/ext.css"_ - Styles the extension widgets, such as the modal widget, tab widget, etc.
 
 ## General layout
 
@@ -24,6 +24,8 @@ to them. This means that it becomes tiny, while at the same time, leaving the de
 Below is a screenshot of what you may expect.
 
 ![alt screenshot](screenshots/screenshot-1.png)
+
+As you can see, there are no fancy fonts, and little layout in general, since Micro only solves the bare minimum expected from every page you create - Leaving the rest up to you to explicitly solve as you wish. This implies that it doesn't _"end up as much in your way"_, as you apply your own custom design to your site, as you see fit. This trait of Micro also results in a __tiny__ bandwidth consumption.
 
 In addition to a general sane default styling of your HTML elements, most form HTML elements also have some styling for you, that
 will create a sane starting ground for your web apps. Below is another screenshot showing you what you may expect.
@@ -36,7 +38,7 @@ also obviously be instantiated as stand-alone elements.
 The color profile of Miro is easily overridden by changing a couple of CSS variables, allowing you to change the colors of all elements,
 by changing only a handful of variables.
 
-### Grid system
+## Grid system
 
 Micro has its own grid system based upon the _"flexbox"_ model. This means among other things, that you can create as many or as few
 columns as you wish in your page. Below is some example code that will create two rows, with a different set of columns each.
@@ -78,12 +80,12 @@ total available width, according to how many columns you add to a specific row.
 The _"container"_ element will have a maximum width of 1120px and automatic margins to the left and right. The _"container-fullscreen"_ will 
 use all available width. You can have as many containers as you wish on your page, and as many rows as you wish inside of each container.
 
-#### Responsive rendering
+### Responsive rendering
 
 Micro does feature _"responsive rendering"_, which means that if your screen resolution drops below 800px, each column, regardless of its definition,
 will automatically pop out, and require 100% of the available width. Micro is created with the _"mobile first"_ approach.
 
-#### Explicit column width
+### Explicit column width
 
 You can also explicitly set a column's width, with one of the following CSS classes.
 
@@ -122,7 +124,7 @@ create-widget
 
 The total width of your columns must result in 100. If it exceeds 100, it will wrap the next column unto the next line.
 
-### Form elements
+## Form elements
 
 Most form elements can simply be instantiated, without any CSS classes associated with them, and they will render with the style
 associated with them correctly. If you wish, you can also add any form elements inside of a _"strip"_, which will make all
@@ -160,140 +162,6 @@ create-widget
 The above will result in something resembling the following.
 
 ![alt screenshot](screenshots/screenshot-3.png)
-
-## Menu navbar navigation
-
-Micro will create CSS rules for the _"nav"_ element, allowing you to easily create a menu or navigation menu for your pages. Notice, you'll need
-to include _"ext.css"_ for the navbar to be rendered correctly. This allows you to create responsive menus for your page. Below is an example.
-
-```
-p5.web.include-css-file:@MICRO/media/main.css
-p5.web.include-css-file:@MICRO/media/ext.css
-
-create-widget:content-menu
-  class:container-fullscreen
-  widgets
-    nav:navbar
-      widgets
-        a
-          href:#
-          role:button
-          innerValue:=
-          onclick
-
-            /*
-             * Toggling expanded class on main navbar element.
-             */
-            get-widget-property:navbar
-              class
-            if:x:/@get-widget-property/*/*?value
-              =:expanded
-              delete-widget-property:navbar
-                class
-            else
-              set-widget-property:navbar
-                class:expanded
-        ul
-          widgets
-            li
-              widgets
-                a
-                  role:button
-                  href:#
-                  innerValue:Menu widget
-                  onclick
-            li
-              widgets
-                a
-                  role:button
-                  href:#
-                  innerValue:DropDown
-                  onclick:"event.stopPropagation();return false;"
-                ul
-                  widgets
-                    li
-                      widgets
-                        a
-                          href:"https://github.com/polterguy/phosphorusfive"
-                          innerValue:Phosphorus Five
-            li
-              widgets
-                a
-                  role:button
-                  href:#
-                  innerValue:DropDown 2
-                  onclick:"event.stopPropagation();return false;"
-                ul
-                  widgets
-                    li
-                      widgets
-                        a
-                          href:"https://gaiasoul.com"
-                          innerValue:GaiaSoul
-                    li
-                      widgets
-                        a
-                          href:#
-                          role:button
-                          innerValue:Nested dropdown
-                          onclick:"event.stopPropagation();return false;"
-                        ul
-                          widgets
-                            li
-                              widgets
-                                a
-                                  href:#
-                                  role:button
-                                  innerValue:Show modal
-                                  onclick
-                            li
-                              widgets
-                                a
-                                  href:"https://gaiasoul.com"
-                                  innerValue:GaiaSoul
-                    li
-                      widgets
-                        a
-                          role:button
-                          href:#
-                          innerValue:Show modal
-                          onclick
-                    li
-                      widgets
-                        hr
-                    li
-                      widgets
-                        a
-                          role:button
-                          href:#
-                          innerValue:Click me!
-                          onclick
-                            set-widget-property:x:/../*/_event?value
-                              innerValue:I was clicked
-```
-
-The above will result in something like the following.
-
-![alt screenshot](screenshots/screenshot-4.png)
-
-Notice, a nav element will also render responsively, which means that if the resolution for your screen is reduced below 800px,
-it will end up looking like the following.
-
-![alt screenshot](screenshots/screenshot-5.png)
-
-If you toggle the above "hamburger" element, the same menu as above will look like this.
-
-![alt screenshot](screenshots/screenshot-6.png)
-
-Notice, the navbar element in Micro, relies upon hover effects for clients with more than 800px in width. This might not
-always be the type of logic you need, but will work correctly for most sites, where you need responsive rendering, for both desktop
-clients, and (most) mobile clients. If this becomes a problem though, you can easily trap **[onclick]** on your dropdown widgets,
-and explicitly show the associated _"ul"_ element for its children menu items. This would only be a problem with touch screen
-devices, which does not post focus correctly, and have a screen resolution above 800px.
-
-To create a manu/navbar by "hand" as we do above, is also quite verbose. If you wish, you could easily create an Active Events, simply
-taking your items, either with a **[url]** property or an **[onclick]** event handler. This would easily reduce its amount of code
-by 70-90 percent. This is left as an exercise for you though.
 
 ## Extension widgets
 
@@ -385,20 +253,91 @@ tab views will not be perfectly aligned with the rest of the content on your pag
 
 Below is a screenshot of how the above code will end up appearing on your site.
 
-![alt screenshot](screenshots/screenshot-8.png)
+![alt screenshot](screenshots/screenshot-6.png)
+
+### [micro.widgets.menu]
+
+Although you could create a "nav" element in Micro by hand, Micro also contains one helper Active Event extension widget for you, that easily allows you to create Ajax and/or hyperlinks menus. A menu must have exactly one **[items]** collection. Each child node beneath your items, becomes a menu item. Each menu
+item, can either have an **[onclick]** for Ajax callbacks, an **[href]** for URL navigation, or its own child **[items]** collection. You should
+in general not combine these, but choose only one for a single menu item.
+
+The name of your child node beneath your **[items]** collection, becomes the friendly name displayed to the user. The value is an optional
+explicit ID for the actual anchor element of your menu. Below is an example of creating a menu.
+
+```
+create-widget:content-menu
+  class:container-fullscreen
+  events
+  widgets
+    micro.widgets.menu
+      items
+        Click me
+          onclick
+            set-widget-property:x:/../*/_event?value
+              innerValue:I was clicked
+        Dropdown 1
+          items
+            GitHub for P5
+              href:"https://github.com/polterguy/phosphorusfive"
+              target:_blank
+            Click me to!:some-item
+              onclick
+                set-widget-property:some-item
+                  innerValue:I was also clicked
+            Sub items
+              items
+                My blog
+                  href:"https://gaiasoul.com"
+                  target:_blank
+                Click me three!
+                  onclick
+                    set-widget-property:x:/../*/_event?value
+                      innerValue:I was also clicked!
+```
+
+The above will result in something like the following
+![alt screenshot](screenshots/screenshot-4.png)
+
+You can combine URL menu items having an **[href]** argument, with other menu items having an **[onclick]** Ajax lambda callback. But you should
+not create menu items that have both of these constructs. All arguments besides from **[onclick]**, **[href]** and **[items]** becomes
+appended into the main anchor widget of your menu item. Above you can see an example of how we added a **[target]** attribute to our widget,
+which makes sure the page the menu item is linking to is opened up in another tab. To override the rendering of specific menu items, you could
+for instance add a **[class]** attribute, which would change the rendering of your anchor element, inside of your "li" widget.
+
+The menu will expand its items upon "hover", but for each item with a sub-menu, it can also explicitly be clicked, which will add an "expanded"
+CSS class to the "ul" element, forcing it to open, also for clients that doesn't handle the hover effect - Such as some tablets and smartphones.
+This implies that it is very friendly for clients running touch-screens and similar constructs.
+
+#### Responsive rendering
+
+If the client has less than 800px in width, the menu will collapse, and render a _"hamburger button"_, allowing you to explicitly expand the entire
+menu. This is useful for small devices, such as smartphones, etc. Below is a screenshot of the same menu we created above, except the client has
+been resized to illustrate how it will look like on smaller devices.
+
+![alt screenshot](screenshots/screenshot-5.png)
+
+The _"hamburger button"_ in the top right corner toggles the expansion of your menu.
 
 ## Performance
 
-Micro really is **microscopic**. Among other things, the total bandwidth usage of the kitchen sink example for its extension widgets
-is **21.5KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load of your page in total. The number
+Micro really is **microscopic**. Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
+ticks in at roughly **25KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in total. The number
 of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their initial
 rendering, and often hundreds of HTTP requests.
 
-In fact, also clicking every single widget on the kitchen sink example, triggering an Ajax callback to the server for each interaction,
-result in no more than **29.5KB** and **15 HTTP requests**. This includes toggling the menu, showing multiple modal windows, switching
-between tab views in the tab widget multiple times, etc.
-
 In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there!
+
+To verify this for yourself, create a new lambda page in System42, set its "template" settings to "empty", and paste in the following code, which will show you the "kitchen sink" example.
+
+```
+sys42.utilities.execute-lambda-file:@MICRO/samples/ext.hl
+```
+
+See the screenshot below, demonstrating how Google Chrome's Network inspector shows you 21KB.
+
+![alt screenshot](screenshots/screenshot-8.png)
+
+In the above page, we have multiple modal widgets, multiple tab widgets, and a fairly complex menu. Still it ticks in at 21KB. Simply displaying the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML and CSS.
 
 To see a video demonstrating some of its features, and the bandwidth consumption differences, you can 
 check out [this YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).
