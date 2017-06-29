@@ -21,129 +21,51 @@ clear-widget:cnt
  */
 create-widget:content-menu
   class:container-fullscreen
-  widgets
-    nav:navbar
-      widgets
-        a
-          href:#
-          role:button
-          innerValue:=
-          onclick
+  events
 
-            /*
-             * Toggling expanded class on main navbar element.
-             */
-            get-widget-property:navbar
-              class
-            if:x:/@get-widget-property/*/*?value
-              =:expanded
-              delete-widget-property:navbar
-                class
-            else
-              set-widget-property:navbar
-                class:expanded
-        ul
+    /*
+     * Helper event to have som visual feedback when menu items are clicked.
+     */
+    micro.samples.show-modal
+      create-widgets
+        micro.widgets.modal:menu-modal
+          class:micro-modal
           widgets
-            li
+            h3
+              innerValue:Menu widget
+            p
+              innerValue:You just clicked a menu item
+            div
+              class:right
               widgets
-                a
-                  role:button
-                  href:#
-                  innerValue:Menu widget
+                button
+                  innerValue:Close
                   onclick
-                    delete-widget-property:navbar
-                      class
-                    create-widgets
-                      micro.widgets.modal:modal-widget-1
-                        class:micro-modal
-                        widgets
-                          h3
-                            innerValue:Menu widget
-                          p
-                            innerValue:You just clicked a link in the menu widget.
-                          div
-                            class:right
-                            widgets
-                              button
-                                innerValue:Close
-                                onclick
-                                  delete-widget:modal-widget-1
-            li
-              widgets
-                a
-                  role:button
-                  href:#
-                  innerValue:DropDown
-                  onclick:"event.stopPropagation();return false;"
-                ul
-                  widgets
-                    li
-                      widgets
-                        a
-                          href:"https://github.com/polterguy/phosphorusfive"
-                          innerValue:Phosphorus Five
-            li
-              widgets
-                a
-                  role:button
-                  href:#
-                  innerValue:DropDown 2
-                  onclick:"event.stopPropagation();return false;"
-                ul
-                  widgets
-                    li
-                      widgets
-                        a
-                          href:"https://gaiasoul.com"
-                          innerValue:GaiaSoul
-                    li
-                      widgets
-                        a
-                          href:#
-                          role:button
-                          innerValue:Nested dropdown
-                          onclick:"event.stopPropagation();return false;"
-                        ul
-                          widgets
-                            li
-                              widgets
-                                a
-                                  href:#
-                                  role:button
-                                  innerValue:Show modal
-                                  onclick
-                                    delete-widget-property:navbar
-                                      class
-                                    p5.web.widgets.ajax-events.raise:show-modal-button
-                                      onclick
-                            li
-                              widgets
-                                a
-                                  href:"https://gaiasoul.com"
-                                  innerValue:GaiaSoul
-                    li
-                      widgets
-                        a
-                          role:button
-                          href:#
-                          innerValue:Show modal
-                          onclick
-                            delete-widget-property:navbar
-                              class
-                            p5.web.widgets.ajax-events.raise:show-modal-button
-                              onclick
-                    li
-                      widgets
-                        hr
-                    li
-                      widgets
-                        a
-                          role:button
-                          href:#
-                          innerValue:Click me!
-                          onclick
-                            set-widget-property:x:/../*/_event?value
-                              innerValue:I was clicked
+                    delete-widget:menu-modal
+
+  widgets
+    micro.widgets.menu
+      items
+        Show modal
+          onclick
+            micro.samples.show-modal
+        Dropdown 1
+          items
+            GitHub for P5
+              href:"https://github.com/polterguy/phosphorusfive"
+              target:_blank
+            Click me!:some-item
+              onclick
+                set-widget-property:some-item
+                  innerValue:I was clicked
+            Sub items
+              items
+                My blog
+                  href:"https://gaiasoul.com"
+                  target:_blank
+                Shows modal
+                  onclick
+                    micro.samples.show-modal
 
 
 /*
