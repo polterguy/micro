@@ -1,0 +1,59 @@
+
+/*
+ * Helper Active Event to toggle CSS class on one or more elements.
+ */
+create-event:micro.css.toggle
+
+  /*
+   * Splitting upon every given CSS class caller wants to toggle.
+   */
+  split:x:/../*/class?value
+    =:,
+    =:" "
+    trim:true
+
+  /*
+   * Retrieving CSS class of specified widget.
+   */
+  get-widget-property:x:/../*/_arg?value
+    class
+
+  /*
+   * Splitting each CSS class already in widget, such that we can figure out if class(es)
+   * caller wants to toggle already exists or not.
+   */
+  split:x:/@get-widget-property/*/*?value
+    =:" "
+
+  /*
+   * Looping through each class supplied.
+   */
+  for-each:x:/../*/split/[0,1]/*/$
+
+    /*
+     * Checking if currently iterated CSS class is in [split] result.
+     */
+    if:x:/@split/*/{0}
+      :x:/@_dp/#?name
+
+      /*
+       * Class exists, deleting it.
+       */
+      set:x:/@split/*/{0}
+        :x:/@_dp/#?name
+
+    else
+
+      /*
+       * Class does NOT exist, adding it.
+       */
+      add:x:/@split
+        src:x:/@_dp/#?name
+
+  /*
+   * Invoking [join] on [split] results, before setting new class value.
+   */
+  join:x:/@split/*?name
+    sep:" "
+  set-widget-property:x:/../*/_arg?value
+    class:x:/@join?value
