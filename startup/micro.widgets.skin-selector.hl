@@ -18,6 +18,7 @@ create-event:micro.widgets.skin-selector
           for:micro-skin-selector
           innerValue:Select skin
         select:micro-skin-selector
+          class:smaller
           widgets
             option
               value:none

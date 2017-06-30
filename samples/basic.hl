@@ -50,7 +50,8 @@ solving all the common problems, which are probably common for most web apps. Fo
 you can override its entire color profile. It doesn't use any fancy (downloadable) fonts, leaving this up to you, etc, etc, etc."
         p
           innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', while being as small as possible, 
-and solves only the common tasks needed for all web apps."
+and solves only the common tasks needed for all web apps.To see how they work in combination with your favourite skin, feel free to select 
+a skin from the select dropdown box below."
     div
       class:col-100
       widgets
@@ -68,17 +69,17 @@ create-widget
       class:col
       widgets
         h1
-          innerValue:H1 header for something
+          innerValue:H1 header
         h2
-          innerValue:H2 header for something
+          innerValue:H2 header
         h3
-          innerValue:H3 header for something
+          innerValue:H3 header
         h4
-          innerValue:H4 header for something
+          innerValue:H4 header
         h5
-          innerValue:H5 header for something
+          innerValue:H5 header
         h6
-          innerValue:H6 header for something
+          innerValue:H6 header
         p
           innerValue:This is some arbitrary piece of text in a paragraph
         p
@@ -111,8 +112,7 @@ create-widget
         pre
           innerValue:@"This is
      some preformatted
- text
-Notice, text is aligned with the rest of the text on page"
+ text"
 
 
 /*
@@ -441,8 +441,6 @@ create-widget
           innerValue:OK
         button
           innerValue:Cancel
-        button
-          innerValue:X
     div
       class:col-100
       widgets
