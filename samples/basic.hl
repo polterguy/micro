@@ -336,6 +336,7 @@ create-widget
           element:textarea
           class:wider
           placeholder:Wider ...
+          innerValue:This textarea has a value, and is wider
     div
       class:col-100
       widgets

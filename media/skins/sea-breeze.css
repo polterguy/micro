@@ -135,7 +135,7 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 
 @media screen and (min-width:800px) {
     button {
-        padding: 9px 45px 8px 45px;
+        padding: 9px 25px 8px 25px;
     }
 }
 
