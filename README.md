@@ -178,9 +178,9 @@ create-widgets
     class:micro-modal
     widgets
       h3
-        innerValue:Menu widget
+        innerValue:Modal widget
       p
-        innerValue:You just clicked a link in the menu widget.
+        innerValue:Mr. Livingston I presume ...?
       div
         class:right
         widgets
@@ -307,6 +307,9 @@ for instance add a **[class]** attribute, which would change the rendering of yo
 The menu will expand its items upon "hover", but for each item with a sub-menu, it can also explicitly be clicked, which will add an "expanded"
 CSS class to the "ul" element, forcing it to open, also for clients that doesn't handle the hover effect - Such as some tablets and smartphones.
 This implies that it is very friendly for clients running touch-screens and similar constructs.
+
+To create a separator, add a **[.separator]** menu item, with no value, and no children. This will render as an "hr" HTML element, and allow you 
+to separate your individual menu items.
 
 #### Responsive rendering
 

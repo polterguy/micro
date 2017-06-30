@@ -183,15 +183,13 @@ create-widget
         h3
           innerValue:Buttons
         p
-          innerValue:There exists 2 basic buttons in Micro, the default button, and the 'hollow' button. Below is an example of both.
+          innerValue:@"This is the styling of a button. Like all elements and widgets, the color profile can easily be overridden by simply changing
+a couple of CSS variables."
     div
       class:col-100
       widgets
         button
           innerValue:Default
-        button
-          innerValue:Hollow
-          class:hollow
 
 
 /*
@@ -469,11 +467,7 @@ create-widget
               for:input-1
               innerValue:$
             input:input-1
-              type:number
-              min:5
-              max:25
-              value:7
-              placeholder:Number input ...
+              placeholder:Foo input ...
               class:smaller
     div
       class:col-100

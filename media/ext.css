@@ -1,39 +1,197 @@
 /* Extension widgets for Micro */
 
 /* Effects */
-@keyframes micro-fade{from{opacity:0;}to{opacity:1;}}
-@keyframes micro-drop{from{margin-top:-1000px;opacity:.1;}to{margin-top:2rem;opacity:1;}}
+@keyframes micro-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes micro-drop {
+    from {
+        margin-top: -1000px;
+        opacity: .1;
+    }
+
+    to {
+        margin-top: 2rem;
+        opacity: 1;
+    }
+}
 
 /* Micro modal widget */
-.micro-modal{display:block !important;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1000;animation-name:micro-fade;animation-duration:.5s;animation-fill-mode:forwards;}
-.micro-modal .micro-modal-content{width:90%;margin-left:auto;margin-right:auto;background:#fff;border-radius:5px;padding:1rem 2rem 0 2rem;overflow:auto;animation-name:micro-drop;animation-duration:.5s;animation-fill-mode:forwards;}
-@media screen and (min-width:800px){.micro-modal .micro-drop{width:800px;}}
+.micro-modal {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    z-index: 1000;
+    animation-name: micro-fade;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+.micro-modal .micro-modal-content {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    border-radius: 5px;
+    padding: 1rem 2rem 0 2rem;
+    overflow: auto;
+    animation-name: micro-drop;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+@media screen and (min-width:800px) {
+    .micro-modal .micro-drop {
+        width: 800px;
+    }
+}
 
 /* Micro tab widget */
-.micro-tab .micro-tab-buttons button{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
-.micro-tab-active{background:var(--hover-color)}
-.micro-tab .micro-tab-views{border-top:solid 1px var(--txt-color);padding-top:1rem;}
-.micro-tab-border .micro-tab-views{border:solid 1px var(--txt-color);border-radius:0 5px 0 0;padding:1rem 1rem 0 1rem;}
+.micro-tab .micro-tab-buttons button {
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+}
+
+.micro-tab-active {
+    background: var(--wid-darker-col);
+}
+
+.micro-tab .micro-tab-views {
+    border-top: solid 1px var(--wid-border-col);
+    padding-top: 1rem;
+}
+
+.micro-tab-border .micro-tab-views {
+    border: solid 1px var(--wid-border-col);
+    border-radius: 0 var(--border-radius) 0 0;
+    padding: 1rem 1rem 0 1rem;
+}
 
 /* Navbar */
-nav{background:var(--txt-color);color:var(--inverted-color);font-size:1.5rem;min-height:4rem;}
-nav:after{content:'';display:table;clear:both;}
-nav a{color:inherit;padding:1rem 1rem 1rem 25px;display:block;white-space:nowrap;outline:none;}
-nav>a{position:absolute;top:0;right:0;min-width:70px;text-align:center;}
-nav a:focus,nav a:active{color:inherit;background:inherit;}
-nav a:hover{color:inherit;background:var(--hover-color);}
-nav ul{list-style-type:none;margin:0;}
-nav>ul{display:none;}
-nav ul li{float:left;display:block;position:relative;}
-nav ul li ul{background:var(--txt-color);position:absolute;z-index:1;display:none;box-shadow:0 8px 16px 0px rgba(0,0,0,0.5);min-width:200px;}
-nav ul li>ul.expanded,nav ul li:hover>ul{display:block;animation-name:micro-fade;animation-duration:.2s;animation-fill-mode:forwards;}
-nav>ul>li>ul>li>ul{left:100%;top:0;margin-left:-5px;}
-nav ul li>ul li{width:100%;}
-nav ul li>ul hr{width:80%;border:solid 1px rgba(0,0,0,.1);margin:0 auto;}
-@media screen and (min-width:800px){nav>a{display:none;}nav>ul{display:block;}}
-nav.expanded>ul{display:block;}
-nav.expanded>ul>li:first-child{margin-top:61px;}
-nav.expanded>ul li{width:100%;}
-nav.expanded>ul li ul{display:block;position:relative;margin-left:25px;}
-nav.expanded>ul>li>ul>li>ul{left:0;}
-nav.expanded hr{display:none;}
+nav {
+    background: var(--wid-dark-col);
+    font-size: 1.5rem;
+}
+
+nav:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+nav a {
+    color: var(--wid-light-col);
+    padding: 1rem 1rem 1rem 25px;
+    display: block;
+    white-space: nowrap;
+    outline: none;
+}
+
+nav > a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 70px;
+    text-align: center;
+}
+
+nav a:focus, nav a:active, nav a:hover {
+    color: var(--wid-light-col);
+    background: var(--wid-darker-col);
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+}
+
+nav > ul {
+    display: none;
+}
+
+nav ul li {
+    float: left;
+    display: block;
+    position: relative;
+}
+
+nav ul li ul {
+    background: var(--wid-dark-col);
+    position: absolute;
+    z-index: 1;
+    display: none;
+    box-shadow: 0 8px 16px 0px rgba(0,0,0,0.3);
+    min-width: 200px;
+}
+
+nav > ul > li > ul > li > ul {
+    left: 100%;
+    top: 0;
+    margin-left: -5px;
+}
+
+nav ul li > ul li {
+    width: 100%;
+}
+
+nav ul li > ul hr {
+    width: 80%;
+    border: solid 1px rgba(0,0,0,.1);
+    margin: 0 auto;
+}
+
+@media screen and (min-width:800px) {
+    nav > a {
+        display: none;
+    }
+
+    nav > ul {
+        display: block;
+    }
+
+    nav ul li > ul.expanded, nav ul li:hover > ul {
+        display: block;
+        animation-name: micro-fade;
+        animation-duration: .2s;
+        animation-fill-mode: forwards;
+    }
+}
+
+nav.expanded > ul {
+    display: block;
+}
+
+nav.expanded > ul > li:first-child {
+    margin-top: 61px;
+}
+
+nav.expanded > ul li {
+    width: 100%;
+}
+
+nav.expanded > ul li ul {
+    display: block;
+    position: relative;
+    margin-left: 25px;
+}
+
+nav.expanded > ul > li > ul > li > ul {
+    left: 0;
+}
+
+nav.expanded hr {
+    display: none;
+}

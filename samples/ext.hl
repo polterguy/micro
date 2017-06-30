@@ -56,6 +56,7 @@ create-widget:content-menu
             GitHub for P5
               href:"https://github.com/polterguy/phosphorusfive"
               target:_blank
+            .separator
             Click me!:some-item
               onclick
                 set-widget-property:some-item

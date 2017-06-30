@@ -75,6 +75,16 @@ create-event:micro.widgets.menu._create-items
    * Looping through each child of specified [items] collection, and adding to return below.
    */
   for-each:x:/../*/_arg/#/*
+
+    /*
+     * Special treatment for [.separator]
+     */
+    if:x:/@_dp/#?name
+      =:.separator
+      add:x:/../*/return/*/ul/*/widgets
+        src:"hr"
+      continue
+
     eval-x:x:/+/**
     add:x:/../*/return/*/ul/*/widgets
       src
