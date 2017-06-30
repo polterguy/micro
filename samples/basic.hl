@@ -221,11 +221,12 @@ create-widget
         input
           class:wider
           placeholder:Wider text input ...
+          value:This is a value
     div
       class:col-100
       widgets
         input
-          placeholder:Default text input ...
+          placeholder:This is placeholder ...
     div
       class:col-100
       widgets

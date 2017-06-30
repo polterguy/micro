@@ -1,6 +1,6 @@
 
 
-/* Purple haze skin, uses purple as base color, and Roboto font from Google */
+/* Sea breeze skin, uses light turquoise as base color, and Roboto font from Google */
 
 /* Roboto fonts for all languages */
 @font-face{font-family: 'Roboto';font-style: normal;font-weight: 300;src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v16/0eC6fl06luXEYWpBSJvXCIX0hVgzZQUfRDuZrPvH3D8.woff2) format('woff2');unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;}
@@ -36,15 +36,15 @@ body {
     font-family: 'Roboto';
     font-size: .95rem;
     --txt-col: #777;
-    --placeholder-col: rgba(0,0,0,.3);
-    --wid-dark-col: linear-gradient(#e9e, #d8d);
-    --wid-darker-col: linear-gradient(#d7d, #c6c);
+    --placeholder-col: rgba(0,0,0,.15);
+    --wid-dark-col: linear-gradient(#63e6ff, #53d6f5);
+    --wid-darker-col: linear-gradient(#53d6fa, #43c6ea);
     --wid-border-col: rgba(0,0,0,.05);
-    --wid-light-col: linear-gradient(#e9e, #faf);
-    --wid-lighter-col: linear-gradient(#d8d, #e9e);
-    --wid-txt-col: #fefefe;
-    --form-txt-col: #fff;
-    --border-radius: 25px;
+    --wid-light-col: linear-gradient(#b3efff, #d3f5ff);
+    --wid-lighter-col: linear-gradient(#d3f5ff, #e7fdff);
+    --wid-txt-col: #dee0fe;
+    --form-txt-col: #777;
+    --border-radius: 7px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 pre {
-    border-left: var(--border-radius) solid #eaaaea;
+    background:var(--wid-lighter-col);
 }
 
 blockquote {
@@ -76,7 +76,7 @@ label {
 }
 
 a {
-    color:#aaf;
+    color:#77f;
 }
 
 button, input, select, .strip label, strip span {
@@ -100,12 +100,23 @@ nav a {
     padding:1.1rem 1.1rem 1.1rem 25px;
 }
 
+nav ul li > ul hr {
+    border-color:rgba(0,0,0,.01);
+    width:100%;
+}
+
 nav a:hover, nav a:active, nav a:focus {
     background:var(--wid-light-col);
 }
 
 nav ul li ul{
-    background:linear-gradient(#feeefe, #f9e9f9);
+    background:var(--wid-light-col);
+    box-shadow:none;
+    border:solid 1px rgba(0,0,0,.05);
+}
+
+nav>ul>li>ul{
+    border-top:none;
 }
 
 /* Form elements */
@@ -126,21 +137,6 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     button {
         padding: 9px 45px 8px 45px;
     }
-}
-
-button:hover, button:active, button:focus {
-    box-shadow: 3px 3px 5px rgba(0,0,0,.2);
-    transition: box-shadow .2s;
-}
-
-input:hover, input:active, input:focus,
-select:hover, select:active, select:focus,
-textarea:hover, textarea:active, textarea:focus {
-    box-shadow: 3px 3px 5px rgba(0,0,0,.2);
-}
-
-input, select, textarea {
-    transition:background-color .2s, box-shadow .2s;
 }
 
 input[type=checkbox], input[type=radio] {
@@ -174,7 +170,7 @@ input[type=radio]:checked:after {
 }
 
 .emphasized {
-    background: linear-gradient(#fcfcff, #f5f5ff);
+    background: var(--wid-lighter-col);
 }
 
 .gray {
@@ -185,7 +181,7 @@ input[type=radio]:checked:after {
 
 .micro-modal .micro-modal-content,
 .micro-tab-border .micro-tab-views {
-    background: linear-gradient(#fef7fe, #faf5fa);
+    background: var(--wid-lighter-col);
 }
 
 .micro-tab-border .micro-tab-buttons {

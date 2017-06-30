@@ -82,7 +82,9 @@ create-event:micro.widgets.menu._create-items
     if:x:/@_dp/#?name
       =:.separator
       add:x:/../*/return/*/ul/*/widgets
-        src:"hr"
+        src
+          li
+            innerValue:"<hr />"
       continue
 
     eval-x:x:/+/**
