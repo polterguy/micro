@@ -1,0 +1,124 @@
+
+
+/* Emotional skin, uses grey as base color, and Indi Flower font from Google */
+
+/* Indie Flower fonts for all languages */
+/* latin */
+@font-face{font-family: 'Indie Flower';font-style: normal;font-weight: 400;src: local('Indie Flower'), local('IndieFlower'), url(https://fonts.gstatic.com/s/indieflower/v8/10JVD_humAd5zP2yrFqw6hampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;}
+
+body {
+    font-family: 'Indie Flower';
+    --txt-col: #777;
+    --placeholder-col: rgba(0,0,0,.25);
+    --wid-dark-col: linear-gradient(#fafafa, #f0f0f0);
+    --wid-darker-col: linear-gradient(#ffffff, #fafafa);
+    --wid-border-col: rgba(0,0,0,.05);
+    --wid-light-col: linear-gradient(#ffffff, #fafafa);
+    --wid-lighter-col: linear-gradient(#ffffff, #fdfdfd);
+    --wid-txt-col: #dee0fe;
+    --form-txt-col: #777;
+    --border-radius: 25px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight:300;
+}
+
+pre {
+    background:var(--wid-lighter-col);
+}
+
+table th {
+    background:none;
+}
+
+table tr:hover td {
+    background: none;
+}
+
+label {
+    padding-top:3px;
+}
+
+a {
+    color:#77f;
+}
+
+nav {
+    background:var(--wid-lighter-col);
+}
+
+nav>ul>li>a {
+    color:var(--form-txt-col);
+}
+
+nav ul li > ul hr {
+    border-color:rgba(0,0,0,.01);
+    width:100%;
+}
+
+nav a:hover, nav a:active, nav a:focus {
+    background:var(--wid-light-col);
+}
+
+nav>ul>li>ul{
+    border-top:none;
+}
+
+/* Form elements */
+
+button {
+    color:var(--txt-col);
+}
+
+@media screen and (min-width:800px) {
+    button {
+        padding: 9px 25px 8px 25px;
+    }
+}
+
+input[type=checkbox]:checked:after {
+    color: var(--txt-col);
+}
+
+input[type=radio]:checked:after {
+}
+
+input[type=radio]:checked:after {
+    background: var(--txt-col);
+}
+
+/* Misc. classes */
+
+.success {
+    background: linear-gradient(#efe, #dfd);
+}
+
+.warning {
+    background: linear-gradient(#fee, #fdd);
+}
+
+.emphasized {
+    background: var(--wid-lighter-col);
+}
+
+.gray {
+    background: linear-gradient(#fafafa, #f2f2f2);
+}
+
+/* Extension widgets */
+
+.micro-modal .micro-modal-content,
+.micro-tab-border .micro-tab-views {
+    background: var(--wid-lighter-col);
+}
+
+.micro-tab-border .micro-tab-buttons {
+    padding-left:7px;
+}
+
+.micro-tab-border .micro-tab-views {
+    padding:2rem 2rem 1rem 2rem;
+    border-radius:5px;
+}
+
