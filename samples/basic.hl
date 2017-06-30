@@ -22,6 +22,11 @@ if
   delete-widget:content
 create-container-widget:content
   class:container
+  widgets
+    a
+      href:/
+      innerValue:Home
+      style:"position:absolute;right:15px;"
 
 
 /*
@@ -32,7 +37,7 @@ create-widget
   class:row
   widgets
     div
-      class:col
+      class:col-100
       widgets
         h1
           innerValue:Micro
@@ -44,8 +49,12 @@ Below are examples of Micro in usage."
 solving all the common problems, which are probably common for most web apps. For instance, by modifying a handful of simple CSS variables,
 you can override its entire color profile. It doesn't use any fancy (downloadable) fonts, leaving this up to you, etc, etc, etc."
         p
-          innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', be as small as possible, 
+          innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', while being as small as possible, 
 and solves only the common tasks needed for all web apps."
+    div
+      class:col-100
+      widgets
+        micro.widgets.skin-selector
 
 
 /*

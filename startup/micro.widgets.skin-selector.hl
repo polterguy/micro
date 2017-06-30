@@ -1,0 +1,96 @@
+
+/*
+ * Creates the skin selector extension widget.
+ *
+ * This widget allows you to automatically select a Micro skin, by selecting any of the installed
+ * skins from a select dropdown box.
+ */
+create-event:micro.widgets.skin-selector
+
+  /*
+   * Returning widget to caller.
+   */
+  return
+    div
+      class:strip
+      widgets
+        label
+          for:micro-skin-selector
+          innerValue:Select skin
+        select:micro-skin-selector
+          widgets
+            option
+              value:none
+              innerValue:Select skin ...
+          onchange
+
+            /*
+             * Making sure we retrieve page URL.
+             */
+            p5.web.get-location-url
+
+            /*
+             * Retrieving value of select drop down, and checking if a skin was selected.
+             */
+            get-widget-property:micro-skin-selector
+              value
+            if:x:/@get-widget-property/*/*?value
+              =:none
+
+              /*
+               * No skin was selected, reloading the same URL without any skin GET parameter.
+               */
+              p5.web.set-location:x:/@p5.web.get-location-url?value
+
+            else
+
+              /*
+               * Some skin was selected, making sure we append an HTTP GET parameter that will be 
+               * fetched during [oninit] of next roundtrip, before we reload the same URL.
+               */
+              p5.html.url-encode:x:/@get-widget-property/*/*?value
+              p5.web.set-location:{0}?skin={1}
+                :x:/@p5.web.get-location-url?value
+                :x:/@p5.html.url-encode?value
+
+          oninit
+
+            /*
+             * Checking if a skin was selected, and if so, automatically include its CSS file.
+             * Afterwards we populate the select drop down combobox with all available skins.
+             */
+            p5.web.query.get:skin
+            if:x:/@p5.web.query.get/*?value
+
+              /*
+               * Including the specified skin.
+               */
+              p5.web.include-css-file:/micro/media/skins/{0}
+                :x:/@p5.web.query.get/*?value
+
+            /*
+             * Listing all available skin files, and creating an "option" element for each.
+             */
+            list-files:/micro/media/skins/
+              filter:.css
+            for-each:x:/@list-files/*?name
+              split:x:/@_dp?value
+                =:/
+
+              /*
+               * Checking if currently iterated item was the selected CSS file.
+               */
+              if:x:/@p5.web.query.get/*?value
+                =:x:/@split/0/-?name
+                add:x:/..for-each/*/create-widget
+                  src
+                    selected
+
+              /*
+               * Creating our "option" element.
+               */
+              create-widget
+                parent:micro-skin-selector
+                element:option
+                innerValue:x:/@split/0/-?name
+                value:x:/@split/0/-?name
