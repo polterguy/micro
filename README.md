@@ -321,9 +321,27 @@ been resized to illustrate how it will look like on smaller devices.
 
 The _"hamburger button"_ in the top right corner toggles the expansion of your menu.
 
+## Helper Active Events
+
+In addition to the above widgets, there exists some helper Active Events in Micro.
+
+* __[micro.css.toggle]__ - Toggles a CSS class for one or more specified widgets
+* __[micro.page.set-focus]__ - Sets focus to a specific widget on your page
+
+There is also one helper extension widget, which might be useful for you, when trying different skins on your page. This event
+is called **[micro.widgets.skin-selector]**, and allows you to play around with skins on your page, by creating a select dropdown box,
+which will automatically traverse all your skins, and allow you to select one of these, which will be automatically injected into your
+page.
+
+Notice, if you use the **[micro.widgets.skin-selector]** widget, you should not manually include any of the skin files yourself.
+
+Micro will also during startup check to see if System42's CMS is installed, and if so, create two example p5.page objects, which gives
+you a demonstration of its capabilities. One page for the normal typography stuff and the grid system, and another page for the rich widgets, 
+such as the modal widget, menu widget, tab widget, etc.
+
 ## Performance
 
-Micro really is **microscopic**. Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
+Micro is truly **microscopic**! Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
 ticks in at roughly **25KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in total. The number
 of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their initial
 rendering, and often hundreds of HTTP requests.

@@ -1,0 +1,17 @@
+
+/*
+ * File responsible for initializing Micro.
+ *
+ * Loops through each folder in the current folder, and evaluates all Hyperlambda files, 
+ * inside of each folder in the current directory.
+ */
+
+
+/*
+ * Evaluates all Hyperlambda files in all folders inside of the current folder.
+ */
+list-folders:@MICRO/startup/
+list-files:x:/@list-folders/*?name
+  filter:.hl
+load-file:x:/@list-files/*?name
+eval:x:/@load-file/*
