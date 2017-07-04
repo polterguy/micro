@@ -90,6 +90,7 @@ label {
     display: block;
     float: left;
     user-select: none;
+    font-weight:bold;
 }
 
 pre {
@@ -120,6 +121,11 @@ ul, ol {
     margin-left: 2.5rem;
 }
 
+hr {
+    margin:0 1rem 1rem 1rem;
+    border-color:rgba(0,0,0,.1);
+}
+
 /* Form elements, first general things */
 ::-webkit-input-placeholder {
     color: var(--placeholder-col);
@@ -136,6 +142,7 @@ ul, ol {
 button, input, select, .strip label, strip span {
     height: 42px;
     color: var(--form-txt-col);
+    font-weight:normal;
 }
 
 /* Then buttons */
@@ -221,6 +228,10 @@ input[type=radio] {
 }
 
 /* Strips of form elements */
+.strip {
+    overflow:auto;
+}
+
 .strip button, .strip input, .strip select {
     border-radius: 0;
     border-left-style: none;
@@ -278,6 +289,19 @@ input[type=radio] {
 *.fill {
     display: table-cell;
     width: 100%;
+}
+
+div.fill {
+    display:flex;
+}
+
+div.fill>label {
+    white-space:nowrap;
+}
+
+div.fill>input[type=text]:last-child, div.fill>select:last-child {
+    margin-right:0;
+    width:100%;
 }
 
 /* Tables */
@@ -480,7 +504,7 @@ table tr:hover td {
 .success, .warning, .emphasized {
     padding: 15px 15px 0 15px;
     border-radius: var(--border-radius);
-    margin: 0 -15px 15px -15px;
+    margin-bottom:1rem;
 }
 
 .success {
@@ -497,6 +521,7 @@ table tr:hover td {
 
 .bg {
     background: #fafafa;
+    margin-bottom: 1rem;
 }
 
 .right {
@@ -510,4 +535,17 @@ table tr:hover td {
 .air {
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+.inner-air {
+    padding:1rem 1rem 0 1rem;
+}
+
+.rounded {
+    border-radius:var(--border-radius);
+}
+
+.shaded {
+    box-shadow: 2px 2px 5px rgba(0,0,0,.2);
+    margin-bottom: 1rem;
 }

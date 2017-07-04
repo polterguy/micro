@@ -606,6 +606,25 @@ together in a strip."
               innerValue:Option 2
         button
           innerValue:!
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:@"You can also combine 'strip' with 'fill', and have the elements fill the available width.
+If you do, you'll need to add both 'strip' and 'fill' on a parent div element, at which point you don.t need to add 'fill' on the 
+text input element."
+    div
+      class:col-100
+      widgets
+        div
+          class:strip fill
+          widgets
+            label
+              for:txt-foo
+              innerValue:Some label
+            input:txt-foo
+              type:text
+              placeholder:Fills remaining width ...
 
 
 /*
@@ -687,9 +706,7 @@ create-widget
       widgets
         p
           innerValue:@"This column has the 'emphasized' class added to it, which can be used to signify something important.
-Notice, all of these classes will move your column 1em outwards from the center of your screen, such that the text content is still nicely aligned
-with the other content on your page. It also creates a border-radius around your column.
-These classes don't mix well with other content, unless you use the 'col-100' class, such that they take up the entire available width."
+Notice, all of these classes will create a border-radius around your column."
         p
           innerValue:@"Inside of this column, we also have a button, which is right-aligned, by using the 'right' class on the parent element."
         div
