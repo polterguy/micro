@@ -714,7 +714,7 @@ These classes don't mix well with other content, unless you use the 'col-100' cl
  * Fullscreen container
  */
 create-container-widget:content-fullscreen
-  class:container-fullscreen prepend-top gray
+  class:container-fullscreen bg
   widgets
     div
       class:row
@@ -724,7 +724,7 @@ create-container-widget:content-fullscreen
           innerValue:@"
 <h3 class=""center"">Fullscreen containers</h3>
 <p>This is a fullscreen container. You can add as many containers as you wish onto your page.</p>
-<p>This container also has the 'grey' class associated with it. The header has the 'center' class. And the columns themselves has the 'air' class
+<p>This container also has the 'bg' class associated with it. The header has the 'center' class. And the columns themselves has the 'air' class
 associated with them, to create some margin between the borders of the container, and its columns.</p>
 <p>Below you can find all the explicitly sized grid column classes, for your reference.</p>"
 
@@ -881,7 +881,7 @@ create-widget
       widgets
         h3
           class:center
-          innerValue:Floating cols.
+          innerValue:Floating columns
         p
           innerValue:Below is an example of using the undefined columns together.
 create-widget
@@ -987,3 +987,51 @@ create-widget
     div
       class:col-100 air
       innerValue:@"<p>Etc ...</p>"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
+    div
+      class:col-100 air prepend-top
+      widgets
+        h3
+          class:center
+          innerValue:Nested rows
+        p
+          innerValue:Below is an example of nesting rows inside of columns.
+    div
+      class:col air
+      widgets
+        div
+          class:row
+          widgets
+            p
+              class:col-33
+              innerValue:Nested col 1 - 33%
+              style:"background:#f0d0d0;"
+            p
+              class:col-67
+              innerValue:Nested col 2 - 67%
+              style:"background:#d0f0d0;"
+    div
+      class:col air
+      widgets
+        div
+          class:row
+          widgets
+            p
+              class:col
+              innerValue:Nested col 3 - 'col'
+              style:"background:#d0d0f0;"
+            p
+              class:col
+              innerValue:Nested col 4 - 'col'
+              style:"background:#f0d0f0;"
+    p
+      class:col-100 air
+      innerValue:@"Notice, when you nest columns, your inner columns cannot have the 'air' class associated with them, since this will wrap
+your columns unto the next row, and not nicely align them with each other."
+    p
+      class:col-100 air
+      innerValue:@"Notice also that what the 'bg' class does, is dependent upon your skin of choice. Without any skins, it becomes
+simply gray. With a skin, it usually either becomes some repeating pattern, or some linear-gradient color."

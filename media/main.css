@@ -32,6 +32,7 @@ html {
 .container-fullscreen {
     width: 100%;
     position: relative;
+    margin-top: 0;
 }
 
 /* Grid system, based upon flexbox */
@@ -494,7 +495,7 @@ table tr:hover td {
     background: #fafafe;
 }
 
-.gray {
+.bg {
     background: #fafafa;
 }
 
