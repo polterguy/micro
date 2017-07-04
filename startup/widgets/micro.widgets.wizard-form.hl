@@ -2,8 +2,8 @@
 /*
  * Creates the wizard form extension widget.
  *
- * This extension widget allows you to create a form declaratively, by simply adding a collection of
- * types of widgets, and decorate some of their properties according to which widgets you'd like to create.
+ * This extension widget allows you to create 'form-widgets' declaratively, by simply adding a collection of
+ * types of widgets, and decorate some of their properties according to what widgets you'd like to create.
  *
  * Supported arguments are as follows.
  *
@@ -15,7 +15,7 @@
  * - [radio-group] - Creates a group of radio buttons
  *
  * The [select] and [radio-group] widgets, requires an [options] collection, being the options the user can legally select.
- * The [options] arguments is a name/value collection, where the name becomes the displayed string, and the value becomes the valuf for
+ * The [options] arguments is a name/value collection, where the name becomes the displayed string, and the value becomes the value for
  * the selected option. All arguments beneath an [option] argument, becomes appended automatically into the specific option element, allowing
  * you to add up for instance a [checked] or [selected] argument, to a specific option, to make sure it is by default selected.
  *
@@ -24,6 +24,14 @@
  *
  * You can serialize the form manually if you wish, but you can also use the [micro.form.serialize] event to retrieve all values of
  * a specific form in your page.
+ *
+ * Notice, when used in combination with [micro.form.serialize], you can add a [.data-field] to most widgets, to avoid using the widget ID
+ * as a data-field name, for cases when you have multiple form widgets with unpredictable names on your form.
+ * If you do, you need to add a [.data-value] for every [radio-group] option element. The [.data-field] will be what is returned for the specific
+ * widget during invocation of [micro.form.serialize].
+ *
+ * You don't need to add a [.data-value] for your select widget's option elements, since these values will be taken from the option element's value,
+ * and not its ID, which anyways can have multiple similar values globally on your form.
  */
 create-event:micro.widgets.wizard-form
 
@@ -118,8 +126,19 @@ create-event:micro.widgets.wizard-form
         /*
          * Radio group widgets.
          */
+        if:x:/@_dp/#?value
+          not
+          set:x:/@_dp/#?value
+            p5.types.guid.new
+        for-each:x:/@_dp/#/*/options/*
+          if:x:/@_dp/#?value
+            not
+            set:x:/@_dp/#?value
+              p5.types.guid.new
         .exe
           return:x:/@_dn/#/*
+        add:x:/@_dp/#/*/options/*
+          src:x:/@_dp/#/*/\.data-field
         add:x:/+/**/{input}
           src:"name:{0}"
             :x:/@_dp/#?value
@@ -141,6 +160,10 @@ create-event:micro.widgets.wizard-form
         /*
          * Checkbox widget.
          */
+        if:x:/@_dp/#?value
+          not
+          set:x:/@_dp/#?value
+            p5.types.guid.new
         eval-x:x:/+2/**
         add:x:/+/**/input
           src:x:/@_dp/#/*(!/info)
@@ -155,15 +178,19 @@ create-event:micro.widgets.wizard-form
       case:br
 
         /*
-         * Carriage return.
+         * Carriage return, slightly special.
          */
-        eval-x:x:/+2/**
-        add:x:/+/**/br
+        if:x:/@_dp/#/*/style
+          not
+          // Defaulting some sane style, to make sure we create a hard break.
+          add:x:/./+2/*/*
+            src
+              style:"clear:both;"
+        add:x:/+/*/*
           src:x:/@_dp/#/*
         add:x:/../*/return/*/container/*/widgets
           src
             br
-              style:"clear:both;"
 
       default
 

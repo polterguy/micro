@@ -235,8 +235,6 @@ of data you want to collect, and leave the creation of the actual widgets up to 
 <li><strong>[checkbox]</strong> - Checkbox widget - Expects [info] argument</li>
 <li><strong>[radio-group]</strong> - Grouped radio buttons</li>"
         p
-          innerValue:@""
-        p
           innerValue:@"All other arguments will be appended as is, allowing you to create for instance additional button widgets and such,
 making it possible to clear the form, create spacing, horizontal rulers, collect the user's data, etc. In addition, each form can take
 an optional <strong>[class]</strong> argument, signifying which root class to use for the form. The form below has the 
@@ -250,41 +248,46 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
       widgets
         micro.widgets.wizard-form:my-form
           class:bg inner-air rounded shaded
-          text:txt
+          text:text-widget
             info:Some text widget
           label
-            for:multline-txt
+            for:textarea-widget
             innerValue:Some textarea
-          textarea:multline-txt
+          textarea:textarea-widget
             info:Some multiline text ...
-          hr
-          select:option
+          checkbox:checkbox-widget-1
+            info:Some checked checkbox
+            checked
+          br
+          checkbox:checkbox-widget-2
+            info:Another checkbox
+          select:select-widget
             info:Some select widget
             options
               Option 1:option-1
               Option 2:option-2
-          checkbox:chk1
-            info:Some checked checkbox
-            checked
-          br
-          checkbox:chk2
-            info:Another checkbox
-          text:txt2
-            info:Another text widget
-            value:Its value
-          radio-group:radio-group
+          radio-group:radio-buttons-group
             options
-              Radio 1:rdo-1
-              Radio 2:rdo-2
+              Radio 1:radio-widget-1
+              Radio 2:radio-widget-2
                 checked
-              Radio 3:rdo-3
+              Radio 3:radio-widget-3
+          input:hidden-value
+            type:hidden
+            value:Hidden value!
           br
+          p
+            innerValue:"This is a 'wizard form', which allows you to easily declare a form input type of widget."
           div
             class:right
             widgets
               button
                 innerValue:OK
                 onclick
+
+                  /*
+                   * Displaying results in a modal widget.
+                   */
                   micro.form.serialize:my-form
                   lambda2hyper:x:/-/*
                   eval-x:x:/+/**/pre/*/innerValue
@@ -316,8 +319,3 @@ and the form will automatically pop out and fill the whole viewport."
         p
           innerValue:@"Most of the widgets in the form requires an <strong>[info]</strong> argument, which will be used as a label, title, etc - Depending
 upon the type of widget you create."
-        p
-          innerValue:@"All other arguments becomes properties of the main input element for your widget."
-        p
-          innerValue:@"The <strong>[select]</strong> and <strong>[radio-group]</strong> widgets requires an <strong>[option]</strong> collection, which
-is a key/value collection where the name of the node becomes the friendly displayed name, and the value becomes the value for the option element."
