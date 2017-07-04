@@ -134,12 +134,9 @@ create-widget
                   p
                     innerValue:@"Notice, there is no custom JavaScript for the modal widget in Micro.
 By intelligently combining CSS with the Managed Ajax parts of P5, we're able to get away with creating a modal widget, 
-without adding any overhead to our page at all."
-                  p
-                    innerValue:@"Which is in stark contrast to Bootstrap, that requires jQuery and hundreds
-of kilobytes of custom JavaScript and CSS to display a simple modal window."
-                  p
-                    innerValue:@"You can put any other widgets you wish into the modal widget in Micro."
+without adding any overhead to our page at all. Which is in stark contrast to Bootstrap, that requires jQuery and hundreds
+of kilobytes of custom JavaScript and CSS to display a simple modal window. You can put any widget you wish into the modal widget in Micro.
+Here we have added a button that simply closes our modal widget."
                   div
                     class:right
                     widgets
@@ -204,10 +201,123 @@ Below is an example of a button."
             widgets
               p
                 innerValue:@"This tab widget has the 'micro-tab-border' CSS class added to it, which makes it have a border, 
-making it more easily seen as a single component on your page."
+making it more easily seen as a single component on your page. In addition, some of the skins in Micro, might choose to further
+add design elements to the 'micro-tab-border' class, making it pop out."
           view
             name:#2
             widgets
               p
                 innerValue:@"This makes your tab widget look more similar to traditional tabs, but also unfortunately aligns its
 content not in accordance with the rest of the content on your page. Which you prefer, is probably a matter of taste."
+
+
+
+/*
+ * Wizard form widget example.
+ */
+create-widget
+  parent:content
+  class:row prepend-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Wizard form widget
+        p
+          innerValue:@"A wizard form widget allows you to easily create rich forms declaratively, by simply supplying the type
+of data you want to collect, and leave the creation of the actual widgets up to the wizard form Active Event. Supported widgets are as follows."
+        ul
+          innerValue:@"
+<li><strong>[text]</strong> - Single line text input - Expects [info] argument</li>
+<li><strong>[textarea]</strong> - Multiline text input - Expects [info] argument</li>
+<li><strong>[select]</strong> - Select dropdown list - Expects [info] argument</li>
+<li><strong>[checkbox]</strong> - Checkbox widget - Expects [info] argument</li>
+<li><strong>[radio-group]</strong> - Grouped radio buttons</li>"
+        p
+          innerValue:@""
+        p
+          innerValue:@"All other arguments will be appended as is, allowing you to create for instance additional button widgets and such,
+making it possible to clear the form, create spacing, horizontal rulers, collect the user's data, etc. In addition, each form can take
+an optional <strong>[class]</strong> argument, signifying which root class to use for the form. The form below has the 
+classes <em>'bg inner-air rounded shaded'</em> associated with it."
+
+    /*
+     * Our actual wizard form.
+     */
+    div
+      class:col-70
+      widgets
+        micro.widgets.wizard-form:my-form
+          class:bg inner-air rounded shaded
+          text:txt
+            info:Some text widget
+          label
+            for:multline-txt
+            innerValue:Some textarea
+          textarea:multline-txt
+            info:Some multiline text ...
+          hr
+          select:option
+            info:Some select widget
+            options
+              Option 1:option-1
+              Option 2:option-2
+          checkbox:chk1
+            info:Some checked checkbox
+            checked
+          br
+          checkbox:chk2
+            info:Another checkbox
+          text:txt2
+            info:Another text widget
+            value:Its value
+          radio-group:radio-group
+            options
+              Radio 1:rdo-1
+              Radio 2:rdo-2
+                checked
+              Radio 3:rdo-3
+          br
+          div
+            class:right
+            widgets
+              button
+                innerValue:OK
+                onclick
+                  micro.form.serialize:my-form
+                  lambda2hyper:x:/-/*
+                  eval-x:x:/+/**/pre/*/innerValue
+                  create-widgets
+                    micro.widgets.modal:form-result
+                      class:micro-modal
+                      widgets
+                        h3
+                          innerValue:Result
+                        pre
+                          innerValue:x:/@lambda2hyper?value
+                        div
+                          class:right
+                          widgets
+                            button
+                              innerValue:Close
+                              oninit
+                                micro.page.set-focus:x:/../*/_event?value
+                              onclick
+                                delete-widget:form-result
+    div
+      class:col-30 rounded shaded inner-air emphasized
+      widgets
+        p
+          innerValue:@"This form is wrapped inside a 'col-70' responsive column, which means you can resize the browser below 800px,
+and the form will automatically pop out and fill the whole viewport."
+        p
+          innerValue:@"Try to resize your browser below 800px in width to see this effect."
+        p
+          innerValue:@"Most of the widgets in the form requires an <strong>[info]</strong> argument, which will be used as a label, title, etc - Depending
+upon the type of widget you create."
+        p
+          innerValue:@"All other arguments becomes properties of the main input element for your widget."
+        p
+          innerValue:@"The <strong>[select]</strong> and <strong>[radio-group]</strong> widgets requires an <strong>[option]</strong> collection, which
+is a key/value collection where the name of the node becomes the friendly displayed name, and the value becomes the value for the option element."

@@ -1,0 +1,77 @@
+
+/*
+ * Given a specific [_arg] widget, will recursively serialize all
+ * form elements beneath that element, and return in a uniform way to caller.
+ */
+create-event:micro.form.serialize
+
+  /*
+   * Figuring out [element] of widget, and handling accordingly.
+   */
+  get-widget-property:x:/../*/_arg?value
+    element
+  switch:x:/@get-widget-property/*/*?value
+
+    /*
+     * Input element, needs to handle all the different types accordingly.
+     */
+    case:input
+      get-widget-property:x:/../*/_arg?value
+        type
+      switch:x:/@get-widget-property/*/*?value
+        case:checkbox
+          get-widget-property:x:/../*/_arg?value
+            checked
+          if:x:/@get-widget-property/*/*
+            add:x:/..case/*/return
+              src:@"{0}:bool:true"
+                :x:/../*/_arg?value
+          else
+            add:x:/..case/*/return
+              src:@"{0}:bool:false"
+                :x:/../*/_arg?value
+          return
+        case:radio
+          get-widget-property:x:/../*/_arg?value
+            checked
+            name
+            value
+          if:x:/@get-widget-property/*/*/checked
+            add:x:/./*/return
+              src:"{0}:{1}"
+                :x:/@get-widget-property/*/*/name?value
+                :x:/@get-widget-property/*/*/value?value
+            return
+        default
+          get-widget-property:x:/../*/_arg?value
+            value
+          add:x:/./*/return
+            src:@"{0}:@""{1}"""
+              :x:/../*/_arg?value
+              :x:/@get-widget-property/*/*?value
+          return
+
+    /*
+     * Select and textarea widgets have the same logic.
+     */
+    case:textarea
+    case:select
+      get-widget-property:x:/../*/_arg?value
+        value
+      add:x:/./*/return
+        src:@"{0}:@""{1}"""
+          :x:/../*/_arg?value
+          :x:/@get-widget-property/*/*?value
+      return
+
+    /*
+     * Any other type of element.
+     */
+    default
+      .ret
+      p5.web.widgets.get-children:x:/../*/_arg?value
+      for-each:x:/@p5.web.widgets.get-children/*/*?value
+        micro.form.serialize:x:/@_dp?value
+        add:x:/@.ret
+          src:x:/@micro.form.serialize/*
+      return:x:/@.ret/*

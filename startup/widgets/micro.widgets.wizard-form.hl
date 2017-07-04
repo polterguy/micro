@@ -1,0 +1,181 @@
+
+/*
+ * Creates the wizard form extension widget.
+ *
+ * This extension widget allows you to create a form declaratively, by simply adding a collection of
+ * types of widgets, and decorate some of their properties according to which widgets you'd like to create.
+ *
+ * Supported arguments are as follows.
+ *
+ * - [class] - Sets the root class for your form.
+ * - [text] - Creates a text input widget, requires [info] argument.
+ * - [textarea] - Creates a textarea type of widget, requires [info] argument.
+ * - [checkbox] - Creates a checkbox input widget, requires [info] argument.
+ * - [select] - Creates a select dropdown widget, requires [info] argument.
+ * - [radio-group] - Creates a group of radio buttons
+ *
+ * The [select] and [radio-group] widgets, requires an [options] collection, being the options the user can legally select.
+ * The [options] arguments is a name/value collection, where the name becomes the displayed string, and the value becomes the valuf for
+ * the selected option. All arguments beneath an [option] argument, becomes appended automatically into the specific option element, allowing
+ * you to add up for instance a [checked] or [selected] argument, to a specific option, to make sure it is by default selected.
+ *
+ * All other arguments to all other widgets are automatically added as arguments into the specific widget, allowing you to add for instance a
+ * [value] to a [text] widget, specifying an initial value for it, or a [checked] argument to a [checkbox] specifying it is initially checked, etc.
+ *
+ * You can serialize the form manually if you wish, but you can also use the [micro.form.serialize] event to retrieve all values of
+ * a specific form in your page.
+ */
+create-event:micro.widgets.wizard-form
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Looping through all arguments and handling them accordingly.
+   */
+  for-each:x:/@.signal/--/<-(!/_arg)
+
+    /*
+     * Figuring out what the current argument is.
+     */
+    switch:x:/@_dp/#?name
+
+      case:class
+
+        /*
+         * Class declaration for main widget.
+         */
+        add:x:/../*/return/*/container
+          src:x:/@_dp/#
+
+      case:text
+
+        /*
+         * Single line text input.
+         */
+        eval-x:x:/+2/**
+        add:x:/+/**/input
+          src:x:/@_dp/#/*(!/info)
+        add:x:/../*/return/*/container/*/widgets
+          src
+            div
+              class:strip fill
+              widgets
+                label
+                  innerValue:x:/@_dp/#/*/info?value
+                  for:x:/@_dp/#?value
+                input:x:/@_dp/#?value
+                  type:text
+                  placeholder:{0} ...
+                    :x:/@_dp/#/*/info?value
+
+      case:textarea
+
+        /*
+         * Multiple lines text input.
+         */
+        eval-x:x:/+2/**
+        add:x:/+/**/literal
+          src:x:/@_dp/#/*(!/info)
+        add:x:/../*/return/*/container/*/widgets
+          src
+            literal:x:/@_dp/#?value
+              element:textarea
+              class:fill
+              placeholder:x:/@_dp/#/*/info?value
+              title:x:/@_dp/#/*/info?value
+              rows:5
+
+      case:select
+
+        /*
+         * Select widget.
+         */
+        eval-x:x:/+3/**
+        add:x:/+2/**/select
+          src:x:/@_dp/#/*(!/info)
+        apply:x:/+/**/select/*/widgets
+          src:x:/@_dp/#/*/options/*
+          template
+            option
+              {value}:x:?value
+              {innerValue}:x:?name
+        add:x:/../*/return/*/container/*/widgets
+          src
+            div
+              class:strip fill
+              widgets
+                label
+                  innerValue:x:/@_dp/#/*/info?value
+                  for:x:/@_dp/#?value
+                select:x:/@_dp/#?value
+                  widgets
+
+      case:radio-group
+
+        /*
+         * Radio group widgets.
+         */
+        .exe
+          return:x:/@_dn/#/*
+        add:x:/+/**/{input}
+          src:"name:{0}"
+            :x:/@_dp/#?value
+        apply:x:/+/*/src
+          src:x:/@_dp/#/*/options/*
+          template
+            {input}:x:?value
+              type:radio
+              {value}:x:?value
+              {@eval}:x:/@.exe
+            label
+              {for}:x:?value
+              {innerValue}:x:?name
+        add:x:/../*/return/*/container/*/widgets
+          src
+
+      case:checkbox
+
+        /*
+         * Checkbox widget.
+         */
+        eval-x:x:/+2/**
+        add:x:/+/**/input
+          src:x:/@_dp/#/*(!/info)
+        add:x:/../*/return/*/container/*/widgets
+          src
+            input:x:/@_dp/#?value
+              type:checkbox
+            label
+              innerValue:x:/@_dp/#/*/info?value
+              for:x:/@_dp/#?value
+
+      case:br
+
+        /*
+         * Carriage return.
+         */
+        eval-x:x:/+2/**
+        add:x:/+/**/br
+          src:x:/@_dp/#/*
+        add:x:/../*/return/*/container/*/widgets
+          src
+            br
+              style:"clear:both;"
+
+      default
+
+        /*
+         * Some arbitrary HTML widget not natively supported.
+         */
+        add:x:/../*/return/*/container/*/widgets
+          src:x:/@_dp/#
+
+  /*
+   * Returning widget to caller.
+   */
+  return
+    container
+      widgets
