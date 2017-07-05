@@ -1,5 +1,7 @@
 # Micro
 
+![alt screenshot](screenshots/screenshot-9.png)
+
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
@@ -578,25 +580,22 @@ possible to solve generically in P5.
 ## Performance
 
 Micro is truly **microscopic**! Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
-ticks in at roughly **25KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in total. The number
-of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their initial
-rendering, and often hundreds of HTTP requests.
+ticks in at roughly **30KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in 
+total. The number of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their 
+initial rendering, and often hundreds of HTTP requests.
 
 In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there!
 
-To verify this for yourself, create a new lambda page in System42, set its "template" settings to "empty", and paste in the following code, which will show you the "kitchen sink" example.
+To verify this for yourself, create a new lambda page in System42, set its "template" settings to "empty", and paste in the following code, 
+which will show you the "kitchen sink" example.
 
 ```
 sys42.utilities.execute-lambda-file:@MICRO/samples/ext.hl
 ```
 
-See the screenshot below, demonstrating how Google Chrome's Network inspector shows you ~30KB. 
-
-![alt screenshot](screenshots/screenshot-8.png)
-
 In the above page, we have multiple modal widgets, multiple tab widgets, and a fairly complex menu. Still it ticks in at ~30KB. Simply displaying 
-the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML and CSS. And even if you add a skin using
-the 'select skin' widget, the page still ticks in at less than 80KB in total.
+the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML, and CSS. And even if you add a skin to Micro,
+using the 'select skin' widget, the page still ticks in at less than 80KB in total.
 
 To see a video demonstrating some of its features, and the bandwidth consumption differences, you can 
 check out [this YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).
