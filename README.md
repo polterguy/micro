@@ -1,8 +1,5 @@
 # Micro
 
-**This page currently illustrates some features not yet released in the latest version of Micro. Please refer to
-the README.md in your download for an accurate description of its current features.**
-
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
@@ -13,7 +10,7 @@ Below is a screenshot of combining Micro with the Sea Breeze skin.
 
 **Notice**, Micro does *not* mix well with Bootstrap, which among other things implies that
 none of these examples can be seen very well in System42's Executor. If you wish to reproduce
-these examples, using [System42](https://github.com/polterguy/system42), you'll have to create a lambda CMS 
+these examples using [System42](https://github.com/polterguy/system42), you'll have to create a lambda CMS 
 page, and make sure you set its _"template"_ settings to _"empty"_.
 
 Micro creates a default layout, not based upon CSS classes for the most parts. It is tiny in size, 
@@ -46,14 +43,15 @@ doesn't _"end up as much in your way"_, as you apply your own custom design to y
 results in a _tiny_ bandwidth consumption.
 
 In addition to a general sane default styling of your HTML elements, most form HTML elements also have some styling for you, that
-will create a sane starting ground for your web apps. Below is another screenshot showing you what you may expect.
+will create a sane starting ground for your web apps. Below is another screenshot showing you what you may expect, unless you explicitly include
+one of the 5 skins that comes out of the box - Or create your own skin, which is ridiculously easy for the record.
 
 ![alt screenshot](screenshots/screenshot-2.png)
 
 The above shows how your form elements will end up looking like, if they're embedded inside of a _"strip"_. All form elements can
 also obviously be instantiated as stand-alone elements.
 
-The color profile of Miro is easily overridden by changing a couple of CSS variables, allowing you to change the colors of all elements,
+The color profile of Micro is easily overridden by changing a couple of CSS variables, allowing you to change the colors of all elements,
 by changing only a handful of variables.
 
 ## Grid system
@@ -109,7 +107,7 @@ or 'col-x' elements.
 
 ### Responsive rendering
 
-Micro does feature _"responsive rendering"_, which means that if your screen resolution drops below 800px, each column, regardless of its definition,
+Micro features what's known as _"responsive rendering"_, which means that if your screen resolution drops below 800px, each column, regardless of its definition,
 will automatically pop out, and require 100% of the available width. Micro is created with the _"mobile first"_ approach.
 
 ### Explicit column width
@@ -149,7 +147,28 @@ create-widget
 
 ```
 
-The total width of your columns must result in 100. If it exceeds 100, it will wrap the next column unto the next line.
+The total width of your columns must result in 100. If it exceeds 100, it will wrap the next column unto the next line. In general terms, you should
+avoid having more columns within each row, than that which adds up to 100, since this will create bad padding at the end of your elements.
+
+### Column offset
+
+You can also offset a column's starting point, with one of the following CSS classes.
+
+* offset-10
+* offset-20
+* offset-25
+* offset-30
+* offset-33
+* offset-40
+* offset-50
+* offset-60
+* offset-67
+* offset-70
+* offset-75
+* offset-80
+* offset-90
+
+The same principle still applies as above, since the total number of any columns inside a single row must still add up to exactly 100.
 
 ## Form elements
 
@@ -192,8 +211,8 @@ The above will result in something resembling the following.
 
 ## Extension widgets
 
-Micro contains some extension widgets which are documented below. All of these extension widgets, will automatically include
-the relevant CSS files.
+Micro contains some extension widgets which are documented below. Most of these extension widgets, will automatically include
+the relevant CSS file(s).
 
 ### [micro.widgets.modal]
 
@@ -287,7 +306,7 @@ tab views will not be perfectly aligned with the rest of the content on your pag
 Although you could create a "nav" element in Micro by hand, Micro also contains one helper Active Event extension widget for you that easily 
 allows you to create Ajax and/or hyperlinks menus. A menu must have exactly one **[items]** collection. Each child node beneath your items, 
 becomes a menu item. Each menu item, can either have an **[onclick]** for Ajax callbacks, an **[href]** for URL navigation, or its own 
-child **[items]** collection creating nested menu items with dropdown menus. You should in general not combine these, but choose only one 
+**[items]** collection, creating nested menu items with dropdowns. You should in general not combine these, but choose only one 
 for each menu item.
 
 The name of your child node beneath your **[items]** collection, becomes the friendly name displayed to the user. The value is an optional
@@ -376,7 +395,7 @@ create-widget
          * Creates our actual 'wizard form' widget.
          */
         micro.widgets.wizard-form:my-form
-          class:bg inner-air rounded shaded
+          class:bg air-inner rounded shaded
           text:text-widget
             info:Some text widget
           label
@@ -441,7 +460,7 @@ The **[micro.widgets.wizard-form]** extension widget, takes the following standa
 * __[select]__ - Creates a select dropdown widget.
 * __[radio-group]__ - Creates a group of radio buttons.
 
-In the above code we use the CSS classes _'bg inner-air rounded shaded'_, which creates the rounded and shaded effect, in addition to 
+In the above code we use the CSS classes _'bg air-inner rounded shaded'_, which creates the rounded and shaded effect, in addition to 
 the background rendering and the inner padding. All other arguments you supply to it, will be assumed are widget declarations, and created
 as such. You can see an example of adding generic widgets to your forms in the above code, where we have a **[label]**, **[br]** and **[div]**
 widget inside of it, in addition to our normal helper declarations.
@@ -527,7 +546,7 @@ create-widget
          * Creates our actual 'wizard form' widget.
          */
         micro.widgets.wizard-form:my-form
-          class:bg inner-air rounded shaded
+          class:bg air-inner rounded shaded
           h3
             innerValue:My form
           text
