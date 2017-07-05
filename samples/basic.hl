@@ -63,7 +63,7 @@ a skin from the select dropdown box below."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col
@@ -121,7 +121,7 @@ create-widget
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col
@@ -208,7 +208,7 @@ There exists offset classes for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 80 and 9
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -230,7 +230,7 @@ a couple of CSS variables."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -269,7 +269,7 @@ create-widget
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -314,7 +314,7 @@ create-widget
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -344,7 +344,7 @@ create-widget
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -381,7 +381,7 @@ create-widget
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -415,7 +415,7 @@ You can also add a label, either before or after a checkbox."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -451,7 +451,7 @@ You can also add a label, either before or after a radio button, just like you c
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -656,7 +656,7 @@ text input element."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -686,7 +686,7 @@ if the viewport becomes less than 800px."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -716,7 +716,7 @@ A default table looks like the following."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -724,7 +724,7 @@ create-widget
         h3
           innerValue:Misc. classes
         p
-          innerValue:@"Use the 'prepend-top' to add some additional 25px of top margin, to create some spacing between for instance rows."
+          innerValue:@"Use the 'air-top' to add some additional 25px of top margin, to create some spacing between for instance rows."
     div
       class:col-100 emphasized inner-air
       widgets
@@ -761,7 +761,7 @@ create-container-widget:content-fullscreen
       class:row
       widgets
         div
-          class:col-100 prepend-top
+          class:col-100 air-top
           innerValue:@"
 <h3 class=""center"">Fullscreen containers</h3>
 <p>This is a fullscreen container. You can add as many containers as you wish onto your page.</p>
@@ -918,7 +918,7 @@ create-widget
   class:row
   widgets
     div
-      class:col prepend-top
+      class:col air-top
       widgets
         h3
           class:center
@@ -1030,7 +1030,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-100 prepend-top
+      class:col-100 air-top
       widgets
         h3
           class:center

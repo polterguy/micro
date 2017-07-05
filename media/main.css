@@ -50,13 +50,13 @@ html {
 /* Typography */
 body {
     font-size: 1.2rem;
+    font-size-adjust: 0.5;
     padding-bottom: 150px;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     color: var(--txt-col);
 }
 
-body, caption, th, td, input, textarea, select, option, legend, fieldset, h1, h2, h3, h4, h5, h6, p, blockquote, label, ul, ol {
-    font-size-adjust: 0.5;
+button, input, select, textarea, body, caption, th, td, input, textarea, select, option, legend, fieldset, h1, h2, h3, h4, h5, h6, p, blockquote, label, ul, ol {
     margin: 0 0 1rem 0;
 }
 
@@ -143,10 +143,6 @@ button, input, select, .strip label, strip span {
     height: 42px;
     color: var(--form-txt-col);
     font-weight:normal;
-}
-
-button, input, select, textarea {
-    margin-bottom: 1rem;
 }
 
 /* Then buttons */
@@ -316,16 +312,8 @@ table th {
     background: var(--wid-lighter-col);
 }
 
-table th:first-child {
-    border-top-left-radius: var(--border-radius);
-}
-
-table th:last-child {
-    border-top-right-radius: var(--border-radius);
-}
-
-table tr:hover td {
-    background: var(--wid-light-col);
+table tbody tr td {
+    border-top:solid 1px var(--wid-border-col);
 }
 
 /* Media queries for devices more than 800px in width */
@@ -510,8 +498,27 @@ table tr:hover td {
 }
 
 /* Misc. classes */
-.prepend-top {
-    margin-top: 25px;
+.air {
+    margin:1rem;
+}
+.air-top {
+    margin-top:1rem;
+}
+
+.air-bottom {
+    margin-bottom:1rem;
+}
+.air-left {
+    margin-left:1rem;
+}
+.air-right {
+    margin-right: 1rem;
+}
+.inner-air {
+    padding:1rem !important;
+}
+.inner-air *:last-child {
+    margin-bottom:0;
 }
 
 .success, .warning, .emphasized {
@@ -533,28 +540,18 @@ table tr:hover td {
 
 .bg {
     background: #fafafa;
-    margin-bottom: 1rem;
 }
 
-.right {
-    text-align: right;
+.left {
+    text-align: left;
 }
 
 .center {
     text-align: center;
 }
 
-.air {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-
-.inner-air {
-    padding:1rem !important;
-}
-
-.inner-air *:last-child {
-    margin-bottom:0;
+.right {
+    text-align: right;
 }
 
 .rounded {

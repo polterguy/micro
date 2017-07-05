@@ -109,7 +109,7 @@ with your favourite skin, feel free to select a skin from the select dropdown bo
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col
@@ -154,7 +154,7 @@ Here we have added a button that simply closes our modal widget."
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
@@ -192,7 +192,7 @@ Below is an example of a button."
                       set-widget-property:x:/../*/_event?value
                         innerValue:I was clicked
     div
-      class:col-100 prepend-top
+      class:col-100 air-top
       widgets
         micro.widgets.tab
           class:micro-tab micro-tab-border
@@ -217,7 +217,7 @@ content not in accordance with the rest of the content on your page. Which you p
  */
 create-widget
   parent:content
-  class:row prepend-top
+  class:row air-top
   widgets
     div
       class:col-100
