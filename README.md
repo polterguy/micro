@@ -98,6 +98,14 @@ total available width, according to how many columns you add to a specific row.
 The _"container"_ element will have a maximum width of 1120px and automatic margins to the left and right. The _"container-fullscreen"_ will 
 use all available width. You can have as many containers as you wish on your page, and as many rows as you wish inside of each container.
 
+The general layout of your page should be as follows.
+
+- 'container' or 'container-fullscreen' element.
+- 'row' elements inside of each container
+- 'col' or 'col-x' elements inside of each 'row'
+
+In such a regard, it logically resembles the structure of a Bottstrap CSS page.
+
 ### Responsive rendering
 
 Micro does feature _"responsive rendering"_, which means that if your screen resolution drops below 800px, each column, regardless of its definition,
