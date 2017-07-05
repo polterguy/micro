@@ -1,11 +1,12 @@
 # Micro
 
-![alt screenshot](screenshots/screenshot-9.png)
-
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
 necessary features. Most of the existing CSS framework were also too JavaScript centric - Including Bootstrap.
+Below is a screenshot of combining Micro with the Sea Breeze skin.
+
+![alt screenshot](screenshots/screenshot-9.png)
 
 **Notice**, Micro does *not* mix well with Bootstrap, which among other things implies that
 none of these examples can be seen very well in System42's Executor. If you wish to reproduce
