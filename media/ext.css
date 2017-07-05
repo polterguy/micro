@@ -84,7 +84,8 @@
 nav {
     background: var(--wid-dark-col);
     font-size: 1.5rem;
-    min-height:61px;
+    min-height: 61px;
+    margin: -1rem 0 0 -1rem;
 }
 
 nav:after {
@@ -156,7 +157,8 @@ nav ul li > ul hr {
 
 @media screen and (min-width:800px) {
     nav {
-        height:auto;
+        height: auto;
+        margin: -2rem 0 0 -2rem;
     }
     nav > a {
         display: none;

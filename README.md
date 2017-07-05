@@ -104,7 +104,8 @@ The general layout of your page should be as follows.
 - 'row' elements inside of each container
 - 'col' or 'col-x' elements inside of each 'row'
 
-In such a regard, it logically resembles the structure of a Bottstrap CSS page.
+In such a regard, it logically resembles the structure of a Bottstrap CSS page. You can nest another 'row' inside of another outer 'col' 
+or 'col-x' elements.
 
 ### Responsive rendering
 

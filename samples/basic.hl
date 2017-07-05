@@ -81,7 +81,8 @@ create-widget
         h6
           innerValue:H6 header
         p
-          innerValue:This is some arbitrary piece of text in a paragraph
+          innerValue:This is some arbitrary piece of text in a paragraph. Below is a horizontal ruler
+        hr
         p
           widgets
             strong
@@ -136,16 +137,27 @@ create-widget
   parent:content
   class:row
   widgets
-    p
+    div
       class:col
-      innerValue:@"The grid system is created using the flexbox model, which allows you to create any number of columns, as you see fit.
+      widgets
+        div
+          class:rounded shaded bg inner-air
+          widgets
+            p
+              innerValue:@"The grid system is created using the flexbox model, which allows you to create any number of columns, as you see fit.
 Your content should normally be embedded inside of a 'col', which should be inside a 'row', which should be inside a 'container'."
-    p
+    div
       class:col
-      innerValue:For instance this row, contains 3 columns, which will simply divide the available space into 3.
-    p
+      widgets
+        p
+          class:rounded shaded bg inner-air
+          innerValue:For instance this row, contains 3 columns, which will simply divide the available space into 3.
+    div
       class:col
-      innerValue:While if you resize your page, below 800px, it will 'pop' such that each column takes up 100% of the width for small devices.
+      widgets
+        p
+          class:rounded shaded bg inner-air
+          innerValue:While if you resize your page, below 800px, it will 'pop' such that each column takes up 100% of the width for small devices.
 
 
 /*
@@ -155,12 +167,18 @@ create-widget
   parent:content
   class:row
   widgets
-    p
+    div
       class:col-33
-      innerValue:This column use the 'col-33' class, which means it will use 33% of the available space.
-    p
+      widgets
+        p
+          class:rounded shaded bg inner-air
+          innerValue:This column use the 'col-33' class, which means it will use 33% of the available space.
+    div
       class:col-67
-      innerValue:While this will use 'col-67' and hence 67%. There are explicit column widths for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 75, 80 and 90 percent in the grid system.
+      widgets
+        p
+          class:rounded shaded bg inner-air
+          innerValue:While this will use 'col-67' and hence 67%. There are explicit column widths for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 75, 80 and 90 percent in the grid system.
 
 
 /*
@@ -170,12 +188,18 @@ create-widget
   parent:content
   class:row
   widgets
-    p
+    div
       class:col-25
-      innerValue:This column use the 'col-25' class, which means it will use 25% of the available space.
-    p
+      widgets
+        p
+          class:rounded shaded bg inner-air
+          innerValue:This column use the 'col-25' class, which means it will use 25% of the available space.
+    div
       class:col-50 offset-25
-      innerValue:@"While this will use 'col-50'and 'offset-25', which means it will be moved forward by 25% of the available space.
+      widgets
+        p
+          class:rounded shaded bg inner-air
+          innerValue:@"While this will use 'col-50'and 'offset-25', which means it will be moved forward by 25% of the available space.
 There exists offset classes for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 80 and 90 percent in Micro."
 
 
@@ -702,7 +726,7 @@ create-widget
         p
           innerValue:@"Use the 'prepend-top' to add some additional 25px of top margin, to create some spacing between for instance rows."
     div
-      class:col-100 emphasized
+      class:col-100 emphasized inner-air
       widgets
         p
           innerValue:@"This column has the 'emphasized' class added to it, which can be used to signify something important.
@@ -716,12 +740,12 @@ Notice, all of these classes will create a border-radius around your column."
               class:hollow
               innerValue:OK
     div
-      class:col-100 success
+      class:col-100 success inner-air
       widgets
         p
           innerValue:@"This column has the 'success' class added to it, which can be used to signify success."
     div
-      class:col-100 warning
+      class:col-100 warning inner-air
       widgets
         p
           innerValue:@"This column has the 'warning' class added to it, which can be used to signify danger, or a warning of some sort."
@@ -737,7 +761,7 @@ create-container-widget:content-fullscreen
       class:row
       widgets
         div
-          class:col-100 prepend-top air
+          class:col-100 prepend-top
           innerValue:@"
 <h3 class=""center"">Fullscreen containers</h3>
 <p>This is a fullscreen container. You can add as many containers as you wish onto your page.</p>
@@ -754,7 +778,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-10 air
+      class:col-10
       widgets
         p
           innerValue:@"col-10"
@@ -764,7 +788,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-20 air
+      class:col-20
       widgets
         p
           innerValue:@"col-20"
@@ -774,7 +798,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-25 air
+      class:col-25
       widgets
         p
           innerValue:@"col-25"
@@ -784,7 +808,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-30 air
+      class:col-30
       widgets
         p
           innerValue:@"col-30"
@@ -794,7 +818,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-33 air
+      class:col-33
       widgets
         p
           innerValue:@"col-33"
@@ -804,7 +828,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-40 air
+      class:col-40
       widgets
         p
           innerValue:@"col-40"
@@ -814,7 +838,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-50 air
+      class:col-50
       widgets
         p
           innerValue:@"col-50"
@@ -824,7 +848,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-60 air
+      class:col-60
       widgets
         p
           innerValue:@"col-60"
@@ -834,7 +858,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-67 air
+      class:col-67
       widgets
         p
           innerValue:@"col-67"
@@ -844,7 +868,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-70 air
+      class:col-70
       widgets
         p
           innerValue:@"col-70"
@@ -854,7 +878,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-75 air
+      class:col-75
       widgets
         p
           innerValue:@"col-75"
@@ -864,7 +888,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-80 air
+      class:col-80
       widgets
         p
           innerValue:@"col-80"
@@ -874,7 +898,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-90 air
+      class:col-90
       widgets
         p
           innerValue:@"col-90"
@@ -884,7 +908,7 @@ create-widget
   class:row
   widgets
     div
-      class:col-100 air
+      class:col-100
       widgets
         p
           innerValue:@"col-100"
@@ -894,7 +918,7 @@ create-widget
   class:row
   widgets
     div
-      class:col air prepend-top
+      class:col prepend-top
       widgets
         h3
           class:center
@@ -906,13 +930,13 @@ create-widget
   class:row
   widgets
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 1/2"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 2/2"
@@ -922,19 +946,19 @@ create-widget
   class:row
   widgets
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 1/3"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 2/3"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 3/3"
@@ -944,25 +968,25 @@ create-widget
   class:row
   widgets
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 1/4"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 2/4"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 3/4"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 4/4"
@@ -972,44 +996,41 @@ create-widget
   class:row
   widgets
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 1/5"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 2/5"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 3/5"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 4/5"
           style:"background:#d0d0d0;"
     div
-      class:col air
+      class:col
       widgets
         p
           innerValue:@"col 5/5"
           style:"background:#d0d0d0;"
-    div
-      class:col-100 air
-      innerValue:@"<p>Etc ...</p>"
 create-widget
   parent:content-fullscreen
   class:row
   widgets
     div
-      class:col-100 air prepend-top
+      class:col-100 prepend-top
       widgets
         h3
           class:center
@@ -1017,7 +1038,7 @@ create-widget
         p
           innerValue:Below is an example of nesting rows inside of columns.
     div
-      class:col air
+      class:col
       widgets
         div
           class:row
@@ -1031,7 +1052,7 @@ create-widget
               innerValue:Nested col 2 - 67%
               style:"background:#d0f0d0;"
     div
-      class:col air
+      class:col
       widgets
         div
           class:row
@@ -1044,11 +1065,15 @@ create-widget
               class:col
               innerValue:Nested col 4 - 'col'
               style:"background:#f0d0f0;"
+create-widget
+  parent:content-fullscreen
+  class:row
+  widgets
     p
-      class:col-100 air
+      class:col-100
       innerValue:@"Notice, when you nest columns, your inner columns cannot have the 'air' class associated with them, since this will wrap
 your columns unto the next row, and not nicely align them with each other."
     p
-      class:col-100 air
+      class:col-100
       innerValue:@"Notice also that what the 'bg' class does, is dependent upon your skin of choice. Without any skins, it becomes
 simply gray. With a skin, it usually either becomes some repeating pattern, or some linear-gradient color."
