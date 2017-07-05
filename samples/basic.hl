@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 
 /*
  * Default startup file for Micro.
@@ -14,1066 +14,834 @@ p5.web.page.set-title:Micro basic examples
 
 
 /*
- * Checking if another "content" widget exists, and if so, deleting it, before we create our own.
+ * Main information widget.
  */
-if
-  fetch:x:/0/0?value
-    widget-exists:content
-  delete-widget:content
-create-container-widget:content
+create-widget
   class:container
   widgets
-    a
-      href:/
-      innerValue:Home
-      style:"position:absolute;right:15px;"
-
-
-/*
- * Introduction
- */
-create-widget
-  parent:content
-  class:row
-  widgets
     div
-      class:col-100
+      class:row
       widgets
-        h1
-          innerValue:Micro
-        p
-          innerValue:@"Welcome to the Micro 'kitchen sink' example. Micro is a microscopic Ajax widget library for Phosphorus Five. 
-Below are examples of Micro in usage."
-        p
-          innerValue:@"Micro is created to be as little in your way as possible, allowing you to control most aspects yourselves, while still
-solving all the common problems, which are probably common for most web apps. For instance, by modifying a handful of simple CSS variables,
-you can override its entire color profile. It doesn't use any fancy (downloadable) fonts, leaving this up to you, etc, etc, etc."
-        p
-          innerValue:@"The basic idea with Micro, is that in general it does as 'little as possible', while being as small as possible, 
-and solves only the common tasks needed for all web apps.To see how they work in combination with your favourite skin, feel free to select 
-a skin from the select dropdown box below."
-    div
-      class:col-100
-      widgets
-        micro.widgets.skin-selector
-
-
-/*
- * Typography widgets.
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col
-      widgets
-        h1
-          innerValue:H1 header
-        h2
-          innerValue:H2 header
-        h3
-          innerValue:H3 header
-        h4
-          innerValue:H4 header
-        h5
-          innerValue:H5 header
-        h6
-          innerValue:H6 header
-        p
-          innerValue:This is some arbitrary piece of text in a paragraph. Below is a horizontal ruler
-        hr
-        p
+        div
+          class:col-100
           widgets
-            strong
-              innerValue:This is some arbitrary strong text
-            em
-              innerValue:This is some arbitrary emphasized text
-            code
-              innerValue:This is some inline code
-            small
-              innerValue:This is some arbitrary small text
-            a
-              href:https://google.com
-              innerValue:Hyperlinks
-        ul
-          widgets
-            li
-              innerValue:Bulleted list 1
-            li
-              innerValue:Bulleted list 2
-        ol
-          widgets
-            li
-              innerValue:Ordered list
-            li
-              innerValue:Ordered list
-        blockquote
-          innerValue:This is some arbitrary piece of text in a blockquote
-        pre
-          innerValue:@"This is
-     some preformatted
- text"
+            h1
+              innerValue:Micro examples
+            p
+              innerValue:@"These are the Micro examples for normal typography, its grid system, and special classes. To see how it looks
+like with a specific skin, feel free to use the skin selector. Notice, without selecting a skin, Micro doesn't look particularly beautiful,
+since only the bare bones styling is added to your page."
+            div
+              style:"position:absolute;top:2rem;right:2rem;z-index:1000;"
+              widgets
+                micro.widgets.skin-selector
 
 
 /*
  * The grid system
  */
 create-widget
-  parent:content
-  class:row air-top
+  class:container
   widgets
     div
-      class:col
-      widgets
-        h3
-          innerValue:The grid system
-
-
-/*
- * Grid system, floating columns.
- */
-create-widget
-  parent:content
-  class:row
-  widgets
-    div
-      class:col
+      class:row air-top
       widgets
         div
-          class:rounded shaded bg inner-air
+          class:col-100
+          widgets
+            h3
+              innerValue:The grid system
+            p
+              innerValue:@"Micro has has a 'flexbox' grid system, which allows you to declare as many or as few columns as you wish. Each column
+should be wrapped inside a 'row', and each 'row' should be wrapped inside either a 'container' or a 'container-fullscreen'. An example 
+of how to create a column structure that creates two columns can be found below."
+            pre
+              innerValue:@"create-widget
+  class:container
+  widgets
+    div
+      class:row
+      widgets
+        div
+          class:col
+          innerValue:Some value
+        div
+          class:col
+          innerValue:Some other value"
+        div
+          class:col-100
           widgets
             p
-              innerValue:@"The grid system is created using the flexbox model, which allows you to create any number of columns, as you see fit.
-Your content should normally be embedded inside of a 'col', which should be inside a 'row', which should be inside a 'container'."
-    div
-      class:col
-      widgets
-        p
-          class:rounded shaded bg inner-air
-          innerValue:For instance this row, contains 3 columns, which will simply divide the available space into 3.
-    div
-      class:col
-      widgets
-        p
-          class:rounded shaded bg inner-air
-          innerValue:While if you resize your page, below 800px, it will 'pop' such that each column takes up 100% of the width for small devices.
+              innerValue:@"The above code would create something like the following."
 
 
 /*
- * Grid system, fixed size.
+ * First example of grid system.
  */
 create-widget
-  parent:content
-  class:row
+  class:container
   widgets
     div
-      class:col-33
+      class:row
       widgets
-        p
-          class:rounded shaded bg inner-air
-          innerValue:This column use the 'col-33' class, which means it will use 33% of the available space.
+        div
+          class:col
+          innerValue:Some value
+        div
+          class:col
+          innerValue:Some other value
+
+
+/*
+ * Explanation for above and grid size.
+ */
+create-widget
+  class:container
+  widgets
     div
-      class:col-67
+      class:row
+      widgets
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"Above we have only two columns, therefor the available viewport will be cut into two equally large parts.
+Each column will be separated by a small padding if its contents starts wrapping. You can have as many 'container' and 'container-fullscreen'
+elements as you wish on your page, each container can have as many 'row' elements as you wish, and each 'row' can have as many 'col' elements 
+as you wish."
+            p
+              innerValue:@"There also exists specific size overrides, to make sure your columns becomes a specific percentage of the 
+available width."
+    div
+      class:row
       widgets
         p
-          class:rounded shaded bg inner-air
-          innerValue:While this will use 'col-67' and hence 67%. There are explicit column widths for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 75, 80 and 90 percent in the grid system.
+          class:col-10 bg
+          innerValue:col-10
+    div
+      class:row
+      widgets
+        p
+          class:col-20 bg
+          innerValue:col-20
+    div
+      class:row
+      widgets
+        p
+          class:col-25 bg
+          innerValue:col-25
+    div
+      class:row
+      widgets
+        p
+          class:col-30 bg
+          innerValue:col-30
+    div
+      class:row
+      widgets
+        p
+          class:col-33 bg
+          innerValue:col-33
+    div
+      class:row
+      widgets
+        p
+          class:col-40 bg
+          innerValue:col-40
+    div
+      class:row
+      widgets
+        p
+          class:col-50 bg
+          innerValue:col-50
+    div
+      class:row
+      widgets
+        p
+          class:col-60 bg
+          innerValue:col-60
+    div
+      class:row
+      widgets
+        p
+          class:col-67 bg
+          innerValue:col-67
+    div
+      class:row
+      widgets
+        p
+          class:col-70 bg
+          innerValue:col-70
+    div
+      class:row
+      widgets
+        p
+          class:col-75 bg
+          innerValue:col-75
+    div
+      class:row
+      widgets
+        p
+          class:col-80 bg
+          innerValue:col-80
+    div
+      class:row
+      widgets
+        p
+          class:col-90 bg
+          innerValue:col-90
+    div
+      class:row
+      widgets
+        p
+          class:col-100 bg
+          innerValue:col-100
+    div
+      class:row
+      widgets
+        p
+          class:col bg
+          innerValue:Single col inside its own row.
+    div
+      class:row
+      widgets
+        div
+          class:col
+          widgets
+            p
+              class:bg
+              innerValue:Column #1 with 'col'
+        div
+          class:col
+          widgets
+            p
+              class:bg
+              innerValue:Column #2 with 'col'
+        div
+          class:col
+          widgets
+            p
+              class:bg
+              innerValue:Column #3 with 'col'
+    div
+      class:row
+      widgets
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"Notice, as you decrease the size of the viewport to below 800px, every column, regardless of its size, automatically 'pops'
+out to become 100% of the available width. Try to resize your browser to less than 800px, and see how each column above 'pops'."
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"Normally you would want to create a 'div', or some container element, for then to have your content inside of this,
+in another wrapped widget, such as a 'p' element, etc."
+
+
+/*
+ * Column offset.
+ */
+create-widget
+  class:container
+  widgets
+    div
+      class:row
+      widgets
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:Each column can also be offset with the following classes.
+    div
+      class:row
+      widgets
+        div
+          class:col-90 offset-10
+          widgets
+            p
+              class:bg
+              innerValue:col-90 offset-10
+    div
+      class:row
+      widgets
+        div
+          class:col-80 offset-20
+          widgets
+            p
+              class:bg
+              innerValue:col-80 offset-20
+    div
+      class:row
+      widgets
+        div
+          class:col-75 offset-25
+          widgets
+            p
+              class:bg
+              innerValue:col-75 offset-25
+    div
+      class:row
+      widgets
+        div
+          class:col-70 offset-30
+          widgets
+            p
+              class:bg
+              innerValue:col-70 offset-30
+    div
+      class:row
+      widgets
+        div
+          class:col-67 offset-33
+          widgets
+            p
+              class:bg
+              innerValue:col-67 offset-33
+    div
+      class:row
+      widgets
+        div
+          class:col-60 offset-40
+          widgets
+            p
+              class:bg
+              innerValue:col-60 offset-40
+    div
+      class:row
+      widgets
+        div
+          class:col-50 offset-50
+          widgets
+            p
+              class:bg
+              innerValue:col-50 offset-50
+    div
+      class:row
+      widgets
+        div
+          class:col-40 offset-60
+          widgets
+            p
+              class:bg
+              innerValue:col-40 offset-60
+    div
+      class:row
+      widgets
+        div
+          class:col-33 offset-67
+          widgets
+            p
+              class:bg
+              innerValue:col-33 offset-67
+    div
+      class:row
+      widgets
+        div
+          class:col-30 offset-70
+          widgets
+            p
+              class:bg
+              innerValue:col-30 offset-70
+    div
+      class:row
+      widgets
+        div
+          class:col-25 offset-75
+          widgets
+            p
+              class:bg
+              innerValue:col-25 offset-75
+    div
+      class:row
+      widgets
+        div
+          class:col-20 offset-80
+          widgets
+            p
+              class:bg
+              innerValue:col-20 offset-80
+    div
+      class:row
+      widgets
+        div
+          class:col-10 offset-90
+          widgets
+            p
+              class:bg
+              innerValue:col-10 offset-90
+
+
+/*
+ * Information widget.
+ */
+create-widget
+  class:container
+  widgets
+    div
+      class:row
+      widgets
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"By intelligently combining col-x and offset-x classes, you can align your content anywhere on the page, by 
+making sure whatever you want to see next to each other, never exceeds 100 in total."
 
 
 /*
  * Grid system, offsetting columns.
  */
 create-widget
-  parent:content
-  class:row
+  class:container
   widgets
     div
-      class:col-25
-      widgets
-        p
-          class:rounded shaded bg inner-air
-          innerValue:This column use the 'col-25' class, which means it will use 25% of the available space.
-    div
-      class:col-50 offset-25
-      widgets
-        p
-          class:rounded shaded bg inner-air
-          innerValue:@"While this will use 'col-50'and 'offset-25', which means it will be moved forward by 25% of the available space.
-There exists offset classes for 10, 20, 25, 30, 33, 40, 50, 60, 67, 70, 80 and 90 percent in Micro."
-
-
-/*
- * Forms, buttons
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Buttons
-        p
-          innerValue:@"This is the styling of a button. Like all elements and widgets, the color profile can easily be overridden by simply changing
-a couple of CSS variables."
-    div
-      class:col-100
-      widgets
-        button
-          innerValue:Default
-
-
-/*
- * Forms, controlling size.
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Text input elements
-        p
-          innerValue:Below is an example of 3 different text input elements.
-    div
-      class:col-100
-      widgets
-        input
-          class:wider
-          placeholder:Wider text input ...
-          value:This is a value
-    div
-      class:col-100
-      widgets
-        input
-          placeholder:This is placeholder ...
-    div
-      class:col-100
-      widgets
-        input
-          class:smaller
-          placeholder:Smaller ...
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:Most elements can be made either wider or smaller, by adding the 'wider' or 'smaller' class to them.
-
-
-/*
- * Select widgets.
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Select form elements
-        p
-          innerValue:Below is an example of 3 different select form elements.
-    div
-      class:col-100
-      widgets
-        select
-          class:wider
-          widgets
-            option
-              innerValue:Option 1
-            option
-              innerValue:Option 2
-    div
-      class:col-100
-      widgets
-        select
-          widgets
-            option
-              innerValue:Option 1
-            option
-              innerValue:Option 2
-    div
-      class:col-100
-      widgets
-        select
-          class:smaller
-          widgets
-            option
-              innerValue:Option 1
-            option
-              innerValue:Option 2
-
-
-/*
- * Mixing form elements
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Mixing form elements
-        p
-          innerValue:You can mix form elements, and they will float next to each other, according to the available space.
-    div
-      class:col-100
-      widgets
-        input
-          class:smaller
-          placeholder:Text input ...
-        select
-          widgets
-            option
-              innerValue:Option 1
-            option
-              innerValue:Option 2
-        button
-          innerValue:OK
-
-
-/*
- * Textareas
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Textareas
-        p
-          innerValue:Below are the 3 basic textareas in Micro
-    div
-      class:col-100
-      widgets
-        literal
-          element:textarea
-          class:wider
-          placeholder:Wider ...
-          innerValue:This textarea has a value, and is wider
-    div
-      class:col-100
-      widgets
-        literal
-          element:textarea
-          placeholder:Default ...
-    div
-      class:col-100
-      widgets
-        literal
-          element:textarea
-          class:smaller
-          placeholder:Smaller ...
-
-
-/*
- * Checkboxes
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Checkboxes
-        p
-          innerValue:@"Checkboxes are rendered such that they become slightly larger, and they're styled.
-You can also add a label, either before or after a checkbox."
-    div
-      class:col-100
-      widgets
-        label
-          for:check-1
-          innerValue:Checkbox 1
-        input:check-1
-          type:checkbox
-    div
-      class:col-100
-      widgets
-        input:check-2
-          type:checkbox
-          checked
-        label
-          for:check-2
-          innerValue:Checkbox 2
-
-
-/*
- * Radio buttons
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Radio buttons
-        p
-          innerValue:@"Radio buttons are rendered such that they become slightly larger, and they're styled.
-You can also add a label, either before or after a radio button, just like you can with checkboxes."
-    div
-      class:col-100
-      widgets
-        label
-          for:radio-1
-          innerValue:Radio button 1
-        input:radio-1
-          type:radio
-          name:radio-group-1
-    div
-      class:col-100
-      widgets
-        input:radio-2
-          type:radio
-          checked
-          name:radio-group-1
-        label
-          for:radio-2
-          innerValue:Radio button 2
-
-
-/*
- * Strips
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Strips
-        p
-          innerValue:You can add mostly any form element inside of a 'strip' which will group relevant form elements together. First a button strip.
-    div
-      class:col-100 strip
-      widgets
-        button
-          innerValue:OK
-        button
-          innerValue:Cancel
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:Then a text input and a select list.
-    div
-      class:col-100 strip
-      widgets
-        input
-          placeholder:Text input ...
-          class:smaller
-        select
-          class:smaller
-          widgets
-            option
-              innerValue:Option 1
-            option
-              innerValue:Option 2
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:When you create a 'strip' you can also add labels, which will be rendered as a part of the strip itself.
-    div
-      class:col-100
+      class:row
       widgets
         div
-          class:strip
+          class:col-25
           widgets
-            label
-              for:input-1
-              innerValue:$
-            input:input-1
-              placeholder:Foo input ...
-              class:smaller
+            p
+              class:rounded shaded bg air-inner
+              innerValue:This column use the 'col-25' class, which means it will use 25% of the available space.
+        div
+          class:col-50 offset-25
+          widgets
+            p
+              class:rounded shaded bg air-inner
+              innerValue:@"While this will use 'col-50'and 'offset-25', which means it will be moved forward by 25% of the available space."
+
+
+/*
+ * Forms elements
+ */
+create-widget
+  class:container
+  widgets
     div
-      class:col-100
+      class:row air-top
       widgets
         div
-          class:strip
+          class:col-100
           widgets
-            input:input-2
-              placeholder:Text input ...
-              class:smaller
-            label
-              for:input-2
-              innerValue:$
-    div
-      class:col-100
-      widgets
+            h3
+              innerValue:Form elements
+            p
+              innerValue:@"Below you can find the most commonly used form elements."
         div
-          class:strip
+          class:col-100
           widgets
-            label
-              for:select-1
-              innerValue:$
-            select:select-1
-              class:smaller
-              widgets
-                option
-                  innerValue:Option 1
-                option
-                  innerValue:Option 2
-    div
-      class:col-100
-      widgets
+            button
+              innerValue:Button
         div
-          class:strip
+          class:col-100
           widgets
-            select:select-2
-              class:smaller
-              widgets
-                option
-                  innerValue:Option 1
-                option
-                  innerValue:Option 2
-            label
-              for:select-2
-              innerValue:$
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:@"You can also combine checkboxes, labels, text input elements, and select elements as you see fit, in the same strip.
-However, if you add a checkbox or a radio button to a 'strip', you need to put it into a span HTML element. First a text input, a label and a checkbox grouped
-together in a strip."
-    div
-      class:col-100 strip
-      widgets
-        input:input-4
-          class:smaller
-          placeholder:Bar ...
-        label
-          for:chk-5
-          innerValue:C
-        span
-          widgets
-            input:chk-5
+            input:chk-1
               type:checkbox
               checked
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:Then a couple of radio buttons, with a label each.
-    div
-      class:col-100 strip
-      widgets
-        label
-          for:radio-5
-          innerValue:$
-        span
+            label
+              for:chk-1
+              innerValue:Checkbox
+        div
+          class:col-100
           widgets
-            input:radio-5
+            input:rdo-1
+              type:radio
+              name:rdo-group-1
+            label
+              for:rdo-1
+              innerValue:Radio button 1
+            input:rdo-2
               type:radio
               checked
-              name:radio-group-2
-        label
-          for:radio-6
-          innerValue:€
-        span
-          widgets
-            input:radio-6
-              type:radio
-              name:radio-group-2
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:Then a label, text input element and a checkbox.
-    div
-      class:col-100 strip
-      widgets
-        label
-          for:input-6
-          innerValue:$
-        input:input-6
-          class:smaller
-          placeholder:Foo ...
-        span
-          widgets
-            input:check-7
-              type:checkbox
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:Then a label, select list and button.
-    div
-      class:col-100 strip
-      widgets
-        label
-          for:sel-6
-          innerValue:$
-        select:sel-6
-          class:smaller
-          widgets
-            option
-              innerValue:Option 1
-            option
-              innerValue:Option 2
-        button
-          innerValue:!
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:@"You can also combine 'strip' with 'fill', and have the elements fill the available width.
-If you do, you'll need to add both 'strip' and 'fill' on a parent div element, at which point you don.t need to add 'fill' on the 
-text input element."
-    div
-      class:col-100
-      widgets
-        div
-          class:strip fill
-          widgets
+              name:rdo-group-1
             label
-              for:txt-foo
-              innerValue:Some label
-            input:txt-foo
+              for:rdo-2
+              innerValue:Radio button 2
+            input:rdo-3
+              type:radio
+              name:rdo-group-1
+            label
+              for:rdo-3
+              innerValue:Radio button 3
+        div
+          class:col-100
+          widgets
+            select
+              widgets
+                option
+                  name:opt-1
+                  innerValue:option 1
+                option
+                  name:opt-2
+                  innerValue:option 2
+                  selected
+        div
+          class:col-100
+          widgets
+            input
               type:text
-              placeholder:Fills remaining width ...
-
-
-/*
- * More size control over form elements.
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:More form size control
-        p
-          innerValue:@"You can combine the grid system with form elements, and use the 'fill' class on most form elements, to have them fill the entire
-available width of their parent column. This also makes your form elements become responsive, since the column themselves will resize to 100% width,
-if the viewport becomes less than 800px."
-    div
-      class:col-75
-      widgets
-        input
-          class:fill
-          placeholder:Fills parent column ...
-    div
-      class:col-25
-      widgets
-        button
-          class:fill
-          innerValue:OK
-
-
-/*
- * Table HTML elements.
- */
-create-widget
-  parent:content
-  class:row air-top
-  widgets
-    div
-      class:col-100
-      widgets
-        h3
-          innerValue:Tables
-        p
-          innerValue:@"Tables will be pulled slightly to the left, to allow for the first column's content to align with the rest of the content on the page. 
-A default table looks like the following."
-    div
-      class:col-100
-      widgets
-        table
+              placeholder:Text input ...
+        div
+          class:col-100
           widgets
-            thead
-              innerValue:@"<tr><th>First column</th><th>Second column</th></tr>"
-            tbody
+            literal
+              element:textarea
+              placeholder:Textarea input ...
+              rows:5
+    div
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            h3
+              innerValue:Sizing
+            p
+              innerValue:Most form elements can also be explicitly given a size, through 'wider' and 'smaller' CSS classes.
+        div
+          class:col-100
+          widgets
+            input
+              type:text
+              class:smaller
+              placeholder:Smaller text input ...
+        div
+          class:col-100
+          widgets
+            input
+              type:text
+              placeholder:Default text input ...
+        div
+          class:col-100
+          widgets
+            input
+              type:text
+              class:wider
+              placeholder:Wider text input ...
+    div
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"You can also make a form control fill the entire column, by adding the 'fill' class to it. Below is a 'col-80 
+offset-10' column with a textarea inside of it."
+        div
+          class:col-80 offset-10
+          widgets
+            literal
+              element:textarea
+              rows:7
+              class:fill
+              placeholder:This textarea has the 'fill' class ...
+    div
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            h3
+              innerValue:Strips
+            p
+              innerValue:@"You can also create 'strips' of related form elements, by making sure the container element of your form elements
+has the 'strip' class."
+        div
+          class:col-100 strip
+          widgets
+            label
+              innerValue:Info
+              for:txt-strip-1
+            input:txt-strip-1
+              class:smaller
+              type:text
+              placeholder:Strip textbox ...
+            select
+              class:smaller
               widgets
-                tr
-                  innerValue:"<td>First cell</td><td>Second cell</td>"
-                tr
-                  innerValue:"<td>Third cell</td><td>Fourth cell</td>"
+                option
+                  innerValue:Option 1
+                option
+                  innerValue:Option 2
+            button
+              innerValue:OK
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"If you add a label inside of your strips, like we did above, it will appear similarly to the rest of your strip.
+Notice, if you wish to add a checkbox or a radio button inside your strips, you should wrap them in a 'span' element, like the following illustrates."
+        div
+          class:col-100 strip
+          widgets
+            label
+              for:chk-strip-1
+              innerValue:Checkbox
+            span
+              widgets
+                input:chk-strip-1
+                  type:checkbox
+            input
+              class:smaller
+              type:text
+              placeholder:Textbox ...
+            button
+              innerValue:OK
+    div
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            h3
+              innerValue:Fullwidth strips
+            p
+              innerValue:@"You can also combine 'strip' width 'fill' on the container element, if you have a select or textbox widget inside of 
+your strip, like the following illustrates. If you do, the strip as a whole will fill the entire width, whatever that is, which can be controlled 
+on the container by using one of the 'col-x' classes. This gives you fine grained control over the width of your strips, making them easily
+fill the entire width of their parent elements."
+        div
+          class:col-40 strip fill
+          widgets
+            label
+              for:txt-strip-fill-1
+              innerValue:Text box 1
+            input:txt-strip-fill-1
+              type:text
+              placeholder:Textbox ...
+        div
+          class:col-60 strip fill
+          widgets
+            label
+              for:select-strip-fill-1
+              innerValue:Select
+            select:select-strip-fill-1
+              widgets
+                option
+                  innerValue:Foo
+                option
+                  innerValue:Bar
+            button
+              innerValue:OK
+        div
+          class:col-70 strip fill
+          widgets
+            label
+              for:txt-strip-fill-2
+              innerValue:Text box 2
+            input:txt-strip-fill-2
+              type:text
+              placeholder:Textbox ...
 
 
 /*
  * Misc. classes.
  */
 create-widget
-  parent:content
-  class:row air-top
+  class:container
   widgets
     div
-      class:col-100
+      class:row air-top
       widgets
-        h3
-          innerValue:Misc. classes
-        p
-          innerValue:@"Use the 'air-top' to add some additional 25px of top margin, to create some spacing between for instance rows."
-    div
-      class:col-100 emphasized inner-air
-      widgets
-        p
-          innerValue:@"This column has the 'emphasized' class added to it, which can be used to signify something important.
-Notice, all of these classes will create a border-radius around your column."
-        p
-          innerValue:@"Inside of this column, we also have a button, which is right-aligned, by using the 'right' class on the parent element."
         div
-          class:right
+          class:col-100
           widgets
-            button
-              class:hollow
-              innerValue:OK
+            h3
+              innerValue:Misc. classes
+            p
+              innerValue:@"There exists some contextual classes, allowing you to add some visual clues to your widgets. Below you can
+find some examples of combinations of some of these classes."
+        div
+          class:col-50
+          widgets
+            div
+              class:bg air-inner rounded shaded
+              widgets
+                p
+                  innerValue:Classes 'bg air-inner rounded shaded'
+        div
+          class:col-50
+          widgets
+            div
+              class:air-inner emphasized
+              widgets
+                p
+                  innerValue:Classes 'air-inner emphasized'
     div
-      class:col-100 success inner-air
+      class:row air-top
       widgets
-        p
-          innerValue:@"This column has the 'success' class added to it, which can be used to signify success."
+        div
+          class:col-50
+          widgets
+            div
+              class:air-inner warning
+              widgets
+                p
+                  innerValue:Classes 'air-inner warning'
+        div
+          class:col-50
+          widgets
+            div
+              class:air-inner success
+              widgets
+                p
+                  innerValue:Classes 'air-inner success'
     div
-      class:col-100 warning inner-air
+      class:row air-top
       widgets
-        p
-          innerValue:@"This column has the 'warning' class added to it, which can be used to signify danger, or a warning of some sort."
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"The 'bg' class is contextual to your skin, and normally adds some repeating pattern, that relates to your skin somehow.
+The 'warning', 'success' and 'emphasized' classes, are normally red, green, and the main color of your skin."
+            p
+              innerValue:@"Notice, the last 'col' inside of a 'row' has its right padding removed, to make sure it fills the entire viewport.
+This means you must sometimes add another 'row' in between 'col' elements that wraps unto a new line. In general, you should have one row for
+each sum of 'col' elements that adds up to 100."
 
 
 /*
- * Fullscreen container
+ * General typography.
  */
-create-container-widget:content-fullscreen
+create-widget
+  class:container
+  widgets
+    div
+      class:row
+      widgets
+        div
+          class:col
+          widgets
+            h3
+              innerValue:General typography
+            p
+              innerValue:@"Below you can see some examples of the general typography in Micro. Notice how the font-size is normally reduced when
+you resize your viewport below 800px size."
+    div
+      class:row
+      widgets
+        div
+          class:col
+          widgets
+            h1
+              innerValue:H1 header
+            h2
+              innerValue:H2 header
+            h3
+              innerValue:H3 header
+            h4
+              innerValue:H4 header
+            h5
+              innerValue:H5 header
+            h6
+              innerValue:H6 header
+            p
+              innerValue:This is some arbitrary piece of text in a paragraph. Below is a horizontal ruler
+            hr
+            p
+              widgets
+                strong
+                  innerValue:This is some arbitrary strong text
+                em
+                  innerValue:This is some arbitrary emphasized text
+                code
+                  innerValue:This is some inline code
+                small
+                  innerValue:This is some arbitrary small text
+                a
+                  href:https://google.com
+                  innerValue:Hyperlinks
+            ul
+              widgets
+                li
+                  innerValue:Bulleted list 1
+                li
+                  innerValue:Bulleted list 2
+            ol
+              widgets
+                li
+                  innerValue:Ordered list
+                li
+                  innerValue:Ordered list
+            blockquote
+              innerValue:This is some arbitrary piece of text in a blockquote
+            pre
+              innerValue:@"This is
+  some preformatted
+    text"
+
+
+/*
+ * Fullscreen containers.
+ */
+create-widget
   class:container-fullscreen bg
   widgets
     div
       class:row
       widgets
         div
-          class:col-100 air-top
-          innerValue:@"
-<h3 class=""center"">Fullscreen containers</h3>
-<p>This is a fullscreen container. You can add as many containers as you wish onto your page.</p>
-<p>This container also has the 'bg' class associated with it. The header has the 'center' class. And the columns themselves has the 'air' class
-associated with them, to create some margin between the borders of the container, and its columns.</p>
-<p>Below you can find all the explicitly sized grid column classes, for your reference.</p>"
-
-
-/*
- * All col classes for reference purposes.
- */
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
+          class:col
+          widgets
+            h3
+              innerValue:Fullscreen containers
+            p
+              innerValue:@"This is a 'container-fullscreen', which will fill the entire viewport. Notice, you can use the entire grid system, 
+exactly as is, but simply exchange your 'container' class on your container to 'container-fullscreen' if you wish to use the entire width
+of the viewport. It still adds some padding, such that the text won't go all the way into the borders of your viewport, making it difficult
+to read. But in general, a fullscreen container uses the whole page width, and does not have a maximum width." 
+            p
+              innerValue:@"We have added the 'bg' class to this fullscreen container to make it more visible."
     div
-      class:col-10
-      widgets
-        p
-          innerValue:@"col-10"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-20
-      widgets
-        p
-          innerValue:@"col-20"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-25
-      widgets
-        p
-          innerValue:@"col-25"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-30
-      widgets
-        p
-          innerValue:@"col-30"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-33
-      widgets
-        p
-          innerValue:@"col-33"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-40
-      widgets
-        p
-          innerValue:@"col-40"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-50
-      widgets
-        p
-          innerValue:@"col-50"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-60
-      widgets
-        p
-          innerValue:@"col-60"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-67
-      widgets
-        p
-          innerValue:@"col-67"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-70
-      widgets
-        p
-          innerValue:@"col-70"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-75
-      widgets
-        p
-          innerValue:@"col-75"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-80
-      widgets
-        p
-          innerValue:@"col-80"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-90
-      widgets
-        p
-          innerValue:@"col-90"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-100
-      widgets
-        p
-          innerValue:@"col-100"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col air-top
-      widgets
-        h3
-          class:center
-          innerValue:Floating columns
-        p
-          innerValue:Below is an example of using the undefined columns together.
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 1/2"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 2/2"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 1/3"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 2/3"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 3/3"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 1/4"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 2/4"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 3/4"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 4/4"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 1/5"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 2/5"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 3/5"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 4/5"
-          style:"background:#d0d0d0;"
-    div
-      class:col
-      widgets
-        p
-          innerValue:@"col 5/5"
-          style:"background:#d0d0d0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    div
-      class:col-100 air-top
-      widgets
-        h3
-          class:center
-          innerValue:Nested rows
-        p
-          innerValue:Below is an example of nesting rows inside of columns.
-    div
-      class:col
+      class:row air-top
       widgets
         div
-          class:row
+          class:col
           widgets
+            h3
+              innerValue:Nesting columns
             p
-              class:col-33
-              innerValue:Nested col 1 - 33%
-              style:"background:#f0d0d0;"
-            p
-              class:col-67
-              innerValue:Nested col 2 - 67%
-              style:"background:#d0f0d0;"
+              innerValue:@"Inside of a column, you can add a new 'row' with its own set of columns. Below we have added two columns, where
+each of these have their own rows, having nested columns inside."
     div
-      class:col
+      class:row
       widgets
         div
-          class:row
+          class:col-60
           widgets
-            p
-              class:col
-              innerValue:Nested col 3 - 'col'
-              style:"background:#d0d0f0;"
-            p
-              class:col
-              innerValue:Nested col 4 - 'col'
-              style:"background:#f0d0f0;"
-create-widget
-  parent:content-fullscreen
-  class:row
-  widgets
-    p
-      class:col-100
-      innerValue:@"Notice, when you nest columns, your inner columns cannot have the 'air' class associated with them, since this will wrap
-your columns unto the next row, and not nicely align them with each other."
-    p
-      class:col-100
-      innerValue:@"Notice also that what the 'bg' class does, is dependent upon your skin of choice. Without any skins, it becomes
-simply gray. With a skin, it usually either becomes some repeating pattern, or some linear-gradient color."
+            div
+              class:row
+              widgets
+                div
+                  class:col-33 air-inner air-bottom
+                  style:"background-color:rgba(0,255,0,.2);"
+                  widgets
+                    p
+                      innerValue:33% of 60%
+                div
+                  class:col-67 air-inner air-bottom
+                  style:"background-color:rgba(0,0,255,.2);"
+                  widgets
+                    p
+                      innerValue:67% of 60%
+        div
+          class:col-40
+          widgets
+            div
+              class:row
+              widgets
+                div
+                  class:col-50 air-inner air-bottom
+                  style:"background-color:rgba(0,255,255,.2);"
+                  widgets
+                    p
+                      innerValue:50% of 40%
+                div
+                  class:col-50 air-inner air-bottom
+                  style:"background-color:rgba(255,0,255,.2);"
+                  widgets
+                    p
+                      innerValue:50% of 40%

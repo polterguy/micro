@@ -56,7 +56,7 @@ body {
     color: var(--txt-col);
 }
 
-button, input, select, textarea, body, caption, th, td, input, textarea, select, option, legend, fieldset, h1, h2, h3, h4, h5, h6, p, blockquote, label, ul, ol {
+button, input, select, textarea, pre, caption, th, td, input, textarea, select, option, legend, fieldset, h1, h2, h3, h4, h5, h6, p, blockquote, label, ul, ol {
     margin: 0 0 1rem 0;
 }
 
@@ -293,7 +293,7 @@ div.fill>label {
     white-space:nowrap;
 }
 
-div.fill>input[type=text]:last-child, div.fill>select:last-child {
+div.fill>input[type=text], div.fill>select {
     margin-right:0;
     width:100%;
 }
@@ -327,7 +327,7 @@ table tbody tr td {
     }
 
     .col, .col-10, .col-20, .col-25, .col-30, .col-33, .col-40, .col-50, .col-60, .col-67, .col-70, .col-75, .col-80, .col-90 {
-        padding: 0 2rem 0 0;
+        padding: 0 1rem 0 0;
     }
 
     .col:last-child, .col-10:last-child, .col-20:last-child, .col-25:last-child, .col-30:last-child, .col-33:last-child, .col-40:last-child, .col-50:last-child, .col-60:last-child, .col-67:last-child, .col-70:last-child, .col-75:last-child, .col-80:last-child, .col-90:last-child, .col-100:last-child {
@@ -448,6 +448,10 @@ table tbody tr td {
         margin-left: 70%;
     }
 
+    .offset-75 {
+        margin-left: 75%;
+    }
+
     .offset-80 {
         margin-left: 80%;
     }
@@ -504,20 +508,13 @@ table tbody tr td {
 .air-top {
     margin-top:1rem;
 }
-
 .air-bottom {
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
 }
-.air-left {
-    margin-left:1rem;
-}
-.air-right {
-    margin-right: 1rem;
-}
-.inner-air {
+.air-inner {
     padding:1rem !important;
 }
-.inner-air *:last-child {
+.air-inner *:last-child {
     margin-bottom:0;
 }
 

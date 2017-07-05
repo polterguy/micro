@@ -247,7 +247,7 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
       class:col-70
       widgets
         micro.widgets.wizard-form:my-form
-          class:bg inner-air rounded shaded
+          class:bg air-inner rounded shaded
           text:text-widget
             info:Some text widget
           label
@@ -282,7 +282,7 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
             class:right
             widgets
               button
-                innerValue:OK
+                innerValue:Serialize
                 onclick
 
                   /*
@@ -309,7 +309,7 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
                               onclick
                                 delete-widget:form-result
     div
-      class:col-30 rounded shaded inner-air emphasized
+      class:col-30 rounded shaded air-inner emphasized
       widgets
         p
           innerValue:@"This form is wrapped inside a 'col-70' responsive column, which means you can resize the browser below 800px,
