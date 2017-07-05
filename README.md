@@ -413,9 +413,62 @@ create-widget
 
 The above code uses the **[micro.form.serialize]** Active Event to serialize the form's values, and displays them in a modal window 
 when you click the OK button. Make sure you create a System42 CMS page, and set the _"template"_ to _"empty"_ if you'd like to test the
-above code. The above form will resemble the following screenshot.
+above code. The above code will resemble the following screenshot.
 
 ![alt screenshot](screenshots/screenshot-9.png)
+
+The **[micro.widgets.wizard-form]** extension widget, takes the following standard arguments.
+
+* __[class]__ - Sets the root class for the widget.
+* __[text]__ - Creates a text input widget.
+* __[textarea]__ - Creates a textarea widget.
+* __[checkbox]__ - Creates a checkbox widget.
+* __[select]__ - Creates a select dropdown widget.
+* __[radio-group]__ - Creates a group of radio buttons.
+
+In the above code we use the CSS classes _'bg inner-air rounded shaded'_, which creates the rounded and shaded effect, in addition to 
+the background rendering and the inner padding. All other arguments you supply to it, will be assumed are widget declarations, and created
+as such. You can see an example of adding generic widgets to your forms in the above code, where we have a **[label]**, **[br]** and **[div]**
+widget inside of it, in addition to our normal helper declarations.
+
+Each widget in the above list takes except the **[radio-group]** requires an **[info]** argument, which will become some sort of label or 
+textual helper information of some sort. For the text and select input widgets for instance, this will create a 'strip' widget, wrapping 
+both a label having the info value, and an input element. For the checkbox, it will simply add a related label. For the textarea it will 
+create a placeholder value. If you want to have a label for your textareas, you'll need to explicitly add it yourself, as we demonstrate 
+in the above code.
+
+Notice, the above declaration of our wizard form is 49 lines of code if we ignore the boiler plate code. If we had created a form of that 
+complexity 'by hand', it would surely easily become at least 150-200 lines of code (LOC). The **[micro.widgets.wizard-form]** extension widget, 
+allows you to easily create very rich forms, without having to repeat yourself, with a very small number of LOC (lines of code).
+
+#### [radio-group] and [select] widgets creation
+
+These two widgets requires an **[options]** argument, which will become the possible options the user can select. These options are in a
+name/value structure, where the name of the option becomes the friendly displayed name, and its value becomes the value serialized
+when the user selects that specific option element. All arguments you supply to your **[option]** children nodes, will be appended directly
+into the specific option element. Above for instance, we are adding a **[checked]** argument to one of our radio button arguments. This
+makes sure that the particular radio button becomes initially selected. To initially select a **[select]** dropdown widget's option,
+add up a **[selected]** argument to it.
+
+#### Dropping the ID of your wizard form widgets
+
+If you wish, you can rely upon the default ID generation for your wizard form widgets, and drop their values. How to retrieve its values 
+if you do, is illustrated in the documentation for the **[micro.form.serialize]** Active Event. This can be useful if you for some reasons
+have a wizard form, which might in theory be repeated multiple times on your page for instance, while still preserving the semantically
+correct data-field name when serializing your form.
+
+#### Responsive rendering
+
+Your **[micro.widgets.wizard-form]** widgets can be wrapped inside of a column class, by e.g. either directly wrapping it inside of a col,
+or by adding some 'col-xx' class to its **[class]** declaration. If you do, it will 'pop' like any other column, and be responsively rendered.
+In the samples for Micro, if combined with System42, there is an example of doing just this.
+
+### [micro.widgets.skin-selector]
+
+This is a special extension widget, which simply makes it easy for you during development to select a skin on your page. It takes no
+arguments, and probably shouldn't be used in real production sites - But is a nice little addition during development, to experiment
+with sifferent skins, by simply selecting your skin from a select dropdown list. Notice, if you use the **[micro.widgets.skin-selector]** 
+widget, you should not manually include any of the skin files yourself.
 
 ## Helper Active Events
 
@@ -423,17 +476,104 @@ In addition to the above widgets, there exists some helper Active Events in Micr
 
 * __[micro.css.toggle]__ - Toggles a CSS class for one or more specified widgets
 * __[micro.page.set-focus]__ - Sets focus to a specific widget on your page
-
-There is also one helper extension widget, which might be useful for you, when trying different skins on your page. This event
-is called **[micro.widgets.skin-selector]**, and allows you to play around with skins on your page, by creating a select dropdown box,
-which will automatically traverse all your skins, and allow you to select one of these, which will be automatically injected into your
-page.
-
-Notice, if you use the **[micro.widgets.skin-selector]** widget, you should not manually include any of the skin files yourself.
+* __[micro.form.serialize]__ - Serialize all form elements from a specified widget
 
 Micro will also during startup check to see if System42's CMS is installed, and if so, create two example p5.page objects, which gives
 you a demonstration of its capabilities. One page for the normal typography stuff and the grid system, and another page for the rich widgets, 
 such as the modal widget, menu widget, tab widget, etc.
+
+### [micro.form.serialize]
+
+This Active Event requires some explanation, since it is a very powerful, recursively serialization event, that allows you with a single
+line of code, serialize all form elements recursively from some starting widget. In the above code for our **[micro.widgets.wizard-form]**
+example for instance, we are using it to automatically serialize the entire form, with a single line of code.
+
+Normally this event will return all form element values from the specified **[_arg]** widget you specify when you invoke it. However,
+if you wish, you can instead add up a **[.data-field]** property for your widgets, which will become the 'key' returned instead of
+the ID of your widgets. This is useful if you for some reasons need to create a form element with an automatic ID, but still want to
+retrieve the form element's value with some semantically easily understood name. Below is an example of creating a wizard form using
+this construct.
+
+```
+
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/ext.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+set-widget-property:cnt
+  class:container
+create-widget
+  class:row
+  widgets
+    container
+      class:col
+      widgets
+      
+        /*
+         * Creates our actual 'wizard form' widget.
+         */
+        micro.widgets.wizard-form:my-form
+          class:bg inner-air rounded shaded
+          h3
+            innerValue:My form
+          text
+            info:Some text widget
+            .data-field:text
+          checkbox
+            info:Some checked checkbox
+            checked
+            .data-field:check
+          select
+            info:Some select widget
+            .data-field:select
+            options
+              Option 1:option-1
+              Option 2:option-2
+          radio-group
+            .data-field:radio
+            options
+              Radio 1
+                .data-value:one
+                checked
+              Radio 2
+                .data-value:two
+          div
+            class:right
+            widgets
+              button
+                innerValue:OK
+                onclick
+
+                  /*
+                   * Serializing the 'form' and displays results 
+                   * in a modal widget.
+                   */
+                  micro.form.serialize:my-form
+                  lambda2hyper:x:/-/*
+                  eval-x:x:/+/**/pre/*/innerValue
+                  create-widgets
+                    micro.widgets.modal
+                      class:micro-modal
+                      widgets
+                        h3
+                          innerValue:Result
+                        pre
+                          innerValue:x:/@lambda2hyper?value
+```
+
+Notice how we have completely dropped our IDs in the above code - Still when we invoke our **[micro.form.serialize]** event, we get semantically
+correct data-field names back. In general, this is done by simply adding a **[.data-field]** argument to each of the widgets you create. However,
+the **[radio-group]** widget from our **[micro.widgets.wizard-form]** requires an additional **[.data-value]** argument for each option element,
+if you wish to create it truly generically, not relying upon the automatically generated IDs in any ways. This is because for a radio button,
+the **[name]** attribute on the client side becomes the key for your widget, and this name attribute might not necessarily be possible to
+create uniquely across your page, and still semantically, without risking having two radio button groups overlap in their names. For 
+a **[select]** widget, this is not a problem, since a select widget will simply serialize the 'option' element's value, which only needs to be 
+unique within a single select element. But for a radio button (group), this might be a problem, having multiple radio button groups with 
+overlapping names. Hence, if you wish to truly semantically retrieve a radio button group's value by semantic key/value, you'll need to in 
+addition to adding a **[.data-field]** for the **[radio-group]** as a whole, also add a **[.data-value]** for each option element beneath your 
+radio group.
+
+This small inconvenience and added complexity for **[radio-group]** widgets, is unfortunately something dictated by the HTML standard, and not
+possible to solve generically in P5.
 
 ## Performance
 
@@ -450,11 +590,13 @@ To verify this for yourself, create a new lambda page in System42, set its "temp
 sys42.utilities.execute-lambda-file:@MICRO/samples/ext.hl
 ```
 
-See the screenshot below, demonstrating how Google Chrome's Network inspector shows you 21KB.
+See the screenshot below, demonstrating how Google Chrome's Network inspector shows you ~30KB. 
 
 ![alt screenshot](screenshots/screenshot-8.png)
 
-In the above page, we have multiple modal widgets, multiple tab widgets, and a fairly complex menu. Still it ticks in at 21KB. Simply displaying the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML and CSS.
+In the above page, we have multiple modal widgets, multiple tab widgets, and a fairly complex menu. Still it ticks in at ~30KB. Simply displaying 
+the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML and CSS. And even if you add a skin using
+the 'select skin' widget, the page still ticks in at less than 80KB in total.
 
 To see a video demonstrating some of its features, and the bandwidth consumption differences, you can 
 check out [this YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).
