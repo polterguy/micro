@@ -1,21 +1,30 @@
 # Micro
 
-Micro is a microscopic CSS framework. It can be used stand alone as a pure CSS framework, but is 
+Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
 necessary features. Most of the existing CSS framework were also too JavaScript centric - Including Bootstrap.
 
 **Notice**, Micro does *not* mix well with Bootstrap, which among other things implies that
 none of these examples can be seen very well in System42's Executor. If you wish to reproduce
-these examples, using System42, you'll have to create a lambda CMS page, and make sure you set
-its _"template"_ settings to _"empty"_.
+these examples, using [System42](https://github.com/polterguy/system42), you'll have to create a lambda CMS 
+page, and make sure you set its _"template"_ settings to _"empty"_.
 
-Micro creates a default layout, not based upon CSS classes for the most parts, which means it does not
-mix well with other CSS frameworks, such as e.g. Bootstrap. It is tiny in size, and contains most
-of the widgets you'll need in your day to day work with Phosphorus Five. It contains 2 CSS files.
+Micro creates a default layout, not based upon CSS classes for the most parts. It is tiny in size, 
+and contains most of the widgets you'll need in your day to day work with Phosphorus Five. It contains 
+2 CSS files and several extension widgets and components. Below are the main CSS files in Micro.
 
 * _"/micro/media/main.css"_ - Styles most common elements, such as buttons, checkboxes, etc.
 * _"/micro/media/ext.css"_ - Styles the extension widgets, such as the modal widget, tab widget, etc.
+
+In addition it contains several skins, which builds upon the default layout and styles your widgets one
+way or the other.
+
+* _"/micro/media/skins/emotional.css"_ - An emotional skin for the courageous programmer.
+* _"/micro/media/skins/forrest-dew.css"_ - A light green skin.
+* _"/micro/media/skins/purple-haze.css"_ - A purple skin.
+* _"/micro/media/skins/sea-breeze.css"_ - A light blue skin.
+* _"/micro/media/skins/serious.css"_ - A more professional (gray) skin.
 
 ## General layout
 
@@ -25,7 +34,10 @@ Below is a screenshot of what you may expect.
 
 ![alt screenshot](screenshots/screenshot-1.png)
 
-As you can see, there are no fancy fonts, and little layout in general, since Micro only solves the bare minimum expected from every page you create - Leaving the rest up to you to explicitly solve as you wish. This implies that it doesn't _"end up as much in your way"_, as you apply your own custom design to your site, as you see fit. This trait of Micro also results in a __tiny__ bandwidth consumption.
+As you can see, there are no fancy fonts, and little layout in general unless you include a skin, since Micro only solves the bare minimum 
+expected from every page you create - Leaving the rest up to you to explicitly solve as you wish. This implies that it 
+doesn't _"end up as much in your way"_, as you apply your own custom design to your site or create a skin for it. This trait of Micro also 
+results in a _tiny_ bandwidth consumption.
 
 In addition to a general sane default styling of your HTML elements, most form HTML elements also have some styling for you, that
 will create a sane starting ground for your web apps. Below is another screenshot showing you what you may expect.
@@ -240,7 +252,7 @@ create-widget
                     innerValue:This is our third view
 ```
 
-Your **[micro.widgets.tab]** widget needs a collection of one or more **[view]**s. Each view becomes a single tabview, and
+Your **[micro.widgets.tab]** widget needs a collection of one or more **[view]**. Each view becomes a single tabview, and
 needs at least a **[name]** and a **[widgets]** collection. The name becomes the name of your view, and also the text of the buttons
 that allows you to change the active view. The **[widgets]** collection, becomes the content of your views.
 
