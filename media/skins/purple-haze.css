@@ -110,7 +110,6 @@ nav ul li ul{
 }
 
 /* Form elements */
-
 button {
     text-transform:uppercase;
     color:#fff;
@@ -165,7 +164,6 @@ input[type=radio]:checked:after {
 }
 
 /* Misc. classes */
-
 .success {
     background: linear-gradient(#efe, #dfd);
 }
@@ -183,7 +181,6 @@ input[type=radio]:checked:after {
 }
 
 /* Extension widgets */
-
 .micro-modal .micro-modal-content,
 .micro-tab-border .micro-tab-views {
     background: linear-gradient(#fef7fe, #faf5fa);

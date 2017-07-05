@@ -1,9 +1,8 @@
 
 
-/* Emotional skin, uses grey as base color, and Indi Flower font from Google */
+/* Emotional skin, uses grey as base color, and Indie Flower font from Google */
 
 /* Indie Flower fonts for all languages */
-/* latin */
 @font-face{font-family: 'Indie Flower';font-style: normal;font-weight: 400;src: local('Indie Flower'), local('IndieFlower'), url(https://fonts.gstatic.com/s/indieflower/v8/10JVD_humAd5zP2yrFqw6hampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;}
 
 body {
@@ -66,7 +65,6 @@ nav>ul>li>ul{
 }
 
 /* Form elements */
-
 button {
     color:var(--txt-col);
 }
@@ -89,7 +87,6 @@ input[type=radio]:checked:after {
 }
 
 /* Misc. classes */
-
 .success {
     background: linear-gradient(#efe, #dfd);
 }
@@ -107,7 +104,6 @@ input[type=radio]:checked:after {
 }
 
 /* Extension widgets */
-
 .micro-modal .micro-modal-content,
 .micro-tab-border .micro-tab-views {
     background: var(--wid-lighter-col);
