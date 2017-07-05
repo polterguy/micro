@@ -256,22 +256,24 @@ Your **[micro.widgets.tab]** widget needs a collection of one or more **[view]**
 needs at least a **[name]** and a **[widgets]** collection. The name becomes the name of your view, and also the text of the buttons
 that allows you to change the active view. The **[widgets]** collection, becomes the content of your views.
 
-All other arguments to your **[view]**s becomes appended into the main container widget of your specific view.
+All other arguments to your **[view]** becomes appended into the main container widget of your specific view.
+
+Below is a screenshot of how the above code will end up appearing on your site.
+
+![alt screenshot](screenshots/screenshot-6.png)
 
 The tab widget needs a **[class]** property of _"micro-tab"_ to function correctly. If you wish, you can add an additional CSS class
 to it, to create borders around the tab widget. If you want to have borders, make sure you also add the _"micro-tab-border"_ CSS class 
 to it when instantiating it. This will create some additional padding for your tab widgets though, which means that the content of your 
 tab views will not be perfectly aligned with the rest of the content on your page.
 
-Below is a screenshot of how the above code will end up appearing on your site.
-
-![alt screenshot](screenshots/screenshot-6.png)
-
 ### [micro.widgets.menu]
 
-Although you could create a "nav" element in Micro by hand, Micro also contains one helper Active Event extension widget for you, that easily allows you to create Ajax and/or hyperlinks menus. A menu must have exactly one **[items]** collection. Each child node beneath your items, becomes a menu item. Each menu
-item, can either have an **[onclick]** for Ajax callbacks, an **[href]** for URL navigation, or its own child **[items]** collection. You should
-in general not combine these, but choose only one for a single menu item.
+Although you could create a "nav" element in Micro by hand, Micro also contains one helper Active Event extension widget for you that easily 
+allows you to create Ajax and/or hyperlinks menus. A menu must have exactly one **[items]** collection. Each child node beneath your items, 
+becomes a menu item. Each menu item, can either have an **[onclick]** for Ajax callbacks, an **[href]** for URL navigation, or its own 
+child **[items]** collection creating nested menu items with dropdown menus. You should in general not combine these, but choose only one 
+for each menu item.
 
 The name of your child node beneath your **[items]** collection, becomes the friendly name displayed to the user. The value is an optional
 explicit ID for the actual anchor element of your menu. Below is an example of creating a menu.
@@ -314,16 +316,16 @@ You can combine URL menu items having an **[href]** argument, with other menu it
 not create menu items that have both of these constructs. All arguments besides from **[onclick]**, **[href]** and **[items]** becomes
 appended into the main anchor widget of your menu item. Above you can see an example of how we added a **[target]** attribute to our widget,
 which makes sure the page the menu item is linking to is opened up in another tab. To override the rendering of specific menu items, you could
-for instance add a **[class]** attribute, which would change the rendering of your anchor element, inside of your "li" widget.
+for instance add a **[class]** attribute, which would change the rendering of your anchor element inside of your "li" widget.
 
-The menu will expand its items upon "hover", but for each item with a sub-menu, it can also explicitly be clicked, which will add an "expanded"
+The menu will expand its items upon hover, but for each item with a sub-menu, it can also explicitly be clicked, which will add an 'expanded'
 CSS class to the "ul" element, forcing it to open, also for clients that doesn't handle the hover effect - Such as some tablets and smartphones.
-This implies that it is very friendly for clients running touch-screens and similar constructs.
+This implies that it is friendly for clients with touch-screens that doesn't handle the hover CSS effect very well.
 
 To create a separator, add a **[.separator]** menu item, with no value, and no children. This will render as an "hr" HTML element, and allow you 
 to separate your individual menu items.
 
-#### Responsive rendering
+#### Responsive menu rendering
 
 If the client has less than 800px in width, the menu will collapse, and render a _"hamburger button"_, allowing you to explicitly expand the entire
 menu. This is useful for small devices, such as smartphones, etc. Below is a screenshot of the same menu we created above, except the client has
@@ -331,7 +333,89 @@ been resized to illustrate how it will look like on smaller devices.
 
 ![alt screenshot](screenshots/screenshot-5.png)
 
-The _"hamburger button"_ in the top right corner toggles the expansion of your menu.
+The _"hamburger button"_ in the top right corner toggles the expansion of your menu. Notice, contrary to the Bootstrap CSS navbar widget, the menu
+extension widget in Micro allows you to nest menu items in multiple levels.
+
+### [micro.widgets.wizard-form]
+
+This extension widget allows you to rapidly declare a group of form controls that will be created in the 'most intelligent way possible'.
+This can signifintly reduce your amount of repetition, keeps your code very 'DRY', and also significantly reduce your LOC (lines of code) 
+when creating 'forms'. Below is an example of using it in combination with the 'Sea Breeze' skin.
+
+```
+
+
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/ext.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+set-widget-property:cnt
+  class:container
+create-widget
+  class:row
+  widgets
+    container
+      class:col
+      widgets
+      
+        /*
+         * Creates our actual 'wizard form' widget.
+         */
+        micro.widgets.wizard-form:my-form
+          class:bg inner-air rounded shaded
+          text:text-widget
+            info:Some text widget
+          label
+            for:textarea-widget
+            innerValue:Some textarea
+          textarea:textarea-widget
+            info:Some multiline text ...
+          checkbox:checkbox-widget-1
+            info:Some checked checkbox
+            checked
+          br
+          checkbox:checkbox-widget-2
+            info:Another checkbox
+          select:select-widget
+            info:Some select widget
+            options
+              Option 1:option-1
+              Option 2:option-2
+          radio-group:radio-buttons-group
+            options
+              Radio 1:radio-widget-1
+              Radio 2:radio-widget-2
+                checked
+              Radio 3:radio-widget-3
+          div
+            class:right
+            widgets
+              button
+                innerValue:OK
+                onclick
+
+                  /*
+                   * Serializing the 'form' and displays results 
+                   * in a modal widget.
+                   */
+                  micro.form.serialize:my-form
+                  lambda2hyper:x:/-/*
+                  eval-x:x:/+/**/pre/*/innerValue
+                  create-widgets
+                    micro.widgets.modal
+                      class:micro-modal
+                      widgets
+                        h3
+                          innerValue:Result
+                        pre
+                          innerValue:x:/@lambda2hyper?value
+
+```
+
+The above code uses the **[micro.form.serialize]** Active Event to serialize the form's values, and displays them in a modal window 
+when you click the OK button. Make sure you create a System42 CMS page, and set the _"template"_ to _"empty"_ if you'd like to test the
+above code. The above form will resemble the following screenshot.
+
+![alt screenshot](screenshots/screenshot-9.png)
 
 ## Helper Active Events
 
