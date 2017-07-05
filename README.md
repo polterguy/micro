@@ -1,5 +1,8 @@
 # Micro
 
+**This page currently illustrates some features not yet released in the latest version of Micro. Please refer to
+the README.md in your download for an accurate description of its current features.**
+
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
