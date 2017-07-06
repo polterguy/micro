@@ -48,10 +48,10 @@ create-widget:content-menu
   widgets
     micro.widgets.menu
       items
-        Show modal
+        Menu widget
           onclick
             micro.samples.show-modal
-        Dropdown 1
+        Dropdown
           items
             GitHub for P5
               href:"https://github.com/polterguy/phosphorusfive"
@@ -319,3 +319,70 @@ and the form will automatically pop out and fill the whole viewport."
         p
           innerValue:@"Most of the widgets in the form requires an <strong>[info]</strong> argument, which will be used as a label, title, etc - Depending
 upon the type of widget you create."
+
+
+
+/*
+ * Grid widget example.
+ */
+create-widget
+  parent:content
+  class:row air-top
+  widgets
+    div
+      class:col-100
+      widgets
+        h3
+          innerValue:Grid widget
+        p
+          innerValue:@"A grid widget allows you to display tabular data in a table. It is also commonly referred to as a 'datagrid'.
+Its consumed through the <strong>[micro.widgets.grid]</strong> extension widget."
+    div
+      class:col-30
+      widgets
+        div
+          class:bg air-inner shaded rounded
+          widgets
+            p
+              innerValue:@"Here we have a <strong>[micro.widgets.grid]</strong>, also known as a 'datagrid'. It is useful for 
+displaying tabular data, and can easily be 'databound' towards some data source."
+            p
+              innerValue:@"The grid we see here, is simply created with a couple of static <strong>[rows]</strong>, 
+and not interactive in any ways. Hence, it is rendered on the page statically as a simple <em>'table'</em>. However, it has
+a lot of power beyond these simple features."
+    div
+      class:col-70
+      widgets
+        div
+          class:bg air-inner shaded rounded
+          widgets
+
+            /*
+             * Our actual grid.
+             */
+            micro.widgets.grid
+              columns
+                Name
+                Email
+                Phone no
+              rows
+                item1
+                  Name:Thomas Hansen
+                  Email:thomas@gaiasoul.com
+                  Phone no:12345678
+                item2
+                  Name:John Doe
+                  Email:john@doe.com
+                  Phone no:99887766
+                item3
+                  Name:Johhny Two-Times
+                  Email:johhny@two-times.com
+                  Phone no:67676767
+                item4
+                  Name:Jane Doe
+                  Email:jane@doe.com
+                  Phone no:99118822
+                item5
+                  Name:Peter Fisher
+                  Email:peter@fisher.com
+                  Phone no:91919191

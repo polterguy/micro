@@ -1,4 +1,4 @@
-# Micro
+# Micro CSS and Ajax
 
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
@@ -33,11 +33,11 @@ way or the other.
 
 In general, Micro does as little as possible. However, most of your HTML elements, will have some sort of sane styling applied
 to them. This means that it becomes tiny, while at the same time, leaving the design parts of your page up to you.
-Below is a screenshot of what you may expect.
+Below is a screenshot of how the general typography looks like in Micro if you apply the Forrest Dew skin.
 
 ![alt screenshot](screenshots/screenshot-1.png)
 
-As you can see, there are no fancy fonts, and little layout in general unless you include a skin, since Micro only solves the bare minimum 
+If you don't apply a skin, there are no fancy fonts, and little layout in general unless you include a skin, since Micro only solves the bare minimum 
 expected from every page you create - Leaving the rest up to you to explicitly solve as you wish. This implies that it 
 doesn't _"end up as much in your way"_, as you apply your own custom design to your site or create a skin for it. This trait of Micro also 
 results in a _tiny_ bandwidth consumption.
@@ -181,6 +181,7 @@ element. Below is an example of creating a strip.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
 set-widget-property:cnt
   class:container
 create-widget
@@ -209,6 +210,10 @@ The above will result in something resembling the following.
 
 ![alt screenshot](screenshots/screenshot-3.png)
 
+## Misc. classes
+
+Micro also contains some semantic helper classes, such as _'error'_, _'emphasize'_, _'warning'_, etc. For a complete list and examples of usage, please refer to the _'/Micro/sample'_ example page which is automatically created for you, if you install Micro together with [System42](https://github.com/polterguy/system42).
+
 ## Extension widgets
 
 Micro contains some extension widgets which are documented below. Most of these extension widgets, will automatically include
@@ -219,6 +224,8 @@ the relevant CSS file(s).
 A tiny modal widget, allowing you to easily create modal windows in your apps. Example usage can be found below.
 
 ```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/forrest-dew.css
 create-widgets
   micro.widgets.modal:modal-widget-1
     class:micro-modal
@@ -252,6 +259,8 @@ Below is a screenshot of how this will end up looking like.
 This is a tab control type of widget. An example of usage can be found below.
 
 ```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/forrest-dew.css
 create-widget
   class:container
   widgets
@@ -262,7 +271,7 @@ create-widget
           class:col-100
           widgets
             micro.widgets.tab
-              class:micro-tab
+              class:micro-tab micro-tab-border
               view
                 name:First
                 widgets
@@ -290,9 +299,7 @@ Your **[micro.widgets.tab]** widget needs a collection of one or more **[view]**
 needs at least a **[name]** and a **[widgets]** collection. The name becomes the name of your view, and also the text of the buttons
 that allows you to change the active view. The **[widgets]** collection, becomes the content of your views.
 
-All other arguments to your **[view]** becomes appended into the main container widget of your specific view.
-
-Below is a screenshot of how the above code will end up appearing on your site.
+All other arguments to your **[view]** becomes appended into the main container widget of your specific view. Below is a screenshot of how the above code will end up appearing on your site.
 
 ![alt screenshot](screenshots/screenshot-6.png)
 
@@ -313,6 +320,8 @@ The name of your child node beneath your **[items]** collection, becomes the fri
 explicit ID for the actual anchor element of your menu. Below is an example of creating a menu.
 
 ```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/forrest-dew.css
 create-widget:content-menu
   class:container-fullscreen
   events
@@ -377,10 +386,7 @@ This can signifintly reduce your amount of repetition, keeps your code very 'DRY
 when creating 'forms'. Below is an example of using it in combination with the 'Sea Breeze' skin.
 
 ```
-
-
 p5.web.include-css-file:@MICRO/media/main.css
-p5.web.include-css-file:@MICRO/media/ext.css
 p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
 set-widget-property:cnt
   class:container
@@ -390,7 +396,7 @@ create-widget
     container
       class:col
       widgets
-      
+
         /*
          * Creates our actual 'wizard form' widget.
          */
@@ -431,8 +437,7 @@ create-widget
                    * Serializing the 'form' and displays results 
                    * in a modal widget.
                    */
-                  micro.form.serialize:my-form
-                  lambda2hyper:x:/-/*
+                  micro.widgets.wizard-form.value:my-form
                   eval-x:x:/+/**/pre/*/innerValue
                   create-widgets
                     micro.widgets.modal
@@ -441,11 +446,10 @@ create-widget
                         h3
                           innerValue:Result
                         pre
-                          innerValue:x:/@lambda2hyper?value
-
+                          innerValue:x:/@micro.widgets.wizard-form.value
 ```
 
-The above code uses the **[micro.form.serialize]** Active Event to serialize the form's values, and displays them in a modal window 
+The above code uses the **[micro.widgets.wizard-form.value]** Active Event to serialize the form's values, and displays them in a modal window 
 when you click the OK button. Make sure you create a System42 CMS page, and set the _"template"_ to _"empty"_ if you'd like to test the
 above code. The above code will resemble the following screenshot.
 
@@ -471,9 +475,11 @@ both a label having the info value, and an input element. For the checkbox, it w
 create a placeholder value. If you want to have a label for your textareas, you'll need to explicitly add it yourself, as we demonstrate 
 in the above code.
 
-Notice, the above declaration of our wizard form is 49 lines of code if we ignore the boiler plate code. If we had created a form of that 
+Notice, the above declaration of our wizard form is 48 lines of code if we ignore the boiler plate code. If we had created a form of that 
 complexity 'by hand', it would surely easily become at least 150-200 lines of code (LOC). The **[micro.widgets.wizard-form]** extension widget, 
 allows you to easily create very rich forms, without having to repeat yourself, with a very small number of LOC (lines of code).
+
+To retrieve the value of your form, you can use the __[micro.widgets.wizard-form.value]__ lambda event, passing in the ID of your form.
 
 #### [radio-group] and [select] widgets creation
 
@@ -529,9 +535,7 @@ retrieve the form element's value with some semantically easily understood name.
 this construct.
 
 ```
-
 p5.web.include-css-file:@MICRO/media/main.css
-p5.web.include-css-file:@MICRO/media/ext.css
 p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
 set-widget-property:cnt
   class:container
@@ -582,7 +586,6 @@ create-widget
                    * in a modal widget.
                    */
                   micro.form.serialize:my-form
-                  lambda2hyper:x:/-/*
                   eval-x:x:/+/**/pre/*/innerValue
                   create-widgets
                     micro.widgets.modal
@@ -591,7 +594,7 @@ create-widget
                         h3
                           innerValue:Result
                         pre
-                          innerValue:x:/@lambda2hyper?value
+                          innerValue:x:/@micro.form.serialize
 ```
 
 Notice how we have completely dropped our IDs in the above code - Still when we invoke our **[micro.form.serialize]** event, we get semantically
@@ -609,6 +612,8 @@ radio group.
 This small inconvenience and added complexity for **[radio-group]** widgets, is unfortunately something dictated by the HTML standard, and not
 possible to solve generically in P5.
 
+In fact, the __[micro.widgets.wizard-form.value]__ lambda event for the wizard form, is just a thin layer on top of the __[micro.form.serialize]__ Active Event.
+
 ## Performance
 
 Micro is truly **microscopic**! Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
@@ -616,18 +621,15 @@ ticks in at roughly **30KB**. This includes all CSS and JavaScript on your page,
 total. The number of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their 
 initial rendering, and often hundreds of HTTP requests.
 
-In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there!
-
-To verify this for yourself, create a new lambda page in System42, set its "template" settings to "empty", and paste in the following code, 
-which will show you the "kitchen sink" example.
+In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there. To verify this for yourself, create a new lambda page in System42, set its "template" settings to "empty", and paste in the following code, 
+which will show you the kitchen sink example for extension widgets.
 
 ```
 sys42.utilities.execute-lambda-file:@MICRO/samples/ext.hl
 ```
 
 In the above page, we have multiple modal widgets, multiple tab widgets, and a fairly complex menu. Still it ticks in at ~30KB. Simply displaying 
-the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML, and CSS. And even if you add a skin to Micro,
-using the 'select skin' widget, the page still ticks in at less than 80KB in total.
+the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML, and CSS. And even if you add a skin to Micro, using the 'select skin' widget, the page still ticks in at less than 80KB in total.
 
 To see a video demonstrating some of its features, and the bandwidth consumption differences, you can 
 check out [this YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).

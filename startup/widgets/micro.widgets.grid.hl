@@ -1,0 +1,138 @@
+
+/*
+ * Creates the grid extension widget.
+ *
+ * Pass in [columns] as your column definition and [rows] as your initial rows.
+ */
+create-event:micro.widgets.grid
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Adding columns.
+   */
+  for-each:x:/@.signal/--/columns/*
+
+    /*
+     * Adding the common stuff.
+     */
+    add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets
+      src
+        th
+
+    /*
+     * Checking type of column.
+     */
+    if:x:/@_dp/#/*
+
+      /*
+       * Widget template column.
+       */
+      add:x:/+/*/*
+        src:x:/@_dp/#/*
+      add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+        src
+          widgets
+
+    else
+
+      /*
+       * Simple 'name' column.
+       */
+      eval-x:x:/+/*/*
+      add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+        src
+          innerValue:x:/@_dp/#?name
+
+  /*
+   * Checking is caller supplied an initial set of [rows].
+   */
+  if:x:/@.signal/--/rows/*
+    add:x:/+
+      src:x:/@.signal/--/rows/*
+    micro.widgets.grid._create-rows
+    add:x:/../*/return/*/container/*/widgets/*/tbody/*/widgets
+      src:x:/@micro.widgets.grid._create-rows/*
+
+  /*
+   * Passing in other arguments to grid.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--/<-(!/columns!/rows)
+
+  /*
+   * Returning widget to caller.
+   */
+  return
+    container
+      element:table
+      widgets
+        thead
+          widgets
+            tr
+              widgets
+        tbody
+          widgets
+
+
+
+
+
+/*
+ * Returns a bunch of "tr" widgets from the given collection of rows.
+ */
+create-event:micro.widgets.grid._create-rows
+
+  /*
+   * Signal node, to separate arguments from the rest of the lambda object of the event.
+   * Also used to hold return values.
+   */
+  .signal
+
+  /*
+   * Finding "tbody" element, clearing it, and looping through each row given as argument.
+   */
+  for-each:x:/@.signal/--/<-
+
+    /*
+     * Adding the generic stuff
+     */
+    add:x:/@.signal
+      src
+        tr
+          widgets
+
+    /*
+     * Looping through each cell in currently iterated row.
+     */
+    for-each:x:/@_dp/#/*
+
+      /*
+       * Checking what type of cell this is, which can be static text, and template cell.
+       */
+      if:x:/@_dp/#/*
+
+        add:x:/+/*/*/*/widgets
+          src:x:/@_dp/#/*
+        add:x:/@.signal/0/-/*/widgets
+          src
+            td
+              widgets
+
+      else
+
+        eval-x:x:/+/*/*/*/innerValue
+        add:x:/@.signal/0/-/*/widgets
+          src
+            td
+              innerValue:x:/@_dp/#?value
+
+  /*
+   * Returning content of [.signal]
+   */
+  add:x:/+
+    src:x:/@.signal/*
+  return

@@ -583,6 +583,7 @@ Notice, if you wish to add a checkbox or a radio button inside your strips, you 
               widgets
                 input:chk-strip-1
                   type:checkbox
+                  checked
             input
               class:smaller
               type:text
@@ -701,6 +702,40 @@ The 'warning', 'success' and 'emphasized' classes, are normally red, green, and 
               innerValue:@"Notice, the last 'col' inside of a 'row' has its right padding removed, to make sure it fills the entire viewport.
 This means you must sometimes add another 'row' in between 'col' elements that wraps unto a new line. In general, you should have one row for
 each sum of 'col' elements that adds up to 100."
+    div
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            input
+              class:error fill
+              placeholder:Input element with 'error' class ...
+            select
+              class:error fill
+              widgets
+                option
+                  innerValue:Select with 'error' class ...
+                option
+                  innerValue:Some other option
+            literal
+              element:textarea
+              class:error fill
+              rows:5
+              placeholder:Textarea element with 'error' class ...
+            input:some-error-checkbox
+              type:checkbox
+              class:error
+            label
+              innerValue:Some checkbox with 'error'
+              for:some-error-checkbox
+        div
+          class:col-100
+          widgets
+            p
+              innerValue:@"Above is some example of adding the 'error' class to your form elements. You can set multiple form elements into
+an 'error' mode, by adding the error class to its parent container. An 'error' element, will have some red borders, signifying that the input
+contains some sort of error."
 
 
 /*

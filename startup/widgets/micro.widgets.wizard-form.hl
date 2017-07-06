@@ -32,6 +32,8 @@
  *
  * You don't need to add a [.data-value] for your select widget's option elements, since these values will be taken from the option element's value,
  * and not its ID, which anyways can have multiple similar values globally on your form.
+ *
+ * Notice, you can use [micro.widgets.wizard-form.value] passing in the ID of your wizard form, to retrieve its values.
  */
 create-event:micro.widgets.wizard-form
 
@@ -101,15 +103,18 @@ create-event:micro.widgets.wizard-form
         /*
          * Select widget.
          */
+        .exe
+          return:x:/@_dn/#/*
         eval-x:x:/+3/**
         add:x:/+2/**/select
-          src:x:/@_dp/#/*(!/info)
+          src:x:/@_dp/#/*(!/info!/options)
         apply:x:/+/**/select/*/widgets
           src:x:/@_dp/#/*/options/*
           template
             option
               {value}:x:?value
               {innerValue}:x:?name
+              {@eval}:x:/@.exe
         add:x:/../*/return/*/container/*/widgets
           src
             div
@@ -205,4 +210,24 @@ create-event:micro.widgets.wizard-form
    */
   return
     container
+      events
+
+        /*
+         * Serializes the form, and returns its values, using [micro.form.serialize]
+         */
+        micro.widgets.wizard-form.value
+
+          /*
+           * Verifying requested form is ID of current.
+           */
+          if:x:/../*/_arg?value
+            =:x:/../*/_event?value
+
+            /*
+             * Using [micro.form.serialize] to retrieve value of form
+             * and returning to caller.
+             */
+            micro.form.serialize:x:/../*/_arg?value
+            return:x:/@micro.form.serialize/*
+
       widgets
