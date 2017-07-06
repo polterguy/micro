@@ -323,7 +323,7 @@ upon the type of widget you create."
 
 
 /*
- * Grid widget example.
+ * Grid widget example explanation.
  */
 create-widget
   parent:content
@@ -336,22 +336,38 @@ create-widget
           innerValue:Grid widget
         p
           innerValue:@"A grid widget allows you to display tabular data in a table. It is also commonly referred to as a 'datagrid'.
-Its consumed through the <strong>[micro.widgets.grid]</strong> extension widget."
+It's consumed through the <strong>[micro.widgets.grid]</strong> extension widget."
+        p
+          innerValue:@"The first grid we display here, are simply using static items,
+to create a non-interactive table, without any fancy stuff. The second grid is first of all dynamically populated, secondly it creates a couple
+of 'template items', which instead of simply displaying static text, in fact holds a <strong>[widgets]</strong> collection by itself - 
+In addition to adding some properties unto the actual row itself, by using the <strong>[.row]</strong> argument."
+
+
+/*
+ * Grid widget example.
+ */
+create-widget
+  parent:content
+  class:row air-top
+  widgets
     div
-      class:col-30
+      class:col-50
       widgets
         div
           class:bg air-inner shaded rounded
           widgets
+            h4
+              innerValue:Static datagrid
             p
-              innerValue:@"Here we have a <strong>[micro.widgets.grid]</strong>, also known as a 'datagrid'. It is useful for 
-displaying tabular data, and can easily be 'databound' towards some data source."
+              innerValue:This is a static datagrid, which simply renders as a static HTML table, without any fancy stuff.
             p
-              innerValue:@"The grid we see here, is simply created with a couple of static <strong>[rows]</strong>, 
-and not interactive in any ways. Hence, it is rendered on the page statically as a simple <em>'table'</em>. However, it has
-a lot of power beyond these simple features."
+              innerValue:@"You can still invoke <strong>[micro.widgets.grid.databind]</strong> for it, to dynamically change its content later if you wish.
+Which is useful to for instance being able to implement your own paging logic, filtering, etc."
+            p
+              innerValue:Its overhead to your page is close to nothing, and in fact it renders as a simple HTML table.
     div
-      class:col-70
+      class:col-50
       widgets
         div
           class:bg air-inner shaded rounded
@@ -366,23 +382,106 @@ a lot of power beyond these simple features."
                 Email
                 Phone no
               rows
-                item1
+                item
                   Name:Thomas Hansen
                   Email:thomas@gaiasoul.com
                   Phone no:12345678
-                item2
+                item
                   Name:John Doe
                   Email:john@doe.com
                   Phone no:99887766
-                item3
+                item
                   Name:Johhny Two-Times
                   Email:johhny@two-times.com
                   Phone no:67676767
-                item4
+                item
                   Name:Jane Doe
                   Email:jane@doe.com
                   Phone no:99118822
-                item5
+                item
                   Name:Peter Fisher
                   Email:peter@fisher.com
                   Phone no:91919191
+create-widget
+  parent:content
+  class:row air-top
+  widgets
+    div
+      class:col-70
+      widgets
+        div
+          class:bg air-inner shaded rounded
+          widgets
+
+            /*
+             * Our actual grid.
+             * Notice, this one is dynamically populated in the [micro.widgets.grid.databind]
+             * invocation below.
+             */
+            micro.widgets.grid:second-grid
+              columns
+                Name
+                Email
+                Phone no
+                Select
+    div
+      class:col-30
+      widgets
+        div
+          class:bg air-inner shaded rounded
+          widgets
+            h4
+              innerValue:Dynamically populated datagrid
+            p
+              innerValue:@"This is a dynamically populated datagrid, with one template column, containing a link button - In addition to 
+adding arguments to the actual creation of one of the rows itself."
+            p
+              innerValue:@"It is created without any initial rows, but dynamically populated by invoking <strong>[micro.widgets.grid.databind]</strong>.
+Hint, try clicking the links."
+
+/*
+ * Populating second grid from above.
+ * Notice, first we add our template column to each [item] below.
+ */
+add:x:/+/*
+  src
+    Delete
+      widgets
+        a
+          href:#
+          role:button
+          innerValue:Del
+          onclick
+            p5.web.widgets.get-parent:x:/../*/_event?value
+            p5.web.widgets.get-parent:x:/-/*/*?value
+            delete-widget:x:/-/*/*?value
+micro.widgets.grid.databind:second-grid
+  item
+    Name:Thomas Hansen
+    Email:thomas@gaiasoul.com
+    Phone no:12345678
+  item
+
+    /*
+     * A [.row] argument like the following, appends all given arguments to the actual "tr" widget,
+     * allowing you to trap [onclick] on the row, set CSS class for the "tr" element, etc, etc, etc.
+     * We just set a simple style property for the row as a whole.
+     */
+    .row
+      style:"background-color:rgba(0,255,0,.1);"
+    Name:John Doe
+    Email:john@doe.com
+    Phone no:99887766
+  item
+    Name:Johhny Two-Times
+    Email:johhny@two-times.com
+    Phone no:67676767
+  item
+    Name:Jane Doe
+    Email:jane@doe.com
+    Phone no:99118822
+  item
+    Name:Peter Fisher
+    Email:peter@fisher.com
+    Phone no:91919191
+

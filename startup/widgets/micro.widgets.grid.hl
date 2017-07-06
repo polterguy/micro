@@ -2,7 +2,7 @@
 /*
  * Creates the grid extension widget.
  *
- * Pass in [columns] as your column definition and [rows] as your initial rows.
+ * Pass in a collection of [columns] as your columns, and optionally a collection of [rows] as your initial rows.
  */
 create-event:micro.widgets.grid
 
@@ -100,6 +100,8 @@ create-event:micro.widgets.grid._create-rows
     /*
      * Adding the generic stuff
      */
+    add:x:/+/*/*
+      src:x:/@_dp/#/*/\.row/*
     add:x:/@.signal
       src
         tr
@@ -108,27 +110,31 @@ create-event:micro.widgets.grid._create-rows
     /*
      * Looping through each cell in currently iterated row.
      */
-    for-each:x:/@_dp/#/*
+    for-each:x:/@_dp/#/*(!/.row)
+
+      /*
+       * Adding the generic stuff.
+       */
+      add:x:/@.signal/0/-/*/widgets
+        src
+          td
+      add:x:/@.signal/0/-/*/widgets/0/-
+        src:x:/@_dp/#/*(!/widgets)
 
       /*
        * Checking what type of cell this is, which can be static text, and template cell.
        */
-      if:x:/@_dp/#/*
+      if:x:/@_dp/#/*/widgets
 
-        add:x:/+/*/*/*/widgets
-          src:x:/@_dp/#/*
-        add:x:/@.signal/0/-/*/widgets
-          src
-            td
-              widgets
+        add:x:/@.signal/0/-/*/widgets/0/-
+          src:x:/@_dp/#/*/widgets
 
       else
 
-        eval-x:x:/+/*/*/*/innerValue
-        add:x:/@.signal/0/-/*/widgets
+        eval-x:x:/+/*/*/innerValue
+        add:x:/@.signal/0/-/*/widgets/0/-
           src
-            td
-              innerValue:x:/@_dp/#?value
+            innerValue:x:/@_dp/#?value
 
   /*
    * Returning content of [.signal]
@@ -136,3 +142,44 @@ create-event:micro.widgets.grid._create-rows
   add:x:/+
     src:x:/@.signal/*
   return
+
+
+
+
+
+/*
+ * Databinds the [_arg] grid.
+ * Expects an [item] collection, similarly to the content of the [rows] argument when grid is created.
+ */
+create-event:micro.widgets.grid.databind
+
+  /*
+   * Signal node, to separate arguments from the rest of the lambda object of the event.
+   */
+  .signal
+
+  /*
+   * Finding the "tbody" element of the grid and clearing it of its previous items.
+   */
+  p5.web.widgets.find-first:x:/../*/_arg?value
+    element:tbody
+  clear-widget:x:/@p5.web.widgets.find-first/*/*?value
+
+  /*
+   * Transforming the given collection of items to a widget hierarchy.
+   */
+  add:x:/+
+    src:x:/@.signal/--/<-(!/_arg)
+  micro.widgets.grid._create-rows
+
+  /*
+   * Appending results of above invocation into below [create-widgets] invocation, making sure we
+   * get the parent correctly, before we invoke it.
+   */
+  add:x:/../*/create-widgets
+    src:x:/@micro.widgets.grid._create-rows/*
+  eval-x:x:/+/*/*
+  add:x:/../*/create-widgets/*
+    src
+      parent:x:/@p5.web.widgets.find-first/*/*?value
+  create-widgets
