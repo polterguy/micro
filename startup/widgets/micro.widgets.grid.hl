@@ -3,6 +3,16 @@
  * Creates the grid extension widget.
  *
  * Pass in a collection of [columns] as your columns, and optionally a collection of [rows] as your initial rows.
+ * Use [micro.widgets.grid.databind] to databind the grid towards a (different) row collection later.
+ *
+ * Both the [columns] and the arguments to [micro.widgets.grid.databind] must be in a similar format, which is a collection
+ * of [item] nodes, each having multiple nodes for each cell in your grid, where the value becomes the displayed text.
+ * Alternatively, you can supply [widgets] collection to one or more of your cell within an [item], which will render
+ * your cell as a container widget, with the supplied [widgets] collection as its content.
+ * All other arguments to your cells, becomes properties/attributes to your cells ('td' elements).
+ *
+ * Your [columns] collection obeys by similar rules, and are by default a simple collection of name strings,
+ * which will become the inner value of your cells. If you 
  */
 create-event:micro.widgets.grid
 
@@ -26,16 +36,15 @@ create-event:micro.widgets.grid
     /*
      * Checking type of column.
      */
-    if:x:/@_dp/#/*
+    if:x:/@_dp/#/*/widgets
 
       /*
        * Widget template column.
        */
-      add:x:/+/*/*
-        src:x:/@_dp/#/*
+      add:x:/+/*
+        src:x:/@_dp/#/*/widgets
       add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
         src
-          widgets
 
     else
 
@@ -46,6 +55,12 @@ create-event:micro.widgets.grid
       add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
         src
           innerValue:x:/@_dp/#?name
+
+    /*
+     * Adding the rest of the [columns] arguments.
+     */
+    add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+      src:x:/@_dp/#/*(!/widgets)
 
   /*
    * Checking is caller supplied an initial set of [rows].
@@ -76,6 +91,47 @@ create-event:micro.widgets.grid
               widgets
         tbody
           widgets
+
+
+
+
+
+/*
+ * Databinds the [_arg] grid.
+ * Expects an [item] collection, similarly to the content of the [rows] argument when grid is created.
+ */
+create-event:micro.widgets.grid.databind
+
+  /*
+   * Signal node, to separate arguments from the rest of the lambda object of the event.
+   */
+  .signal
+
+  /*
+   * Finding the "tbody" element of the grid, and clearing it of its previous items.
+   */
+  p5.web.widgets.find-first:x:/../*/_arg?value
+    element:tbody
+  clear-widget:x:/@p5.web.widgets.find-first/*/*?value
+
+  /*
+   * Transforming the given collection of items to a widget hierarchy.
+   */
+  add:x:/+
+    src:x:/@.signal/--/<-(!/_arg)
+  micro.widgets.grid._create-rows
+
+  /*
+   * Appending results of above invocation into below [create-widgets] invocation, making sure we
+   * get the parent correctly, before we invoke it.
+   */
+  add:x:/../*/create-widgets
+    src:x:/@micro.widgets.grid._create-rows/*
+  eval-x:x:/+/*/*
+  add:x:/../*/create-widgets/*
+    src
+      parent:x:/@p5.web.widgets.find-first/*/*?value
+  create-widgets
 
 
 
@@ -142,44 +198,3 @@ create-event:micro.widgets.grid._create-rows
   add:x:/+
     src:x:/@.signal/*
   return
-
-
-
-
-
-/*
- * Databinds the [_arg] grid.
- * Expects an [item] collection, similarly to the content of the [rows] argument when grid is created.
- */
-create-event:micro.widgets.grid.databind
-
-  /*
-   * Signal node, to separate arguments from the rest of the lambda object of the event.
-   */
-  .signal
-
-  /*
-   * Finding the "tbody" element of the grid and clearing it of its previous items.
-   */
-  p5.web.widgets.find-first:x:/../*/_arg?value
-    element:tbody
-  clear-widget:x:/@p5.web.widgets.find-first/*/*?value
-
-  /*
-   * Transforming the given collection of items to a widget hierarchy.
-   */
-  add:x:/+
-    src:x:/@.signal/--/<-(!/_arg)
-  micro.widgets.grid._create-rows
-
-  /*
-   * Appending results of above invocation into below [create-widgets] invocation, making sure we
-   * get the parent correctly, before we invoke it.
-   */
-  add:x:/../*/create-widgets
-    src:x:/@micro.widgets.grid._create-rows/*
-  eval-x:x:/+/*/*
-  add:x:/../*/create-widgets/*
-    src
-      parent:x:/@p5.web.widgets.find-first/*/*?value
-  create-widgets

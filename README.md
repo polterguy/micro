@@ -3,7 +3,7 @@
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
 It was created because of Bootstrap being too big, and other smaller framework not having the 
-necessary features. Most of the existing CSS framework were also too JavaScript centric - Including Bootstrap.
+necessary features. Most of the existing CSS framework were also too JavaScript centric, including Bootstrap.
 Below is a screenshot of combining Micro with the Sea Breeze skin.
 
 ![alt screenshot](screenshots/screenshot-9.png)
@@ -39,7 +39,7 @@ Below is a screenshot of how the general typography looks like in Micro if you a
 
 If you don't apply a skin, there are no fancy fonts, and little layout in general unless you include a skin, since Micro only solves the bare minimum 
 expected from every page you create - Leaving the rest up to you to explicitly solve as you wish. This implies that it 
-doesn't _"end up as much in your way"_, as you apply your own custom design to your site or create a skin for it. This trait of Micro also 
+doesn't _"end up as much in your way"_, as you apply your own custom design to your site, or create a skin for it. This trait of Micro also 
 results in a _tiny_ bandwidth consumption.
 
 In addition to a general sane default styling of your HTML elements, most form HTML elements also have some styling for you, that
@@ -49,7 +49,7 @@ one of the 5 skins that comes out of the box - Or create your own skin, which is
 ![alt screenshot](screenshots/screenshot-2.png)
 
 The above shows how your form elements will end up looking like, if they're embedded inside of a _"strip"_. All form elements can
-also obviously be instantiated as stand-alone elements.
+also obviously be instantiated as stand-alone elements. Notice, the above screenshot has not included any skins.
 
 The color profile of Micro is easily overridden by changing a couple of CSS variables, allowing you to change the colors of all elements,
 by changing only a handful of variables.
@@ -219,6 +219,313 @@ Micro also contains some semantic helper classes, such as _'error'_, _'emphasize
 Micro contains some extension widgets which are documented below. Most of these extension widgets, will automatically include
 the relevant CSS file(s).
 
+### [micro.widgets.grid]
+
+This is the _'datagrid'_ in Micro, which allows you to create tabular data, controlling any aspects of your view. It is at its core nothing but a thin abstraction over the _"table"_ HTML element, allowing you to dynamically databind the rows of your tbody element. Creating a datagrid is as easy as the following. Create a new lambda page in System42, set its _"template"_ to _"empty"_, and paste in the following code.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid
+                  columns
+                    Name
+                    Email
+                    Phone no
+                  rows
+                    item
+                      Name:Thomas Hansen
+                      Email:thomas@gaiasoul.com
+                      Phone no:12345678
+                    item
+                      Name:John Doe
+                      Email:john@doe.com
+                      Phone no:99887766
+                    item
+                      Name:Johhny Two-Times
+                      Email:johhny@two-times.com
+                      Phone no:67676767
+                    item
+                      Name:Jane Doe
+                      Email:jane@doe.com
+                      Phone no:99118822
+                    item
+                      Name:Peter Fisher
+                      Email:peter@fisher.com
+                      Phone no:91919191
+```
+
+The above code will resemble the following.
+
+![alt screenshot](screenshots/screenshot-8.png)
+
+You can invoke **[micro.widgets.grid.databind]** and pass in an **[item]** collection, to databind the grid towards a different dataset later. For instance, consider the following code, which starts out with a single row, for then to change its content when the button is clicked.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid:my-grid
+                  columns
+                    Name
+                    Email
+                    Phone no
+                  rows
+                    item
+                      Name:Thomas Hansen
+                      Email:thomas@gaiasoul.com
+                      Phone no:12345678
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100 right
+          widgets
+            button
+              innerValue:Databind
+              onclick
+                micro.widgets.grid.databind:my-grid
+                  item
+                    Name:John Doe
+                    Email:john@doe.com
+                    Phone no:99887766
+                  item
+                    Name:Johhny Two-Times
+                    Email:johhny@two-times.com
+                    Phone no:67676767
+```
+
+Both of the above samples will create a simple HTML table for you, allowing you to dynamically change its rows. If you wish to create more complex datagrid rows, which have complex widgets as their children - You can do this by applying a **[widgets]** collection to your items. The following illustrates how we could turn all _"Phone No"_ cells into clickable widgets.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid:my-grid
+                  columns
+                    Name
+                    Email
+                    Phone no
+                  rows
+                    item
+                      Name:Thomas Hansen
+                      Email:thomas@gaiasoul.com
+                      Phone no
+                        widgets
+                          a
+                            href:#
+                            role:button
+                            innerValue:12345678
+                            onclick
+                              set-widget-property:x:/../*/_event?value
+                                innerValue:I was clicked
+                    item
+                      Name:John Doe
+                      Email:john@doe.com
+                      Phone no
+                        widgets
+                          a
+                            href:#
+                            role:button
+                            innerValue:99887766
+                            onclick
+                              set-widget-property:x:/../*/_event?value
+                                innerValue:I was clicked
+
+```
+
+Which would resemble the following.
+
+![alt screenshot](screenshots/screenshot-10.png)
+
+If you don't supply a **[widgets]** collection, the _"td"_ widget will be created as a literal widget, with its **[innerValue]** being the value of your item's argument.
+
+All other arguments, besides **[widgets]**, that you pass into a specific cell when creating your items, will be added as properties/attributes to your cell. For instance, passing in the following item collection to it, either during creation, or during **[micro.widgets.grid.databind]**, would make sure your email cells becomes light blue.
+
+```
+  item
+    Name:Thomas Hansen
+    Email:thomas@gaiasoul.com
+      style:"color:rgb(128,128,255);"
+    Phone no:12345678
+  item
+    Name:John Doe
+    Email:john@doe.com
+      style:"color:rgb(128,128,255);"
+    Phone no:99887766
+```
+
+#### Modifying the row
+
+Sometimes you wish to modify the actual row of your items. This is easily done by adding a **[.row]** argument to your items. Either during initial creation, or when grid is databound again. Below we have created a clickable row, which simply adds some styling to your row when it is clicked.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid:my-grid
+                  columns
+                    Name
+                    Email
+                    Phone no
+                  rows
+                    item
+                      .row
+                        role:button
+                        onclick
+                          set-widget-property:x:/../*/_event?value
+                            style:"background-color:rgba(128,255,128,.2);"
+                      Name:Thomas Hansen
+                      Email:thomas@gaiasoul.com
+                      Phone no:12345678
+                    item
+                      .row
+                        role:button
+                        onclick
+                          set-widget-property:x:/../*/_event?value
+                            style:"background-color:rgba(128,255,128,.2);"
+                      Name:John Doe
+                      Email:john@doe.com
+                      Phone no:99887766
+```
+
+The above code would make your row turn light green when clicked. Everything inside of your **[.rows]** will be appended as is, to the actual _"tr"_ element of your row.
+
+#### Modifying your headers
+
+You can also modify your headers with similar constructs. The following code makes sure the **[Name]** header becomes light green, and the **[Email]** header has its own widgets collection. Notice, like with modifying your cells, the construct is similar in that if you add a **[widgets]** collection to a header, it gets a widget collection - Everything else will simply be added as properties/attributes to your _"th"_ element.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid:my-grid
+                  columns
+                    Name
+                      style:"background-color:rgba(128,255,128,.2);"
+                    Email
+                      widgets
+                        a
+                          role:button
+                          href:#
+                          innerValue:Email
+                          onclick
+                            set-widget-property:x:/../*/_event?value
+                              innerValue:Clicked!
+                    Phone no
+                  rows
+                    item
+                      Name:Thomas Hansen
+                      Email:thomas@gaiasoul.com
+                      Phone no:12345678
+```
+
+#### Modifying your table
+
+You can also modify the actual creation of your table element. Everything you add into your table which is neither **[columns]** nor **[rows]** will be added as properties/attributes to your _"table"_ element itself. Below we create a table having the _"foo"_ class, which once clicked, shows a modal widget.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid:my-grid
+                  class:foo
+                  onclick
+                    create-widgets
+                      micro.widgets.modal
+                        class:micro-modal
+                        widgets
+                          h3
+                            innerValue:Table was clicked!
+                  columns
+                    Name
+                    Email
+                    Phone no
+                  rows
+                    item
+                      Name:Thomas Hansen
+                      Email:thomas@gaiasoul.com
+                      Phone no:12345678
+```
+
+#### Datagrid Ninja tricks
+
+By combining your grid creation and/or databind operations with the **[apply]** Active Event from the core of Phosphorus Five, you can easily create any columns, rows, etc, you wish, from any data source you happen to want to create your table from.
+
+Another Ninja trick you should take advantage of, is to create your own specialized datagrids as extension widgets, that first changes the given data, for then to invoke **[micro.widgets.grid]** internally. This way you'd avoid having to repeat yourself, and have your own specialized grids, for displaying whatever data source you wish to display in a uniform way.
+
+The grid in Micro is a very thin layer of abstraction on top of an HTML table widget. This comes with the added cost of making it more verbose to consume when you have special needs. However, it also implies that there does not exist any datagrid you would want to display in this world, that you could not create using the Micro grid. To fixe the first problem, creating your own extension widget, which internally invokes **[micro.widgets.grid]** after first having _"massaged"_ the given data, makes you able to be very _"DRY"_.
+
+I would not recommend you to consume the grid in Micro directly, unless you're creating a _"boring"_ HTML table for the above reasons - But rather recommend you to create your own extension widget, based upon the **[micro.widgets.grid]** itself.
+
+I will be creating some examples of how to do this over at [my blog](https://gaiasoul.com).
+
 ### [micro.widgets.modal]
 
 A tiny modal widget, allowing you to easily create modal windows in your apps. Example usage can be found below.
@@ -368,6 +675,8 @@ This implies that it is friendly for clients with touch-screens that doesn't han
 To create a separator, add a **[.separator]** menu item, with no value, and no children. This will render as an "hr" HTML element, and allow you 
 to separate your individual menu items.
 
+All arguments besides **[items]** will appended as is to the root _"nav"_ widget for your menu. Which allows you to for instance add a CSS class, set styling for it, etc.
+
 #### Responsive menu rendering
 
 If the client has less than 800px in width, the menu will collapse, and render a _"hamburger button"_, allowing you to explicitly expand the entire
@@ -381,9 +690,9 @@ extension widget in Micro allows you to nest menu items in multiple levels.
 
 ### [micro.widgets.wizard-form]
 
-This extension widget allows you to rapidly declare a group of form controls that will be created in the 'most intelligent way possible'.
-This can signifintly reduce your amount of repetition, keeps your code very 'DRY', and also significantly reduce your LOC (lines of code) 
-when creating 'forms'. Below is an example of using it in combination with the 'Sea Breeze' skin.
+This extension widget allows you to rapidly declare a group of form controls that will be created in the _'most intelligent way possible'_.
+This can signifintly reduce your amount of repetition, keeps your code very DRY, and also significantly reduce your LOC (lines of code) 
+when creating forms. Below is an example of using it in combination with the Sea Breeze skin.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -460,8 +769,8 @@ The **[micro.widgets.wizard-form]** extension widget, takes the following standa
 * __[class]__ - Sets the root class for the widget.
 * __[text]__ - Creates a text input widget.
 * __[textarea]__ - Creates a textarea widget.
-* __[checkbox]__ - Creates a checkbox widget.
 * __[select]__ - Creates a select dropdown widget.
+* __[checkbox]__ - Creates a checkbox widget.
 * __[radio-group]__ - Creates a group of radio buttons.
 
 In the above code we use the CSS classes _'bg air-inner rounded shaded'_, which creates the rounded and shaded effect, in addition to 
@@ -470,8 +779,8 @@ as such. You can see an example of adding generic widgets to your forms in the a
 widget inside of it, in addition to our normal helper declarations.
 
 Each widget in the above list takes except the **[radio-group]** requires an **[info]** argument, which will become some sort of label or 
-textual helper information of some sort. For the text and select input widgets for instance, this will create a 'strip' widget, wrapping 
-both a label having the info value, and an input element. For the checkbox, it will simply add a related label. For the textarea it will 
+textual helper information of some sort. For the **[text]** and **[select]** input widgets for instance, this will create a 'strip' widget, wrapping 
+both a label having the info value, and an input element. For the **[checkbox]**, it will simply add a related label. For the **[textarea]** it will 
 create a placeholder value. If you want to have a label for your textareas, you'll need to explicitly add it yourself, as we demonstrate 
 in the above code.
 
@@ -512,7 +821,7 @@ widget, you should not manually include any of the skin files yourself.
 
 ## Helper Active Events
 
-In addition to the above widgets, there exists some helper Active Events in Micro.
+In addition to the above widgets, there exists a couple of helper Active Events in Micro.
 
 * __[micro.css.toggle]__ - Toggles a CSS class for one or more specified widgets
 * __[micro.page.set-focus]__ - Sets focus to a specific widget on your page
@@ -526,13 +835,11 @@ such as the modal widget, menu widget, tab widget, etc.
 
 This Active Event requires some explanation, since it is a very powerful, recursively serialization event, that allows you with a single
 line of code, serialize all form elements recursively from some starting widget. In the above code for our **[micro.widgets.wizard-form]**
-example for instance, we are using it to automatically serialize the entire form, with a single line of code.
+example for instance, we are using it indirectly to automatically serialize the entire form, with a single line of code.
 
-Normally this event will return all form element values from the specified **[_arg]** widget you specify when you invoke it. However,
-if you wish, you can instead add up a **[.data-field]** property for your widgets, which will become the 'key' returned instead of
-the ID of your widgets. This is useful if you for some reasons need to create a form element with an automatic ID, but still want to
-retrieve the form element's value with some semantically easily understood name. Below is an example of creating a wizard form using
-this construct.
+Normally this event will return all form element values from the specified **[_arg]** widget you specify when you invoke it, according to an ID/value structure. However, if you wish, you can instead add up a **[.data-field]** property for your widgets, which will become the 'key' returned instead of the ID of your widgets. This is useful if you for some reasons need to create a form element with an automatic ID, but still want to
+retrieve the form element's value with some semantically easily understood key/name. Below is an example of creating a wizard form using
+this construct. Notice particularly the **[.data-field]** and **[.data-value]** in our code, and how they relate to the return values from **[micro.form.serialize]**.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -598,12 +905,12 @@ create-widget
 ```
 
 Notice how we have completely dropped our IDs in the above code - Still when we invoke our **[micro.form.serialize]** event, we get semantically
-correct data-field names back. In general, this is done by simply adding a **[.data-field]** argument to each of the widgets you create. However,
+correct data-field names back. In general, this is done by adding a **[.data-field]** argument to each of the widgets you create. However,
 the **[radio-group]** widget from our **[micro.widgets.wizard-form]** requires an additional **[.data-value]** argument for each option element,
-if you wish to create it truly generically, not relying upon the automatically generated IDs in any ways. This is because for a radio button,
-the **[name]** attribute on the client side becomes the key for your widget, and this name attribute might not necessarily be possible to
-create uniquely across your page, and still semantically, without risking having two radio button groups overlap in their names. For 
-a **[select]** widget, this is not a problem, since a select widget will simply serialize the 'option' element's value, which only needs to be 
+if you wish to create it truly generically, not relying upon the automatically generated IDs in any ways. This is because for a radio button, the **[name]** attribute on the client side becomes the key for your widget, and this name attribute might not necessarily be possible to
+create uniquely across your page, and still semantically, without risking having two radio button groups overlap in their names.
+
+For a **[select]** widget, this is not a problem, since a select widget will simply serialize the 'option' element's value, which only needs to be 
 unique within a single select element. But for a radio button (group), this might be a problem, having multiple radio button groups with 
 overlapping names. Hence, if you wish to truly semantically retrieve a radio button group's value by semantic key/value, you'll need to in 
 addition to adding a **[.data-field]** for the **[radio-group]** as a whole, also add a **[.data-value]** for each option element beneath your 
@@ -612,24 +919,13 @@ radio group.
 This small inconvenience and added complexity for **[radio-group]** widgets, is unfortunately something dictated by the HTML standard, and not
 possible to solve generically in P5.
 
-In fact, the __[micro.widgets.wizard-form.value]__ lambda event for the wizard form, is just a thin layer on top of the __[micro.form.serialize]__ Active Event.
+Notice, the __[micro.widgets.wizard-form.value]__ lambda event for the wizard form, is just a thin layer on top of the __[micro.form.serialize]__ Active Event.
 
 ## Performance
 
 Micro is truly **microscopic**! Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
-ticks in at roughly **30KB**. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in 
-total. The number of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their 
-initial rendering, and often hundreds of HTTP requests.
+ticks in at roughly **32KB**, unless you apply a skin. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in total. The number of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their initial rendering, and often hundreds of HTTP requests. In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there.
 
-In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there. To verify this for yourself, create a new lambda page in System42, set its "template" settings to "empty", and paste in the following code, 
-which will show you the kitchen sink example for extension widgets.
+Notice that the extension widgets example also includes several datagrids, multiple modal windows, several tab controls, a wizard form, an Ajax menu - Yet still, its total bandwidth consumption is 32KB. If you apply a skin to the page, it is still less than 100KB, regardless of which skin you include.
 
-```
-sys42.utilities.execute-lambda-file:@MICRO/samples/ext.hl
-```
-
-In the above page, we have multiple modal widgets, multiple tab widgets, and a fairly complex menu. Still it ticks in at ~30KB. Simply displaying 
-the Ajax menu example for most other Ajax libraries, will often download megabytes of JavaScript, HTML, and CSS. And even if you add a skin to Micro, using the 'select skin' widget, the page still ticks in at less than 80KB in total.
-
-To see a video demonstrating some of its features, and the bandwidth consumption differences, you can 
-check out [this YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).
+To see a video demonstrating some of Micro's features, and its bandwidth consumption compared to other competing toolkits, feel free to watch the  [following YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).

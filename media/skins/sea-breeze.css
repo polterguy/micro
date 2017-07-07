@@ -196,6 +196,6 @@ input[type=radio]:checked:after {
 .bg {
     /* Copyright(c) Steve Schoger, licenseed as CC BY-SA 4.0*/
     background-color: #e7fdff;
-    background-image: var(--bg-img);
+    background-image: url('sea-breeze/formal-invitation.svg');
 }
 

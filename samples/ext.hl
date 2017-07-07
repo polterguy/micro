@@ -415,15 +415,24 @@ create-widget
 
             /*
              * Our actual grid.
-             * Notice, this one is dynamically populated in the [micro.widgets.grid.databind]
-             * invocation below.
+             * Notice, this one is dynamically populated in the [micro.widgets.grid.databind] invocation below.
+             * Also notice we set the style property for one of our [columns], in addition to creating a template
+             * [widgets] collection for another of our rows.
              */
             micro.widgets.grid:second-grid
               columns
                 Name
                 Email
                 Phone no
-                Select
+                  widgets
+                    a
+                      href:#
+                      innerValue:Phone no
+                      onclick
+                        set-widget-property:x:/../*/_event?value
+                          innerValue:Filtering
+                Delete
+                  style:"color:rgba(255,0,0,.4);"
     div
       class:col-30
       widgets
@@ -458,6 +467,7 @@ add:x:/+/*
 micro.widgets.grid.databind:second-grid
   item
     Name:Thomas Hansen
+      style:"color:rgb(128,128,255);"
     Email:thomas@gaiasoul.com
     Phone no:12345678
   item
@@ -468,7 +478,7 @@ micro.widgets.grid.databind:second-grid
      * We just set a simple style property for the row as a whole.
      */
     .row
-      style:"background-color:rgba(0,255,0,.1);"
+      style:"background-color:rgba(128,128,255,.2);"
     Name:John Doe
     Email:john@doe.com
     Phone no:99887766
@@ -484,4 +494,20 @@ micro.widgets.grid.databind:second-grid
     Name:Peter Fisher
     Email:peter@fisher.com
     Phone no:91919191
+
+
+
+/*
+ * Grid widget explanation (more).
+ */
+create-widget
+  parent:content
+  class:row air-top
+  widgets
+    div
+      class:col-100
+      widgets
+        p
+          innerValue:@"So basically, you have 100% perfect control over the exact rendering of your grid, by making it possible for you
+to modify any aspect of its rendering."
 

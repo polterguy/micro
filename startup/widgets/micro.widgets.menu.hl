@@ -37,6 +37,12 @@ create-event:micro.widgets.menu
     micro.widgets.menu._create-items:x:/@.signal/--/items
 
   /*
+   * Adding all other arguments.
+   */
+  add:x:/../*/return/*/nav
+    src:x:/@.signal/--/<-(!/items)
+
+  /*
    * Returning menu to caller.
    */
   return
