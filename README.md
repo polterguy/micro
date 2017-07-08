@@ -214,6 +214,14 @@ The above will result in something resembling the following.
 
 Micro also contains some semantic helper classes, such as _'error'_, _'emphasize'_, _'warning'_, etc. For a complete list and examples of usage, please refer to the _'/Micro/sample'_ example page which is automatically created for you, if you install Micro together with [System42](https://github.com/polterguy/system42).
 
+## Tables
+
+Tables are by default rendered with a single border between cells. If you add the _'striped'_ class to your table, every second rows will be rendered with a slightly darker background color. Below is an example of a striped table.
+
+![alt screenshot](screenshots/screenshot-11.png)
+
+Notice the column the above table is rendered in, also have the _'bg air-inner shaded rounded'_ classes associated with it, in addition to that we're using the Sea Breeze skin.
+
 ## Extension widgets
 
 Micro contains some extension widgets which are documented below. Most of these extension widgets, will automatically include
@@ -270,7 +278,9 @@ The above code will resemble the following.
 
 ![alt screenshot](screenshots/screenshot-8.png)
 
-You can invoke **[micro.widgets.grid.databind]** and pass in an **[item]** collection, to databind the grid towards a different dataset later. For instance, consider the following code, which starts out with a single row, for then to change its content when the button is clicked.
+#### Dunamically databinding your grid
+
+You can invoke **[micro.widgets.grid.databind]** and pass in an **[item]** collection to databind the grid towards a different dataset later. For instance, consider the following code, which starts out with a single row, for then to change its content when the button is clicked.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -317,7 +327,11 @@ create-widget
                     Phone no:67676767
 ```
 
-Both of the above samples will create a simple HTML table for you, allowing you to dynamically change its rows. If you wish to create more complex datagrid rows, which have complex widgets as their children - You can do this by applying a **[widgets]** collection to your items. The following illustrates how we could turn all _"Phone No"_ cells into clickable widgets.
+Both of the above samples will create a simple HTML table for you, allowing you to dynamically change its rows. 
+
+#### Complex cells
+
+If you wish to create more complex datagrid rows, which have complex widgets as their children - You can do this by applying a **[widgets]** collection to your items. The following illustrates how we could turn all _"Phone No"_ cells into clickable widgets.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -390,7 +404,7 @@ All other arguments, besides **[widgets]**, that you pass into a specific cell w
 
 #### Modifying the row
 
-Sometimes you wish to modify the actual row of your items. This is easily done by adding a **[.row]** argument to your items. Either during initial creation, or when grid is databound again. Below we have created a clickable row, which simply adds some styling to your row when it is clicked.
+Sometimes you wish to modify the actual row of your items. This is easily done by adding a **[.row]** argument to your items. Either during initial creation, or when grid is databound. Below we have created a clickable row, which simply adds some styling to your row when it is clicked.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -435,9 +449,9 @@ create-widget
 
 The above code would make your row turn light green when clicked. Everything inside of your **[.rows]** will be appended as is, to the actual _"tr"_ element of your row.
 
-#### Modifying your headers
+#### Modifying your columns
 
-You can also modify your headers with similar constructs. The following code makes sure the **[Name]** header becomes light green, and the **[Email]** header has its own widgets collection. Notice, like with modifying your cells, the construct is similar in that if you add a **[widgets]** collection to a header, it gets a widget collection - Everything else will simply be added as properties/attributes to your _"th"_ element.
+You can also modify your columns with similar constructs. The following code makes sure the **[Name]** header becomes light green, and the **[Email]** header has its own widgets collection. Notice, like with modifying your cells, the construct is similar in that if you add a **[widgets]** collection to a header, it gets a widget collection - Everything else will simply be added as properties/attributes to your _"th"_ element.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -475,9 +489,25 @@ create-widget
                       Phone no:12345678
 ```
 
+Or if you only wish to modify the _'tr'_ element of your thead element, your **[columns]** row that is, you can use the **[.row]** argument, inside of your **[columns]** declaration. Like the following incomplete example illustrates.
+
+```
+  micro.widgets.grid
+    class:striped
+    columns
+      .row
+        style:"background-color:rgba(128,255,128,.2);"
+      Column 1
+      Column 2
+
+    /*
+     * the rest of your grid declaration.
+     */
+```
+
 #### Modifying your table
 
-You can also modify the actual creation of your table element. Everything you add into your table which is neither **[columns]** nor **[rows]** will be added as properties/attributes to your _"table"_ element itself. Below we create a table having the _"foo"_ class, which once clicked, shows a modal widget.
+You can also modify the actual creation of your table element. Everything you add into your table which is neither **[columns]** nor **[rows]** nor **[.body]** will be added as properties/attributes to your _"table"_ element itself. Below we create a table having the _"foo"_ class, which once clicked, shows a modal widget.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -514,17 +544,102 @@ create-widget
                       Phone no:12345678
 ```
 
+You can also supply a **[.body]** argument to your invocation, to modify on the _'tbody'_ widget only, and not the entire table. Consider the following incomplete code.
+
+```
+  micro.widgets.grid
+    .body
+      style:"background-color:rgba(128,255,128,.2);"
+
+    /*
+     * Rest of grid declaration.
+     */
+```
+
+If you only wish to modify the _'thead'_ widget instead, you can do such a thing with the following code.
+
+```
+  micro.widgets.grid
+    columns
+      .head
+        style:"background-color:rgba(128,255,128,.2);"
+      Column 1
+      Column 2
+
+    /*
+     * Rest of grid declaration.
+     */
+```
+
+#### Kitchen sink datagrid example
+
+Below is an example using all the bells and whistles of the **[micro.widgets.grid]** extension widget.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/skins/sea-breeze.css
+create-widget
+  class:container
+  widgets
+    container
+      class:row air-top
+      widgets
+        div
+          class:col-100
+          widgets
+            div
+              class:bg air-inner shaded rounded
+              widgets
+                micro.widgets.grid
+                  class:striped
+                  .body
+                    style:"font-size:.8em;"
+                  .head
+                    style:"background-color:rgba(128,128,255,.2);"
+                  columns
+                    .row
+                      style:"background-color:rgba(128,255,128,.2);"
+                    Name
+                      style:"color:rgb(0,255,0);"
+                    Email
+                      widgets
+                        a
+                          href:"https://gaiasoul.com"
+                          target:_blank
+                          innerValue:Email
+                    Phone no
+                  rows
+                    item
+                      .row
+                        style:"background-color:rgba(128,128,255,.2);"
+                      Name:Thomas Hansen
+                        style:"font-size:1.2em;"
+                      Email:thomas@gaiasoul.com
+                        widgets
+                          a
+                            href:#
+                            innerValue:Email
+                            onclick
+                              set-widget-property:x:/../*/_event?value
+                                innerValue:I was clicked!
+                      Phone no:12345678
+                    item
+                      Name:John Doe
+                      Email:john@doe.com
+                      Phone no:99887766
+```
+
 #### Datagrid Ninja tricks
 
-By combining your grid creation and/or databind operations with the **[apply]** Active Event from the core of Phosphorus Five, you can easily create any columns, rows, etc, you wish, from any data source you happen to want to create your table from.
+A Ninja trick you should take advantage of, is to create your own specialized datagrids as extension widgets, that first changes the given data, for then to invoke **[micro.widgets.grid]** internally, and returns the results of that invocation. This way you'd avoid having to repeat yourself, and have your own specialized grids, for displaying whatever data source you wish to display in a uniform way.
 
-Another Ninja trick you should take advantage of, is to create your own specialized datagrids as extension widgets, that first changes the given data, for then to invoke **[micro.widgets.grid]** internally. This way you'd avoid having to repeat yourself, and have your own specialized grids, for displaying whatever data source you wish to display in a uniform way.
+Notice, if you do this, you would only need to modify the **[columns]** definition, as long as you don't supply any static **[rows]**, but rather rely upon invoking your own specialized version of **[micro.widgets.grid.databind]** event, which internally invoke the base databind event.
 
-The grid in Micro is a very thin layer of abstraction on top of an HTML table widget. This comes with the added cost of making it more verbose to consume when you have special needs. However, it also implies that there does not exist any datagrid you would want to display in this world, that you could not create using the Micro grid. To fixe the first problem, creating your own extension widget, which internally invokes **[micro.widgets.grid]** after first having _"massaged"_ the given data, makes you able to be very _"DRY"_.
+The grid in Micro is a very thin layer of abstraction on top of an HTML table widget. This comes with the added cost of making it more verbose to consume when you have special needs. However, it also implies that there does not exist any datagrid you would want to display in this world, that you could not easily create using the Micro grid. To fixe the first problem, creating your own extension widget, which internally invokes **[micro.widgets.grid]** after first having _"massaged"_ the given data - In addition to creating your own specialized version of **[micro.widgets.grid.databind]** - Makes your code very _"DRY"_.
 
-I would not recommend you to consume the grid in Micro directly, unless you're creating a _"boring"_ HTML table for the above reasons - But rather recommend you to create your own extension widget, based upon the **[micro.widgets.grid]** itself.
+I would not recommend you to consume the grid in Micro directly, unless you're creating a _"boring"_ HTML table for the above reasons - But rather recommend you to create your own extension widget, based upon the **[micro.widgets.grid]** and **[micro.widgets.grid.databind]** events themselves. I will be creating some examples of how to do this over at [my blog](https://gaiasoul.com).
 
-I will be creating some examples of how to do this over at [my blog](https://gaiasoul.com).
+I have already written a blog that demonstrates how to use the grid in Micro, which you can see [here](https://gaiasoul.com/2017/07/07/creating-a-million-ajax-datagrids-in-20-minutes-aphrodite-kiss/).
 
 ### [micro.widgets.modal]
 
