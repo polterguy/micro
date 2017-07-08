@@ -2,6 +2,9 @@
 /*
  * Creates the grid extension widget.
  *
+ * The [micro.widgets.grid] extension widget is the equivalent of a "datagrid" in Micro, and allows you to create tabular data,
+ * and by extending it yourself, creating specialized datagrid widgets.
+ *
  * Pass in a collection of [columns] as your columns, and optionally a collection of [rows] as your initial rows.
  * Use [micro.widgets.grid.databind] to databind the grid towards a (different) row collection later.
  *
