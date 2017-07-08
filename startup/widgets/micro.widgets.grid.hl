@@ -27,7 +27,7 @@ create-event:micro.widgets.grid
   /*
    * Adding columns, if there are any.
    */
-  if:x:/@.signal/--/columns/*(!/\.head)
+  if:x:/@.signal/--/columns
 
     /*
      * Caller specified a [columns] collection.
@@ -106,10 +106,10 @@ create-event:micro.widgets.grid
       src:x:/@micro.widgets.grid._create-rows/*
 
   /*
-   * Passing in other arguments to grid.
+   * Passing in other arguments to 'table'.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--/<-(!/columns!/rows!/\.body)
+    src:x:/@.signal/--/<-(!/columns!/rows!/\.body!/\.head)
 
   /*
    * Returning widget to caller.
@@ -127,7 +127,7 @@ create-event:micro.widgets.grid
 
 /*
  * Databinds the [_arg] grid.
- * Expects an [item] collection, similarly to the content of the [rows] argument when grid is created.
+ * Expects an [item] collection, similarly to the content of the [rows] argument when grid was created.
  */
 create-event:micro.widgets.grid.databind
 
