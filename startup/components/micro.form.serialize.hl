@@ -52,10 +52,10 @@ create-event:micro.form.serialize
         default
           get-widget-property:x:/../*/_arg?value
             value
-          add:x:/./*/return
-            src:@"{0}:@""{1}"""
-              :x:(/..case/*/get-widget-property/*/*/\.data-field|/../*/_arg)/[0,1]?value
-              :x:/@get-widget-property/*/*?value
+          add:x:/..default/*/return
+            src:x:(/..case/*/get-widget-property/*/*/\.data-field|/../*/_arg)/[0,1]?value
+          set:x:/..default/*/return/0?value
+            src:x:/@get-widget-property/*/*?value
           return
 
     /*
@@ -66,20 +66,19 @@ create-event:micro.form.serialize
       get-widget-property:x:/../*/_arg?value
         value
         .data-field
-      add:x:/./*/return
-        src:@"{0}:@""{1}"""
-          :x:(/..case/*/get-widget-property/*/*/.data-field|/../*/_arg)?value
-          :x:/@get-widget-property/*/*/value?value
+      add:x:/..case/*/return
+        src:x:(/..case/*/get-widget-property/*/*/\.data-field|/../*/_arg)/[0,1]?value
+      set:x:/..case/*/return/0?value
+        src:x:/@get-widget-property/*/*/value?value
       return
 
     /*
      * Any other type of element.
      */
     default
-      .ret
       p5.web.widgets.get-children:x:/../*/_arg?value
       for-each:x:/@p5.web.widgets.get-children/*/*?value
         micro.form.serialize:x:/@_dp?value
-        add:x:/@.ret
+        add:x:/..default/*/return
           src:x:/@micro.form.serialize/*
-      return:x:/@.ret/*
+      return

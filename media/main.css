@@ -114,7 +114,7 @@ pre, textarea {
 }
 
 .strip, button {
-    overflow: visible;
+    overflow: auto;
 }
 
 code, kbd, pre, samp {
@@ -398,7 +398,6 @@ input, select, textarea {
     border-radius: 0 var(--border-radius)var(--border-radius)0;
     border-left-style: none;
     float: left;
-    margin-right: 5px;
 }
 
 .strip span input[type=checkbox], .strip span input[type=radio] {
@@ -436,7 +435,7 @@ div.fill {
         white-space: nowrap;
     }
 
-    div.fill > input[type=text], div.fill > select {
+    div.fill > input[type=text], div.fill > input[type=number], div.fill > input[type=password], div.fill > select {
         margin-right: 0 !important;
         width: 100%;
     }
@@ -463,8 +462,16 @@ table tbody tr:first-child td {
     border-top-style: none;
 }
 
-table.striped tr:nth-child(2n+1) td {
+table.striped tr:nth-child(2n) td {
     background-color:rgba(0,0,0,.01);
+}
+
+table.hover tr {
+    cursor:pointer;
+}
+
+table.hover tr:hover td {
+    background-color:rgba(0,0,0,.1);
 }
 
 @media screen and (min-width:800px) {
@@ -667,6 +674,7 @@ table.striped tr:nth-child(2n+1) td {
 
 .air-inner {
     padding: 1rem !important;
+    overflow:auto;
 }
 
     .air-inner :last-child {
@@ -703,6 +711,7 @@ table.striped tr:nth-child(2n+1) td {
 
 .shaded {
     box-shadow: 2px 2px 5px rgba(0,0,0,.2);
+    overflow:visible;
 }
 
 .error .strip > label:first-child, .error input, .error select, .error textarea, input.error, select.error, textarea.error {
