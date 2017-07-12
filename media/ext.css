@@ -72,6 +72,10 @@ nav ul li ul, nav > ul {
     animation-name: micro-drop;
 }
 
+.micro-modal-smaller .micro-modal-content {
+    max-width:800px;
+}
+
 @media screen and (min-width:800px) {
     .micro-modal .micro-drop {
         width: 800px;
