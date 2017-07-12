@@ -26,6 +26,25 @@
     }
 }
 
+@keyframes micro-windows-info {
+    0% {
+        margin-top: -200px;
+        opacity: 0;
+    }
+    10% {
+        margin-top: 0;
+        opacity: 1;
+    }
+    90% {
+        margin-top: 0;
+        opacity: 1;
+    }
+    100% {
+        margin-top: -200px;
+        opacity: 0;
+    }
+}
+
 .micro-modal {
     display: block !important;
     position: fixed;
@@ -200,3 +219,22 @@ nav.expanded > ul {
 nav.expanded hr {
     display: none;
 }
+
+
+.micro-windows-info {
+    position: fixed;
+    top: 0;
+    right: 0;
+    animation-name: micro-windows-info;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+    border-bottom-left-radius: var(--border-radius);
+    border-left: solid 1px var(--wid-border-col);
+    border-bottom: solid 1px var(--wid-border-col);
+    padding: 1.5rem;
+    background: var(--wid-dark-col);
+    z-index:1000;
+    user-select:none;
+    cursor:pointer;
+}
+
