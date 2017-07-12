@@ -4,5 +4,5 @@
  */
 create-event:micro.page.set-focus
 
-  p5.web.send-javascript:@"p5.$('{0}').el.focus();"
+  p5.web.send-javascript:@"p5.$('{0}').el.focus();p5.$('{0}').el.select();"
     :x:/../*/_arg?value

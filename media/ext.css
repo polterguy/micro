@@ -1,2 +1,202 @@
 /*! Micro.css v3.1 | GPL/Proprietary License | copyright Thomas Hansen thomas@gaiasoul.com */
-.micro-modal,.micro-modal .micro-modal-content{animation-duration:.5s;animation-fill-mode:forwards}@keyframes micro-fade{from{opacity:0}to{opacity:1}}@keyframes micro-drop{from{margin-top:-1000px;opacity:.1}to{margin-top:2rem;opacity:1}}.micro-modal{display:block!important;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1000;animation-name:micro-fade}nav ul li ul,nav>ul{display:none}.micro-modal .micro-modal-content{width:90%;margin-left:auto;margin-right:auto;background:#fff;border-radius:5px;padding:1rem 2rem 0;overflow:auto;animation-name:micro-drop}@media screen and (min-width:800px){.micro-modal .micro-drop{width:800px}}.micro-tab .micro-tab-buttons button{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none}.micro-tab-active{background:var(--wid-darker-col)}nav,nav ul li ul{background:var(--wid-dark-col)}.micro-tab .micro-tab-views{border-top:solid 1px var(--wid-border-col);padding-top:1rem}.micro-tab-border .micro-tab-views{border:1px solid var(--wid-border-col);border-radius:0 var(--border-radius)0 0;padding:1rem 1rem 0}nav{font-size:1.5rem;min-height:61px;margin:-1rem 0 0 -1rem}nav:after{content:'';display:table;clear:both}nav a{color:var(--wid-light-col);padding:1rem 1rem 1rem 25px;display:block;white-space:nowrap;outline:0}nav>a{position:absolute;top:0;right:0;min-width:70px;text-align:center}nav a:active,nav a:focus,nav a:hover{color:var(--wid-light-col);background:var(--wid-darker-col)}nav ul{list-style-type:none;margin:0}nav ul li{float:left;display:block;position:relative}nav ul li ul{position:absolute;z-index:1;box-shadow:0 8px 16px 0 rgba(0,0,0,.3);min-width:200px}nav>ul>li>ul>li>ul{left:100%;top:0;margin-left:-5px}nav ul li>ul li{width:100%}nav ul li>ul hr{width:80%;border:1px solid rgba(0,0,0,.1);margin:0 auto}@media screen and (min-width:800px){nav{height:auto;margin:-2rem 0 0 -2rem}nav>a{display:none}nav>ul{display:block}nav ul li:hover>ul,nav ul li>ul.expanded{display:block;animation-name:micro-fade;animation-duration:.2s;animation-fill-mode:forwards}}nav.expanded>ul{display:block}nav.expanded>ul>li:first-child{margin-top:61px}nav.expanded>ul li{width:100%}nav.expanded>ul li ul{display:block;position:relative;margin-left:25px}nav.expanded>ul>li>ul>li>ul{left:0}nav.expanded hr{display:none}
+.micro-modal, .micro-modal .micro-modal-content {
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes micro-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes micro-drop {
+    from {
+        margin-top: -1000px;
+        opacity: .1;
+    }
+
+    to {
+        margin-top: 2rem;
+        opacity: 1;
+    }
+}
+
+.micro-modal {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    z-index: 1000;
+    animation-name: micro-fade;
+}
+
+nav ul li ul, nav > ul {
+    display: none;
+}
+
+.micro-modal .micro-modal-content {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    border-radius: 5px;
+    padding: 1rem 2rem 0;
+    overflow: auto;
+    animation-name: micro-drop;
+}
+
+@media screen and (min-width:800px) {
+    .micro-modal .micro-drop {
+        width: 800px;
+    }
+}
+
+.micro-tab .micro-tab-buttons button {
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-right:5px;
+}
+
+.micro-tab-active {
+    background: var(--wid-darker-col);
+}
+
+nav, nav ul li ul {
+    background: var(--wid-dark-col);
+}
+
+.micro-tab .micro-tab-views {
+    border-top: solid 1px var(--wid-border-col);
+    padding-top: 1rem;
+}
+
+.micro-tab-border .micro-tab-views {
+    border: 1px solid var(--wid-border-col);
+    border-radius: 0 var(--border-radius)0 0;
+    padding: 1rem 1rem 0;
+}
+
+nav {
+    font-size: 1.5rem;
+    min-height: 61px;
+    margin: -1rem 0 0 -1rem;
+}
+
+    nav:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    nav a {
+        color: var(--wid-light-col);
+        padding: 1rem 1rem 1rem 25px;
+        display: block;
+        white-space: nowrap;
+        outline: 0;
+    }
+
+    nav > a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 70px;
+        text-align: center;
+    }
+
+    nav a:active, nav a:focus, nav a:hover {
+        color: var(--wid-light-col);
+        background: var(--wid-darker-col);
+    }
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+    }
+
+        nav ul li {
+            float: left;
+            display: block;
+            position: relative;
+        }
+
+            nav ul li ul {
+                position: absolute;
+                z-index: 1;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,.3);
+                min-width: 200px;
+            }
+
+    nav > ul > li > ul > li > ul {
+        left: 100%;
+        top: 0;
+        margin-left: -5px;
+    }
+
+    nav ul li > ul li {
+        width: 100%;
+    }
+
+    nav ul li > ul hr {
+        width: 80%;
+        border: 1px solid rgba(0,0,0,.1);
+        margin: 0 auto;
+    }
+
+@media screen and (min-width:800px) {
+    nav {
+        height: auto;
+        margin: -2rem 0 0 -2rem;
+    }
+
+        nav > a {
+            display: none;
+        }
+
+        nav > ul {
+            display: block;
+        }
+
+        nav ul li:hover > ul, nav ul li > ul.expanded {
+            display: block;
+            animation-name: micro-fade;
+            animation-duration: .2s;
+            animation-fill-mode: forwards;
+        }
+}
+
+nav.expanded > ul {
+    display: block;
+}
+
+    nav.expanded > ul > li:first-child {
+        margin-top: 61px;
+    }
+
+    nav.expanded > ul li {
+        width: 100%;
+    }
+
+        nav.expanded > ul li ul {
+            display: block;
+            position: relative;
+            margin-left: 25px;
+        }
+
+    nav.expanded > ul > li > ul > li > ul {
+        left: 0;
+    }
+
+nav.expanded hr {
+    display: none;
+}

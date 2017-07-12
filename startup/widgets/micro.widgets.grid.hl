@@ -25,45 +25,75 @@ create-event:micro.widgets.grid
   .signal
 
   /*
-   * Adding columns.
+   * Adding columns, if there are any.
    */
-  for-each:x:/@.signal/--/columns/*
+  if:x:/@.signal/--/columns
 
     /*
-     * Adding the common stuff.
+     * Caller specified a [columns] collection.
+     * First adding actual "thead" widget, then looping through each column definition.
      */
-    add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets
+    insert-before:x:/../*/return/*/container/*/widgets/*/tbody
       src
-        th
-
-    /*
-     * Checking type of column.
-     */
-    if:x:/@_dp/#/*/widgets
-
-      /*
-       * Widget template column.
-       */
-      add:x:/+/*
-        src:x:/@_dp/#/*/widgets
-      add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
-        src
-
-    else
+        thead
+          widgets
+            tr
+              widgets
+    for-each:x:/@.signal/--/columns/*(!/\.head!/\.row)
 
       /*
-       * Simple 'name' column.
+       * Adding the common stuff.
        */
-      eval-x:x:/+/*/*
-      add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+      add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets
         src
-          innerValue:x:/@_dp/#?name
+          th
+
+      /*
+       * Checking type of column.
+       */
+      if:x:/@_dp/#/*/widgets
+
+        /*
+         * Widget template column.
+         */
+        add:x:/+/*
+          src:x:/@_dp/#/*/widgets
+        add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+          src
+
+      else
+
+        /*
+         * Simple 'name' column.
+         */
+        eval-x:x:/+/*/*
+        add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+          src
+            innerValue:x:/@_dp/#?name
+
+      /*
+       * Adding the rest of the [columns] arguments.
+       */
+      add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
+        src:x:/@_dp/#/*(!/widgets)
 
     /*
-     * Adding the rest of the [columns] arguments.
+     * Adding [.head] collection, if there are any.
      */
-    add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr/*/widgets/0/-
-      src:x:/@_dp/#/*(!/widgets)
+    add:x:/../*/return/*/container/*/widgets/*/thead
+      src:x:/@.signal/--/columns/*/\.head/*
+
+    /*
+     * Adding columns [.row] collection, if there are any.
+     */
+    add:x:/../*/return/*/container/*/widgets/*/thead/*/widgets/*/tr
+      src:x:/@.signal/--/columns/*/\.row/*
+
+  /*
+   * Adding [.body] collection, if there are any.
+   */
+  add:x:/../*/return/*/container/*/widgets/*/tbody
+    src:x:/@.signal/--/\.body/*
 
   /*
    * Checking is caller supplied an initial set of [rows].
@@ -76,10 +106,10 @@ create-event:micro.widgets.grid
       src:x:/@micro.widgets.grid._create-rows/*
 
   /*
-   * Passing in other arguments to grid.
+   * Passing in other arguments to 'table'.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--/<-(!/columns!/rows)
+    src:x:/@.signal/--/<-(!/columns!/rows!/\.body!/\.head)
 
   /*
    * Returning widget to caller.
@@ -88,10 +118,6 @@ create-event:micro.widgets.grid
     container
       element:table
       widgets
-        thead
-          widgets
-            tr
-              widgets
         tbody
           widgets
 
@@ -101,7 +127,7 @@ create-event:micro.widgets.grid
 
 /*
  * Databinds the [_arg] grid.
- * Expects an [item] collection, similarly to the content of the [rows] argument when grid is created.
+ * Expects an [item] collection, similarly to the content of the [rows] argument when grid was created.
  */
 create-event:micro.widgets.grid.databind
 

@@ -288,7 +288,7 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
                   /*
                    * Displaying results in a modal widget.
                    */
-                  micro.form.serialize:my-form
+                  micro.widgets.wizard-form.value:my-form
                   lambda2hyper:x:/-/*
                   eval-x:x:/+/**/pre/*/innerValue
                   create-widgets
