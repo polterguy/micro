@@ -88,7 +88,7 @@ input, textarea, select, button {
     padding-right: 15px;
 }
 
-.strip span {
+.strip>span {
     padding:5px 15px 5px 15px;
 }
 

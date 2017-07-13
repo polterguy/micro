@@ -377,7 +377,7 @@ input, select, textarea {
     float: left;
 }
 
-.strip label, .strip span {
+.strip>label, .strip>span {
     border-radius: 0;
     border: 1px solid var(--wid-border-col);
     border-left-style: none;
@@ -388,13 +388,13 @@ input, select, textarea {
     float: left;
 }
 
-.strip :first-child {
+.strip>*:first-child {
     border-radius: var(--border-radius)0 0 var(--border-radius);
     border-left-width: 1px;
     border-left-style: solid;
 }
 
-.strip :last-child {
+.strip>*:last-child {
     border-radius: 0 var(--border-radius)var(--border-radius)0;
     border-left-style: none;
     float: left;
@@ -408,6 +408,13 @@ input, select, textarea {
 
 .strip span input[type=radio] {
     border-radius: 15px;
+}
+
+button span {
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+    font-size:1.20rem;
 }
 
 .emphasized, .rounded, .success, .warning {
@@ -452,6 +459,10 @@ table td, table th {
 
 table th {
     background: var(--wid-lighter-col);
+}
+
+table tr.selected {
+    background-color:rgba(0,0,0,.04);
 }
 
 table tbody tr td {
