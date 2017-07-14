@@ -3,7 +3,8 @@
  * Creates a small "information bubble" window, that will be displayed on the form for n seconds, 
  * before automatically disappearing.
  *
- * Pass in text to display as [_arg]
+ * Pass in text to display as [_arg].
+ * Optionally pass in [parent] as parent widget to where to display window.
  */
 create-event:micro.windows.info
 
@@ -21,10 +22,26 @@ create-event:micro.windows.info
     delete-widget:micro-windows-info
 
   /*
+   * Adding [parent] if specified.
+   */
+  add:x:/../*/create-widget
+    src:x:/../*/parent
+
+  /*
+   * Checking if user gave us an explicit [class].
+   */
+  if:x:/../*/class
+    add:x:/../*/create-widget
+      src:x:/../*/class
+  else
+    add:x:/../*/create-widget
+      src
+        class:micro-windows-info
+
+  /*
    * Creating new information bubble window.
    */
   create-widget:micro-windows-info
-    class:micro-windows-info
     innerValue:x:/../*/_arg?value
     role:button
     onclick

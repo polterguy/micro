@@ -31,22 +31,22 @@ create-event:micro.widgets.modal
   /*
    * Returning widget to caller.
    */
+  eval-x:x:/+/*/*/onclick
   return
     container
 
       // Hack to make sure window doesn't flicker during initial display.
       style:"display:none;"
+      data-window:modal
       oninit
         p5.web.include-css-file:@MICRO/media/main.css
         p5.web.include-css-file:@MICRO/media/ext.css
-      onclick
+      onclick:@"if (event.currentTarget == event.target) {{p5.$(document.querySelectorAll('[data-window=""modal""]')[0].id).raise('.ondelete');}}"
+      .ondelete
         delete-widget:x:/../*/_event?value
       widgets
         container
           class:micro-modal-content
-
-          // To stop propagation clicking the obscurer, which would close the modal widget, we need to trap onclick here.
-          onclick:"event.stopPropagation();return false;"
           widgets
             container
               widgets:widgets

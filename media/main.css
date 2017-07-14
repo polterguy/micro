@@ -441,6 +441,9 @@ div.fill {
     div.fill > label {
         white-space: nowrap;
     }
+    div.fill > label:first-child {
+        min-width: 100px;
+    }
 
     div.fill > input[type=text], div.fill > input[type=number], div.fill > input[type=password], div.fill > select {
         margin-right: 0 !important;
