@@ -26,6 +26,15 @@ create-event:micro.windows.info
    */
   add:x:/../*/create-widget
     src:x:/../*/parent
+  if:x:/../*/parent
+
+    /*
+     * Since user gave us an explicit parent, we assume it was to move the positioning
+     * of the window around, and hence we change its "position" from "fixed" to "absolute".
+     */
+    add:x:/../*/create-widget
+      src
+        style:"position:absolute;"
 
   /*
    * Checking if user gave us an explicit [class].

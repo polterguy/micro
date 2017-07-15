@@ -227,7 +227,7 @@ nav.expanded hr {
 
 
 .micro-windows-info {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     animation-name: micro-windows-info;
