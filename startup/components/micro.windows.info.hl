@@ -48,10 +48,18 @@ create-event:micro.windows.info
         class:micro-windows-info
 
   /*
+   * Adding custom widgets to information bubble.
+   */
+  add:x:/../*/create-widget/*/widgets
+    src:x:/../*/widgets/*
+
+  /*
    * Creating new information bubble window.
    */
   create-widget:micro-windows-info
-    innerValue:x:/../*/_arg?value
     role:button
     onclick
       delete-widget:micro-windows-info
+    widgets
+      span
+        innerValue:x:/../*/_arg?value
