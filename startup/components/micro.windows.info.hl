@@ -4,7 +4,8 @@
  * before automatically disappearing.
  *
  * Pass in text to display as [_arg].
- * Optionally pass in [parent] as parent widget to where to display window.
+ * Optionally pass in [parent] as parent widget to where to display window, [class] to override default 
+ * class or [onclick] to provide a user defined lambda callback that will be invoked when user clicks the bubble window.
  */
 create-event:micro.windows.info
 
@@ -48,6 +49,13 @@ create-event:micro.windows.info
         class:micro-windows-info
 
   /*
+   * Checking if user gave us an explicit [onclick].
+   */
+  if:x:/../*/onclick/*
+    add:x:/../*/create-widget/*/onclick/*/.lambda
+      src:x:/../*/onclick/*
+
+  /*
    * Adding custom widgets to information bubble.
    */
   add:x:/../*/create-widget/*/widgets
@@ -59,7 +67,18 @@ create-event:micro.windows.info
   create-widget:micro-windows-info
     role:button
     onclick
+
+      /*
+       * Making sure we invoke any user provided lambda callbacks.
+       */
+      .lambda
+      eval:x:/-
+
+      /*
+       * Deleting widget.
+       */
       delete-widget:micro-windows-info
+
     widgets
       span
         innerValue:x:/../*/_arg?value
