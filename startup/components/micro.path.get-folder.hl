@@ -1,0 +1,36 @@
+
+/*
+ * Helper Active Event to return only the folder parts from a given path.
+ *
+ * Will strip away the file from a specified path, if there is a file part, and
+ * return only the folder of the given path.
+ */
+create-event:micro.path.get-folder
+
+  /*
+   * First checking if path already is a folder.
+   */
+  index-of:x:/../*/_arg?value
+    src:/
+  +:x:/@index-of/0/-?value
+    _:1
+  length:x:/../*/_arg?value
+  if:x:/@+?value
+    =:x:/@length?value
+
+    /*
+     * Path is already a reference to a folder.
+     */
+    return:x:/../*/_arg?value
+
+  /*
+   * Splitting up components of path, removing the last entity,
+   * joining results, and returning to caller.
+   */
+  split:x:/../*/_arg?value
+    =:/
+  set:x:/@split/0/-
+  join:x:/@split/*?name
+    sep:/
+  return:/{0}/
+    :x:/@join?value
