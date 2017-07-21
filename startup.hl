@@ -90,11 +90,20 @@ create-event:micro.evaluate.folder
     filter:.hl
 
   /*
-   * Evaluating all Hyperlambda files from that folder.
+   * Evaluating all Hyperlambda files from that folder, making sure we
+   * pass in arguments given.
    */
   add:x:/+
     src:x:/@.signal/--(!/_arg)/<-
   micro.evaluate.file:x:/@list-files/*?name
+
+  /*
+   * Returning the results of the above evaluation to caller.
+   */
+  insert-after:x:/@.signal
+    src:x:/@micro.evaluate.file/*
+  set:x:/..?value
+    src:x:/@eval?value
 
   /*
    * Listing all folders recursively, within the folder(s) we've just evaluated.
@@ -115,6 +124,6 @@ create-event:micro.evaluate.folder
 
 
 /*
- * Evaluates all Hyperlambda folders within the current folder.
+ * Evaluates all Hyperlambda files recursively within the "@MICRO/startup/" folder.
  */
 micro.evaluate.folder:@MICRO/startup/
