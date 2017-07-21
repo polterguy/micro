@@ -1,0 +1,79 @@
+
+/*
+ * Helper Active Event to verify expected "contract" arguments are given to lambda object.
+ *
+ * Loops through the given lambda object, given as [_arg], and verifies all the
+ * specified arguments can be found in lambda object.
+ *
+ * If an argument in contract is not found, an exception will be thrown, 
+ * with a text indicating which argument was missing.
+ *
+ * You can declare the expected type of your argument's value as the value of your contract
+ * argument. You can also declare children nodes to your arguments, and such declare entire 
+ * expected hierarchies of arguments.
+ */
+create-event:micro.contract
+
+  /*
+   * Signal object to separate arguments from the rest of our lambda object.
+   */
+  .signal
+
+  /*
+   * Looping through each argument given, and verifies that it can be found
+   * accordingly in the given [_arg] lambda object.
+   */
+  for-each:x:/@.signal/--(!/_arg)/<-
+
+    /*
+     * Checking if argument was given at all.
+     */
+    if:x:/../*/_arg/#/*/{0}
+      :x:/@_dp/#?name
+      not
+
+      /*
+       * Argument was missing in its entirety.
+       */
+      throw:Argument [{0}] was missing
+        :x:/@_dp/#?name
+
+    /*
+     * Checking if argument was expected to contain any value,
+     * for then to check if argument actually held a value.
+     */
+    if:x:/@_dp/#?value
+      and:x:/../*/_arg/#/*/{0}?value
+        :x:/@_dp/#?name
+        not
+
+      /*
+       * Argument was expected to hold a value, but did not.
+       */
+      throw:Argument [{0}] did not have a value
+        :x:/@_dp/#?name
+
+    /*
+     * Checking type of value, and that it can legally be converted into the expected type.
+     */
+    if:x:/@_dp/#?value
+      and
+        p5.types.can-convert:x:/../*/_arg/#/*/{0}?value
+          :x:/@_dp/#?name
+          type:x:/@_dp/#?value
+        not
+
+      /*
+       * Value of argument could not be converted into expected type.
+       */
+      throw:Argument [{0}] count not be converted into '{1}'
+        :x:/@_dp/#?name
+        :x:/@_dp/#?value
+
+    /*
+     * Recursively checking contract beneath currently iterated contract argument.
+     */
+    add:x:/+
+      src:x:/@_dp/#/*
+    micro.contract:x:/../*/_arg/#/*/{0}
+      :x:/@_dp/#?name
