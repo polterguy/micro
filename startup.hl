@@ -2,8 +2,12 @@
 /*
  * File responsible for initializing Micro.
  *
- * Creates one Active Event [p5.io.unroll-path.@MICRO] - Which evaluates to the "/micro/" folder, 
+ * Creates three Active Events [p5.io.unroll-path.@MICRO] - Which evaluates to the "/micro/" folder, 
  * and is used as a "path variable".
+ *
+ * In addition, it creates both of our [micro.evaluate.xxx] events, one called "file" and another caller "folder",
+ * which allows you to evaluate a single Hyperlambda file or evaluate all Hyperlambda files inside of one specified 
+ * folder recursively.
  */
 
 
@@ -26,9 +30,91 @@ create-event:p5.io.unroll-path.@MICRO
 
 
 /*
- * Evaluates all Hyperlambda files in the "startup" folder.
+ * Creates the Active Event that allows you to execute one or more Hyperlambda files. 
+ *
+ * The Hyperlambda file(s) you wish to execute is given as [_arg].
+ * All other arguments will be passed into your execution as is.
  */
-list-files:@MICRO/startup/
-  filter:.hl
-load-file:x:/@list-files/*?name
-eval:x:/@load-file/*
+create-event:micro.evaluate.file
+
+  /*
+   * Used as "signal object" to separate arguments from the rest of the lambda.
+   */
+  .signal
+
+  /*
+   * Loading up all files given as [_arg] arguments.
+   */
+  load-file:x:/@.signal/--/<-/_arg?value
+
+  /*
+   * Adding all arguments given to evaluation of file into [eval].
+   */
+  add:x:/../*/eval
+    src:x:/@.signal/--(!/_arg)/<-
+
+  /*
+   * Evaluating [load-file]'s children, with the arguments applied in the above [add] invocation.
+   */
+  eval:x:/@load-file/*
+
+  /*
+   * Returning the results of the above evaluation to caller.
+   */
+  insert-after:x:/@.signal
+    src:x:/@eval/*
+  set:x:/..?value
+    src:x:/@eval?value
+
+
+
+
+
+/*
+ * Evaluates all Hyperlambda files within the specified folder(s) recursively.
+ *
+ * The Hyperlambda folder(s) you wish to execute is given as [_arg].
+ * All other arguments will be passed into your execution as is.
+ */
+create-event:micro.evaluate.folder
+
+  /*
+   * Used as "signal object" to separate arguments from the rest of the lambda.
+   */
+  .signal
+
+  /*
+   * Listing all Hyperlambda files in directories we're given.
+   */
+  list-files:x:/../*/_arg?value
+    filter:.hl
+
+  /*
+   * Evaluating all Hyperlambda files from that folder.
+   */
+  add:x:/+
+    src:x:/@.signal/--(!/_arg)/<-
+  micro.evaluate.file:x:/@list-files/*?name
+
+  /*
+   * Listing all folders recursively, within the folder(s) we've just evaluated.
+   */
+  list-folders:x:/../*/_arg?value
+
+  /*
+   * If the above [list-folder] gave us any result(s), we recursively invoke self,
+   * making sure we pass in the same arguments we were given.
+   */
+  if:x:/-/*
+    add:x:/+
+      src:x:/@.signal/--(!/_arg)/<-
+    micro.evaluate.folder:x:/@list-folders/*?name
+
+
+
+
+
+/*
+ * Evaluates all Hyperlambda folders within the current folder.
+ */
+micro.evaluate.folder:@MICRO/startup/
