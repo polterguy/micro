@@ -12,7 +12,7 @@
  * argument. You can also declare children nodes to your arguments, and such declare entire 
  * expected hierarchies of arguments.
  */
-create-event:micro.contract
+create-event:micro.lambda.contract.min
 
   /*
    * Signal object to separate arguments from the rest of our lambda object.
@@ -75,5 +75,5 @@ create-event:micro.contract
      */
     add:x:/+
       src:x:/@_dp/#/*
-    micro.contract:x:/../*/_arg/#/*/{0}
+    micro.lambda.contract.min:x:/../*/_arg/#/*/{0}
       :x:/@_dp/#?name
