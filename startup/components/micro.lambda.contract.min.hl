@@ -20,6 +20,13 @@ create-event:micro.lambda.contract.min
   .signal
 
   /*
+   * Sanity checking invocation.
+   */
+  if:x:/../*/_arg?value
+    not
+    throw:You must pass in a node reference as [_arg] to check in your [micro.lambda.contract.min] invocations
+
+  /*
    * Looping through each argument given, and verifies that it can be found
    * accordingly in the given [_arg] lambda object.
    */
@@ -57,6 +64,7 @@ create-event:micro.lambda.contract.min
      * Checking type of value, and that it can legally be converted into the expected type.
      */
     if:x:/@_dp/#?value
+      !=:
       and
         p5.types.can-convert:x:/../*/_arg/#/*/{0}?value
           :x:/@_dp/#?name
