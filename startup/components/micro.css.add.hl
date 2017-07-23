@@ -1,10 +1,10 @@
 
 /*
- * Helper Active Event to toggle CSS class on one or more elements.
+ * Helper Active Event to add CSS class(es) to one or more elements.
  *
- * Pass in [_arg] as widget ID and [class] as class(es) to toggle on widget.
+ * Pass in [_arg] as widget ID and [class] as class(es) to add on widget.
  */
-create-event:micro.css.toggle
+create-event:micro.css.add
 
   /*
    * Sanity checking invocation.
@@ -14,7 +14,7 @@ create-event:micro.css.toggle
     class:string
 
   /*
-   * Splitting upon every given CSS class caller wants to toggle.
+   * Splitting upon every given CSS class caller wants to add.
    */
   split:x:/../*/class?value
     =:,
@@ -29,7 +29,7 @@ create-event:micro.css.toggle
 
   /*
    * Splitting each CSS class already in widget, such that we can figure out if class(es)
-   * caller wants to toggle already exists or not.
+   * caller wants to add already exists or not.
    */
   split:x:/@get-widget-property/*/*?value
     =:" "
@@ -40,27 +40,20 @@ create-event:micro.css.toggle
   for-each:x:/../*/split/[0,1]/*/$
 
     /*
-     * Checking if currently iterated CSS class is in [split] result.
+     * Checking if currently iterated CSS class is not already in [split] result.
      */
     if:x:/@split/*/{0}
       :x:/@_dp/#?name
+      not
 
       /*
-       * Class exists, deleting it.
-       */
-      set:x:/@split/*/{0}
-        :x:/@_dp/#?name
-
-    else
-
-      /*
-       * Class does NOT exist, adding it.
+       * Class does NOT exist, adding it
        */
       add:x:/@split
         src:x:/@_dp/#?name
 
   /*
-   * Invoking [join] on [split] results, before setting new class value.
+   * Invoking [join] on split results, before settings new class value
    */
   join:x:/@split/*?name
     sep:" "
