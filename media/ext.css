@@ -1,4 +1,4 @@
-/*! Micro.css v3.1 | GPL/Proprietary License | copyright Thomas Hansen thomas@gaiasoul.com */
+/*! Micro.css v3.1 | GPL/Proprietary License | Copyright Thomas Hansen thomas@gaiasoul.com */
 .micro-modal, .micro-modal .micro-modal-content {
     animation-duration: .5s;
     animation-fill-mode: forwards;
@@ -16,7 +16,7 @@
 
 @keyframes micro-drop {
     from {
-        margin-top: -1000px;
+        margin-top: -500px;
         opacity: .1;
     }
 
@@ -53,7 +53,7 @@
 
     100% {
         margin-top: 0;
-        opacity: 1;
+        opacity:1;
     }
 }
 
@@ -67,10 +67,6 @@
     background: rgba(0,0,0,.4);
     z-index: 1000;
     animation-name: micro-fade;
-}
-
-nav ul li ul, nav > ul {
-    display: none;
 }
 
 .micro-modal .micro-modal-content {
@@ -90,7 +86,7 @@ nav ul li ul, nav > ul {
 }
 
 @media screen and (min-width:800px) {
-    .micro-modal .micro-drop {
+    .micro-modal .micro-modal-content {
         width: 800px;
     }
 }
@@ -107,10 +103,6 @@ nav ul li ul, nav > ul {
     background: var(--wid-darker-col);
 }
 
-nav, nav ul li ul {
-    background: var(--wid-dark-col);
-}
-
 .micro-tab .micro-tab-views {
     border-top: solid 1px var(--wid-border-col);
     padding-top: 1rem;
@@ -125,113 +117,123 @@ nav, nav ul li ul {
 nav {
     font-size: 1.5rem;
     min-height: 61px;
-    margin: -1rem 0 0 -1rem;
+    margin: -1rem -1rem 0 0;
 }
 
-    nav:after {
-        content: '';
-        display: table;
-        clear: both;
-    }
+nav:after {
+    content: '';
+    display: table;
+    clear: both;
+}
 
-    nav a {
-        color: var(--wid-light-col);
-        padding: 1rem 1rem 1rem 25px;
-        display: block;
-        white-space: nowrap;
-        outline: 0;
-    }
+nav ul li ul,
+nav > ul {
+    display: none;
+}
 
-    nav > a {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 70px;
-        text-align: center;
-    }
+nav, nav ul li ul {
+    background: var(--wid-dark-col);
+}
 
-    nav a:active, nav a:focus, nav a:hover {
-        color: var(--wid-light-col);
-        background: var(--wid-darker-col);
-    }
+nav a {
+    color: var(--wid-light-col);
+    padding: 1rem 1rem 1rem 25px;
+    display: block;
+    white-space: nowrap;
+    outline: 0;
+}
 
-    nav ul {
-        list-style-type: none;
-        margin: 0;
-    }
+nav > a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 70px;
+    text-align: center;
+    padding-top:.8rem;
+    padding-bottom:1.2rem;
+}
 
-        nav ul li {
-            float: left;
-            display: block;
-            position: relative;
-        }
+nav a:active, nav a:focus, nav a:hover {
+    color: var(--wid-light-col);
+    background: var(--wid-darker-col);
+}
 
-            nav ul li ul {
-                position: absolute;
-                z-index: 1;
-                box-shadow: 0 8px 16px 0 rgba(0,0,0,.3);
-                min-width: 200px;
-            }
+nav ul {
+    list-style-type: none;
+    margin: 0;
+}
 
-    nav > ul > li > ul > li > ul {
-        left: 100%;
-        top: 0;
-        margin-left: -5px;
-    }
+nav ul li {
+    float: left;
+    display: block;
+    position: relative;
+}
 
-    nav ul li > ul li {
-        width: 100%;
-    }
+nav ul li ul {
+    position: absolute;
+    z-index: 1;
+    box-shadow: 3px 3px 8px 0 rgba(0,0,0,.4);
+    min-width: 200px;
+}
 
-    nav ul li > ul hr {
-        width: 80%;
-        border: 1px solid rgba(0,0,0,.1);
-        margin: 0 auto;
-    }
+nav > ul > li > ul > li > ul {
+    left: 100%;
+    top: 0;
+    margin-left: -5px;
+}
+
+nav ul li > ul li {
+    width: 100%;
+}
+
+nav ul li > ul hr {
+    width: 80%;
+    border: 1px solid rgba(0,0,0,.1);
+    margin: 0 auto;
+}
 
 @media screen and (min-width:800px) {
     nav {
         height: auto;
-        margin: -2rem 0 0 -2rem;
     }
 
-        nav > a {
-            display: none;
-        }
+    nav > a {
+        display: none;
+    }
 
-        nav > ul {
-            display: block;
-        }
+    nav > ul {
+        display: block;
+    }
 
-        nav ul li:hover > ul, nav ul li > ul.expanded {
-            display: block;
-            animation-name: micro-fade;
-            animation-duration: .2s;
-            animation-fill-mode: forwards;
-        }
+    nav ul li:hover > ul, nav ul li > ul.expanded {
+        display: block;
+        animation-name: micro-fade;
+        animation-duration: .2s;
+        animation-fill-mode: forwards;
+    }
 }
 
 nav.expanded > ul {
     display: block;
 }
 
-    nav.expanded > ul > li:first-child {
-        margin-top: 61px;
-    }
+nav.expanded > ul > li:first-child {
+    margin-top: 61px;
+}
 
-    nav.expanded > ul li {
-        width: 100%;
-    }
+nav.expanded > ul li {
+    width: 100%;
+}
 
-        nav.expanded > ul li ul {
-            display: block;
-            position: relative;
-            margin-left: 25px;
-        }
+nav.expanded > ul li ul {
+    display: block;
+    position: relative;
+    margin-left: 25px;
+}
 
-    nav.expanded > ul > li > ul > li > ul {
-        left: 0;
-    }
+nav.expanded > ul > li > ul > li > ul {
+    left: 0;
+}
 
 nav.expanded hr {
     display: none;

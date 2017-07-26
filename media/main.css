@@ -141,14 +141,14 @@ button, html input[type=button], input[type=reset], input[type=submit] {
     cursor: pointer;
 }
 
-    button[disabled], html input[disabled] {
-        cursor: default;
-    }
+button[disabled], html input[disabled] {
+    cursor: default;
+}
 
-    button::-moz-focus-inner, input::-moz-focus-inner {
-        border: 0;
-        padding: 0;
-    }
+button::-moz-focus-inner, input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
 
 input {
     line-height: normal;
@@ -184,8 +184,19 @@ button, pre {
     box-sizing: inherit;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 .container, .container-fullscreen {
-    padding: 1rem 0 0 1rem;
+    padding: 1rem 1rem 1rem 0;
     overflow: visible;
     position: relative;
 }
@@ -202,25 +213,20 @@ button, pre {
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: 1rem;
 }
 
-    .row .row {
-        margin-right: 0;
-    }
-
-blockquote, button, caption, fieldset, h1, h2, h3, h4, h5, h6, hr, input, label, legend, ol, option, p, pre, select, td, textarea, th, ul {
-    margin: 0 0 1rem;
+blockquote, button, caption, fieldset, h1, h2, h3, h4, h5, h6, hr, input, label, legend, table, ol, ul, p, pre, select, textarea {
+    margin: 0 0 1rem 0;
 }
 
-.col, .col-10, .col-100, .col-20, .col-25, .col-30, .col-33, .col-40, .col-50, .col-60, .col-67, .col-70, .col-75, .col-80, .col-90 {
+.col, .col-10, .col-100, .col-20, .col-25, .col-30, .col-33, .col-40, .col-50, .col-60, .col-67, .col-70, .col-75, .col-80, .col-90, .col-100 {
     flex: 100%;
+    padding: 0 0 0 1rem;
 }
 
 body {
     font-size: 1.2rem;
     font-size-adjust: .5;
-    padding-bottom: 150px;
     font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
     color: var(--txt-col);
 }
@@ -251,19 +257,19 @@ blockquote {
 }
 
 label {
-    display: block;
-    float: left;
     user-select: none;
-    font-weight: 700;
+    font-weight: bold;
+    vertical-align:top;
+    margin-right:1rem;
 }
 
 pre {
-    background: #f5f5f5;
+    background: #fafafa;
     padding: 1rem;
 }
 
 code {
-    background: #f5f5f5;
+    background: #fafafa;
 }
 
 code, pre {
@@ -308,76 +314,91 @@ button {
     padding: 7px 15px;
 }
 
-    button:active, button:focus, button:hover {
-        background: var(--wid-darker-col);
-    }
+button:active, button:focus, button:hover {
+    background: var(--wid-darker-col);
+}
 
 input, select, textarea {
     border-radius: var(--border-radius);
     width: 250px;
     border: 1px solid var(--wid-border-col);
-    padding: 7px 25px;
+    padding: 7px 15px;
     outline: 0;
     background: var(--wid-light-col);
     color: var(--form-txt-col);
 }
 
-    input:active, input:focus, input:hover, input[type=checkbox]:active, input[type=checkbox]:checked:active, input[type=checkbox]:checked:focus, input[type=checkbox]:checked:hover, input[type=checkbox]:focus, input[type=checkbox]:hover, input[type=radio]:active, input[type=radio]:checked:active, input[type=radio]:checked:focus, input[type=radio]:checked:hover, input[type=radio]:hover, select:active, select:focus, select:hover, textarea:active, textarea:focus, textarea:hover {
-        background: var(--wid-lighter-col);
-    }
+input:active, 
+input:focus, 
+input:hover, 
+select:active, 
+select:focus, 
+select:hover, 
+textarea:active, 
+textarea:focus, 
+textarea:hover {
+    background: var(--wid-lighter-col);
+}
 
-    input[type=checkbox], input[type=radio], select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-    }
+input[type=checkbox], input[type=radio], select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 
-    input[type=checkbox], input[type=radio] {
-        display: block;
-        position: relative;
-        float: left;
-        height: 24px;
-        width: 24px;
-        margin: 0 15px;
-    }
+input[type=checkbox], 
+input[type=radio] {
+    position: relative;
+    height: 24px;
+    width: 24px;
+    margin-right:.5rem;
+}
 
-        input[type=checkbox]:first-child, input[type=radio]:first-child {
-            margin-left: 0;
-        }
 
-        input[type=checkbox]:checked:after, input[type=radio]:checked:after {
-            position: absolute;
-            left: 3px;
-            top: 0;
-            color: var(--form-txt-col);
-            display: block;
-            font-size: 20px;
-        }
 
-        input[type=checkbox]:checked:after {
-            content: '\2714';
-        }
 
-        input[type=radio]:checked:after {
-            content: ' ';
-            width: 16px;
-            height: 16px;
-            border-radius: 15px;
-            background: var(--form-txt-col);
-            margin: 3px 0;
-        }
 
-    input[type=radio] {
-        border-radius: 15px;
-    }
 
-.strip button, .strip input, .strip select {
+
+
+
+input[type=checkbox]:checked:after, 
+input[type=radio]:checked:after {
+    position: absolute;
+    left: 3px;
+    top: 0;
+    color: var(--form-txt-col);
+    display: block;
+    font-size: 20px;
+}
+
+input[type=checkbox]:checked:after {
+    content: '\2714';
+}
+
+input[type=radio] {
+    border-radius: 15px;
+}
+
+input[type=radio]:checked:after {
+    content: ' ';
+    width: 16px;
+    height: 16px;
+    border-radius: 15px;
+    background: var(--form-txt-col);
+    margin: 3px 0;
+}
+
+.strip button, 
+.strip input, 
+.strip select {
     border-radius: 0;
     border-left-style: none;
     float: left;
 }
 
-.strip>label, .strip>span {
+.strip>label, 
+.strip>span {
     border-radius: 0;
     border: 1px solid var(--wid-border-col);
     border-left-style: none;
@@ -386,21 +407,21 @@ input, select, textarea {
     padding: 8px 15px;
     margin-bottom: 1rem;
     float: left;
+    margin-right:0;
 }
 
 .strip>*:first-child {
-    border-radius: var(--border-radius)0 0 var(--border-radius);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
     border-left-width: 1px;
     border-left-style: solid;
 }
 
 .strip>*:last-child {
-    border-radius: 0 var(--border-radius)var(--border-radius)0;
-    border-left-style: none;
-    float: left;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
-.strip span input[type=checkbox], .strip span input[type=radio] {
+.strip span input[type=checkbox], 
+.strip span input[type=radio] {
     margin: 0;
     border-left-style: solid;
     border-radius: var(--border-radius);
@@ -410,19 +431,15 @@ input, select, textarea {
     border-radius: 15px;
 }
 
-button span {
-    border: none;
-    padding-left: 0;
-    padding-right: 0;
-    font-size:1.20rem;
-}
-
-.emphasized, .rounded, .success, .warning {
+.rounded,
+.emphasized,
+.success,
+.warning {
     border-radius: var(--border-radius);
 }
 
 .wider {
-    width: 270px;
+    width: 100%;
 }
 
 .smaller {
@@ -438,17 +455,14 @@ div.fill {
     display: flex;
 }
 
-    div.fill > label {
-        white-space: nowrap;
-    }
-    div.fill > label:first-child {
-        min-width: 100px;
-    }
+div.fill > label {
+    white-space: nowrap;
+}
 
-    div.fill > input[type=text], div.fill > input[type=number], div.fill > input[type=password], div.fill > select {
-        margin-right: 0 !important;
-        width: 100%;
-    }
+div.fill > input[type=text], div.fill > input[type=number], div.fill > input[type=password], div.fill > select {
+    margin-right: 0 !important;
+    width: 100%;
+}
 
 table {
     border-collapse: collapse;
@@ -457,15 +471,11 @@ table {
 }
 
 table td, table th {
-    padding: .5rem 1rem;
+    padding: .2rem 1rem .2rem 0;
 }
 
-table th {
-    background: var(--wid-lighter-col);
-}
-
-table tr.selected {
-    background-color:rgba(0,0,0,.04);
+table td:last-child, table th:last-child {
+    padding: .3rem 0 .3rem 0;
 }
 
 table tbody tr td {
@@ -480,7 +490,14 @@ table.striped tr:nth-child(2n) td {
     background-color:rgba(0,0,0,.01);
 }
 
-table.hover tr {
+table tr.selected,
+table tr td.selected,
+table.striped tr.selected,
+table.striped tr td.selected {
+    background-color:rgba(0,0,0,.1);
+}
+
+table.hover tbody tr {
     cursor:pointer;
 }
 
@@ -492,22 +509,6 @@ table.hover tr:hover td {
     h2, h3 {
         line-height: 1.25;
     }
-
-    .container, .container-fullscreen {
-        padding: 2rem 0 0 2rem;
-    }
-
-    .row {
-        margin-right: 2rem;
-    }
-
-    .col, .col-10, .col-20, .col-25, .col-30, .col-33, .col-40, .col-50, .col-60, .col-67, .col-70, .col-75, .col-80, .col-90 {
-        padding: 0 1rem 0 0;
-    }
-
-        .col-100:last-child, .col-10:last-child, .col-20:last-child, .col-25:last-child, .col-30:last-child, .col-33:last-child, .col-40:last-child, .col-50:last-child, .col-60:last-child, .col-67:last-child, .col-70:last-child, .col-75:last-child, .col-80:last-child, .col-90:last-child, .col:last-child {
-            padding: 0;
-        }
 
     .col {
         flex: 1;
@@ -670,7 +671,7 @@ table.hover tr:hover td {
     }
 
     button {
-        padding: 7px 25px;
+        padding: 7px 15px;
     }
 }
 
@@ -682,8 +683,16 @@ table.hover tr:hover td {
     margin-top: 1rem;
 }
 
+.air-right {
+    margin-top: 1rem;
+}
+
 .air-bottom {
     margin-bottom: 1rem;
+}
+
+.air-left {
+    margin-left: 1rem;
 }
 
 .air-inner {
@@ -691,11 +700,15 @@ table.hover tr:hover td {
     overflow:auto;
 }
 
-    .air-inner :last-child {
-        margin-bottom: 0;
-    }
+.no-air {
+    margin:0;
+}
 
-.emphasized, .rounded, .shaded, .success, .warning {
+.emphasized, 
+.rounded, 
+.shaded, 
+.success, 
+.warning {
     margin-bottom: 1rem;
 }
 
@@ -719,8 +732,16 @@ table.hover tr:hover td {
     text-align: center;
 }
 
+.left {
+    text-align: left;
+}
+
 .right {
     text-align: right;
+}
+
+.justify {
+    text-align:justify;
 }
 
 .shaded {
@@ -728,6 +749,12 @@ table.hover tr:hover td {
     overflow:visible;
 }
 
-.error .strip > label:first-child, .error input, .error select, .error textarea, input.error, select.error, textarea.error {
-    box-shadow: 0 0 3px rgba(255,0,0,1) !important;
+.error .strip > label:first-child, 
+.error input, 
+.error select, 
+.error textarea, 
+input.error, 
+select.error, 
+textarea.error {
+    box-shadow: 0 0 2px rgba(255,0,0,1) !important;
 }

@@ -10,6 +10,7 @@
  * Include main CSS file for Micro.
  */
 p5.web.include-css-file:@MICRO/media/main.css
+p5.web.include-css-file:@MICRO/media/fonts.css
 p5.web.page.set-title:Micro basic examples
 
 
@@ -115,93 +116,138 @@ available width."
     div
       class:row
       widgets
-        p
-          class:col-10 bg
-          innerValue:col-10
+        div
+          class:col-10
+          widgets
+            p
+              class:bg
+              innerValue:col-10
     div
       class:row
       widgets
-        p
-          class:col-20 bg
-          innerValue:col-20
+        div
+          class:col-20
+          widgets
+            p
+              class:bg
+              innerValue:col-20
     div
       class:row
       widgets
-        p
-          class:col-25 bg
-          innerValue:col-25
+        div
+          class:col-25
+          widgets
+            p
+              class:bg
+              innerValue:col-25
     div
       class:row
       widgets
-        p
-          class:col-30 bg
-          innerValue:col-30
+        div
+          class:col-30
+          widgets
+            p
+              class:bg
+              innerValue:col-30
     div
       class:row
       widgets
-        p
-          class:col-33 bg
-          innerValue:col-33
+        div
+          class:col-33
+          widgets
+            p
+              class:bg
+              innerValue:col-33
     div
       class:row
       widgets
-        p
-          class:col-40 bg
-          innerValue:col-40
+        div
+          class:col-40
+          widgets
+            p
+              class:bg
+              innerValue:col-40
     div
       class:row
       widgets
-        p
-          class:col-50 bg
-          innerValue:col-50
+        div
+          class:col-50
+          widgets
+            p
+              class:bg
+              innerValue:col-50
     div
       class:row
       widgets
-        p
-          class:col-60 bg
-          innerValue:col-60
+        div
+          class:col-60
+          widgets
+            p
+              class:bg
+              innerValue:col-60
     div
       class:row
       widgets
-        p
-          class:col-67 bg
-          innerValue:col-67
+        div
+          class:col-67
+          widgets
+            p
+              class:bg
+              innerValue:col-67
     div
       class:row
       widgets
-        p
-          class:col-70 bg
-          innerValue:col-70
+        div
+          class:col-70
+          widgets
+            p
+              class:bg
+              innerValue:col-70
     div
       class:row
       widgets
-        p
-          class:col-75 bg
-          innerValue:col-75
+        div
+          class:col-75
+          widgets
+            p
+              class:bg
+              innerValue:col-75
     div
       class:row
       widgets
-        p
-          class:col-80 bg
-          innerValue:col-80
+        div
+          class:col-80
+          widgets
+            p
+              class:bg
+              innerValue:col-80
     div
       class:row
       widgets
-        p
-          class:col-90 bg
-          innerValue:col-90
+        div
+          class:col-90
+          widgets
+            p
+              class:bg
+              innerValue:col-90
     div
       class:row
       widgets
-        p
-          class:col-100 bg
-          innerValue:col-100
+        div
+          class:col-100
+          widgets
+            p
+              class:bg
+              innerValue:col-100
     div
       class:row
       widgets
-        p
-          class:col bg
-          innerValue:Single col inside its own row.
+        div
+          class:col
+          widgets
+            p
+              class:bg
+              innerValue:Single col inside its own row.
     div
       class:row
       widgets
@@ -434,6 +480,8 @@ create-widget
           widgets
             button
               innerValue:Button
+            button
+              innerValue:@"Icon button <span class=""icon-trash""></span>"
         div
           class:col-100
           widgets
@@ -803,10 +851,35 @@ you resize your viewport below 800px size."
                   innerValue:Ordered list
             blockquote
               innerValue:This is some arbitrary piece of text in a blockquote
+            label
+              innerValue:This is a label
+            code
+              innerValue:This is inline code
             pre
               innerValue:@"This is
   some preformatted
     text"
+            h3
+              innerValue:Tables
+            p
+              innerValue:@"Micro also styles tables by default for you. You don't need to add any classes to your tables, but if you want to, you
+can add 'striped' and/or 'hover', which will act accordingly. Individual rows, and/or cells of tables, can also have the 'selected' class associated with them.
+The table below has the 'hover' class."
+            table
+              class:hover
+              widgets
+                thead
+                  widgets
+                    tr
+                      innerValue:@"<th>Table column 1</th><th>Table column 2</th><th>Table column 3</th>"
+                tbody
+                  widgets
+                    tr
+                      innerValue:@"<td>Row 1, cell 1</td><td>Row 1, cell 2</td><td>Row 1, cell 3</td>"
+                    tr
+                      innerValue:@"<td>Row 2, cell 1</td><td>Row 2, cell 2</td><td>Row 2, cell 3</td>"
+                    tr
+                      innerValue:@"<td>Row 3, cell 1</td><td>Row 3, cell 2</td><td>Row 3, cell 3</td>"
 
 
 /*

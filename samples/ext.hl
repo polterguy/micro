@@ -48,7 +48,9 @@ create-widget:content-menu
   widgets
     micro.widgets.menu
       items
-        Menu widget
+        Home
+          href:/
+        Click me
           onclick
             micro.samples.show-modal
         Dropdown
@@ -76,11 +78,6 @@ create-widget:content-menu
  */
 create-container-widget:content
   class:container
-  widgets
-    a
-      href:/
-      innerValue:Home
-      style:"position:absolute;right:15px;"
 
 
 /*
@@ -283,6 +280,7 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
             widgets
               button
                 innerValue:Serialize
+                class:no-air
                 onclick
 
                   /*
@@ -309,15 +307,18 @@ classes <em>'bg inner-air rounded shaded'</em> associated with it."
                               onclick
                                 delete-widget:form-result
     div
-      class:col-30 rounded shaded air-inner emphasized
+      class:col-30
       widgets
-        p
-          innerValue:@"This form is wrapped inside a 'col-70' responsive column, which means you can resize the browser below 800px,
+        div
+          class:rounded shaded air-inner emphasized
+          widgets
+            p
+              innerValue:@"This form is wrapped inside a 'col-70' responsive column, which means you can resize the browser below 800px,
 and the form will automatically pop out and fill the whole viewport."
-        p
-          innerValue:@"Try to resize your browser below 800px in width to see this effect."
-        p
-          innerValue:@"Most of the widgets in the form requires an <strong>[info]</strong> argument, which will be used as a label, title, etc - Depending
+            p
+              innerValue:@"Try to resize your browser below 800px in width to see this effect."
+            p
+              innerValue:@"Most of the widgets in the form requires an <strong>[info]</strong> argument, which will be used as a label, title, etc - Depending
 upon the type of widget you create."
 
 
@@ -377,6 +378,7 @@ Which is useful to for instance being able to implement your own paging logic, f
              * Our actual grid.
              */
             micro.widgets.grid
+              class:hover
               columns
                 Name
                 Email
