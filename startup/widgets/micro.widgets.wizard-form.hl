@@ -14,6 +14,8 @@
  * - [select] - Creates a select dropdown widget, requires [info] argument.
  * - [radio-group] - Creates a group of radio buttons
  *
+ * If you add a [style] or [class] argument, these will be handled specially, as the style and class attribute of the main root widget.
+ *
  * The [select] and [radio-group] widgets, requires an [options] collection, being the options the user can legally select.
  * The [options] arguments is a name/value collection, where the name becomes the displayed string, and the value becomes the value for
  * the selected option. All arguments beneath an [option] argument, becomes appended automatically into the specific option element, allowing
@@ -45,7 +47,7 @@ create-event:micro.widgets.wizard-form
   /*
    * Looping through all arguments and handling them accordingly.
    */
-  for-each:x:/@.signal/--/<-(!/_arg)
+  for-each:x:/@.signal/--/<-(!/_arg!/style!/class)
 
     /*
      * Figuring out what the current argument is.
@@ -206,8 +208,10 @@ create-event:micro.widgets.wizard-form
           src:x:/@_dp/#
 
   /*
-   * Returning widget to caller.
+   * Returning widget to caller, making sure we add [style] and [class] arguments.
    */
+  add:x:/../*/return/*/container
+    src:x:/../*(/class|/style)
   return
     container
       events

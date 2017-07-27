@@ -39,6 +39,7 @@ html {
     --wid-txt-col: #fefefe;
     --form-txt-col: #787f98;
     --border-radius: 5px;
+    --border-width: 1px;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
@@ -308,7 +309,7 @@ hr {
 }
 
 button {
-    border: 1px solid var(--wid-border-col);
+    border: var(--border-width) solid var(--wid-border-col);
     background: var(--wid-dark-col);
     color: var(--wid-txt-col);
     padding: 7px 15px;
@@ -321,7 +322,7 @@ button:active, button:focus, button:hover {
 input, select, textarea {
     border-radius: var(--border-radius);
     width: 250px;
-    border: 1px solid var(--wid-border-col);
+    border: var(--border-width) solid var(--wid-border-col);
     padding: 7px 15px;
     outline: 0;
     background: var(--wid-light-col);
@@ -397,22 +398,22 @@ input[type=radio]:checked:after {
     float: left;
 }
 
-.strip>label, 
-.strip>span {
+.strip > label,
+.strip > span {
     border-radius: 0;
-    border: 1px solid var(--wid-border-col);
+    border: var(--border-width) solid var(--wid-border-col);
     border-left-style: none;
     background: var(--wid-dark-col);
     color: var(--wid-light-col);
     padding: 8px 15px;
     margin-bottom: 1rem;
     float: left;
-    margin-right:0;
+    margin-right: 0;
 }
 
-.strip>*:first-child {
+.strip > *:first-child {
     border-radius: var(--border-radius) 0 0 var(--border-radius);
-    border-left-width: 1px;
+    border-left-width: var(--border-width);
     border-left-style: solid;
 }
 

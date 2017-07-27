@@ -6,6 +6,8 @@
  * Pass in text to display as [_arg].
  * Optionally pass in [parent] as parent widget to where to display window, [class] to override default 
  * class or [onclick] to provide a user defined lambda callback that will be invoked when user clicks the bubble window.
+ *
+ * Alternatively, you can also pass in a [widgets] collection, which will be appended into the information bubble as is.
  */
 create-event:micro.windows.info
 

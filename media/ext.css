@@ -104,12 +104,12 @@
 }
 
 .micro-tab .micro-tab-views {
-    border-top: solid 1px var(--wid-border-col);
+    border-top: solid var(--border-width) var(--wid-border-col);
     padding-top: 1rem;
 }
 
 .micro-tab-border .micro-tab-views {
-    border: 1px solid var(--wid-border-col);
+    border: var(--border-width) solid var(--wid-border-col);
     border-radius: 0 var(--border-radius)0 0;
     padding: 1rem 1rem 0;
 }
@@ -188,7 +188,7 @@ nav ul li > ul li {
 
 nav ul li > ul hr {
     width: 80%;
-    border: 1px solid rgba(0,0,0,.1);
+    border: var(--border-width) solid rgba(0,0,0,.1);
     margin: 0 auto;
 }
 
@@ -247,14 +247,14 @@ nav.expanded hr {
     right: 0;
     animation-fill-mode: forwards;
     border-bottom-left-radius: var(--border-radius);
-    border-left: solid 1px var(--wid-border-col);
-    border-bottom: solid 1px var(--wid-border-col);
+    border-left: solid var(--border-width) var(--wid-border-col);
+    border-bottom: solid var(--border-width) var(--wid-border-col);
     padding: 1.5rem;
     background: var(--wid-dark-col);
-    z-index:1000;
-    user-select:none;
-    cursor:pointer;
-    box-shadow:3px 3px 2px rgba(0,0,0,.2);
+    z-index: 1000;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 2px rgba(0,0,0,.2);
 }
 
 .micro-windows-info span,

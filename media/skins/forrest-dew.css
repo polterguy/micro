@@ -12,14 +12,14 @@ body {
     font-size: .95rem;
     --txt-col: #777;
     --placeholder-col: rgba(0,0,0,.15);
-    --wid-dark-col: linear-gradient(#63ffe6, #53f5d6);
+    --wid-dark-col: linear-gradient(#e3fff0, #d3f5f0);
     --wid-darker-col: linear-gradient(#53fad6, #43eac6);
-    --wid-border-col: rgba(0,0,0,.05);
-    --wid-light-col: linear-gradient(#b3ffef, #d3fff5);
-    --wid-lighter-col: linear-gradient(#d3fff5, #e7fffd);
+    --wid-border-col: rgba(0,255,0,.05);
+    --wid-light-col: #fefefe;
+    --wid-lighter-col: #ffffff;
     --wid-txt-col: #dee0fe;
     --form-txt-col: #777;
-    --border-radius: 25px;
+    --border-radius: 7px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -56,6 +56,15 @@ a {
 
 button, input, select, .strip label, strip span {
     height: 36px;
+}
+
+.strip label {
+    color:#aaa;
+}
+
+.strip label:first-child {
+    color: #aaa;
+    padding-right:35px;
 }
 
 input, textarea, select {
@@ -103,7 +112,7 @@ nav>ul>li>ul{
 button {
     color:var(--txt-col);
     font-size:.9rem;
-    padding:8px 15px 7px 15px;
+    padding:8px 10px 7px 10px;
 }
 
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
@@ -113,7 +122,7 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 
 @media screen and (min-width:800px) {
     button {
-        padding: 9px 25px 8px 25px;
+        padding: 9px 15px 8px 15px;
     }
 }
 

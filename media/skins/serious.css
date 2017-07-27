@@ -37,11 +37,11 @@ body {
     font-size: .95rem;
     --txt-col: #777;
     --placeholder-col: rgba(0,0,0,.1);
-    --wid-dark-col: linear-gradient(#e0e0e0, #d0d0d0);
-    --wid-darker-col: linear-gradient(#d7d7d7, #c2c2c2);
-    --wid-border-col: rgba(200,200,200,.3);
-    --wid-light-col: #fcfcfc;
-    --wid-lighter-col: #fefefe;
+    --wid-dark-col: linear-gradient(#fefefe, #fafafa);
+    --wid-darker-col: linear-gradient(#f7f7f7, #f0f0f0);
+    --wid-border-col: rgba(200,200,200,.2);
+    --wid-light-col: #fefefe;
+    --wid-lighter-col: #ffffff;
     --wid-txt-col: #dee0fe;
     --form-txt-col: #777;
     --border-radius: 4px;
@@ -69,6 +69,9 @@ table tr:hover td {
 
 label {
     line-height:1.5rem;
+}
+.strip>label {
+    color:#a0a0a0;
 }
 
 a {
@@ -152,7 +155,7 @@ input[type=radio]:checked:after {
 }
 
 .bg {
-    /* Copyright(c) Steve Schoger, licenseed as CC BY-SA 4.0*/
+    /* Copyright(c) Steve Schoger, licensed as CC BY-SA 4.0*/
     background-color: #ffffff;
     background-image: url('serious/floating-cogs.svg');
 }
