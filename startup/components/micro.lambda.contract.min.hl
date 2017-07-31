@@ -46,10 +46,14 @@ create-event:micro.lambda.contract.min
         :x:/@_dp/#?name
 
     /*
-     * Checking if argument was expected to contain any value,
-     * for then to check if argument actually held a value.
+     * Checking if argument was supposed to hold a value (if given).
+     *
+     * Notice, we'll need to explicitly handle "bool" here, since it implicitly
+     * converts into "false" if its value is "false".
      */
     if:x:/@_dp/#?value
+      and:x:/@_dp/#?value
+        !=:bool
       and:x:/../*/_arg/#/*/{0}?value
         :x:/@_dp/#?name
         not
