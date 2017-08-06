@@ -72,7 +72,7 @@ table tr:hover td {
 }
 
 label {
-    padding-top:3px;
+    line-height:1.5rem;
 }
 
 a {
@@ -83,12 +83,16 @@ button, input, select, .strip label, strip span {
     height: 36px;
 }
 
-.strip span {
+.strip>span {
     padding:5px 15px 5px 15px;
 }
 
+.strip label {
+    line-height:1.2rem;
+}
+
 nav {
-    background:var(--wid-lighter-col);
+    background:var(--wid-light-col);
     min-height:63px;
 }
 
@@ -105,8 +109,10 @@ nav ul li > ul hr {
     width:100%;
 }
 
-nav a:hover, nav a:active, nav a:focus {
-    background:var(--wid-light-col);
+nav a:hover, 
+nav a:active, 
+nav a:focus {
+    background:var(--wid-lighter-col);
 }
 
 nav ul li ul{
@@ -124,19 +130,13 @@ button {
     text-transform:uppercase;
     color:#fff;
     font-size:.9rem;
-    padding:8px 5px 7px 5px;
+    padding:8px 15px 7px 15px;
 }
 
 input[type=checkbox]:checked:after, 
 input[type=radio]:checked:after {
     left: 2px;
     font-size: 18px;
-}
-
-@media screen and (min-width:800px) {
-    button {
-        padding: 9px 10px 8px 10px;
-    }
 }
 
 input[type=checkbox], input[type=radio] {

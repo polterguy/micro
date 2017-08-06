@@ -47,6 +47,10 @@ nav {
     background:var(--wid-lighter-col);
 }
 
+nav > a {
+    height:61px;
+}
+
 nav>ul>li>a {
     color:var(--form-txt-col);
 }
@@ -67,12 +71,7 @@ nav>ul>li>ul{
 /* Form elements */
 button {
     color:var(--txt-col);
-}
-
-@media screen and (min-width:800px) {
-    button {
-        padding: 9px 25px 8px 25px;
-    }
+    padding:8px 15px 7px 15px;
 }
 
 input[type=checkbox]:checked:after {

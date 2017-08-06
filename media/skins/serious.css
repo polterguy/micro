@@ -78,7 +78,10 @@ a {
     color:#9090da;
 }
 
-button, input, select, .strip label, strip span {
+button, input, 
+select, 
+.strip label, 
+strip span {
     height: 36px;
 }
 
@@ -90,16 +93,25 @@ button, input, select, .strip label, strip span {
     padding-top:5px;
 }
 
-nav>a {
+nav a {
     padding-top:1rem;
     padding-bottom:1rem;
+    color:var(--wid-dark-col)
+}
+
+nav a:hover,
+nav a:focus,
+nav a:active {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--wid-dark-col);
 }
 
 /* Form elements */
 button {
     color:#7a7a7a;
     font-size:.9rem;
-    padding:8px 25px 7px 25px;
+    padding:8px 15px 7px 15px;
 }
 
 input[type=checkbox]:checked:after, 

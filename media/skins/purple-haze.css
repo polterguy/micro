@@ -62,13 +62,23 @@ button, input, select, .strip label, strip span {
     color:#707070;
 }
 
-.strip span {
+.strip>span {
     padding:4px 15px 4px 15px;
 }
 
 nav {
     background:var(--wid-lighter-col);
     min-height:63px;
+}
+
+nav a {
+    color:var(--form-txt-col)
+}
+
+nav a:hover,
+nav a:focus,
+nav a:active {
+    color:var(--form-txt-col);
 }
 
 nav>ul>li>a {
@@ -90,18 +100,12 @@ nav ul li ul{
 /* Form elements */
 button {
     font-size:.9rem;
-    padding:8px 5px 7px 5px;
+    padding:8px 15px 7px 15px;
 }
 
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     left: 1px;
     font-size: 18px;
-}
-
-@media screen and (min-width:800px) {
-    button {
-        padding: 9px 15px 8px 15px;
-    }
 }
 
 input, select, textarea {

@@ -115,7 +115,7 @@ pre, textarea {
 }
 
 .strip, button {
-    overflow: auto;
+    overflow: visible;
 }
 
 code, kbd, pre, samp {
