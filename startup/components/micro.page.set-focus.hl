@@ -1,8 +1,26 @@
 
 /*
  * Helper Active Event to set focus to the given [_arg] widget.
+ *
+ * If [no-select] is true, it will not select all text in any text widgets.
  */
 create-event:micro.page.set-focus
 
-  p5.web.send-javascript:@"p5.$('{0}').el.focus();if(p5.$('{0}').el.select) {{p5.$('{0}').el.select();}}"
-    :x:/../*/_arg?value
+  /*
+   * Checking if caller supplied [no-select].
+   */
+  if:x:/../*/no-select?value
+
+    /*
+     * No select was true.
+     */
+    p5.web.send-javascript:@"p5.$('{0}').el.focus();"
+      :x:/../*/_arg?value
+
+  else
+
+    /*
+     * No select was not given.
+     */
+    p5.web.send-javascript:@"p5.$('{0}').el.focus();if(p5.$('{0}').el.select) {{p5.$('{0}').el.select();}}"
+      :x:/../*/_arg?value
