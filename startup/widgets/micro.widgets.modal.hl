@@ -29,6 +29,16 @@ create-event:micro.widgets.modal
     src:x:/@.signal/--(!/widgets)
 
   /*
+   * Checking if caller supplied a [class] argument, and if not, defaulting
+   * to the default class for widget.
+   */
+  if:x:/../*/class
+    not
+    add:x:/../*/return/*/container
+      src
+        class:micro-modal
+
+  /*
    * Returning widget to caller.
    */
   eval-x:x:/+/*/*/onclick
