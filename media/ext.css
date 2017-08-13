@@ -67,6 +67,7 @@
     background: rgba(0,0,0,.4);
     z-index: 1000;
     animation-name: micro-fade;
+    overflow-y:auto;
 }
 
 .micro-modal .micro-modal-content {
@@ -75,10 +76,11 @@
     margin-right: auto;
     background: #fff;
     border-radius: 5px;
-    padding: 1rem 2rem 0;
+    padding: 1rem 2rem;
     overflow: auto;
     animation-name: micro-drop;
     position:relative;
+    margin-bottom:2rem;
 }
 
 .micro-modal-smaller .micro-modal-content {
