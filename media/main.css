@@ -222,7 +222,7 @@ blockquote, button, caption, fieldset, h1, h2, h3, h4, h5, h6, hr, input, label,
 
 .col, .col-10, .col-100, .col-20, .col-25, .col-30, .col-33, .col-40, .col-50, .col-60, .col-67, .col-70, .col-75, .col-80, .col-90, .col-100 {
     flex: 100%;
-    padding: 0 0 0 1rem;
+    padding:0;
 }
 
 body {
@@ -513,6 +513,9 @@ table.hover tr:hover td {
 @media screen and (min-width:800px) {
 h2, h3 {
     line-height: 1.25;
+}
+.col, .col-10, .col-100, .col-20, .col-25, .col-30, .col-33, .col-40, .col-50, .col-60, .col-67, .col-70, .col-75, .col-80, .col-90, .col-100 {
+    padding: 0 0 0 1rem;
 }
 
 .col {
