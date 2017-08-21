@@ -221,7 +221,7 @@ button, pre {
  * pull it to the left, with the same distance a "col" is padded with.
  */
 .row .row {
-    margin:0 0 0 -1rem;
+    margin-left:-1rem;
 }
 
 blockquote, button, caption, fieldset, h1, h2, h3, h4, h5, h6, hr, input, label, legend, table, ol, ul, p, pre, select, textarea {
