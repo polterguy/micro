@@ -83,7 +83,7 @@
     animation-duration: 2s;
     animation-fill-mode: forwards;
     background-color:#000;
-    color:#fefefe;
+    color:rgba(0,0,0,.7);
 }
 .micro-ajax-wait-animations {
     position: absolute;
@@ -95,9 +95,15 @@
     top: 15px;
     right: 55px;
 }
+@keyframes micro-ajax-wait-info-flash {
+    0% { color: #fefefe; }
+    100% { color: #b0b0b0; }
+}
 .micro-ajax-wait-info {
     margin-top:2rem;
     text-align:center;
+    animation: micro-ajax-wait-info-flash 1.5s ease infinite;
+    animation-direction:alternate;
 }
 .micro-ajax-square {
     position: absolute;
