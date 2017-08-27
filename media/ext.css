@@ -70,7 +70,6 @@
 }
 @keyframes micro-ajax-wait {
     0% { opacity: 0; }
-    15% { opacity:0; }
     100% { opacity: 1; }
 }
 .micro-ajax-wait {
@@ -100,7 +99,7 @@
     100% { color: #b0b0b0; }
 }
 .micro-ajax-wait-info {
-    margin-top:2rem;
+    margin-top:4rem;
     text-align:center;
     animation: micro-ajax-wait-info-flash 1.5s ease infinite;
     animation-direction:alternate;
