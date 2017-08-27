@@ -57,6 +57,94 @@
     }
 }
 
+
+/*
+ * CSS animation for Ajax wait.
+ *
+ * Thx to Anya Melnyk fo sharing this at https://codepen.io/slyka85/pen/QvBQPb
+ */
+@keyframes micro-ajax-wait-dominos {
+  50% { opacity: 0.7; }
+  75% { -webkit-transform: rotate(90deg); transform: rotate(90deg); }
+  80% { opacity: 1; } 
+}
+@keyframes micro-ajax-wait {
+    0% { opacity: 0; }
+    15% { opacity:0; }
+    100% { opacity: 1; }
+}
+.micro-ajax-wait {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    animation-name: micro-ajax-wait;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    background-color:#000;
+    color:#fefefe;
+}
+.micro-ajax-wait-animations {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    top: 15px;
+    right: 55px;
+}
+.micro-ajax-wait-info {
+    margin-top:2rem;
+    text-align:center;
+}
+.micro-ajax-square {
+    position: absolute;
+    top: 15px;
+    right:15px;
+    width: 25px;
+    height: 7px;
+    background: white;
+    box-shadow: 2px 2px 3px 0px black;
+}
+.micro-ajax-square-1 {
+    left: 70px;
+    animation: micro-ajax-wait-dominos 1s 0.125s ease infinite;
+}
+.micro-ajax-square-2 {
+    left: 60px;
+    animation: micro-ajax-wait-dominos 1s 0.3s ease infinite;
+}
+.micro-ajax-square-3 {
+    left: 50px;
+    animation: micro-ajax-wait-dominos 1s 0.425s ease infinite;
+}
+.micro-ajax-square-4 {
+    left: 40px;
+    animation: micro-ajax-wait-dominos 1s 0.540s ease infinite;
+}
+.micro-ajax-square-5 {
+    left: 30px;
+    animation: micro-ajax-wait-dominos 1s 0.665s ease infinite;
+}
+.micro-ajax-square-6 {
+    left: 20px;
+    animation: micro-ajax-wait-dominos 1s 0.79s ease infinite;
+}
+.micro-ajax-square-7 {
+    left: 10px;
+    animation: micro-ajax-wait-dominos 1s 0.9s ease infinite;
+}
+.micro-ajax-square-8 {
+    left: 0px;
+    animation: micro-ajax-wait-dominos 1s 1s ease infinite;
+}
+
+
+/*
+ * Modal widget.
+ */
 .micro-modal {
     display: block !important;
     position: fixed;
