@@ -3,6 +3,7 @@
  * Creates the modal "obscurer" widget, which is an Ajax Wait type of widget.
  *
  * Pass in [message] to explicitly choose which text to display to user as he waits.
+ * If you don't pass in a [message] argument, the default will be "Please wait ...".
  * All other arguments are passed in "as is".
  *
  * Notice, if you pass in a [class] and/or a [widgets] collection, you will override
@@ -45,7 +46,7 @@ create-event:micro.widgets.obscurer
         widgets
           h3
             class:micro-ajax-wait-info
-            innerValue:x:/../*(/message|/.defaults/message)/$?value
+            innerValue:x:/../*(/message|/.defaults/*/message)/$?value
           div
             class:micro-ajax-wait-animations
             widgets
