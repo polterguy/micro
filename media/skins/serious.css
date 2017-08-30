@@ -39,7 +39,7 @@ body {
     --placeholder-col: rgba(0,0,0,.1);
     --wid-dark-col: linear-gradient(#fefefe, #fafafa);
     --wid-darker-col: linear-gradient(#f7f7f7, #f0f0f0);
-    --wid-border-col: rgba(200,200,200,.2);
+    --wid-border-col: rgba(200,200,200,.7);
     --wid-light-col: #fefefe;
     --wid-lighter-col: #ffffff;
     --wid-txt-col: #dee0fe;
