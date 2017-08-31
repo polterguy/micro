@@ -163,8 +163,13 @@ input[type=radio]:checked:after {
 }
 
 .micro-tab-border .micro-tab-views {
-    padding:2rem 2rem 1rem 2rem;
+    padding:1rem;
     border-radius:5px;
+}
+@media screen and (min-width:800px) {
+.micro-tab-border .micro-tab-views {
+    padding: 2rem 2rem 1rem 2rem;
+}
 }
 
 .bg {

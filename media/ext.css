@@ -188,11 +188,22 @@
 }
 
 .micro-tab .micro-tab-buttons button {
+    display:none;
+}
+.micro-tab .micro-tab-display-buttons button {
+    display:list-item;
+    width:150px;
+    margin-right:15px;
+}
+.micro-tab .micro-tab-buttons button.micro-tab-hamburger {
+    display: inline-block;
     margin-bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom: none;
-    margin-right:5px;
+    margin-right: 5px;
+    width:auto;
+    float:none;
 }
 
 .micro-tab-active {
@@ -207,7 +218,7 @@
 .micro-tab-border .micro-tab-views {
     border: var(--border-width) solid var(--wid-border-col);
     border-radius: 0 var(--border-radius)0 0;
-    padding: 1rem 1rem 0;
+    padding: 1rem 1rem;
 }
 
 nav {
@@ -289,24 +300,35 @@ nav ul li > ul hr {
 }
 
 @media screen and (min-width:800px) {
-    nav {
-        height: auto;
-    }
+.micro-tab .micro-tab-buttons button {
+    display:inline-block;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-right: 5px;
+}
+.micro-tab .micro-tab-buttons button.micro-tab-hamburger {
+    display:none;
+}
+nav {
+    height: auto;
+}
 
-    nav > a {
-        display: none;
-    }
+nav > a {
+    display: none;
+}
 
-    nav > ul {
-        display: block;
-    }
+nav > ul {
+    display: block;
+}
 
-    nav ul li:hover > ul, nav ul li > ul.expanded {
-        display: block;
-        animation-name: micro-fade;
-        animation-duration: .2s;
-        animation-fill-mode: forwards;
-    }
+nav ul li:hover > ul, nav ul li > ul.expanded {
+    display: block;
+    animation-name: micro-fade;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+}
 }
 
 nav.expanded > ul {
