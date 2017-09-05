@@ -25,18 +25,19 @@
 (function () {
 
     // Constructor.
-    p5.dropzone = function (widget, cssClass, hoverClass, dropClass, errorClass, filter, multiple, url) {
+    p5.dropzone = function (hoverClass, dropClass, errorClass, filter, multiple, url, onfinish, onbegin) {
 
         // Initializing.
-        this._widget = p5.$(widget);
-        this._cssClass = cssClass;
+        this._cssClass = document.body.className;
         this._hoverClass = hoverClass;
         this._dropClass = dropClass;
         this._errorClass = errorClass;
         this._filter = (filter == '' ? [] : filter.split('|'));
         this._multiple = multiple;
         this._url = url;
-        this._file = p5.$(widget).el.childNodes[0];
+        this._onfinish = onfinish;
+        this._onbegin = onbegin;
+        this._file = p5.$('micro-page-dropzone-file').el;
 
         // Storing this as "self" to have access to it inside of event handlers further down.
         var self = this;
@@ -45,21 +46,40 @@
         this._file.addEventListener('change', function () {self.onFileInputChanged();});
 
         // Then the DOM event handler for what happens when a file is dropped unto widget.
-        this._widget.el.addEventListener('drop', function (e) { self.onDrop(e);}, false);
+        document.body.addEventListener('drop', function (e) { self.onDrop(e);}, false);
 
         // Then the DOM event handler for what happens when a file is dragged over it.
-        this._widget.el.addEventListener('dragover', function (e) {self.onDragOver(e);}, false);
+        document.body.addEventListener('dragover', function (e) {self.onDragOver(e);}, false);
 
         // Then the DOM event handler for what happens when the user drags the file away from our widget.
-        this._widget.el.addEventListener('dragleave', function (e) {self.onDragLeave(e);}, false);
+        document.body.addEventListener('dragleave', function (e) {self.onDragLeave(e);}, false);
+
+        // Storing instance.
+        p5.dropzone.instance = this;
     };
 
 
-    // Allows you to show the "browse for file" window explicitly.
-    p5.dropzone.prototype.browse = function () {
+    /*
+     * Allows you to show the "browse for file" window explicitly.
+     *
+     * Notice, this is an "API" function, allowing you to invoke it from your own
+     * code, if you have a button for instance, that explicitly allows the user to
+     * browse for files, to be uploaded using the uploaded logic.
+     *
+     * Notice, you are responsible yourself to stop the propagation of the function,
+     * such that the clicking of your button, doesn't propagate, and reloads your page,
+     * etc - If you invoke this function from a button.
+     *
+     * To invoke from a button onclick event handler for instance, you could use the following code;
+     * "p5.dropzone.browse();event.stopPropagation(true);return false;"
+     */
+    p5.dropzone.browse = function () {
+
+        // Making sure we set the file input's value to null, in case user tries to upload the same file once more later.
+        p5.dropzone.instance._file.value = null;
 
         // Clicks the file input element.
-        this._file.click ();
+        p5.dropzone.instance._file.click ();
     };
 
 
@@ -68,9 +88,6 @@
 
         // Forwarding to common uploader function.
         this.uploadFiles(this._file.files);
-
-        // Making sure we set the file input's value to null, in case user tries to upload the same file once more later.
-        this._file.value = null;
     };
 
 
@@ -94,9 +111,9 @@
             // File input is not valid, making sure we provide visual clues to user by setting its error CSS class.
             // Also making sure we remove the error CSS class after one second, such that we can set it again later successfully,
             // in case user does something else later, that also triggers an error.
-            this._widget.el.className = this._cssClass + " " + this._errorClass;
+            document.body.el.className = this._cssClass + " " + this._errorClass;
             var self = this;
-            setTimeout(function () { self._widget.el.className = self._cssClass; }, 1000);
+            setTimeout(function () { document.body.className = self._cssClass; }, 1000);
 
         } else {
 
@@ -104,10 +121,10 @@
             if (files.length > 0) {
 
                 // Changing CSS class to the specified "drop" CSS class.
-                this._widget.el.className = this._cssClass + " " + this._dropClass;
+                document.body.className = this._cssClass + " " + this._dropClass;
 
                 // Creating a batch id.
-                function uuidv4() {
+                function guid_new() {
                     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                         return v.toString(16);
@@ -115,8 +132,11 @@
                 }
 
                 // Uploading file(s).
+                this._onbegin();
                 var self = this;
-                var length = files.length, no = 0, has_error = 0, uid = uuidv4();
+                var length = files.length, no = 0, has_error = 0, uid = guid_new ();
+
+                // Looping through each file, and pushing it towards our specified endpoint.
                 for (var i = 0; i < files.length; i++) {
                     var xhr = new XMLHttpRequest(), fd = new FormData();
                     xhr.open('POST', this._url, true);
@@ -126,19 +146,12 @@
                                 has_error += 1;
                             }
                             if (++no == length) {
-                                if (has_error != 0) {
-                                    alert(has_error + ' file(s) were not accepted');
-                                }
-                                if (no == has_error) {
-                                    //window.location.replace(window.location);
-                                } else {
-                                    //window.location.replace('{0}batch/{1}');
-                                }
+                                self._onfinish(uid, no, has_error);
                             }
                         }
                     };
                     fd.append('file', files[i]);
-                    fd.append('batch-id', uid)
+                    fd.append('batch', uid)
                     xhr.send(fd);
                 }
             }
@@ -151,7 +164,7 @@
 
         // Preventing default, and setting back CSS class to default class.
         e.preventDefault();
-        this._widget.el.className = this._cssClass;
+        document.body.className = this._cssClass;
     };
 
 
@@ -160,7 +173,7 @@
 
         // Preventing default, and setting CSS class to "hover class".
         e.preventDefault();
-        this._widget.el.className = this._cssClass + " " + this._hoverClass;
+        document.body.className = this._cssClass + " " + this._hoverClass;
     };
 
 

@@ -405,19 +405,39 @@ nav.expanded hr {
     animation-duration: .5s;
 }
 
-.micro-dropzone {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background-color:yellow;
+
+
+/*
+ * Dropzone CSS classes.
+ */
+@keyframes micro-dropzone-dragover {
+    0% {
+        background-color:rgba(255,255,0,0);
+    }
+    100% {
+        background-color:rgba(255,255,0,.5);
+    }
+}
+@keyframes micro-dropzone-dropped {
+    0% {
+        background-color: rgba(0,255,0,0);
+    }
+
+    100% {
+        background-color: rgba(0,255,0,.5);
+    }
 }
 .micro-dropzone-hover {
-    background-color: green;
+    animation-name: micro-dropzone-dragover;
+    animation-iteration-count: infinite;
+    animation-duration: .5s;
+    animation-direction: alternate-reverse;
 }
 .micro-dropzone-drop {
-    background-color: blue;
+    animation-name: micro-dropzone-dropped;
+    animation-iteration-count: infinite;
+    animation-duration: .5s;
+    animation-direction: alternate-reverse;
 }
 .micro-dropzone-error {
     background-color: red;

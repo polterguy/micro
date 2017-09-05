@@ -1,0 +1,107 @@
+
+/*
+ * Creates a dropzone for the entire page.
+ *
+ * Arguments are as follows.
+ *
+ * [url]         - Which URL to POST files to, once we have some files to upload.
+ *                 Notice, the URL endpoint will be given the files as "form-data",
+ *                 where the file itself will be given as a "file" POST argument, and
+ *                 the batch ID for all files simultaneously uploaded being "batch-id".
+ * [hover-class] - Which CSS class to use when files are dragged unto the body's surface.
+ *                 Defaults to "micro-dropzone-hover".
+ * [drop-class]  - Which CSS class to use when files are dropped unto the body's surface.
+ *                 Defaults to "micro-dropzone-drop".
+ * [error-class] - Which CSS class to use when files are dragged unto the body's surface,
+ *                 and they are not accepted for some reasons.
+ *                 Defaults to "micro-dropzone-error".
+ * [multiple]    - If true, the widget will allow multiple files to be uploaded at once.
+ * [filter]      - A pipe separated list of file extensions that the widget allows
+ *                 for being uploaded. E.g. "png|jpg|jpeg|gif".
+ *                 If it is empty or null, all files are accepted. 
+ *                 The default value is null.
+ * [.onfinish]   - Optional JavaScript callback, invoked when uploading of file(s) are done.
+ *                 Callback will be invoked with the batch id of the files that were
+ *                 uploaded as its first argument, the numbers of files in total, and
+ *                 number of files that were rejected by the endpoint uploading URL.
+ * [.onbegin]    - Optional JavaScript callback, invoked without parameters when 
+ *                 uploading of files begins.
+ */
+create-event:micro.page.create-dropzone
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Applying options for widget, with default values.
+   */
+  .defaults
+    hover-class:micro-dropzone-hover
+    drop-class:micro-dropzone-drop
+    error-class:micro-dropzone-error
+    multiple:bool:true
+    filter
+    .onfinish:"function(uid, no_files, no_errors){}"
+    .onbegin:"function(){}"
+
+  /*
+   * Sanity checking mandatory parameters.
+   */
+  micro.lambda.contract.min:x:/..
+    url:string
+
+  /*
+   * Sanity checking optional parameters.
+   */
+  micro.lambda.contract.optional:x:/..
+    hover-class:string
+    drop-class:string
+    error-class:string
+    multiple:bool
+    filter:string
+    .onfinish:string
+    .onbegin:string
+
+  /*
+   * Checking that there does not exist a dropzone from before.
+   */
+  if
+    fetch:x:/0/0?value
+      widget-exists:micro-page-dropzone-file
+    throw:You can only have one dropzone for each page in your system, and there already exists another one from before
+
+  /*
+   * Including Micro's CSS files.
+   */
+  p5.web.include-css-file:@MICRO/media/main.css
+  p5.web.include-css-file:@MICRO/media/ext.css
+
+  /*
+   * Including JavaScript that creates our dropzone on the client side.
+   */
+  p5.web.include-javascript-file:@MICRO/media/dropzone.js
+
+  /*
+   * Instantiating dropzone on client side.
+   */
+  to-lower:x:(/../*/multiple|/../*/.defaults/*/multiple)/$?value
+  p5.web.include-javascript:@"p5.micro_page_dropzone = new p5.dropzone ('{0}', '{1}', '{2}', '{3}', {4}, '{5}', {6}, {7});"
+    :x:(/../*/hover-class|/../*/.defaults/*/hover-class)/$?value
+    :x:(/../*/drop-class|/../*/.defaults/*/drop-class)/$?value
+    :x:(/../*/error-class|/../*/.defaults/*/error-class)/$?value
+    :x:(/../*/filter|/../*/.defaults/*/filter)/$?value
+    :x:/@to-lower?value
+    :x:(/../*/url|/../*/.defaults/*/url)/$?value
+    :x:(/../*/.onfinish|/../*/.defaults/*/.onfinish)/$?value
+    :x:(/../*/.onbegin|/../*/.defaults/*/.onbegin)/$?value
+
+  /*
+   * Creating file input necessary to handle files on client side.
+   */
+  create-widgets
+    input:micro-page-dropzone-file
+      type:file
+      multiple
+      style:@"opacity:0 !important;position:absolute !important;width:0;height:0;z-index:-1;top:-5000px;left:0;"

@@ -195,7 +195,13 @@ button, pre {
 
 
 
+html {
+    height: 100%;
+}
 
+body {
+    min-height: 100%;
+}
 .container, .container-fullscreen {
     padding: 1rem 1rem 1rem 0;
     overflow: visible;
