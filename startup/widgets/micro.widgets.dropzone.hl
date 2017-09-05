@@ -1,0 +1,113 @@
+
+/*
+ * Creates the drag and drop uploader extension widget.
+ *
+ * Arguments are as follows.
+ *
+ * [url]         - Which URL to POST files to, once the widget has some files to upload.
+ * [class]       - Which CSS class the widget has by default, when inactive.
+ *                 Defaults to "micro-dropzone".
+ * [hover-class] - Which CSS class to use when files are dragged unto its surface.
+ *                 Defaults to "micro-dropzone-hover".
+ * [drop-class]  - Which CSS class to use when files are dropped unto its surface.
+ *                 Defaults to "micro-dropzone-drop".
+ * [error-class] - Which CSS class to use when files are dragged unto its surface,
+ *                 and they are not accepted for some reasons.
+ *                 Defaults to "micro-dropzone-error".
+ * [multiple]    - If true, the widget will allow multiple files to be uploaded at once.
+ * [filter]      - A pipe separated list of file extensions that the widget allows
+ *                 for being uploaded. E.g. "png|jpg|jpeg|gif".
+ *                 If it is empty or null, all files are accepted. 
+ *                 The default value is null.
+ */
+create-event:micro.widgets.dropzone
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Applying options for widget, with default values.
+   */
+  .defaults
+    class:micro-dropzone
+    hover-class:micro-dropzone-hover
+    drop-class:micro-dropzone-drop
+    error-class:micro-dropzone-error
+    multiple:bool:true
+    filter
+
+  /*
+   * Sanity checking mandatory parameters.
+   */
+  micro.lambda.contract.min:x:/..
+    url:string
+
+  /*
+   * Sanity checking optional parameters.
+   */
+  micro.lambda.contract.optional:x:/..
+    class:string
+    hover-class:string
+    drop-class:string
+    error-class:string
+    multiple:bool
+    filter:string
+
+  /*
+   * Passing in arguments to [oninit].
+   */
+  add:x:/../*/return/*/container/*/oninit/*/.args
+    src:x:(/@.signal/--(!/_arg)|/../*/.defaults/*)/$
+
+  /*
+   * Passing in non-specific arguments to widget itself.
+   */
+  add:x:/../*/return/*/container
+    src:x:/.@signal/--(!/class|/hover-class|/drop-class|/error-class|/multiple|/filter|/url)
+
+  /*
+   * Returning widget to caller.
+   */
+  eval-x:x:/+/*/*/class
+  return
+    container
+      class:x:/../*(/class|/.defaults/*/class)/$?value
+      oninit
+
+        /*
+         * List of args, populated above.
+         */
+        .args
+
+        /*
+         * Including Micro's CSS files.
+         */
+        p5.web.include-css-file:@MICRO/media/main.css
+        p5.web.include-css-file:@MICRO/media/ext.css
+
+        /*
+         * Including JavaScript that creates our dropzone on the client side.
+         */
+        p5.web.include-javascript-file:@MICRO/media/dropzone.js
+
+        /*
+         * Instantiating dropzone on client side.
+         */
+        to-lower:x:/@.args/*/multiple?value
+        p5.web.include-javascript:@"p5['{0}'] = new p5.dropzone ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}');"
+          :x:/../*/_event?value
+          :x:/@.args/*/class?value
+          :x:/@.args/*/hover-class?value
+          :x:/@.args/*/drop-class?value
+          :x:/@.args/*/error-class?value
+          :x:/@.args/*/filter?value
+          :x:/@to-lower?value
+          :x:/@.args/*/url?value
+
+      widgets
+        input
+          type:file
+          multiple
+          style:@"opacity:0 !important;position:absolute !important;width:0;height:0;z-index:-1;top:-5000px;left:0;"
