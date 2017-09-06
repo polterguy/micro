@@ -70,7 +70,7 @@
 }
 @keyframes micro-ajax-wait {
     0% { opacity: 0; }
-    100% { opacity: 1; }
+    100% { opacity: .7; }
 }
 .micro-ajax-wait {
     position:fixed;
@@ -81,9 +81,11 @@
     animation-name: micro-ajax-wait;
     animation-duration: 2s;
     animation-fill-mode: forwards;
+    animation-delay:.5s;
     background-color:#000;
     color:rgba(0,0,0,.7);
     z-index:5000;
+    opacity:0;
 }
 .micro-ajax-wait-animations {
     position: absolute;
