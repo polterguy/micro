@@ -171,9 +171,14 @@
     // Invoked when a dragover operation occurs.
     p5.dropzone.prototype.onDragOver = function (e) {
 
-        // Preventing default, and setting CSS class to "hover class".
-        e.preventDefault();
-        document.body.className = this._cssClass + " " + this._hoverClass;
+        // Verifying that it's actually a file that's being dragged here.
+        var dt = e.dataTransfer;
+        if (dt.types && (dt.types.indexOf ? dt.types.indexOf('Files') != -1 : dt.types.contains('Files'))) {
+
+            // Preventing default, and setting CSS class to "hover class".
+            e.preventDefault();
+            document.body.className = this._cssClass + " " + this._hoverClass;
+        }
     };
 
 
