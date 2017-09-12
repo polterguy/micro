@@ -709,7 +709,7 @@ button[disabled] {
     cursor: not-allowed;
 }
 
-input[disabled] {
+input[disabled], select[disabled], textarea[disabled] {
     background: var(--wid-darker-col) !important;
     cursor: not-allowed !important;
 }
