@@ -199,13 +199,33 @@ create-event:micro.widgets.wizard-form
           src
             br
 
+      case:collection
+
+        /*
+         * A grouping of widgets, creating a wrapper container element, and iterating its
+         * [widgets] collection.
+         */
+        add:x:/+
+          src:x:/@_dp/#/*(!/widgets)|/@_dp/#/*/widgets/*
+        micro.widgets.wizard-form
+        add:x:/../*/return/*/container/*/widgets
+          src:x:/@micro.widgets.wizard-form/*
+
       default
 
         /*
-         * Some arbitrary HTML widget not natively supported.
+         * Some arbitrary HTML widget not natively supported, or possible some
+         * arbitrary attribute.
          */
-        add:x:/../*/return/*/container/*/widgets
-          src:x:/@_dp/#
+        if:x:/@_dp/#?name
+          ~:.
+          or:x:/@_dp/#?name
+            =:visible
+          add:x:/../*/return/*/container
+            src:x:/@_dp/#
+        else
+          add:x:/../*/return/*/container/*/widgets
+            src:x:/@_dp/#
 
   /*
    * Returning widget to caller, making sure we add [style] and [class] arguments.
