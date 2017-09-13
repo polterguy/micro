@@ -190,8 +190,9 @@ You can also offset a column's starting point, with one of the following CSS cla
 * offset-80
 * offset-90
 
-The same principle still applies as above, since the total number of any columns inside a single row must still add up to exactly 100. These offset 
-classes are also completely ignored, making your columns become 100% width, if the browser's viewport dips below 800px.
+The same principle still applies as above, since the total number of any columns inside a single row, in addition to their offsets, 
+must still add up to exactly 100. These offset classes are also completely ignored, making your columns become 100% width, 
+if the browser's viewport dips below 800px.
 
 ## Form elements
 
