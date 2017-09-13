@@ -98,9 +98,9 @@ use all available width. You can have as many containers as you wish on your pag
 
 The general layout of your page should be as follows.
 
-- 'container' or 'container-fullscreen' element.
-- 'row' elements inside of each container
-- 'col' or 'col-x' elements inside of each 'row'
+- _'container'_ or _'container-fullscreen'_ element.
+- _'row'_ elements inside of each container
+- _'col'_ or _'col-x'_ elements inside of each _'row'_
 
 In such a regard, it logically resembles the structure of a Bottstrap CSS page. You can nest another 'row' inside of another outer 'col' 
 or 'col-x' elements.
