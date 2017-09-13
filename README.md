@@ -912,7 +912,7 @@ The **[micro.widgets.wizard-form]** extension widget, takes the following standa
 * __[select]__ - Creates a select dropdown widget.
 * __[checkbox]__ - Creates a checkbox widget.
 * __[radio-group]__ - Creates a group of radio buttons.
-* __[collection]__ - Creates a container widget, recursively invoking self for each widget in its __[widgets]__ collection.
+* __[collection]__ - Creates a nested wizard-form, recursively invoking itself, for the contents of its __[widgets]__ collection.
 
 In the above code we use the CSS classes _'bg air-inner rounded shaded'_, which creates the rounded and shaded effect, in addition to 
 the background rendering and the inner padding. All other arguments you supply to it, will be assumed are widget declarations, and created
@@ -927,46 +927,71 @@ in the above code.
 
 Notice, the above declaration of our wizard form is 48 lines of code if we ignore the boiler plate code. If we had created a form of that 
 complexity 'by hand', it would surely easily become at least 150-200 lines of code (LOC). The **[micro.widgets.wizard-form]** extension widget, 
-allows you to easily create very rich forms, without having to repeat yourself, with a very small number of LOC (lines of code).
+allows you to easily create very rich forms, without having to repeat yourself, with a very small number of LOC (lines of code). However, this
+comes at the cost of having slightly less flexibility when creating your forms.
 
 To retrieve the value of your form, you can use the __[micro.widgets.wizard-form.value]__ lambda event, passing in the ID of your form.
+This will retrieve the value of all form elements inside of your wizard-form recursively.
 
-#### [radio-group] and [select] widgets creation
+#### [radio-group] and [select] widgets
 
 These two widgets requires an **[options]** argument, which will become the possible options the user can select. These options are in a
 name/value structure, where the name of the option becomes the friendly displayed name, and its value becomes the value serialized
 when the user selects that specific option element. All arguments you supply to your **[option]** children nodes, will be appended directly
 into the specific option element. Above for instance, we are adding a **[checked]** argument to one of our radio button arguments. This
-makes sure that the particular radio button becomes initially selected. To initially select a **[select]** dropdown widget's option,
+makes sure that the particular radio button becomes initially checked. To initially select a **[select]** dropdown widget's option,
 add up a **[selected]** argument to it.
 
-#### Dropping the ID of your wizard form widgets
+#### Dropping the IDs of your wizard form widgets
 
-If you wish, you can rely upon the default ID generation for your wizard form widgets, and drop their values. How to retrieve its values 
+If you want to, you can rely upon the default ID generation for your wizard form widgets, and drop their values. How to retrieve its values 
 if you do, is illustrated in the documentation for the **[micro.form.serialize]** Active Event. This can be useful if you for some reasons
-have a wizard form, which might in theory be repeated multiple times on your page for instance, while still preserving the semantically
+have a wizard form, which might in theory be repeated multiple times on your page - While still preserving the semantically
 correct data-field name when serializing your form.
 
 #### Responsive rendering
 
 Your **[micro.widgets.wizard-form]** widgets can be wrapped inside of a column class, by e.g. either directly wrapping it inside of a col,
 or by adding some 'col-xx' class to its **[class]** declaration. If you do, it will 'pop' like any other column, and be responsively rendered.
-In the samples for Micro, if combined with System42, there is an example of doing just this.
+
+### [micro.widgets.obscurer]
+
+This is a useful widget if you have some lengthy operation, that might require a lot of time to finish, and you wish to obscure the page,
+to prevent the user from doing other things, while the operation is in progress. It's kind of like a _'page wide'_ Ajax wait obscurer
+window, that _'locks'_ the screen from being interacted with, by the user, as the operation is being evaluated.
+
+By default, the obscurer widget will show some small animation while the operation is proceeding, giving the user visual clues
+about that some lengthy operation is in progress. You can pass in your own custom message as **[message]** to the obscurer.
+If you render the obscurer initially with a display of _'none'_, you can easily manipulate it from JavaScript, and by using the 
+JavaScript API of p5.ajax, make it show as the user is raising an Ajax request. Alternatively, create a _'shadow'_ event, where you
+show your obscurer, return back to the client, making the client automatically raise another real Ajax event, that actually performs
+your lengthy job. For then to hide the obscurer from Hyperlambda when the job is finished.
+
+There are many examples of how to use this widget, in e.g. [Sephia Five](https://github.com/polterguy/sephia-five)'s code.
 
 ### [micro.widgets.skin-selector]
 
 This is a special extension widget, which simply makes it easy for you during development to select a skin on your page. It takes no
 arguments, and probably shouldn't be used in real production sites - But is a nice little addition during development, to experiment
 with sifferent skins, by simply selecting your skin from a select dropdown list. Notice, if you use the **[micro.widgets.skin-selector]** 
-widget, you should not manually include any of the skin files yourself.
+widget, you should not manually include any of the skin files yourself. When the user selects a skin, the page will refresh, to make sure
+only the selected skin's CSS file is included.
 
 ## Helper Active Events
 
 In addition to the above widgets, there exists a couple of helper Active Events in Micro.
 
-* __[micro.css.toggle]__ - Toggles a CSS class for one or more specified widgets
+* __[micro.windows.change-password]__ - Shows a window that allows the currently logged in user to change his password
+* __[micro.windows.info]__ - Shows a _'bubble'_ window with some informative text to the user
+* __[micro.css.add]__ - Adds a CSS class to one or more specified widgets
+* __[micro.css.delete]__ - Deletes a CSS class from one or more specified widgets
+* __[micro.css.toggle]__ - Toggles a CSS class in one or more specified widgets
 * __[micro.page.set-focus]__ - Sets focus to a specific widget on your page
 * __[micro.form.serialize]__ - Serialize all form elements from a specified widget
+* __[micro.path.get-folder]__ - Returns only the folder path of the file evaluting some piece of code, if invoked from inside of a file evaluation
+* __[micro.page.create-dropzone]__ - Turns your page into a _'dropzone'_, such that users can drag and drop files unto the surface of their browser, to upload these to the server
+* __[micro.lambda.contract.min]__ - Allows you to verify that an Active Event invocation obeys by some specified _'contract'_.
+* __[micro.lambda.contract.optional]__ - Allows you to verify that an Active Event invocation's optional arguments obeys by some specified _'contract'_.
 
 Micro will also during startup check to see if System42's CMS is installed, and if so, create two example p5.page objects, which gives
 you a demonstration of its capabilities. One page for the normal typography stuff and the grid system, and another page for the rich widgets, 
