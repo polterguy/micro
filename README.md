@@ -198,7 +198,7 @@ if the browser's viewport dips below 800px.
 
 Most form elements can simply be instantiated, without any CSS classes associated with them, and they will render with the style
 associated with them correctly. If you wish, you can also add any form elements inside of a _"strip"_, which will make all
-form elements inside of your strip become "associated" with each other, creating a toolbar kind of effect.
+form elements inside of your strip become _"associated"_ with each other, creating a toolbar kind of effect.
 
 If you want to add a radiobutton or a checkbox into your strip though, you'll have to wrap these elements inside of a _"span"_
 element. Below is an example of creating a strip.
@@ -230,13 +230,13 @@ create-widget
           innerValue:OK
 ```
 
-The above will result in something resembling the following.
+The above will result in something resembling the following, if you're using the Sea Breeze skin.
 
 ![alt screenshot](screenshots/screenshot-3.png)
 
 ## Misc. classes
 
-Micro also contains some semantic helper classes, such as _'error'_, _'emphasize'_, _'warning'_, etc. For a complete list and examples of usage, please refer to the _'/Micro/sample'_ example page which is automatically created for you, if you install Micro together with [System42](https://github.com/polterguy/system42).
+Micro also contains some semantic helper classes, such as _'error'_, _'emphasize'_, _'warning'_, etc.
 
 ## Tables
 
@@ -244,7 +244,8 @@ Tables are by default rendered with a single border between cells. If you add th
 
 ![alt screenshot](screenshots/screenshot-11.png)
 
-Notice the column the above table is rendered in, also have the _'bg air-inner shaded rounded'_ classes associated with it, in addition to that we're using the Sea Breeze skin.
+Notice the widget the above table is rendered within, also have the _'bg air-inner shaded rounded'_ classes associated with it, 
+in addition to that we're using the Sea Breeze skin.
 
 ## Extension widgets
 
@@ -253,7 +254,7 @@ the relevant CSS file(s).
 
 ### [micro.widgets.grid]
 
-This is the _'datagrid'_ in Micro, which allows you to create tabular data, controlling any aspects of your view. It is at its core nothing but a thin abstraction over the _"table"_ HTML element, allowing you to dynamically databind the rows of your tbody element. Creating a datagrid is as easy as the following. Create a new lambda page in System42, set its _"template"_ to _"empty"_, and paste in the following code.
+This is the _'datagrid'_ in Micro, which allows you to create tabular data, controlling any aspects of your view. It is at its core nothing but a thin abstraction over the _"table"_ HTML element, allowing you to dynamically databind the rows of your tbody element. Below is an example of how to create a datagrid.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -302,7 +303,7 @@ The above code will resemble the following.
 
 ![alt screenshot](screenshots/screenshot-8.png)
 
-#### Dunamically databinding your grid
+#### Dynamically databinding your grid
 
 You can invoke **[micro.widgets.grid.databind]** and pass in an **[item]** collection to databind the grid towards a different dataset later. For instance, consider the following code, which starts out with a single row, for then to change its content when the button is clicked.
 
@@ -351,11 +352,11 @@ create-widget
                     Phone no:67676767
 ```
 
-Both of the above samples will create a simple HTML table for you, allowing you to dynamically change its rows. 
+Both of the above examples will create a simple HTML table for you, allowing you to dynamically change its rows. 
 
 #### Complex cells
 
-If you wish to create more complex datagrid rows, which have complex widgets as their children - You can do this by applying a **[widgets]** collection to your items. The following illustrates how we could turn all _"Phone No"_ cells into clickable widgets.
+If you want to create more complex datagrid rows, that have complex widgets as their children - You can do this by applying a **[widgets]** collection to your items. The following illustrates how we could turn all _"Phone No"_ cells into clickable widgets.
 
 ```
 p5.web.include-css-file:@MICRO/media/main.css
@@ -659,7 +660,7 @@ A Ninja trick you should take advantage of, is to create your own specialized da
 
 Notice, if you do this, you would only need to modify the **[columns]** definition, as long as you don't supply any static **[rows]**, but rather rely upon invoking your own specialized version of **[micro.widgets.grid.databind]** event, which internally invoke the base databind event.
 
-The grid in Micro is a very thin layer of abstraction on top of an HTML table widget. This comes with the added cost of making it more verbose to consume when you have special needs. However, it also implies that there does not exist any datagrid you would want to display in this world, that you could not easily create using the Micro grid. To fixe the first problem, creating your own extension widget, which internally invokes **[micro.widgets.grid]** after first having _"massaged"_ the given data - In addition to creating your own specialized version of **[micro.widgets.grid.databind]** - Makes your code very _"DRY"_.
+The grid in Micro is a very thin layer of abstraction on top of an HTML table widget. This comes with the added cost of making it more verbose to consume when you have special needs. However, it also implies that there does not exist any datagrid you could possibly want to display in this world, that you could not easily create using the Micro grid. To fix the first problem, create your own extension widget, which internally invokes **[micro.widgets.grid]** after first having _"massaged"_ the given data. Then create your own specialized version of **[micro.widgets.grid.databind]**. This makes your code very _"DRY"_.
 
 I would not recommend you to consume the grid in Micro directly, unless you're creating a _"boring"_ HTML table for the above reasons - But rather recommend you to create your own extension widget, based upon the **[micro.widgets.grid]** and **[micro.widgets.grid.databind]** events themselves. I will be creating some examples of how to do this over at [my blog](https://gaiasoul.com).
 
@@ -741,11 +742,11 @@ create-widget
                     innerValue:This is our third view
 ```
 
-Your **[micro.widgets.tab]** widget needs a collection of one or more **[view]**. Each view becomes a single tabview, and
+Your **[micro.widgets.tab]** widget needs a collection of one or more **[view]** items. Each view becomes a single tabview, and
 needs at least a **[name]** and a **[widgets]** collection. The name becomes the name of your view, and also the text of the buttons
 that allows you to change the active view. The **[widgets]** collection, becomes the content of your views.
 
-All other arguments to your **[view]** becomes appended into the main container widget of your specific view. Below is a screenshot of how the above code will end up appearing on your site.
+All other arguments to your **[view]**, are appended into the main container widget of your specific view. Below is a screenshot of how the above code will end up appearing on your site.
 
 ![alt screenshot](screenshots/screenshot-6.png)
 
@@ -911,6 +912,7 @@ The **[micro.widgets.wizard-form]** extension widget, takes the following standa
 * __[select]__ - Creates a select dropdown widget.
 * __[checkbox]__ - Creates a checkbox widget.
 * __[radio-group]__ - Creates a group of radio buttons.
+* __[collection]__ - Creates a container widget, recursively invoking self for each widget in its __[widgets]__ collection.
 
 In the above code we use the CSS classes _'bg air-inner rounded shaded'_, which creates the rounded and shaded effect, in addition to 
 the background rendering and the inner padding. All other arguments you supply to it, will be assumed are widget declarations, and created
