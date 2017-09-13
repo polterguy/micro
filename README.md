@@ -149,7 +149,25 @@ create-widget
 The total width of your columns should result in 100. If it exceeds 100, it will wrap the overflowed columns unto a new rows. But you can also
 avoid defining your column widths, at which point each column will take up an equal amount of width within your rows. If you want to have floating
 widths of your columns like this, you can use the generic _'col'_ class on your columns, at which point your columns will divide the available width
-amongst themselves, and become equally wide.
+amongst themselves, and become equally wide. Below is an example of three columns becoming equally wide, by sharing their available width between themselves.
+
+```
+p5.web.include-css-file:@MICRO/media/main.css
+set-widget-property:cnt
+  class:container
+create-widget
+  class:row
+  widgets
+    literal
+      class
+      innerValue:Column 1
+    literal
+      class
+      innerValue:Column 2
+    literal
+      class
+      innerValue:Column 3
+```
 
 ### Column offset
 
