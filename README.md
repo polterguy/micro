@@ -1082,12 +1082,3 @@ This small inconvenience and added complexity for **[radio-group]** widgets, is 
 possible to solve generically in P5.
 
 Notice, the __[micro.widgets.wizard-form.value]__ lambda event for the wizard form, is just a thin layer on top of the __[micro.form.serialize]__ Active Event.
-
-## Performance
-
-Micro is truly **microscopic**! Among other things, the total bandwidth usage for the kitchen sink example for its extension widgets
-ticks in at roughly **32KB**, unless you apply a skin. This includes all CSS and JavaScript on your page, in addition to the initial page load and HTML of your page in total. The number of HTTP requests is 4. Compare this to most other Ajax control vendors, who often have several megabytes of bandwidth in their initial rendering, and often hundreds of HTTP requests. In general, Micro is at least 2 orders of magnitudes smaller in bandwidth consumption than literally anything else out there.
-
-Notice that the extension widgets example also includes several datagrids, multiple modal windows, several tab controls, a wizard form, an Ajax menu - Yet still, its total bandwidth consumption is 32KB. If you apply a skin to the page, it is still less than 100KB, regardless of which skin you include.
-
-To see a video demonstrating some of Micro's features, and its bandwidth consumption compared to other competing toolkits, feel free to watch the  [following YouTube video](https://www.youtube.com/watch?v=amVnm5uHB1sg).
