@@ -100,10 +100,9 @@ The general layout of your page should be as follows.
 
 - _'container'_ or _'container-fullscreen'_ element.
 - _'row'_ elements inside of each container
-- _'col'_ or _'col-x'_ elements inside of each _'row'_
+- _'col'_ or _'col-x'_ elements inside of each row
 
-In such a regard, it logically resembles the structure of a Bottstrap CSS page. You can nest another 'row' inside of another outer 'col' 
-or 'col-x' elements.
+In such a regard, it logically resembles the structure of Bootstrap CSS. You can nest rows inside of columns.
 
 ### Responsive rendering
 
@@ -147,8 +146,10 @@ create-widget
 
 ```
 
-The total width of your columns must result in 100. If it exceeds 100, it will wrap the next column unto the next line. In general terms, you should
-avoid having more columns within each row, than that which adds up to 100, since this will create bad padding at the end of your elements.
+The total width of your columns should result in 100. If it exceeds 100, it will wrap the overflowed columns unto a new rows. But you can also
+avoid defining your column widths, at which point each column will take up an equal amount of width within your rows. If you want to have floating
+widths of your columns like this, you can use the generic _'col'_ class on your columns, at which point your columns will divide the available width
+amongst themselves, and become equally wide.
 
 ### Column offset
 
