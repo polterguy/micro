@@ -146,7 +146,7 @@ create-widget
 
 ```
 
-The total width of your columns should result in 100. If it exceeds 100, it will wrap the overflowed columns unto a new rows. But you can also
+The total width of your columns should result in 100. If it exceeds 100, it will wrap the overflowed columns unto new rows. But you can also
 avoid defining your column widths, at which point each column will take up an equal amount of width within your rows. If you want to have floating
 widths of your columns like this, you can use the generic _'col'_ class on your columns, at which point your columns will divide the available width
 amongst themselves, and become equally wide. Below is an example of three columns becoming equally wide, by sharing their available width between themselves.
@@ -159,13 +159,13 @@ create-widget
   class:row
   widgets
     literal
-      class
+      class:col
       innerValue:Column 1
     literal
-      class
+      class:col
       innerValue:Column 2
     literal
-      class
+      class:col
       innerValue:Column 3
 ```
 
