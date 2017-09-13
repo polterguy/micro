@@ -169,6 +169,9 @@ create-widget
       innerValue:Column 3
 ```
 
+Notice, also the generic _'col'_ class will be rendered responsively automatically for you, making it pop out and become 100% width of the width
+of the browser's viewport dips below 800px.
+
 ### Column offset
 
 You can also offset a column's starting point, with one of the following CSS classes.
