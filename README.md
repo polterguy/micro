@@ -169,8 +169,8 @@ create-widget
       innerValue:Column 3
 ```
 
-Notice, also the generic _'col'_ class will be rendered responsively automatically for you, making it pop out and become 100% width of the width
-of the browser's viewport dips below 800px.
+Notice, also the generic _'col'_ class will be rendered responsively automatically for you, making your columns pop out and become 100% wide
+if the width of the browser's viewport dips below 800px.
 
 ### Column offset
 
@@ -190,7 +190,8 @@ You can also offset a column's starting point, with one of the following CSS cla
 * offset-80
 * offset-90
 
-The same principle still applies as above, since the total number of any columns inside a single row must still add up to exactly 100.
+The same principle still applies as above, since the total number of any columns inside a single row must still add up to exactly 100. These offset 
+classes are also completely ignored, making your columns become 100% width, if the browser's viewport dips below 800px.
 
 ## Form elements
 
