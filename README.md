@@ -993,10 +993,6 @@ In addition to the above widgets, there exists a couple of helper Active Events 
 * __[micro.lambda.contract.min]__ - Allows you to verify that an Active Event invocation obeys by some specified _'contract'_.
 * __[micro.lambda.contract.optional]__ - Allows you to verify that an Active Event invocation's optional arguments obeys by some specified _'contract'_.
 
-Micro will also during startup check to see if System42's CMS is installed, and if so, create two example p5.page objects, which gives
-you a demonstration of its capabilities. One page for the normal typography stuff and the grid system, and another page for the rich widgets, 
-such as the modal widget, menu widget, tab widget, etc.
-
 ### [micro.form.serialize]
 
 This Active Event requires some explanation, since it is a very powerful, recursively serialization event, that allows you with a single
