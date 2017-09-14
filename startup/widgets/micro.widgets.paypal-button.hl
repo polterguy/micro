@@ -1,0 +1,188 @@
+
+/*
+ * Helper Active Event to inject a PayPal button, which once clicked, will allow
+ * the user to perform a purchase at PayPal, before some action is taken.
+ *
+ * Requires [.onok] lambda callback, which will be invoked when the purchase has 
+ * successfully been accepted - In addition to a [price] and a [currency] argument.
+ * Optionally pass in a [custom] piece of text, that will be associated with the
+ * payment, in your PayPal report.
+ *
+ * Notice, this will render a PayPal button according to your web.config settings, 
+ * and more explicitly the "paypal.xxx" parts of your web.config settings.
+ *
+ * Please edit your web.config file, to make sure the PayPal button points to
+ * your account.
+ *
+ * Basically, once the PayPal button is clicked, it will open up a modal window,
+ * allowing the user to purchase "something", and once that something has been 
+ * purchased, your [.onok] lambda callback will be invoked.
+ */
+create-event:micro.widgets.paypal-button
+
+  /*
+   * Signal node, to separate arguments from the rest of our event.
+   */
+  .signal
+
+  /*
+   * Default values.
+   */
+  .defaults
+    custom:Phosphorus Five payment
+
+  /*
+   * Sanity check.
+   */
+  micro.lambda.contract.min:x:/..
+    .onok
+    price:decimal
+    currency:string
+
+  /*
+   * Sanity checking optional arguments.
+   */
+  micro.lambda.contract.optional:x:/..
+    custom:string
+
+  /*
+   * Adding all arguments to returned widget, except [price] and [currency].
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--(!/price!/currency)
+
+  /*
+   * Checking if caller supplied his own [oninit] event, and if not, making sure 
+   * widget gets one.
+   */
+  if:x:/../*/return/*/container/*/oninit
+    not
+
+    /*
+     * Making sure widget gets an [oninit] event.
+     */
+    add:x:/../*/return/*/container
+      src
+        oninit
+
+  /*
+   * Appending logic into [oninit] that is necessary to render widget correctly.
+   */
+  eval-x:x:/+/*/*(/_price|/_currency|/_custom)
+  add:x:/../*/return/*/container/*/oninit
+    src
+
+      /*
+       * Forward evaluated above.
+       */
+      _price:x:/../*/price?value
+      _currency:x:/../*/currency?value
+      _custom:x:(/../*/_custom|/../*/.defaults/*/custom)/$?value
+
+      /*
+       * Retrieving PayPal settings from web.config.
+       */
+      .config
+        paypal.sandbox
+        paypal.production
+        paypal.type
+      p5.config.get:x:/-/*?name
+
+      /*
+       * Ensuring our PayPal JavaScript file is cached locally.
+       *
+       * Notice, we don't download PayPal "checkout.js" file directly from PayPal, since they
+       * have no CORS HTTP headers on their servers, and this will trigger a JavaScript error
+       * if file is dynamically included during a callback - Which it will be, if the
+       * PayPal widget is shown during an Ajax request.
+       *
+       * Instead we download the file from PayPal, cache it locally, and include our
+       * local version of it.
+       *
+       * Yeah, I know it sucks - But complain to PayPal's crappy developers.
+       * It would be dead simple for them to fix this, without security flaws, by
+       * simply adding a simple fucking CORS HTTP header on their freakin' JS file ...!!
+       *
+       * CAN YOU READ THIS PAYPAL ...??
+       */
+      micro.widgets.paypal-button._ensure-checkout-js
+
+      /*
+       * Including JavaScript file necessary to render our button, and our JS
+       * logic that actually renders it.
+       */
+      p5.web.include-javascript:@"
+paypal.Button.render({{
+  env: '{1}',
+  client:{{
+    sandbox:'{2}',
+    production:'{3}'}},
+  commit: true,
+  style:{{
+    size: 'small',
+    color: 'gold',
+    shape: 'pill',
+    label: 'checkout'}},
+  payment: function(data, actions){{
+    return actions.payment.create({{
+      payment:{{
+        transactions:[{{
+          amount:{{
+            total:{4},
+            currency: '{5}'}}, 
+          custom:'{6}'}}]
+      }}
+    }});
+  }},
+  onAuthorize: function(data, actions){{
+    return actions.payment.execute().then(function(payment){{
+      p5.$('{0}').raise('.onok');}});
+  }}
+}}, '#{0}');"
+        :x:/../*/_event?value
+        :x:/@p5.config.get/*/paypal.type?value
+        :x:/@p5.config.get/*/paypal.sandbox?value
+        :x:/@p5.config.get/*/paypal.production?value
+        :x:/../*/_price?value
+        :x:/../*/_currency?value
+        :x:/../*/_custom?value
+
+  /*
+   * Returning a widget, that will be turned into a PayPal button by PayPal.
+   */
+  return
+    container
+
+
+
+
+
+/*
+ * Helper file to ensure PayPal's "checkout.js" file is locally cached, to avoid
+ * CORS problems.
+ */
+create-event:micro.widgets.paypal-button._ensure-checkout-js
+
+  /*
+   * Checking if file is cached locally.
+   *
+   * TODO: Perdiocally (every so often), refresh our locally cached file, in case
+   * PayPal for some reasons should actually want to update their JS file on their servers.
+   */
+  if
+    fetch:x:/0/0?value
+      file-exists:/common/documents/public/checkout.js
+    not
+
+    /*
+     * Fetching file from PayPal and caching it locally.
+     */
+    p5.http.get:"https://www.paypalobjects.com/api/checkout.js"
+    save-file:/common/documents/public/checkout.js
+      src:x:/@p5.http.get/**/content?value
+
+  /*
+   * Then including locally cached version of file.
+   */
+  p5.web.include-javascript-file:/common/documents/public/checkout.js
+    
