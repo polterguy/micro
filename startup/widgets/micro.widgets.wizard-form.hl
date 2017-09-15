@@ -210,6 +210,8 @@ create-event:micro.widgets.wizard-form
         micro.widgets.wizard-form
         add:x:/../*/return/*/container/*/widgets
           src:x:/@micro.widgets.wizard-form/*
+        set:x:/../*/return/*/container/*/widgets/0/-?value
+          src:x:/@_dp/#?value
 
       default
 
