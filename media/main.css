@@ -516,6 +516,13 @@ table tbody tr:first-child td {
 table.striped tr:nth-child(2n) td {
     background-color:rgba(0,0,0,.01);
 }
+table.spaced td,
+table.spaced th {
+    padding:.5rem;
+}
+table.lg-headers th {
+    font-size:1.3rem;
+}
 
 table tr.selected,
 table tr td.selected,
