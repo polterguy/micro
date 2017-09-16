@@ -137,17 +137,24 @@ create-event:micro.widgets.grid.databind
   .signal
 
   /*
-   * Finding the "tbody" element of the grid, and clearing it of its previous items.
+   * Finding the "tbody" element of the grid, and clearing it of its previous items,
+   * unless [keep-items] is set to boolean "true".
    */
   p5.web.widgets.find-first:x:/../*/_arg?value
     element:tbody
-  clear-widget:x:/@p5.web.widgets.find-first/*/*?value
+  if:x:/@.signal/--/keep-items?value
+    not
+
+    /*
+     * Clearing old rows from grid.
+     */
+    clear-widget:x:/@p5.web.widgets.find-first/*/*?value
 
   /*
    * Transforming the given collection of items to a widget hierarchy.
    */
   add:x:/+
-    src:x:/@.signal/--/<-(!/_arg)
+    src:x:/@.signal/--/<-(!/_arg!/keep-items)
   micro.widgets.grid._create-rows
 
   /*
@@ -156,8 +163,12 @@ create-event:micro.widgets.grid.databind
    */
   add:x:/../*/create-widgets
     src:x:/@micro.widgets.grid._create-rows/*
+
+  /*
+   * Adding [parent] to all rows that doesn't already hav an [after] argument.
+   */
   eval-x:x:/+/*/*
-  add:x:/../*/create-widgets/*
+  add:x:/../*/create-widgets/*(!/*/after/.)
     src
       parent:x:/@p5.web.widgets.find-first/*/*?value
   create-widgets
@@ -185,8 +196,24 @@ create-event:micro.widgets.grid._create-rows
     /*
      * Adding the generic stuff
      */
-    add:x:/+/*/*
-      src:x:/@_dp/#/*/\.row/*
+    add:x:/+2/*/*
+      src:x:/@_dp/#/*/.row/*(!/.replace)
+    if:x:/@_dp/#/*/.row/*/.replace?value
+
+      /*
+       * Row is meant to replace an existing row, and not be appended into grid per se.
+       */
+      eval-x:x:/+/*/**(/after|/_after)
+      add:x:/..for-each/*/add/[1,2]/*/*
+        src
+          after:x:/@_dp/#/*/.row/*/.replace?value
+          oninit
+            _after:x:/@_dp/#/*/.row/*/.replace?value
+            delete-widget:x:/-?value
+
+    /*
+     * Now we can actually add row.
+     */
     add:x:/@.signal
       src
         tr
