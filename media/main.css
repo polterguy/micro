@@ -801,3 +801,7 @@ select.error,
 textarea.error {
     box-shadow: 0 0 2px rgba(255,0,0,1) !important;
 }
+
+.capitalize {
+    text-transform:capitalize;
+}
