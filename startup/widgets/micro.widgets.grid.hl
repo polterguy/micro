@@ -127,7 +127,10 @@ create-event:micro.widgets.grid
 
 /*
  * Databinds the [_arg] grid.
+ *
  * Expects an [item] collection, similarly to the content of the [rows] argument when grid was created.
+ * Optionally pass in [keep-items] and set its value to boolean "true" if you don't wish to clear
+ * out existing items in grid, but rather add additional items to the grid.
  */
 create-event:micro.widgets.grid.databind
 
