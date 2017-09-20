@@ -142,6 +142,7 @@
                     xhr.open('POST', this._url, true);
                     xhr.onreadystatechange = function() {
                         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                            document.body.className = this._cssClass;
                             if (this.responseText === 'ERROR') {
                                 has_error += 1;
                             }
