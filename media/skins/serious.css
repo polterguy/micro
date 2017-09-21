@@ -175,6 +175,6 @@ input[type=radio]:checked:after {
 .bg {
     /* Copyright(c) Steve Schoger, licensed as CC BY-SA 4.0*/
     background-color: #ffffff;
-    background-image: url('serious/floating-cogs.svg');
+    background-image: url('serious/bg.svg');
 }
 
