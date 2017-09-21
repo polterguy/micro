@@ -176,11 +176,13 @@ create-event:micro.widgets.wizard-form
           src:x:/@_dp/#/*(!/info)
         add:x:/../*/return/*/container/*/widgets
           src
-            input:x:/@_dp/#?value
-              type:checkbox
             label
-              innerValue:x:/@_dp/#/*/info?value
-              for:x:/@_dp/#?value
+              class:input-label
+              widgets
+                input:x:/@_dp/#?value
+                  type:checkbox
+                span
+                  innerValue:x:/@_dp/#/*/info?value
 
       case:br
 

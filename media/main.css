@@ -491,6 +491,22 @@ div.fill > input[type=text], div.fill > input[type=number], div.fill > input[typ
     width: 100%;
 }
 
+label {
+    display:inline-block;
+}
+
+label.input-label {
+    min-width:180px;
+}
+
+label input {
+    margin-bottom:0;
+}
+
+label span {
+    vertical-align:top;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
