@@ -39,8 +39,8 @@ body {
     --placeholder-col: rgba(0,0,0,.15);
     --wid-dark-col: linear-gradient(#b0eaff, #a0d6ff);
     --wid-darker-col: linear-gradient(#80d9ff, #70c6ff);
-    --wid-border-col: rgba(100,200,255,.2);
-    --wid-light-col: linear-gradient(#fafeff, #f5f7ff);
+    --wid-border-col: rgba(0,0,0,.07);
+    --wid-light-col: #ffffff;
     --wid-lighter-col: linear-gradient(#fefeff, #fefeff);
     --wid-txt-col: #fefefe;
     --form-txt-col: #777;
