@@ -292,6 +292,10 @@ code, pre {
     font-family: Consolas,Monaco,monospace;
 }
 
+pre > code {
+    background:inherit;
+}
+
 a:active, a:focus, a:hover {
     color: var(--wid-darker-col);
 }
@@ -848,4 +852,457 @@ textarea.error {
     padding:1rem;
     font-size:.8rem;
     z-index:10000;
+}
+
+
+
+
+
+/*
+ * CSS classes for extension widgets.
+ */
+.micro-modal, .micro-modal .micro-modal-content {
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes micro-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes micro-drop {
+    from {
+        margin-top: -500px;
+        opacity: .1;
+    }
+
+    to {
+        margin-top: 2rem;
+        opacity: 1;
+    }
+}
+
+@keyframes micro-windows-info {
+    0% {
+        margin-top: -200px;
+        opacity: 0;
+    }
+    10% {
+        margin-top: 0;
+        opacity: 1;
+    }
+    90% {
+        margin-top: 0;
+        opacity: 1;
+    }
+    100% {
+        margin-top: -200px;
+        opacity: 0;
+    }
+}
+
+@keyframes micro-windows-info-sticky {
+    0% {
+        margin-top: -200px;
+        opacity: 0;
+    }
+
+    100% {
+        margin-top: 0;
+        opacity:1;
+    }
+}
+
+
+/*
+ * CSS animation for Ajax wait.
+ *
+ * Thx to Anya Melnyk fo sharing this at https://codepen.io/slyka85/pen/QvBQPb
+ */
+@keyframes micro-ajax-wait-dominos {
+  50% { opacity: 0.7; }
+  75% { -webkit-transform: rotate(90deg); transform: rotate(90deg); }
+  80% { opacity: 1; } 
+}
+@keyframes micro-ajax-wait {
+    0% { opacity: 0; }
+    100% { opacity: .7; }
+}
+.micro-ajax-wait {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    animation-name: micro-ajax-wait;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-delay:.5s;
+    background-color:#000;
+    color:rgba(0,0,0,.7);
+    z-index:5000;
+    opacity:0;
+}
+.micro-ajax-wait-animations {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    top: 15px;
+    right: 55px;
+}
+@keyframes micro-ajax-wait-info-flash {
+    0% { color: #fefefe; }
+    100% { color: #b0b0b0; }
+}
+.micro-ajax-wait-info {
+    margin-top:4rem;
+    text-align:center;
+    animation: micro-ajax-wait-info-flash 1.5s ease infinite;
+    animation-direction:alternate;
+}
+.micro-ajax-square {
+    position: absolute;
+    top: 15px;
+    right:15px;
+    width: 25px;
+    height: 7px;
+    background: white;
+    box-shadow: 2px 2px 3px 0px black;
+}
+.micro-ajax-square-1 {
+    left: 70px;
+    animation: micro-ajax-wait-dominos 1s 0.125s ease infinite;
+}
+.micro-ajax-square-2 {
+    left: 60px;
+    animation: micro-ajax-wait-dominos 1s 0.3s ease infinite;
+}
+.micro-ajax-square-3 {
+    left: 50px;
+    animation: micro-ajax-wait-dominos 1s 0.425s ease infinite;
+}
+.micro-ajax-square-4 {
+    left: 40px;
+    animation: micro-ajax-wait-dominos 1s 0.540s ease infinite;
+}
+.micro-ajax-square-5 {
+    left: 30px;
+    animation: micro-ajax-wait-dominos 1s 0.665s ease infinite;
+}
+.micro-ajax-square-6 {
+    left: 20px;
+    animation: micro-ajax-wait-dominos 1s 0.79s ease infinite;
+}
+.micro-ajax-square-7 {
+    left: 10px;
+    animation: micro-ajax-wait-dominos 1s 0.9s ease infinite;
+}
+.micro-ajax-square-8 {
+    left: 0px;
+    animation: micro-ajax-wait-dominos 1s 1s ease infinite;
+}
+
+
+/*
+ * Modal widget.
+ */
+.micro-modal {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.4);
+    z-index: 1000;
+    animation-name: micro-fade;
+    overflow-y:auto;
+}
+
+.micro-modal .micro-modal-content {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    overflow: auto;
+    animation-name: micro-drop;
+    position:relative;
+    margin-bottom:2rem;
+}
+
+.micro-modal-smaller .micro-modal-content {
+    max-width:800px;
+}
+
+@media screen and (min-width:800px) {
+    .micro-modal .micro-modal-content {
+        width: 800px;
+    }
+}
+
+.micro-tab .micro-tab-buttons button {
+    display:none;
+}
+.micro-tab .micro-tab-display-buttons button {
+    display:list-item;
+    width:150px;
+    margin-right:15px;
+}
+.micro-tab .micro-tab-buttons button.micro-tab-hamburger {
+    display: inline-block;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-right: 5px;
+    width:auto;
+    float:none;
+}
+
+.micro-tab-active {
+    background: var(--wid-darker-col);
+}
+
+.micro-tab .micro-tab-views {
+    border-top: solid var(--border-width) var(--wid-border-col);
+    padding-top: 1rem;
+}
+
+.micro-tab-border .micro-tab-views {
+    border: var(--border-width) solid var(--wid-border-col);
+    border-radius: 0 var(--border-radius)0 0;
+    padding: 1rem 1rem;
+}
+
+nav {
+    font-size: 1.5rem;
+    min-height: 61px;
+    margin: -1rem -1rem 0 0;
+}
+
+nav:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+nav ul li ul,
+nav > ul {
+    display: none;
+}
+
+nav, nav ul li ul {
+    background: var(--wid-dark-col);
+}
+
+nav a {
+    color: var(--wid-light-col);
+    padding: 1rem 1rem 1rem 25px;
+    display: block;
+    white-space: nowrap;
+    outline: 0;
+}
+
+nav > a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 70px;
+    text-align: center;
+    padding-top:.8rem;
+    padding-bottom:1.2rem;
+}
+
+nav a:active, nav a:focus, nav a:hover {
+    color: var(--wid-light-col);
+    background: var(--wid-darker-col);
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+}
+
+nav ul li {
+    float: left;
+    display: block;
+    position: relative;
+}
+
+nav ul li ul {
+    position: absolute;
+    z-index: 1;
+    box-shadow: 3px 3px 8px 0 rgba(0,0,0,.4);
+    min-width: 200px;
+}
+
+nav > ul > li > ul > li > ul {
+    left: 100%;
+    top: 0;
+    margin-left: -5px;
+}
+
+nav ul li > ul li {
+    width: 100%;
+}
+
+nav ul li > ul hr {
+    width: 80%;
+    border: var(--border-width) solid rgba(0,0,0,.1);
+    margin: 0 auto;
+}
+
+@media screen and (min-width:800px) {
+.micro-tab .micro-tab-buttons button {
+    display:inline-block;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-right: 5px;
+}
+.micro-tab .micro-tab-buttons button.micro-tab-hamburger {
+    display:none;
+}
+nav {
+    height: auto;
+}
+
+nav > a {
+    display: none;
+}
+
+nav > ul {
+    display: block;
+}
+
+nav ul li:hover > ul, nav ul li > ul.expanded {
+    display: block;
+    animation-name: micro-fade;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+}
+}
+
+nav.expanded > ul {
+    display: block;
+}
+
+nav.expanded > ul > li:first-child {
+    margin-top: 61px;
+}
+
+nav.expanded > ul li {
+    width: 100%;
+}
+
+nav.expanded > ul li ul {
+    display: block;
+    position: relative;
+    margin-left: 25px;
+}
+
+nav.expanded > ul > li > ul > li > ul {
+    left: 0;
+}
+
+nav.expanded hr {
+    display: none;
+}
+
+
+.micro-windows-info,
+.micro-windows-info-sticky {
+    position: fixed;
+    top: 0;
+    right: 0;
+    animation-fill-mode: forwards;
+    border-bottom-left-radius: var(--border-radius);
+    border-left: solid var(--border-width) var(--wid-border-col);
+    border-bottom: solid var(--border-width) var(--wid-border-col);
+    padding: 1.5rem;
+    background: var(--wid-dark-col);
+    z-index: 1000;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 2px rgba(0,0,0,.2);
+}
+
+.micro-windows-info span,
+.micro-windows-info-sticky span {
+    margin-right:15px;
+    float:left;
+    display:block;
+    margin-bottom:1rem;
+}
+
+.micro-windows-info span:last-child,
+.micro-windows-info-sticky span:last-child {
+    margin-bottom:0;
+}
+
+.micro-windows-info button,
+.micro-windows-info-sticky button {
+    margin-bottom:0;
+    float:right;
+    display:block;
+}
+
+.micro-windows-info {
+    animation-name: micro-windows-info;
+    animation-duration: 5s;
+}
+
+.micro-windows-info-sticky {
+    animation-name: micro-windows-info-sticky;
+    animation-duration: .5s;
+}
+
+
+
+/*
+ * Dropzone CSS classes.
+ */
+@keyframes micro-dropzone-dragover {
+    0% {
+        background-color:rgba(255,255,0,0);
+    }
+    100% {
+        background-color:rgba(255,255,0,.5);
+    }
+}
+@keyframes micro-dropzone-dropped {
+    0% {
+        background-color: rgba(0,255,0,0);
+    }
+
+    100% {
+        background-color: rgba(0,255,0,.5);
+    }
+}
+.micro-dropzone-hover {
+    animation-name: micro-dropzone-dragover;
+    animation-iteration-count: infinite;
+    animation-duration: .5s;
+    animation-direction: alternate-reverse;
+}
+.micro-dropzone-drop {
+    animation-name: micro-dropzone-dropped;
+    animation-iteration-count: infinite;
+    animation-duration: .5s;
+    animation-direction: alternate-reverse;
+}
+.micro-dropzone-error {
+    background-color: red;
 }
