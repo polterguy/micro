@@ -13,21 +13,16 @@ none of these examples can be seen very well in System42's Executor. If you wish
 these examples using [System42](https://github.com/polterguy/system42), you'll have to create a lambda CMS 
 page, and make sure you set its _"template"_ settings to _"empty"_.
 
-Micro creates a default layout, not based upon CSS classes for the most parts. It is tiny in size, 
-and contains most of the widgets you'll need in your day to day work with Phosphorus Five. It contains 
-2 CSS files and several extension widgets and components. Below are the main CSS files in Micro.
+Micro creates a default layout, not based upon CSS classes for the most parts. This makes it easier in use,
+but also more difficult to mix with other CSS frameworks. It is tiny in size, and contains most of the widgets 
+you'll need in your day to day work with Phosphorus Five. It contains one main CSS file, and several extension widgets 
+and components. Its main CSS file is `"/micro/media/main.css"`.
 
-* _"/micro/media/main.css"_ - Styles most common elements, such as buttons, checkboxes, etc.
-* _"/micro/media/ext.css"_ - Styles the extension widgets, such as the modal widget, tab widget, etc.
-
-In addition it contains several skins, which builds upon the default layout and styles your widgets one
+In addition it contains two skins, which builds upon the default layout and styles your widgets one
 way or the other.
 
-* _"/micro/media/skins/emotional.css"_ - An emotional skin for the courageous programmer.
-* _"/micro/media/skins/forrest-dew.css"_ - A light green skin.
-* _"/micro/media/skins/purple-haze.css"_ - A purple skin.
 * _"/micro/media/skins/sea-breeze.css"_ - A light blue skin.
-* _"/micro/media/skins/serious.css"_ - A more professional (gray) skin.
+* _"/micro/media/skins/serious.css"_ - A more _'boring'_ gray skin.
 
 ## General layout
 
