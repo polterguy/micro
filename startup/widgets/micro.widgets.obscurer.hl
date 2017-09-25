@@ -37,15 +37,21 @@ create-event:micro.widgets.obscurer
   if:x:/../*/return/*/container/*/oninit
     add:x:/../*/return/*/container/*/oninit
       src
+
+        /*
+         * Making sure we include Micro's CSS file.
+         */
         p5.web.include-css-file:@MICRO/media/main.css
-        p5.web.include-css-file:@MICRO/media/ext.css
 
   else
     add:x:/../*/return/*/container
       src
         oninit
+
+          /*
+           * Making sure we include Micro's CSS file.
+           */
           p5.web.include-css-file:@MICRO/media/main.css
-          p5.web.include-css-file:@MICRO/media/ext.css
 
   /*
    * Checking if caller specified a widgets collection, and if not, making

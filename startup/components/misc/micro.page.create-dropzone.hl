@@ -76,7 +76,6 @@ create-event:micro.page.create-dropzone
    * Including Micro's CSS files.
    */
   p5.web.include-css-file:@MICRO/media/main.css
-  p5.web.include-css-file:@MICRO/media/ext.css
 
   /*
    * Including JavaScript that creates our dropzone on the client side.

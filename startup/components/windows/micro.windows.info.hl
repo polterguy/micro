@@ -12,11 +12,6 @@
 create-event:micro.windows.info
 
   /*
-   * Making sure we include extension CSS file.
-   */
-  p5.web.include-css-file:@MICRO/media/ext.css
-
-  /*
    * Deleting any previously created information bubbles.
    */
   if

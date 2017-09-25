@@ -49,8 +49,12 @@ create-event:micro.widgets.modal
       style:"display:none;"
       data-window:modal
       oninit
+
+        /*
+         * Making sure we include Micro's CSS file.
+         */
         p5.web.include-css-file:@MICRO/media/main.css
-        p5.web.include-css-file:@MICRO/media/ext.css
+
       onclick:@"if (event.currentTarget == event.target) {{p5.$(document.querySelectorAll('[data-window=""modal""]')[0].id).raise('.ondelete');}}"
       .ondelete
         delete-widget:x:/../*/_event?value

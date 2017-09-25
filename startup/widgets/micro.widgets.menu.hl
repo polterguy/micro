@@ -28,7 +28,6 @@ create-event:micro.widgets.menu
    */
   p5.web.include-css-file
     @MICRO/media/main.css
-    @MICRO/media/ext.css
 
   /*
    * Recursively adding items to menu.
