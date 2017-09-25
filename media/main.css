@@ -1043,7 +1043,11 @@ textarea.error {
 }
 
 .micro-modal-smaller .micro-modal-content {
-    max-width:800px;
+    max-width: 600px;
+}
+
+.micro-modal-small .micro-modal-content {
+    max-width: 400px;
 }
 
 @media screen and (min-width:800px) {
