@@ -20,8 +20,6 @@
  * is also commercially available under Quid Pro Quo terms. Check 
  * out our website at http://gaiasoul.com for more details.
  */
-
-
 (function () {
 
     // Constructor.
