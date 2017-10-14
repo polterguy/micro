@@ -4,15 +4,23 @@
  * the user to perform a purchase at PayPal, before some action is taken.
  *
  * Requires [.onok] lambda callback, which will be invoked when the purchase has 
- * successfully been accepted - In addition to a [price] and a [currency] argument.
+ * successfully been accepted - In addition to a [price] and (optionally) a [currency] 
+ * argument.
+ *
  * Optionally pass in a [custom] piece of text, that will be associated with the
  * payment, in your PayPal report.
+ *
+ * [currency] defaults to "EUR" if omitted.
  *
  * Notice, this will render a PayPal button according to your web.config settings, 
  * and more explicitly the "paypal.xxx" parts of your web.config settings.
  *
- * Please edit your web.config file, to make sure the PayPal button points to
- * your account.
+ * However, you can override the "paypal.xxx" values if you wish, to rather
+ * use specific PayPal keys, instead of the default key values from web.config.
+ *
+ * If you wish to override the key, provide a [paypal.production] argument, being
+ * the PayPal key you wish to use instead of your web.config value.
+ * You can also override [paypal.sandbox] and [paypal.type] if you wish.
  *
  * Basically, once the PayPal button is clicked, it will open up a modal window,
  * allowing the user to purchase "something", and once that something has been 
@@ -30,6 +38,7 @@ create-event:micro.widgets.paypal-button
    */
   .defaults
     custom:Phosphorus Five payment
+    currency:EUR
 
   /*
    * Sanity check.
@@ -37,19 +46,22 @@ create-event:micro.widgets.paypal-button
   micro.lambda.contract.min:x:/..
     .onok
     price:decimal
-    currency:string
 
   /*
    * Sanity checking optional arguments.
    */
   micro.lambda.contract.optional:x:/..
     custom:string
+    paypal.production:string
+    paypal.sandbox:string
+    paypal.type:string
+    currency:string
 
   /*
    * Adding all arguments to returned widget, except [price] and [currency].
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/price!/currency)
+    src:x:/@.signal/--(!/price!/currency!/~paypal.)
 
   /*
    * Checking if caller supplied his own [oninit] event, and if not, making sure 
@@ -68,6 +80,8 @@ create-event:micro.widgets.paypal-button
   /*
    * Appending logic into [oninit] that is necessary to render widget correctly.
    */
+  add:x:/+2/*/*/.pars
+    src:x:/@.signal/--
   eval-x:x:/+/*/*(/_price|/_currency|/_custom)
   add:x:/../*/return/*/container/*/oninit
     src
@@ -75,9 +89,10 @@ create-event:micro.widgets.paypal-button
       /*
        * Forward evaluated above.
        */
+      .pars
       _price:x:/../*/price?value
-      _currency:x:/../*/currency?value
-      _custom:x:(/../*/_custom|/../*/.defaults/*/custom)/$?value
+      _currency:x:(/@.signal/--/currency|/../*/.defaults/*/currency)/$?value
+      _custom:x:(/@.signal/--/custom|/../*/.defaults/*/custom)/$?value
 
       /*
        * Retrieving PayPal settings from web.config.
@@ -140,9 +155,9 @@ paypal.Button.render({{
   }}
 }}, '#{0}');"
         :x:/../*/_event?value
-        :x:/@p5.config.get/*/paypal.type?value
-        :x:/@p5.config.get/*/paypal.sandbox?value
-        :x:/@p5.config.get/*/paypal.production?value
+        :x:(/@.pars/*/paypal.type|/@p5.config.get/*/paypal.type)/$?value
+        :x:(/@.pars/*/paypal.sandbox|/@p5.config.get/*/paypal.sandbox)/$?value
+        :x:(/@.pars/*/paypal.production|/@p5.config.get/*/paypal.production)/$?value
         :x:/../*/_price?value
         :x:/../*/_currency?value
         :x:/../*/_custom?value
