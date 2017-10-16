@@ -6,7 +6,8 @@
  * Notice, the caller is responsible for making sure the correct HTTP headers are added,
  * such as for instance "Content-Type" and "Content-Disposition".
  *
- * This event does not add any HTTP headers at all to the response object.
+ * This event does not add any HTTP headers at all to the response object, and the
+ * HTTP parameters of [Content-Type] and [Content-Disposition] are mandatory.
  * The event relies upon the URL resolver of Micro, which you can find 
  * in "/modules/micro/launch.hl".
  */
@@ -22,6 +23,8 @@ create-event:micro.download.file
    */
   micro.lambda.contract.min:x:/..
     _arg:string
+    Content-Type:string
+    Content-Disposition:string
 
   /*
    * Storing filename and HTTP headers in session.
