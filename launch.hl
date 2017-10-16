@@ -1,0 +1,54 @@
+
+/*
+ * URL resolver for Micro.
+ *
+ * Includes support for downloading files using [micro.download.file] among other things.
+ */
+
+
+
+
+
+/*
+ * Checking if this is a download request.
+ */
+split:x:/../*/url?value
+  =:/
+  =:?
+if:x:/@split/1?name
+  =:download
+
+  /*
+   * This is a download request, making sure we've got a file reference in our session.
+   */
+  p5.web.session.get:micro.download.file
+  if:x:/@p5.web.session.get/*
+
+    /*
+     * Clearing session value.
+     */
+    p5.web.session.set:micro.download.file
+
+    /*
+     * Echoing file back to client, adding all HTTP headers first.
+     */
+    for-each:x:/@p5.web.session.get/*/*/*
+      p5.web.header.set:x:/@_dp/#?name
+        src:x:/@_dp/#?value
+    p5.web.echo-file:x:/@p5.web.session.get/*/*/file?value
+
+  else
+
+    /*
+     * The client is not supposed to be allowed to download a file at this time.
+     */
+    p5.web.response.set-status-code:404
+    p5.web.echo:Oops 404, the place where URLs go to die!
+
+else
+
+  /*
+   * Non-existing URL.
+   */
+  p5.web.response.set-status-code:404
+  p5.web.echo:Oops 404, the place where URLs go to die!

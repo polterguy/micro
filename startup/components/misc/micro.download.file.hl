@@ -1,0 +1,43 @@
+﻿
+/*
+ * Creates the Active Event responsible for downloading a file to client.
+ *
+ * Pass in filename as [_arg], and any additional HTTP headers as key/value children.
+ * Notice, the caller is responsible for making sure the correct HTTP headers are added,
+ * such as for instance "Content-Type" and "Content-Disposition".
+ *
+ * This event does not add any HTTP headers at all to the response object.
+ * The event relies upon the URL resolver of Micro, which you can find 
+ * in "/modules/micro/launch.hl".
+ */
+create-event:micro.download.file
+
+  /*
+   * Used to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking mandatory parameters.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+
+  /*
+   * Storing filename and HTTP headers in session.
+   */
+  eval-x:x:/../*/p5.web.session.set/*/*/file
+  add:x:/../*/p5.web.session.set/*/*
+    src:x:/@.signal/--(!/_arg)
+  p5.web.session.set:micro.download.file
+    src
+      file:x:/@.signal/--/_arg?value
+
+  /*
+   * Re-directing client to URL resolver of Micro, which will download the file.
+   */
+  p5.io.unroll-path:@MICRO/
+  split:x:/@p5.io.unroll-path?value
+    =:/
+  p5.web.set-location:{0}/download
+    :x:/@split/1?name
