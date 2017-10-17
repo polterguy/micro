@@ -104,23 +104,9 @@ create-event:micro.widgets.paypal-button
       p5.config.get:x:/-/*?name
 
       /*
-       * Ensuring our PayPal JavaScript file is cached locally.
-       *
-       * Notice, we don't download PayPal "checkout.js" file directly from PayPal, since they
-       * have no CORS HTTP headers on their servers, and this will trigger a JavaScript error
-       * if file is dynamically included during a callback - Which it will be, if the
-       * PayPal widget is shown during an Ajax request.
-       *
-       * Instead we download the file from PayPal, cache it locally, and include our
-       * local version of it.
-       *
-       * Yeah, I know it sucks - But complain to PayPal's crappy developers.
-       * It would be dead simple for them to fix this, without security flaws, by
-       * simply adding a simple fucking CORS HTTP header on their freakin' JS file ...!!
-       *
-       * CAN YOU READ THIS PAYPAL ...??
+       * Ensuring our PayPal JavaScript file is included on page.
        */
-      micro.widgets.paypal-button._ensure-checkout-js
+      micro.widgets.paypal-button.ensure-checkout-js
 
       /*
        * Including JavaScript file necessary to render our button, and our JS
@@ -176,28 +162,25 @@ paypal.Button.render({{
  * Helper file to ensure PayPal's "checkout.js" file is locally cached, to avoid
  * CORS problems.
  */
-create-event:micro.widgets.paypal-button._ensure-checkout-js
+create-event:micro.widgets.paypal-button.ensure-checkout-js
 
   /*
-   * Checking if file is cached locally.
-   *
-   * TODO: Perdiocally (every so often), refresh our locally cached file, in case
-   * PayPal for some reasons should actually want to update their JS file on their servers.
+   * Checking if this is an Ajax Callback, and if it is, and PayPal's JavaScript
+   * file has not already been "ensured", we throw an exception.
    */
   if
-    fetch:x:/0/0?value
-      file-exists:/common/documents/public/checkout.js
-    not
-
-    /*
-     * Fetching file from PayPal and caching it locally.
-     */
-    p5.http.get:"https://www.paypalobjects.com/api/checkout.js"
-    save-file:/common/documents/public/checkout.js
-      src:x:/@p5.http.get/**/content?value
+    p5.web.request.is-ajax-callback
+    if
+      fetch:x:/0/0?value
+        p5.web.viewstate.get:micro.widgets.paypal-button.included
+      not
+      throw:@"You must include PayPal's JS file using [micro.widgets.paypal-button.ensure-checkout-js] in the initial load of your page when using the PayPal widget."
+  p5.web.viewstate.set:micro.widgets.paypal-button.included
+    src:bool:true
 
   /*
-   * Then including locally cached version of file.
+   * Checking for the easy version first, in case this is not a callback, 
+   * we directly include the PayPal JavaScript file from PayPal's servers.
    */
-  p5.web.include-javascript-file:/common/documents/public/checkout.js
+  p5.web.include-javascript-file:@"https://www.paypalobjects.com/api/checkout.js"
     
