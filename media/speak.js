@@ -37,13 +37,13 @@
      * If a name is given, this function will search for the specified name, and use that if it can, otherwise resort to the
      * first voice matching the "locale" parts after the ",".
      */
-    p5.speak.speak = function (txt, voice, onfinish) {
+    p5.speak.speak = function (txt, voice, onfinish, pitch, rate) {
 
         // Checking if voices has already been initialized.
         if (p5.speak._voices) {
 
             // Voices are already initialized, invoking "_speak" function immediately.
-            p5.speak._speak (txt, voice, onfinish);
+            p5.speak._speak (txt, voice, onfinish, pitch, rate);
 
         } else {
 
@@ -57,7 +57,7 @@
 
                 // Retrieving voices, and storing them, such that we don't need another roundtrip through here later.
                 p5.speak._voices = window.speechSynthesis.getVoices ();
-                p5.speak._speak (txt, voice, onfinish);
+                p5.speak._speak (txt, voice, onfinish, pitch, rate);
             }
         }
     }
@@ -67,13 +67,13 @@
      * Private implementation for the above.
      * Expects "p5.speak._voices" to have already beein initialized.
      */
-    p5.speak._speak = function (txt, voice, onfinish) {
+    p5.speak._speak = function (txt, voice, onfinish, pitch, rate) {
 
         // Creating our utterance object, wrapping specified text that should be spoken.
         var utter = new SpeechSynthesisUtterance (txt);
         utter.onend = onfinish;
-        utter.pitch = 1;
-        utter.rate = .9;
+        utter.pitch = pitch;
+        utter.rate = rate;
 
         // Retrieving the specified voice, such that we support all possible permutations.
         var voices = p5.speak._voices.filter (function (ix) {
