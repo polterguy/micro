@@ -1,0 +1,111 @@
+﻿
+/*
+ * Creates our listen Active Event.
+ *
+ * Will initiate a speech recognition input object on the client, and invoking
+ * the specified [onfinish] when some text has been captured, passing the the text
+ * to your lambda as [text].
+ *
+ * Optionally pass in [lang] as language to capture. The default value for [lang]
+ * is "en" implying English.
+ *
+ * Optionally pass in [grammar] being a collection of words or commands we should 
+ * recognize.
+ */
+create-event:micro.listen
+
+  /*
+   * Defaults if no argument(s) are supplied.
+   */
+  .defaults
+    lang:en
+
+  /*
+   * Making sure we check for mandatory arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    onfinish
+  micro.lambda.contract.optional:x:/..
+    lang:text
+    grammar
+
+  /*
+   * Making sure we delete any previously created wrapper widgets, if existing.
+   */
+  if
+    fetch:x:/0/0?value
+      widget-exists:micro-speech-input
+    delete-widget:micro-speech-input
+
+  /*
+   * Creating an invisible widget, which will invoke our callback, once any
+   * speech has been captured.
+   */
+  add:x:/../*/create-literal-widget/*/.onfinish/*/.lambda
+    src:x:/../*/onfinish/*
+  create-literal-widget:micro-speech-input
+    element:span
+    style:"display:none !important;"
+    .onfinish
+
+      /*
+       * Wraps our lambda callback, supplied during instantiation.
+       */
+      .lambda
+
+      /*
+       * Deleting widget, before we invoke lambda callback supplied during 
+       * instantiation, passing in [text] to callback.
+       */
+      delete-widget:x:/../*/_event?value
+      p5.web.post.get:micro-speech-recognized-text
+      eval-x:x:/+/*
+      eval:x:/@.lambda
+        text:x:/@p5.web.post.get/*?value
+
+  /*
+   * Passing in JavaScript necessary to capture speech on client side.
+   *
+   * Notice, this logic depends upon wheter or not a [grammar] argument was supplied or not.
+   */
+  if:x:/../*/grammar/*
+
+    /*
+     * Grammar was specified.
+     */
+    join:x:/../*/grammar/*?name
+      sep:" | "
+    p5.web.send-javascript:@"
+var rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+rec.lang = '{0}';
+var gram = new (window.SpeechGrammarList || window.webkitSpeechGrammarList || window.mozSpeechGrammarList || window.msSpeechGrammarList)();
+gram.addFromString('#JSGF V1.0; grammar words; public <words> =  {1};', 1);
+rec.grammars = gram;
+rec.start();
+rec.onresult = function(event) {{
+  p5.$('micro-speech-input').raise('.onfinish', {{
+    onbefore: function (pars, evt) {{
+      pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
+    }}
+  }});
+}};"
+      :x:(/../*/lang|/@.defaults/*/lang)/$?value
+      :x:/@join?value
+
+  else
+
+    /*
+     * No grammar, generic capture of word or phrase.
+     */
+    p5.web.send-javascript:@"
+var rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+rec.lang = '{0}';
+rec.start();
+rec.onresult = function(event) {{
+  p5.$('micro-speech-input').raise('.onfinish', {{
+    onbefore: function (pars, evt) {{
+      pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
+    }}
+  }});
+}};"
+      :x:(/../*/lang|/@.defaults/*/lang)/$?value
