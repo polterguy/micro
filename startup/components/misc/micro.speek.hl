@@ -16,6 +16,8 @@ create-event:micro.speak
    */
   .defaults
     voice:en
+    pitch:1.0
+    rate:1.0
 
   /*
    * Making sure we check for mandatory arguments.
@@ -28,6 +30,8 @@ create-event:micro.speak
    */
   micro.lambda.contract.optional:x:/..
     onfinish
+    pitch:decimal
+    rate:decimal
 
   /*
    * Making sure we include our JavaScript file.
@@ -73,115 +77,9 @@ create-event:micro.speak
   /*
    * Making sure we invoke client-side function that wraps our speech.
    */
-  p5.web.send-javascript:@"p5.speak.speak(""{0}"", ""{1}"", function(){{{2}}});"
+  p5.web.send-javascript:@"p5.speak.speak(""{0}"", ""{1}"", function(){{{2}}}, {3}, {4});"
     :x:/../*/_arg?value
     :x:(/../*/voice|/@.defaults/*/voice)/$?value
     :x:/@.extra?value
-
-
-
-
-
-/*
- * Creates the event that allows caller to query what languages and voices exists on the current client.
- *
- * This event invokes the specified [onfinish] callback when voices have been retrieved.
- * Your [onfinish] lambda will be invoked with [voices] being the supported voices for the current client.
- *
- * Internally, this might requires a roundtrip to the client, injecting a JavaScript component, which then invokes
- * the server again asynchronously, for the first time you invoke this event. 
- * This is necessary, since the client is the one who knows which supported voices and languages it has.
- */
-create-event:micro.speak.query-voices
-
-  /*
-   * Making sure user supplied the mandatory arguments.
-   */
-  micro.lambda.contract.min:x:/..
-    onfinish
-
-  /*
-   * Checking if we have previously queried available voices for the current session, and if so, simply invoking
-   * the supplied [onfinish] callback immediately, fetching the available voices from the session object.
-   * This saves us another roundtrip for retrieving voices every consecutive query, after the initial query.
-   */
-  p5.web.session.get:micro.speak.query.voices
-  if:x:/@p5.web.session.get/*
-
-    /*
-     * Session object has already stored the available voices for the current client.
-     * Invoking [.on-finished] immediately, with the available voices.
-     */
-    add:x:/+/*/voices
-      src:x:/@p5.web.session.get/*/*/*
-    eval:x:/../*/onfinish
-      voices
-
-  else
-
-    /*
-     * Making sure we include our JavaScript file.
-     */
-    p5.web.include-javascript-file:@MICRO/media/speak.js
-
-    /*
-     * We don't have the supported voices in our session, hence we'll need to create a roundtrip to the client, to have it
-     * return the available voices for us.
-     * We do this by creating a temporary invisible widget, with an invisible Ajax event, which is invoked once the client has
-     * retrieved the available voices.
-     *
-     * First we need to parametrize the Ajax event with the [onfinish] lambda callback supplied by caller.
-     */
-    add:x:/+/**/.onfinish
-      src:x:/../*/onfinish
-    create-literal-widget
-      element:span
-      style:"display:none !important;"
-      .onfinish
-
-        /*
-         * Deleting the temporary injected widget.
-         */
-        delete-widget:x:/../*/_event?value
-
-        /*
-         * Retrieving all voices supported by client from HTTP POST parameter collection.
-         */
-        p5.web.post.list:~p5-speech-voice.
-        p5.web.post.get:x:/-/*?name
-
-        /*
-         * Parametrizing lambda callbak [onfinish] and invoking it.
-         */
-        for-each:x:/@p5.web.post.get/*
-          split:x:/@_dp/#?value
-            =:,
-          split:x:/@_dp/#?name
-            =:.
-          add:x:/../*/eval/*
-            src:"{0}:{1}"
-              :x:/@split/0/-?name
-              :x:/..for-each/*/split/[0,1]/0?name
-          add:x:/../*/eval/*/0/-
-            src:"local:{0}"
-              :x:/..for-each/*/split/[0,1]/1?name
-
-        /*
-         * Notice, before we invoke lambda callback, we store the voices in session, to avoid creating another roundtrip
-         * to client, if user invokes event again.
-         */
-        add:x:/../*/p5.web.session.set/*/*
-          src:x:/../*/eval/*/voices/*
-        p5.web.session.set:micro.speak.query.voices
-          src
-            voices
-        eval:x:/../*/onfinish
-          voices
-
-      oninit
-
-        /*
-         * Passing over JavaScript necessary to query the available voices.
-         */
-        p5.web.send-javascript:@"p5.speak.query('{0}');"
-          :x:/../*/_event?value
+    :x:(/../*/pitch|/@.defaults/*/pitch)/$?value
+    :x:(/../*/rate|/@.defaults/*/rate)/$?value
