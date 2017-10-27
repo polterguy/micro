@@ -110,7 +110,7 @@ if (p5._listen_stop) {{
   p5._listen_rec.start();
   p5._listen_rec.onend = function() {{
     var el = p5.$('micro-speech-input');
-    if (el) {{
+    if (el.el && el.el.id) {{
       el.raise('.onfinish');
     }}
   }}
