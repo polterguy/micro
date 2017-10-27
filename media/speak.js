@@ -64,16 +64,62 @@
 
 
     /*
+     * Uses speech recognition to listen for input from user.
+     */
+    p5.speak.listen = function(lang, grammar) {
+        p5.speak.stop_listening();
+        p5.speak.rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        p5.speak.rec.lang = lang;
+        if (grammar) {
+            var gram = new (window.SpeechGrammarList || window.webkitSpeechGrammarList || window.mozSpeechGrammarList || window.msSpeechGrammarList)();
+            gram.addFromString('#JSGF V1.0; grammar words; public <words> =  ' + grammar + ';', 1);
+            p5.speak.rec.grammars = gram;
+        }
+        p5.speak.rec.start();
+        p5.speak.rec.onresult = function(event) {
+          if(p5.speak.rec) {
+              delete p5.speak.rec;
+              p5.$('micro-speech-input').raise('.onfinish', {
+                onbefore: function (pars, evt) {
+                  pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
+                }
+              });
+          }
+        };
+        p5.speak.rec.onend = function(event) {
+          if(p5.speak.rec) {
+              delete p5.speak.rec;
+              p5.$('micro-speech-input').raise('.onfinish');
+          }
+        }
+    }
+
+
+    /*
+     * Stops speech recognition, if it exists.
+     */
+    p5.speak.stop_listening = function() {
+        if (p5.speak.rec) {
+            p5.speak.rec.abort();
+            delete p5.speak.rec;
+        }
+    }
+
+
+    /*
      * Private implementation for the above.
      * Expects "p5.speak._voices" to have already beein initialized.
      */
     p5.speak._speak = function (txt, voice, onfinish, pitch, rate) {
 
+        // Making sure we abort any listening operations.
+        p5.speak.stop_listening();
+
         // Creating our utterance object, wrapping specified text that should be spoken.
-        var utter = new SpeechSynthesisUtterance (txt);
-        utter.onend = onfinish;
-        utter.pitch = pitch;
-        utter.rate = rate;
+        p5.speak.utter = new SpeechSynthesisUtterance (txt);
+        p5.speak.utter.onend = onfinish;
+        p5.speak.utter.pitch = pitch;
+        p5.speak.utter.rate = rate;
 
         // Retrieving the specified voice, such that we support all possible permutations.
         var voices = p5.speak._voices.filter (function (ix) {
@@ -99,8 +145,8 @@
         if (voices.length > 0) {
 
             // Speaking utterance object, with the first voice from our list of matches.
-            utter.voice = voices [0];
-            window.speechSynthesis.speak(utter);
+            p5.speak.utter.voice = voices [0];
+            window.speechSynthesis.speak(p5.speak.utter);
 
         } else {
 

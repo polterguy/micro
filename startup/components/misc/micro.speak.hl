@@ -77,6 +77,7 @@ create-event:micro.speak
   /*
    * Making sure we invoke client-side function that wraps our speech.
    */
+  micro.listen.reset
   p5.web.send-javascript:@"p5.speak.speak(""{0}"", ""{1}"", function(){{{2}}}, {3}, {4});"
     :x:/../*/_arg?value
     :x:(/../*/voice|/@.defaults/*/voice)/$?value

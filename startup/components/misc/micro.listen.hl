@@ -21,7 +21,7 @@ create-event:micro.listen
     lang:en
 
   /*
-   * Making sure we check for mandatory arguments.
+   * Making sure we check for mandatory and optional arguments.
    */
   micro.lambda.contract.min:x:/..
     onfinish
@@ -75,20 +75,7 @@ create-event:micro.listen
      */
     join:x:/../*/grammar/*?name
       sep:" | "
-    p5.web.send-javascript:@"
-var rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-rec.lang = '{0}';
-var gram = new (window.SpeechGrammarList || window.webkitSpeechGrammarList || window.mozSpeechGrammarList || window.msSpeechGrammarList)();
-gram.addFromString('#JSGF V1.0; grammar words; public <words> =  {1};', 1);
-rec.grammars = gram;
-rec.start();
-rec.onresult = function(event) {{
-  p5.$('micro-speech-input').raise('.onfinish', {{
-    onbefore: function (pars, evt) {{
-      pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
-    }}
-  }});
-}};"
+    p5.web.send-javascript:@"p5.speak.listen('{0}', '{1}');"
       :x:(/../*/lang|/@.defaults/*/lang)/$?value
       :x:/@join?value
 
@@ -97,31 +84,7 @@ rec.onresult = function(event) {{
     /*
      * No grammar, generic capture of word or phrase.
      */
-    p5.web.send-javascript:@"
-if (p5._listen_stop) {{
-  if (p5._listen_rec) {{
-    p5._listen_rec.stop();
-    delete p5._listen_rec;
-  }}
-  delete p5._listen_stop;
-}} else {{
-  p5._listen_rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-  p5._listen_rec.lang = '{0}';
-  p5._listen_rec.start();
-  p5._listen_rec.onend = function() {{
-    var el = p5.$('micro-speech-input');
-    if (el.el && el.el.id) {{
-      el.raise('.onfinish');
-    }}
-  }}
-  p5._listen_rec.onresult = function(event) {{
-    p5.$('micro-speech-input').raise('.onfinish', {{
-      onbefore: function (pars, evt) {{
-        pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
-      }}
-    }});
-  }};
-}}"
+    p5.web.send-javascript:@"p5.speak.listen('{0}');"
       :x:(/../*/lang|/@.defaults/*/lang)/$?value
 
 
@@ -131,15 +94,5 @@ if (p5._listen_stop) {{
 /*
  * Stops speech recognition.
  */
-create-event:micro.listen.quit
-  p5.web.send-javascript:@"p5._listen_stop = true;if (p5._listen_rec) {p5._listen_rec.stop();delete p5._listen_rec;}"
-
-
-
-
-
-/*
- * Resets speech recognition.
- */
-create-event:micro.listen.reset
-  p5.web.send-javascript:@"delete p5._listen_stop;if (p5._listen_rec) {p5._listen_rec.stop();delete p5._listen_rec;}"
+create-event:micro.listen.stop
+  p5.web.send-javascript:@"p5.speak.stop_listening()"
