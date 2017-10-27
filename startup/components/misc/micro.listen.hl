@@ -99,12 +99,22 @@ rec.onresult = function(event) {{
      */
     p5.web.send-javascript:@"
 if (p5._listen_stop) {{
+  if (p5._listen_rec) {{
+    p5._listen_rec.stop();
+    delete p5._listen_rec;
+  }}
   delete p5._listen_stop;
 }} else {{
-  var rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-  rec.lang = '{0}';
-  rec.start();
-  rec.onresult = function(event) {{
+  p5._listen_rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+  p5._listen_rec.lang = '{0}';
+  p5._listen_rec.start();
+  p5._listen_rec.onend = function() {{
+    var el = p5.$('micro-speech-input');
+    if (el) {{
+      el.raise('.onfinish');
+    }}
+  }}
+  p5._listen_rec.onresult = function(event) {{
     p5.$('micro-speech-input').raise('.onfinish', {{
       onbefore: function (pars, evt) {{
         pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
@@ -122,4 +132,14 @@ if (p5._listen_stop) {{
  * Stops speech recognition.
  */
 create-event:micro.listen.quit
-  p5.web.send-javascript:@"p5._listen_stop = true;"
+  p5.web.send-javascript:@"p5._listen_stop = true;if (p5._listen_rec) {p5._listen_rec.stop();delete p5._listen_rec;}"
+
+
+
+
+
+/*
+ * Resets speech recognition.
+ */
+create-event:micro.listen.reset
+  p5.web.send-javascript:@"delete p5._listen_stop;if (p5._listen_rec) {p5._listen_rec.stop();delete p5._listen_rec;}"
