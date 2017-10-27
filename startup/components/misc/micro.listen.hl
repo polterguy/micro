@@ -98,14 +98,28 @@ rec.onresult = function(event) {{
      * No grammar, generic capture of word or phrase.
      */
     p5.web.send-javascript:@"
-var rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-rec.lang = '{0}';
-rec.start();
-rec.onresult = function(event) {{
-  p5.$('micro-speech-input').raise('.onfinish', {{
-    onbefore: function (pars, evt) {{
-      pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
-    }}
-  }});
-}};"
+if (p5._listen_stop) {{
+  delete p5._listen_stop;
+}} else {{
+  var rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+  rec.lang = '{0}';
+  rec.start();
+  rec.onresult = function(event) {{
+    p5.$('micro-speech-input').raise('.onfinish', {{
+      onbefore: function (pars, evt) {{
+        pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
+      }}
+    }});
+  }};
+}}"
       :x:(/../*/lang|/@.defaults/*/lang)/$?value
+
+
+
+
+
+/*
+ * Stops speech recognition.
+ */
+create-event:micro.listen.quit
+  p5.web.send-javascript:@"p5._listen_stop = true;"
