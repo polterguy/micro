@@ -48,7 +48,7 @@ create-event:micro.speak.query-voices
      *
      * First we need to parametrize the Ajax event with the [onfinish] lambda callback supplied by caller.
      */
-    add:x:/+/**/.onfinish
+    add:x:/+/*/.onfinish
       src:x:/../*/onfinish
     create-literal-widget
       element:span
