@@ -26,8 +26,13 @@ create-event:micro.listen
   micro.lambda.contract.min:x:/..
     onfinish
   micro.lambda.contract.optional:x:/..
-    lang:text
+    lang:string
     grammar
+
+  /*
+   * Making sure we include our JavaScript file.
+   */
+  p5.web.include-javascript-file:@MICRO/media/speak.js
 
   /*
    * Making sure we delete any previously created wrapper widgets, if existing.
