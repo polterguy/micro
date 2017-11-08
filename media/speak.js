@@ -36,6 +36,8 @@
      * Notice, "voice" can be for instance "en-US", or it can be "Samantha,en-US" or it can be "Fred".
      * If a name is given, this function will search for the specified name, and use that if it can, otherwise resort to the
      * first voice matching the "locale" parts after the ",".
+     *
+     * Due to different implementations of this in different browser, the code unfortunately resembles a fruit cocktail.
      */
     p5.speak.speak = function (txt, voice, onfinish, pitch, rate) {
 
@@ -47,17 +49,27 @@
 
         } else {
 
-            // Voices have NOT been initialized yet, provding our callback function, for retrieving all available voices on client.
-            window.speechSynthesis.onvoiceschanged = function() {
+            // Creating callback, which is necessary for Chrome to function.
+            var getVoices = function () {
 
                 // To avoid callback from being evaluated twice, we return "early" if it has already been invoked previously.
-                if (p5.speak._voices) {
+                if (p5.speak._voices && p5.speak._voices.length > 0) {
                   return;
                 }
 
                 // Retrieving voices, and storing them, such that we don't need another roundtrip through here later.
                 p5.speak._voices = window.speechSynthesis.getVoices ();
-                p5.speak._speak (txt, voice, onfinish, pitch, rate);
+                if (p5.speak._voices && p5.speak._voices.length > 0) {
+                    p5.speak._speak (txt, voice, onfinish, pitch, rate);
+                }
+            }
+
+            // Notice, this looks weird, but is necessary since different browsers are incompatible in this area.
+            getVoices ();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = function() {
+                    getVoices ();
+                }
             }
         }
     }
@@ -66,22 +78,23 @@
     /*
      * Uses speech recognition to listen for input from user.
      */
-    p5.speak.listen = function(lang, grammar) {
+    p5.speak.listen = function(lang) {
+        if (window.SpeechRecognition == null && 
+            window.webkitSpeechRecognition == null && 
+            window.mozSpeechRecognition == null && 
+            window.msSpeechRecognition == null) {
+            alert("Your browser doesn't support speech recognition. Hint; Google Chrome does!");
+            return;
+        }
         p5.speak.stop_listening();
         p5.speak.rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
         p5.speak.rec.lang = lang;
-        if (grammar) {
-            var gram = new (window.SpeechGrammarList || window.webkitSpeechGrammarList || window.mozSpeechGrammarList || window.msSpeechGrammarList)();
-            gram.addFromString('#JSGF V1.0; grammar words; public <words> =  ' + grammar + ';', 1);
-            p5.speak.rec.grammars = gram;
-        }
-        p5.speak.rec.start();
-        p5.speak.rec.onresult = function(event) {
+        p5.speak.rec.onresult = function(e) {
           if(p5.speak.rec) {
               delete p5.speak.rec;
               p5.$('micro-speech-input').raise('.onfinish', {
                 onbefore: function (pars, evt) {
-                  pars.push(['micro-speech-recognized-text', event.results[0][0].transcript]);
+                  pars.push(['micro-speech-recognized-text', e.results[0][0].transcript]);
                 }
               });
           }
@@ -92,6 +105,7 @@
               p5.$('micro-speech-input').raise('.onfinish');
           }
         }
+        p5.speak.rec.start();
     }
 
 
@@ -107,6 +121,30 @@
 
 
     /*
+     * Stops speaking.
+     */
+    p5.speak.stop_speaking = function() {
+        (window.speechSynthesis || window.webkitSpeechSynthesis).cancel();
+    }
+
+
+    /*
+     * Pause speaking.
+     */
+    p5.speak.pause_speaking = function() {
+        (window.speechSynthesis || window.webkitSpeechSynthesis).pause();
+    }
+
+
+    /*
+     * Resumes speaking.
+     */
+    p5.speak.resume_speaking = function() {
+        (window.speechSynthesis || window.webkitSpeechSynthesis).resume();
+    }
+
+
+    /*
      * Private implementation for the above.
      * Expects "p5.speak._voices" to have already beein initialized.
      */
@@ -114,6 +152,8 @@
 
         // Making sure we abort any listening operations.
         p5.speak.stop_listening();
+        p5.speak.stop_speaking();
+
 
         // Creating our utterance object, wrapping specified text that should be spoken.
         p5.speak.utter = new SpeechSynthesisUtterance (txt);

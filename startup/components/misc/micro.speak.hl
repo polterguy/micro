@@ -92,3 +92,33 @@ create-event:micro.speak
     :x:/@.extra?value
     :x:(/../*/pitch|/@.defaults/*/pitch)/$?value
     :x:(/../*/rate|/@.defaults/*/rate)/$?value
+
+
+
+
+
+/*
+ * Stops speaking.
+ */
+create-event:micro.speak.stop
+  p5.web.send-javascript:@"p5.speak.stop_speaking();"
+
+
+
+
+
+/*
+ * Pauses speaking.
+ */
+create-event:micro.speak.pause
+  p5.web.send-javascript:@"p5.speak.pause_speaking();"
+
+
+
+
+
+/*
+ * Resumes speaking.
+ */
+create-event:micro.speak.resume
+  p5.web.send-javascript:@"p5.speak.resume_speaking();"

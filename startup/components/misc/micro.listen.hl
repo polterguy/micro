@@ -8,9 +8,6 @@
  *
  * Optionally pass in [lang] as language to capture. The default value for [lang]
  * is "en" implying English.
- *
- * Optionally pass in [grammar] being a collection of words or commands we should 
- * recognize.
  */
 create-event:micro.listen
 
@@ -27,7 +24,6 @@ create-event:micro.listen
     onfinish
   micro.lambda.contract.optional:x:/..
     lang:string
-    grammar
 
   /*
    * Making sure we include our JavaScript file.
@@ -69,28 +65,10 @@ create-event:micro.listen
         text:x:/@p5.web.post.get/*?value
 
   /*
-   * Passing in JavaScript necessary to capture speech on client side.
-   *
-   * Notice, this logic depends upon wheter or not a [grammar] argument was supplied or not.
+   * No grammar, generic capture of word or phrase.
    */
-  if:x:/../*/grammar/*
-
-    /*
-     * Grammar was specified.
-     */
-    join:x:/../*/grammar/*?name
-      sep:" | "
-    p5.web.send-javascript:@"p5.speak.listen('{0}', '{1}');"
-      :x:(/../*/lang|/@.defaults/*/lang)/$?value
-      :x:/@join?value
-
-  else
-
-    /*
-     * No grammar, generic capture of word or phrase.
-     */
-    p5.web.send-javascript:@"p5.speak.listen('{0}');"
-      :x:(/../*/lang|/@.defaults/*/lang)/$?value
+  p5.web.send-javascript:@"p5.speak.listen('{0}');"
+    :x:(/../*/lang|/@.defaults/*/lang)/$?value
 
 
 
@@ -100,4 +78,4 @@ create-event:micro.listen
  * Stops speech recognition.
  */
 create-event:micro.listen.stop
-  p5.web.send-javascript:@"p5.speak.stop_listening()"
+  p5.web.send-javascript:@"p5.speak.stop_listening();"
