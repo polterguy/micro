@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?glyn27');
-  src:  url('fonts/icomoon.eot?glyn27#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?glyn27') format('truetype'),
-    url('fonts/icomoon.woff?glyn27') format('woff'),
-    url('fonts/icomoon.svg?glyn27#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?36yrvs');
+  src:  url('fonts/icomoon.eot?36yrvs#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?36yrvs') format('truetype'),
+    url('fonts/icomoon.woff?36yrvs') format('woff'),
+    url('fonts/icomoon.svg?36yrvs#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -75,6 +75,12 @@
 .icon-dice:before {
   content: "\e915";
 }
+.icon-bullhorn:before {
+  content: "\e91a";
+}
+.icon-connection:before {
+  content: "\e91b";
+}
 .icon-mic:before {
   content: "\e91e";
 }
@@ -125,6 +131,9 @@
 }
 .icon-credit-card:before {
   content: "\e93f";
+}
+.icon-lifebuoy:before {
+  content: "\e941";
 }
 .icon-phone:before {
   content: "\e942";
@@ -239,6 +248,9 @@
 }
 .icon-cogs:before {
   content: "\e995";
+}
+.icon-magic-wand:before {
+  content: "\e997";
 }
 .icon-aid-kit:before {
   content: "\e998";

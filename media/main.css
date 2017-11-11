@@ -698,9 +698,13 @@ table {
     }
 }
 
-button[disabled] {
+button[disabled], button[disabled].toggled {
     color: var(--placeholder-col);
+    background: var(--wid-dark-col);
     cursor: not-allowed;
+}
+button[disabled].toggled {
+    background: var(--wid-dark-col-invert);
 }
 
 input[disabled], input[readonly], select[disabled], textarea[disabled] {
@@ -1036,13 +1040,13 @@ input[disabled], input[readonly], select[disabled], textarea[disabled] {
 }
 
 .micro-tab .micro-tab-views {
-    border-top: solid var(--border-width)var(--wid-border-col);
+    border-top: solid var(--border-width) var(--wid-border-col);
     padding-top: 1rem;
 }
 
 .micro-tab-border .micro-tab-views {
-    border: var(--border-width)solid var(--wid-border-col);
-    border-radius: 0 var(--border-radius)0 0;
+    border: var(--border-width) solid var(--wid-border-col);
+    border-radius: 0 var(--border-radius) 0 0;
     padding: 1rem;
 }
 
