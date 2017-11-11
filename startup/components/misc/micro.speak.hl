@@ -101,6 +101,11 @@ create-event:micro.speak
  * Stops speaking.
  */
 create-event:micro.speak.stop
+
+  /*
+   * Making sure we include our JavaScript file.
+   */
+  p5.web.include-javascript-file:@MICRO/media/speak.js
   p5.web.send-javascript:@"p5.speak.stop_speaking();"
 
 
@@ -111,6 +116,11 @@ create-event:micro.speak.stop
  * Pauses speaking.
  */
 create-event:micro.speak.pause
+
+  /*
+   * Making sure we include our JavaScript file.
+   */
+  p5.web.include-javascript-file:@MICRO/media/speak.js
   p5.web.send-javascript:@"p5.speak.pause_speaking();"
 
 
@@ -121,4 +131,9 @@ create-event:micro.speak.pause
  * Resumes speaking.
  */
 create-event:micro.speak.resume
+
+  /*
+   * Making sure we include our JavaScript file.
+   */
+  p5.web.include-javascript-file:@MICRO/media/speak.js
   p5.web.send-javascript:@"p5.speak.resume_speaking();"
