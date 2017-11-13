@@ -1,0 +1,45 @@
+﻿
+/*
+ * Creates the event that allows caller to translate a piece of text from one language to another, using Google Translate.
+ *
+ * Pass in [_arg] as whatever you want to have translated, and [dest-lang] being the language you wish to have it translated to.
+ *
+ * Optionally pass in [src-lang], for explicitly declaring what language your source text is in.
+ * If no [src-lang] is specified, then "auto" will be assumed, at which point Google will attempt to intelligently
+ * figure out what is your source language by itself.
+ *
+ * Example of some languages you could use are; "en" English, and "no" for Norwegian, or "nb-NO" for Norwegian Bokmål and "en-US"
+ * for American English.
+ */
+create-event:micro.google.translate
+
+  /*
+   * Defaults.
+   */
+  .defaults
+    src-lang:auto
+
+  /*
+   * URL encoding text.
+   */
+  p5.html.url-encode:x:/../*/_arg?value
+
+  /*
+   * Invoking Google Translate with URL encoded text, source language, and destination language.
+   */
+  p5.http.get:"https://translate.googleapis.com/translate_a/single?client=gtx&ie=UTF-8&sl={0}&tl={1}&dt=t&q={2}"
+    :x:(/../*/src-lang|/@.defaults/*/src-lang)/$?value
+    :x:/../*/dest-lang?value
+    :x:/@p5.html.url-encode?value
+
+  /*
+   * Google Translate will return results as JSON, making sure we parse it as such,
+   * returning it to caller as a single piece of text.
+   */
+  json2lambda:x:/@p5.http.get/**/content?value
+
+  /*
+   * Returning result to caller.
+   */
+  join:x:/@json2lambda/0/0/*/0?value
+  return:x:/@join?value
