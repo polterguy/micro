@@ -99,5 +99,5 @@ create-event:micro.speak.query-voices
         /*
          * Passing over JavaScript necessary to query the available voices.
          */
-        p5.web.send-javascript:@"p5.speak.query('{0}');"
+        p5.web.send-javascript:@"p5.speech.query('{0}');"
           :x:/../*/_event?value

@@ -8,6 +8,8 @@
  * The voice can contain both a locale parts, and a named voice, such as e.g.
  * "Veronica,en", which will use "Veronica" voice, if she exists, and is English.
  * Otherwise, it'll default to the first "en" (English) voice that exists.
+ *
+ * Optionally supply [pitch] and [rate].
  */
 create-event:micro.speak
 
@@ -26,20 +28,20 @@ create-event:micro.speak
     _arg:string
 
   /*
-   * Eliminating all carriage return sequences, to avoid JavaScript crash on the
-   * client side.
-   */
-  set:x:/../*/_arg?value
-    replace:x:/../*/_arg?value
-      src:"`"
-
-  /*
    * Optional arguments.
    */
   micro.lambda.contract.optional:x:/..
     onfinish
     pitch:decimal
     rate:decimal
+
+  /*
+   * Eliminating all carriage return sequences, to avoid JavaScript crash on the
+   * client side.
+   */
+  set:x:/../*/_arg?value
+    replace:x:/../*/_arg?value
+      src:"`"
 
   /*
    * Making sure we include our JavaScript file.
@@ -53,40 +55,43 @@ create-event:micro.speak
    */
   .extra:
   if:x:/../*/onfinish
-    if
-      fetch:x:/0/0?value
-        widget-exists:micro-speak-callback
-
-      /*
-       * Deleting any previously existing callback widgets.
-       */
-      delete-widget:micro-speak-callback
 
     /*
      * Adding lambda callback into invisible callback event for widget.
      */
-    add:x:/./*/create-literal-widget/*/.onfinish
+    add:x:/./*/create-literal-widget/*/.onfinish/*/.lambda
       src:x:/../*/onfinish/*
 
     /*
      * Creating widget.
      */
-    create-literal-widget:micro-speak-callback
+    create-literal-widget
       element:span
       style:"display:none !important;"
       .onfinish
+
+        /*
+         * Contains [onfinish] lambda, supplied during instantiation.
+         */
+        .lambda
+
+        /*
+         * Deletes widget, and invokes lambda callback, supplied during instantiation.
+         */
+        delete-widget:x:/../*/_event?value
+        eval:x:/@.lambda
 
     /*
      * Creating JavaScript necessary to invoke callback once speak is finished.
      */
     set:x:/@.extra?value
-      src:@"p5.$('micro-speak-callback').raise('.onfinish');"
+      src:@"p5.$('{0}').raise('.onfinish');"
+        :x:/@create-literal-widget?value
 
   /*
    * Making sure we invoke client-side function that wraps our speech.
    */
-  micro.listen.reset
-  p5.web.send-javascript:@"p5.speak.speak(`{0}`, ""{1}"", function(){{{2}}}, {3}, {4});"
+  p5.web.send-javascript:@"p5.speech.speak(`{0}`, ""{1}"", function(){{{2}}}, {3}, {4});"
     :x:/../*/_arg?value
     :x:(/../*/voice|/@.defaults/*/voice)/$?value
     :x:/@.extra?value
@@ -106,7 +111,7 @@ create-event:micro.speak.stop
    * Making sure we include our JavaScript file.
    */
   p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speak.stop_speaking();"
+  p5.web.send-javascript:@"p5.speech.speak.stop();"
 
 
 
@@ -121,7 +126,7 @@ create-event:micro.speak.pause
    * Making sure we include our JavaScript file.
    */
   p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speak.pause_speaking();"
+  p5.web.send-javascript:@"p5.speech.speak.pause();"
 
 
 
@@ -136,4 +141,4 @@ create-event:micro.speak.resume
    * Making sure we include our JavaScript file.
    */
   p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speak.resume_speaking();"
+  p5.web.send-javascript:@"p5.speech.speak.resume();"

@@ -31,20 +31,12 @@ create-event:micro.listen
   p5.web.include-javascript-file:@MICRO/media/speak.js
 
   /*
-   * Making sure we delete any previously created wrapper widgets, if existing.
-   */
-  if
-    fetch:x:/0/0?value
-      widget-exists:micro-speech-input
-    delete-widget:micro-speech-input
-
-  /*
    * Creating an invisible widget, which will invoke our callback, once any
    * speech has been captured.
    */
   add:x:/../*/create-literal-widget/*/.onfinish/*/.lambda
     src:x:/../*/onfinish/*
-  create-literal-widget:micro-speech-input
+  create-literal-widget
     element:span
     style:"display:none !important;"
     .onfinish
@@ -65,10 +57,19 @@ create-event:micro.listen
         text:x:/@p5.web.post.get/*?value
 
   /*
-   * No grammar, generic capture of word or phrase.
+   * Creating JavaScript necessary to invoke callback once speak is finished.
    */
-  p5.web.send-javascript:@"p5.speak.listen('{0}');"
+  .extra
+  set:x:/@.extra?value
+    src:@"var r = this.recognised;p5.$('{0}').raise('.onfinish', {{onbefore: function (pars, evt){{pars.push(['micro-speech-recognized-text', r]);}}}});"
+      :x:/@create-literal-widget?value
+
+  /*
+   * Sending JavaScript necessary to invoke listening process.
+   */
+  p5.web.send-javascript:@"p5.speech.listen('{0}', function(){{{1}}});"
     :x:(/../*/lang|/@.defaults/*/lang)/$?value
+    :x:/@.extra?value
 
 
 
@@ -83,4 +84,4 @@ create-event:micro.listen.stop
    * Making sure we include our JavaScript file.
    */
   p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speak.stop_listening();"
+  p5.web.send-javascript:@"p5.speech.recognition.stop();"

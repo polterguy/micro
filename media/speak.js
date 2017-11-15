@@ -27,7 +27,8 @@
     /*
      * Main wrapper namespace object for speak parts of Phosphorus Five.
      */
-    p5.speak = {};
+    p5.speech = {};
+    p5.speech._chain = [];
 
 
     /*
@@ -36,49 +37,165 @@
      * Notice, "voice" can be for instance "en-US", or it can be "Samantha,en-US" or it can be "Fred".
      * If a name is given, this function will search for the specified name, and use that if it can, otherwise resort to the
      * first voice matching the "locale" parts after the ",".
-     *
-     * Due to different implementations of this in different browser, the code unfortunately resembles a fruit cocktail.
      */
-    p5.speak.speak = function (txt, voice, onfinish, pitch, rate) {
+    p5.speech.speak = function (txt, voice, onfinish, pitch, rate) {
+        if (p5.speech._chain.push (new p5.speech.utter (txt, voice, onfinish, pitch, rate)) == 1) {
+            p5.speech.next ();
+        }
+    }
 
-        // Checking if voices has already been initialized.
-        if (p5.speak._voices) {
+    /*
+     * Functions that accepts speech input from user using the given "lang" as the language to do speech recognition for.
+     *
+     * Optionall pass in an onfinish function, which will be invoked with the event as "e" once speech has been captured.
+     */
+    p5.speech.listen = function (lang, onfinish) {
+        if (p5.speech._chain.push (new p5.speech.recognition (lang, onfinish)) == 1) {
+            p5.speech.next ();
+        }
+    }
 
-            // Voices are already initialized, invoking "_speak" function immediately.
-            p5.speak._speak (txt, voice, onfinish, pitch, rate);
+    /*
+     * Executes the next element in queue.
+     *
+     * Notice, this little chain trick, ensures that all of our speech utterings and
+     * recognition objects are executed in FIFO order.
+     * This allows us to invoke multiple [micro.speak] invocations for instance, and
+     * intermix with multiple [micro.listen] invocations, in the same request, and yet
+     * still have all our invocations execute in an orderly fashion, doing everything they're
+     * supposed to do.
+     */
+    p5.speech.next = function () {
 
-        } else {
+        // Executes the first element in queue.
+        p5.speech._chain[0].do.apply (p5.speech._chain[0], [function () {
 
-            // Creating callback, which is necessary for Chrome to function.
-            var getVoices = function () {
+            // Invokes the finish handler for currently handled element.
+            p5.speech._chain[0].onfinish.apply (p5.speech._chain[0]);
 
-                // To avoid callback from being evaluated twice, we return "early" if it has already been invoked previously.
-                if (p5.speak._voices && p5.speak._voices.length > 0) {
-                  return;
+            // Removes the first element from queue.
+            p5.speech._chain.splice (0,1);
+
+            // Checks to see if we have more elements in queue, and if so, executing next element.
+            if (p5.speech._chain.length != 0) {
+                p5.speech.next ();
+            }
+        }]);
+    }
+
+
+
+
+    /*
+     * "Utter class", wrapping speech synthesis.
+     */
+    p5.speech.utter = function (txt, voice, onfinish, pitch, rate) {
+
+        // Setting properties for utter object.
+        this.txt = txt;
+        this.voice = voice;
+        this.pitch = pitch;
+        this.rate = rate;
+        this.onfinish = onfinish;
+    }
+    p5.speech.utter._voices = null;
+
+    p5.speech.utter.prototype.do = function (whendone) {
+        this.speak (whendone);
+    }
+
+    p5.speech.utter.prototype.speak = function (whendone) {
+        if (p5.speech.utter._voices != null) {
+
+            // Creating our utterance object, wrapping specified text that should be spoken.
+            this.utter = new SpeechSynthesisUtterance (this.txt);
+            var self = this;
+            this.utter.onend = function() {whendone.apply (self)};
+            this.utter.pitch = this.pitch;
+            this.utter.rate = this.rate;
+
+            // Retrieving the specified voice, such that we support all possible permutations.
+            var voice = this.voice;
+            var voices = p5.speech.utter._voices.filter (function (ix) {
+
+                // Checking if voice contains both name and locale.
+                if (voice.indexOf (',') != -1) {
+                    return ix.name == voice.split(',')[0];
                 }
 
-                // Retrieving voices, and storing them, such that we don't need another roundtrip through here later.
-                p5.speak._voices = window.speechSynthesis.getVoices ();
-                if (p5.speak._voices && p5.speak._voices.length > 0) {
-                    p5.speak._speak (txt, voice, onfinish, pitch, rate);
-                }
+                // "voice" is either a name or a locale.
+                return ix.name == voice || ix.lang == voice;
+            });
+
+            /*
+             * If voice was in "name,locale" format, and the "name" voice was not found, we must look for the first voice matching
+             * the "locale" (meaning the parts after the ",").
+             */
+            if (voices.length == 0 && this.voice.indexOf(',') != -1) {
+                voices = p5.speech.utter._voices.filter (function (ix) {return ix.lang == voice.split (',')[1]});
             }
 
-            // Notice, this looks weird, but is necessary since different browsers are incompatible in this area.
-            getVoices ();
-            if (window.speechSynthesis.onvoiceschanged !== undefined) {
-                window.speechSynthesis.onvoiceschanged = function() {
-                    getVoices ();
+            // Checking if we have a voice matching the one specified from caller.
+            if (voices.length > 0) {
+
+                // Speaking utterance object, with the first voice from our list of matches.
+                this.utter.voice = voices [0];
+                window.speechSynthesis.speak(this.utter);
+
+            } else {
+
+                // Unsupported voice was supplied.
+                window.speechSynthesis.speak (new SpeechSynthesisUtterance ('That voice is not supported!'));
+            }
+
+        } else {
+            var getVoices = function (whendone) {
+                p5.speech.utter._voices = window.speechSynthesis.getVoices ();
+                if (p5.speech.utter._voices && p5.speech.utter._voices.length > 0) {
+                    this.speak (whendone);
                 }
+            }
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                var self = this;
+                window.speechSynthesis.onvoiceschanged = function() {
+                    getVoices.apply (self, [whendone]);
+                }
+            } else {
+                getVoices.apply (this, [whendone]);
             }
         }
     }
 
+    p5.speech.speak.stop = function () {
+        (window.speechSynthesis || window.webkitSpeechSynthesis).cancel();
+    }
+
+    p5.speech.speak.pause = function () {
+        (window.speechSynthesis || window.webkitSpeechSynthesis).pause();
+    }
+
+    p5.speech.speak.resume = function () {
+        (window.speechSynthesis || window.webkitSpeechSynthesis).resume();
+    }
+
+
+
 
     /*
-     * Uses speech recognition to listen for input from user.
+     * "Recognition class", wrapping speech recognition.
      */
-    p5.speak.listen = function(lang) {
+    p5.speech.recognition = function (lang, onfinish) {
+
+        // Setting properties for speech recognition object.
+        this.lang = lang;
+        this.onfinish = onfinish;
+    }
+
+    p5.speech.recognition.prototype.do = function (whendone) {
+        this.recognise (whendone);
+    }
+
+    p5.speech.recognition.prototype.recognise = function (whendone) {
         if (window.SpeechRecognition == null && 
             window.webkitSpeechRecognition == null && 
             window.mozSpeechRecognition == null && 
@@ -86,114 +203,39 @@
             alert("Your browser doesn't support speech recognition. Hint; Google Chrome does!");
             return;
         }
-        p5.speak.stop_listening();
-        p5.speak.rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-        p5.speak.rec.lang = lang;
-        p5.speak.rec.onresult = function(e) {
-          if(p5.speak.rec) {
-              delete p5.speak.rec;
-              p5.$('micro-speech-input').raise('.onfinish', {
-                onbefore: function (pars, evt) {
-                  pars.push(['micro-speech-recognized-text', e.results[0][0].transcript]);
-                }
-              });
-          }
+        this.rec = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        this.rec.lang = this.lang;
+        var self = this;
+        this._handled = false;
+        this.rec.onresult = function(e) {
+            self._handled = true;
+            self.recognised = e.results[0][0].transcript;
+            whendone.apply (self);
         };
-        p5.speak.rec.onend = function(event) {
-          if(p5.speak.rec) {
-              delete p5.speak.rec;
-              p5.$('micro-speech-input').raise('.onfinish');
-          }
-        }
-        p5.speak.rec.start();
-    }
-
-
-    /*
-     * Stops speech recognition, if it exists.
-     */
-    p5.speak.stop_listening = function() {
-        if (p5.speak.rec) {
-            p5.speak.rec.abort();
-            delete p5.speak.rec;
-        }
-    }
-
-
-    /*
-     * Stops speaking.
-     */
-    p5.speak.stop_speaking = function() {
-        (window.speechSynthesis || window.webkitSpeechSynthesis).cancel();
-    }
-
-
-    /*
-     * Pause speaking.
-     */
-    p5.speak.pause_speaking = function() {
-        (window.speechSynthesis || window.webkitSpeechSynthesis).pause();
-    }
-
-
-    /*
-     * Resumes speaking.
-     */
-    p5.speak.resume_speaking = function() {
-        (window.speechSynthesis || window.webkitSpeechSynthesis).resume();
-    }
-
-
-    /*
-     * Private implementation for the above.
-     * Expects "p5.speak._voices" to have already beein initialized.
-     */
-    p5.speak._speak = function (txt, voice, onfinish, pitch, rate) {
-
-        // Making sure we abort any listening operations.
-        p5.speak.stop_listening();
-        p5.speak.stop_speaking();
-
-
-        // Creating our utterance object, wrapping specified text that should be spoken.
-        p5.speak.utter = new SpeechSynthesisUtterance (txt);
-        p5.speak.utter.onend = onfinish;
-        p5.speak.utter.pitch = pitch;
-        p5.speak.utter.rate = rate;
-
-        // Retrieving the specified voice, such that we support all possible permutations.
-        var voices = p5.speak._voices.filter (function (ix) {
-
-            // Checking if voice contains both name and locale.
-            if (voice.indexOf (',') != -1) {
-                return ix.name == voice.split(',')[0];
+        this.rec.onend = function(event) {
+            if (self._handled != true) {
+                self.recognised = '';
+                whendone.apply (self);
             }
-
-            // "voice" is either a name or a locale.
-            return ix.name == voice || ix.lang == voice;
-        });
-
-        /*
-         * If voice was in "name,locale" format, and the "name" voice was not found, we must look for the first voice matching
-         * the "locale" (meaning the parts after the ",").
-         */
-        if (voices.length == 0 && voice.indexOf(',') != -1) {
-          voices = p5.speak._voices.filter (function (ix) {return ix.lang == voice.split (',')[1]});
         }
+        this.rec.start();
+    }
 
-        // Checking if we have a voice matching the one specified from caller.
-        if (voices.length > 0) {
+    p5.speech.recognition.prototype.stop = function () {
+        this.rec.abort ();
+    }
 
-            // Speaking utterance object, with the first voice from our list of matches.
-            p5.speak.utter.voice = voices [0];
-            window.speechSynthesis.speak(p5.speak.utter);
-
-        } else {
-
-            // Unsupported voice was supplied.
-            window.speechSynthesis.speak(new SpeechSynthesisUtterance('That voice is not supported!'));
+    p5.speech.recognition.stop = function () {
+        if (p5.speech._chain.length == 0) {
+            return;
+        }
+        var el = p5.speech._chain[0];
+        if (el.stop !== undefined) {
+            el.stop();
         }
     }
+
+
 
 
     /*
@@ -204,13 +246,13 @@
      * POST parameter will be passed in, for each voice the client supports.
      * The locale/language of the voice, will be the value of the HTTP POST parameter(s).
      */
-    p5.speak.query = function (widget) {
+    p5.speech.query = function (widget) {
 
         // Checking if voices has already been initialized.
-        if (p5.speak._voices) {
+        if (p5.speech.utter._voices) {
 
             // Voices are already initialized, invoking "_query" function immediately.
-            p5.speak._query (widget);
+            p5.speech._query (widget);
 
         } else {
 
@@ -218,13 +260,13 @@
             window.speechSynthesis.onvoiceschanged = function() {
 
                 // To avoid callback from being evaluated twice, we return "early" if it has already been invoked previously.
-                if (p5.speak._voices) {
+                if (p5.speech.utter._voices) {
                   return;
                 }
 
                 // Retrieving voices, and storing them, such that we don't need another roundtrip through here later.
-                p5.speak._voices = window.speechSynthesis.getVoices ();
-                p5.speak._query (widget);
+                p5.speech.utter._voices = window.speechSynthesis.getVoices ();
+                p5.speech._query (widget);
             }
         }
     }
@@ -234,7 +276,7 @@
      * Private implementation for the above.
      * Expects "p5.speech._sys42_speech_voices" to have already beein initialized.
      */
-    p5.speak._query = function (widget) {
+    p5.speech._query = function (widget) {
         p5.$(widget).raise('.onfinish', {
             onbefore: function (pars, evt) {
                 for (var ix = 0; ix < p5.speak._voices.length;ix++) {
