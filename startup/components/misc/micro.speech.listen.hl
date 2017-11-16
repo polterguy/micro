@@ -9,7 +9,7 @@
  * Optionally pass in [lang] as language to capture. The default value for [lang]
  * is "en" implying English.
  */
-create-event:micro.listen
+create-event:micro.speech.listen
 
   /*
    * Defaults if no argument(s) are supplied.
@@ -70,18 +70,3 @@ create-event:micro.listen
   p5.web.send-javascript:@"p5.speech.listen('{0}', function(){{{1}}});"
     :x:(/../*/lang|/@.defaults/*/lang)/$?value
     :x:/@.extra?value
-
-
-
-
-
-/*
- * Stops speech recognition.
- */
-create-event:micro.listen.stop
-
-  /*
-   * Making sure we include our JavaScript file.
-   */
-  p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speech.recognition.stop();"

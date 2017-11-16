@@ -11,7 +11,7 @@
  *
  * Optionally supply [pitch] and [rate].
  */
-create-event:micro.speak
+create-event:micro.speech.speak
 
   /*
    * Defaults if no argument(s) are supplied.
@@ -97,48 +97,3 @@ create-event:micro.speak
     :x:/@.extra?value
     :x:(/../*/pitch|/@.defaults/*/pitch)/$?value
     :x:(/../*/rate|/@.defaults/*/rate)/$?value
-
-
-
-
-
-/*
- * Stops speaking.
- */
-create-event:micro.speak.stop
-
-  /*
-   * Making sure we include our JavaScript file.
-   */
-  p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speech.speak.stop();"
-
-
-
-
-
-/*
- * Pauses speaking.
- */
-create-event:micro.speak.pause
-
-  /*
-   * Making sure we include our JavaScript file.
-   */
-  p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speech.speak.pause();"
-
-
-
-
-
-/*
- * Resumes speaking.
- */
-create-event:micro.speak.resume
-
-  /*
-   * Making sure we include our JavaScript file.
-   */
-  p5.web.include-javascript-file:@MICRO/media/speak.js
-  p5.web.send-javascript:@"p5.speech.speak.resume();"

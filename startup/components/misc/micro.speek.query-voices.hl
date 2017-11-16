@@ -8,7 +8,7 @@
  * the server again asynchronously, for the first time you invoke this event. 
  * This is necessary, since the client is the one who knows which supported voices and languages it has.
  */
-create-event:micro.speak.query-voices
+create-event:micro.speech.speak.query-voices
 
   /*
    * Making sure user supplied the mandatory arguments.
@@ -21,7 +21,7 @@ create-event:micro.speak.query-voices
    * the supplied [onfinish] callback immediately, fetching the available voices from the session object.
    * This saves us another roundtrip for retrieving voices every consecutive query, after the initial query.
    */
-  p5.web.session.get:micro.speak.query.voices
+  p5.web.session.get:micro.speech.speak.query.voices
   if:x:/@p5.web.session.get/*
 
     /*
@@ -88,7 +88,7 @@ create-event:micro.speak.query-voices
          */
         add:x:/../*/p5.web.session.set/*/*
           src:x:/../*/eval/*/voices/*
-        p5.web.session.set:micro.speak.query.voices
+        p5.web.session.set:micro.speech.speak.query.voices
           src
             voices
         eval:x:/../*/onfinish
@@ -99,5 +99,5 @@ create-event:micro.speak.query-voices
         /*
          * Passing over JavaScript necessary to query the available voices.
          */
-        p5.web.send-javascript:@"p5.speech.query('{0}');"
+        p5.web.send-javascript:@"p5.speech.query_voices ('{0}');"
           :x:/../*/_event?value

@@ -1,0 +1,11 @@
+﻿
+/*
+ * Stops speech recognition and speech uttering.
+ */
+create-event:micro.speech.stop
+
+  /*
+   * Making sure we include our JavaScript file.
+   */
+  p5.web.include-javascript-file:@MICRO/media/speak.js
+  p5.web.send-javascript:@"p5.speech.stop();"
