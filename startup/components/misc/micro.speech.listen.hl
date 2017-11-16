@@ -61,7 +61,7 @@ create-event:micro.speech.listen
    */
   .extra
   set:x:/@.extra?value
-    src:@"var r = this.recognised;p5.$('{0}').raise('.onfinish', {{onbefore: function (pars, evt){{pars.push(['micro-speech-recognized-text', r]);}}}});"
+    src:@"if (this._handle == true) {{var r = this.recognised;p5.$('{0}').raise('.onfinish', {{onbefore: function (pars, evt){{pars.push(['micro-speech-recognized-text', r]);}}}});}}"
       :x:/@create-literal-widget?value
 
   /*

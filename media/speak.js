@@ -100,19 +100,20 @@
         exe.do (function () {
 
             /*
-             * Checks if current object has an onfinish callback, and if so, we make sure we execute it.
+             * Notice, if "onfinish" returns false, it is because it has been explicitly
+             * stopped, at which point we should not removing the current object from the queue,
+             * since the queue anyways have been emptied, due to an invocation to "stop".
              */
-            if (exe.onfinish !== undefined) {
-                exe.onfinish ();
-            }
+            if (exe.onfinish () == true) {
 
-            /*
-             * Removes the object we just executed from our queue, and checks to see if
-             * we have more objects in our queue, at which point we execute the next object.
-             */
-            p5.speech._chain.splice (0,1);
-            if (p5.speech._chain.length != 0) {
-                p5.speech._next ();
+                /*
+                 * Removes the object we just executed from our queue, and checks to see if
+                 * we have more objects in our queue, at which point we execute the next object.
+                 */
+                p5.speech._chain.splice (0,1);
+                if (p5.speech._chain.length != 0) {
+                    p5.speech._next ();
+                }
             }
         });
     }
@@ -146,9 +147,10 @@
          */
         this.ssu = new SpeechSynthesisUtterance (txt);
         this.voice = voice;
-        this.onfinish = onfinish;
+        this._onfinish = onfinish;
         this.ssu.pitch = pitch;
         this.ssu.rate = rate;
+        this._handle = true;
     }
 
     /*
@@ -186,6 +188,32 @@
             var self = this;
             p5.speech._queryVoices (function(){self.do (onfinish)});
         }
+    }
+
+    /*
+     * Stop function, that stops the current reading, without handling it in any ways.
+     */
+    p5.speech._utter.prototype.onfinish = function () {
+        this._onfinish ();
+        var ret = this._handle;
+        this._handle = false;
+        return ret;
+    }
+
+    /*
+     * Stop function, that stops the current reading, without handling it in any ways.
+     */
+    p5.speech._utter.prototype.stop = function () {
+
+        /*
+         * Making sure onfinish is not invoked when done.
+         */
+        this._handle = false;
+
+        /*
+         * This will stop any speech synthesis objects currently being executed.
+         */
+        window.speechSynthesis.cancel();
     }
 
     /*
@@ -275,7 +303,7 @@
 
         // Setting properties for speech recognition object.
         this.lang = lang;
-        this.onfinish = onfinish;
+        this._onfinish = onfinish;
     }
 
     /*
@@ -313,11 +341,9 @@
          * This event is invoked when something has been captured by the speech recognition engine.
          */
         this._rec.onresult = function(e) {
-            if (self._handle == true) {
-                self._handle = false;
-                self.recognised = e.results[0][0].transcript;
-                whendone ();
-            }
+            self.recognised = e.results[0][0].transcript;
+            whendone ();
+            self._handle = false;
         };
 
         /*
@@ -325,12 +351,21 @@
          * been recognised, or because of a timeout.
          */
         this._rec.onend = function(event) {
-            if (self._handle == true) {
-                self.recognised = '';
-                whendone ();
-            }
+            self.recognised = '';
+            whendone ();
+            self._handle = false;
         }
         this._rec.start();
+    }
+
+    /*
+     * "Interface" function for executing a "speech recognition object".
+     */
+    p5.speech._recognition.prototype.onfinish = function (whendone) {
+        this._onfinish ();
+        var ret = this._handle;
+        this._handle = false;
+        return ret;
     }
 
     /*
@@ -367,6 +402,7 @@
      * Helper function to abort speech recognition.
      */
     p5.speech._recognition.prototype.stop = function () {
+        this._handle = false;
         this._rec.abort ();
     }
 
@@ -429,6 +465,7 @@
                 }
             }
         });
+        return true;
     }
 
 
@@ -510,12 +547,9 @@
         }
 
         /*
-         * Making sure we stop any listeners, if any.
-         *
-         * Notice, is a speech recognition is the currently executed object, we need to
-         * explicitly stop it, using an instance function.
+         * Making sure we stop any current objects being executed.
          */
-        var el = p5.speech._chain[0];
+        var cur = p5.speech._chain [0];
 
         /*
          * Making sure we reset "chain" before stopping speech recognition, and synthesis,
@@ -527,14 +561,8 @@
          * Checking if currently executed chain object is a "speech recognition object", 
          * at which point we must stop it, through its instance.
          */
-        if (el.stop !== undefined) {
-            el._handled = true;
-            el.stop();
+        if (cur.stop !== undefined) {
+            cur.stop();
         }
-
-        /*
-         * This will stop any speech synthesis objects currently being executed.
-         */
-        window.speechSynthesis.cancel();
     }
 })();

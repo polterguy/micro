@@ -85,7 +85,7 @@ create-event:micro.speech.speak
      * Creating JavaScript necessary to invoke callback once speak is finished.
      */
     set:x:/@.extra?value
-      src:@"p5.$('{0}').raise('.onfinish');"
+      src:@"if (this._handle == true) {{p5.$('{0}').raise('.onfinish');}}"
         :x:/@create-literal-widget?value
 
   /*
