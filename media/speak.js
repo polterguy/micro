@@ -209,24 +209,41 @@
 
                 /*
                  * Voice contains both name and locale, e.g. "Veronica,en-US".
+                 *
+                 * Only returning a match if both parts are a match.
                  */
-                return ix.name == voiceEntities [0];
+                return ix.name == voiceEntities [0] && ix.lang == voiceEntities [1];
 
             } else {
 
                 /*
                  * Voice is either "en-US" or "Veronica" style, but not both.
+                 *
+                 * Returning voice if either "name" or "lang" matches.
                  */
-                return ix.name == voice || ix.lang == voice;
+                return ix.name == voiceEntities [0] || ix.lang == voiceEntities [0];
             }
         });
 
         /*
          * If voice was in "name,locale" format, and the "name" voice was not found, we must look for the first voice matching
-         * the "locale" (meaning the parts after the ",").
+         * the "locale" (meaning the parts after the ",", e.g. "en-AU").
+         *
+         * This might occur if user specified "Veronica,en-US", and there exists an "en-US" voice, but not "Veronica".
          */
         if (voices.length == 0 && voiceEntities.length == 2) {
             voices = p5.speech._voices.filter (function (ix) {return ix.lang == voiceEntities [1]});
+        }
+
+        /*
+         * Last resort fallback, in case we didn't find any matching voices from our above filtering operations.
+         *
+         * Will find the first voice that starts with the first part of the "locale" parts, e.g. "en".
+         * This might happen if caller requested "en-AU", and we didn't find such a voice, but we did find an "en" voice.
+         */
+        if (voices.length == 0) {
+            var mainLang = (voiceEntities.length == 2 ? voiceEntities [1] : voiceEntities [0]).split ('-')[0];
+            voices = p5.speech._voices.filter (function (ix) {return ix.lang.startsWith (mainLang)});
         }
 
         /*
@@ -267,32 +284,19 @@
     p5.speech._recognition.prototype.do = function (whendone) {
 
         /*
-         * Verifying that the client supports speech recognition, and if not, warning user through an alert.
+         * Creating our speech recognition instance, and decorating it.
          */
-        if (window.SpeechRecognition == null && 
-            window.webkitSpeechRecognition == null && 
-            window.mozSpeechRecognition == null && 
-            window.msSpeechRecognition == null) {
-
-            alert("Your browser doesn't support speech recognition. Hint; Google Chrome does!");
+        this._rec = p5.speech._recognition.create_sr ();
+        if (this._rec == null) {
 
             /*
-             * Making sure we invoke "onfinish", to allow for the next object in chain to be executed,
-             * before we return.
+             * SR is not supported in the current browser.
+             * Warning user, and returning early.
              */
+            this.recognised = window.prompt ("Your browser doesn't support speech recognition. Hint; Google Chrome does!");;
             whendone ();
             return;
         }
-
-        /*
-         * Creating and decorating our SpeechRecognition object, making sure we 
-         * support all possibly different browser implementations.
-         */
-        this._rec = new (
-            window.SpeechRecognition || 
-            window.webkitSpeechRecognition || 
-            window.mozSpeechRecognition || 
-            window.msSpeechRecognition)();
         this._rec.lang = this.lang;
 
         /*
@@ -327,6 +331,36 @@
             }
         }
         this._rec.start();
+    }
+
+    /*
+     * Helper function to create a speech recognition object.
+     */
+    p5.speech._recognition.create_sr = function () {
+
+        /*
+         * Verifying that the client supports speech recognition, and if not, returning null.
+         */
+        if (window.SpeechRecognition == null && 
+            window.webkitSpeechRecognition == null && 
+            window.mozSpeechRecognition == null && 
+            window.msSpeechRecognition == null) {
+
+            /*
+             * Speech recognition is not supported in current browser.
+             */
+            return null;
+        }
+
+        /*
+         * Creating and decorating our SpeechRecognition object, making sure we 
+         * support all possibly different browser implementations.
+         */
+        return new (
+            window.SpeechRecognition || 
+            window.webkitSpeechRecognition || 
+            window.mozSpeechRecognition || 
+            window.msSpeechRecognition)();
     }
 
     /*
@@ -419,8 +453,27 @@
         /*
          * Creating a callback function for our "onvoicechanged" event.
          */
-        var getVoices = function (whendone) {
+        var getVoices = function () {
+
+            /*
+             * Retrieving voices from speechSynthesis obect.
+             */
             p5.speech._voices = window.speechSynthesis.getVoices ();
+
+            /*
+             * Notice, sometimes the above fails, in some browsers, since some browsers
+             * requires an "onvoicechanged" callback to have been declared, and retrieving
+             * the voices from inside of that event handler.
+             *
+             * To circumvent this, we invoke this function twice, once from outside
+             * of the "onvoicechanged" event handler, and once from inside of it.
+             * Hence, we'll need to check if the above failed, at which point we
+             * are not considered being finished with the retrieval of voices, but must
+             * allow for our second invocation to finish up things for us.
+             *
+             * I know this looks weird, but this is due to different implementations in
+             * different browsers.
+             */
             if (p5.speech._voices && p5.speech._voices.length > 0) {
                 onfinish ();
             }
@@ -433,25 +486,55 @@
          */
         if (window.speechSynthesis.onvoiceschanged !== undefined) {
             window.speechSynthesis.onvoiceschanged = function() {
-                getVoices (onfinish);
+                getVoices ();
             }
+            getVoices ();
         } else {
-            getVoices (onfinish);
+            getVoices ();
         }
     }
 
+
+
+
+    /*
+     * "Static" helper function to stop and abort all speech recognition/utterance/querying objects in queue.
+     */
     p5.speech.stop = function () {
+
+        /*
+         * Checking if queue is empty, at which point there's nothing to be done here.
+         */
         if (p5.speech._chain.length == 0) {
             return;
         }
 
-        // Making sure we stop any listeners, if any.
+        /*
+         * Making sure we stop any listeners, if any.
+         *
+         * Notice, is a speech recognition is the currently executed object, we need to
+         * explicitly stop it, using an instance function.
+         */
         var el = p5.speech._chain[0];
+
+        /*
+         * Making sure we reset "chain" before stopping speech recognition, and synthesis,
+         * to avoid having the next item in chain being executed as a result.
+         */
+        p5.speech._chain = [];
+
+        /*
+         * Checking if currently executed chain object is a "speech recognition object", 
+         * at which point we must stop it, through its instance.
+         */
         if (el.stop !== undefined) {
             el._handled = true;
             el.stop();
         }
-        (window.speechSynthesis || window.webkitSpeechSynthesis).cancel();
-        p5.speech._chain = [];
+
+        /*
+         * This will stop any speech synthesis objects currently being executed.
+         */
+        window.speechSynthesis.cancel();
     }
 })();
