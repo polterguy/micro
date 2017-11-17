@@ -565,4 +565,13 @@
             cur.stop();
         }
     }
+
+
+
+
+    /*
+     * Making sure we trap the changing of the current URL, to turn off all speach recognition/utterance objects,
+     * when the user changes the URL, by for instance clicking a link etc.
+     */
+    window.addEventListener ('beforeunload', p5.speech.stop);
 })();
