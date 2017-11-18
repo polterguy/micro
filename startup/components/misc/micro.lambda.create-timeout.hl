@@ -1,0 +1,53 @@
+﻿
+/*
+ * Create the Active Event that allows user to invoke some piece of 
+ * Hyperlambda n milliseconds from now.
+ *
+ * Expects [onfinish] to contain the lambda to be evaluated once [milliseconds]
+ * have passed.
+ */
+create-event:micro.lambda.create-timeout
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    onfinish
+    milliseconds:long
+
+  /*
+   * Passing in [onfinish] to [.lambda] node inside of our hidden Ajax event.
+   */
+  add:x:/../*/create-literal-widget/*/.ondone/*/.lambda
+    src:x:/../*/onfinish/*
+
+  /*
+   * Then forward evaluating [_milliseconds], to make sure we are able
+   * to know how many milliseconds from now we should invoke our [.onback].
+   */
+  eval-x:x:/+/*/oninit/*/_milliseconds
+  create-literal-widget
+    .ondone
+
+      /*
+       * Deleting widget wrapping our Ajax event.
+       */
+      delete-widget:x:/../*/_event?value
+
+      /*
+       * Evaluating callback lambda specified during invocation.
+       */
+      .lambda
+      eval:x:/@.lambda
+
+    oninit
+
+      /*
+       * Creating our timeout function, that will invoke our Ajax event some 'n' seconds
+       * from now.
+       */
+      _milliseconds:x:/../*/milliseconds?value
+      p5.web.send-javascript:@"setTimeout(function(){{p5.$('{0}').raise('.ondone');}}, {1})"
+        :x:/../*/_event?value
+        :x:/@_milliseconds?value
+
