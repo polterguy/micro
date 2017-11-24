@@ -6,6 +6,7 @@
  * Optionally supply [max] being the number of stars to render, becoming the
  * maximum value of the widget, [.data-field] becoming the data-field name
  * of your widget's value when serialized, and [value] being its initial value.
+ * If you don't supply a [max] value, a default max value of 5 will be assumed.
  *
  * All other arguments are added as attributes/properties to your main widget 
  * being rendered.
@@ -13,6 +14,8 @@
  * In addition to simply serialising some ancestor widget, you can also explicitly
  * use [micro.widgets.star-rating.value] to retrieve your widget's value, passing 
  * in its ID as [_arg].
+ *
+ * The widget's default CSS class, if none is given, will be "micro-star-rater".
  */
 create-event:micro.widgets.star-rating
 
@@ -50,14 +53,15 @@ create-event:micro.widgets.star-rating
       src:x:/../*/.data-field
 
   /*
-   * Adding the CSS class, either the expicitly given one, or our default class.
+   * Adding the CSS class, either the explicitly given one, or our default class.
    */
   add:x:/../*/return/*/container
     src:x:(/../*/class|/@.defaults/*/class)/$
 
   /*
-   * Adding the correct number of stars, according to [max] value, making sure
-   * we get the initial [value] correctly.
+   * Checking if an initial [value] was supplied, at which point we set the initial
+   * value of our star rater to the specified [value], by making sure we start out
+   * our iterator iterating each star to create with a "star-full" CSS class.
    */
   _value:icon-star-empty
   if:x:/../*/value?value
@@ -78,7 +82,7 @@ create-event:micro.widgets.star-rating
     >:int:0
 
     /*
-     * Adding one anchor hyperlink button for currently iterated value.
+     * Adding one hyperlink button for currently iterated value.
      */
     eval-x:x:/+/*/*/*/innerValue
     add:x:/../*/return/*/container/*/widgets
@@ -99,30 +103,40 @@ create-event:micro.widgets.star-rating
               widget:x:/../*/_event?value
 
     /*
-     * Checking if [value] was provided, and we are above it.
+     * Checking if [value] was provided, and if we are above it in our iteration.
      */
     if:x:/../*/value?value
+
+      /*
+       * A [value] was provided, making sure we decrement it, such that we can check
+       * if we have passed it, at which point we change our star CSS class to "empty".
+       */
       set:x:/../*/value?value
         -:x:/../*/value?value.int
           _:1
+
+      /*
+       * Checking if we're above our initial [value], at which point we should
+       * change the star's CSS class to the "empty star" value.
+       */
       if:x:/../*/value?value.int
         <:int:0
         set:x:/@_value?value
           src:icon-star-empty
 
     /*
-     * Decrementing "counter".
+     * Decrementing "counter", such that we can track if we've passed the initial value
+     * in our next iteration.
      */
     set:x:(/../*/max|/@.defaults/*/max)/$?value
       -:x:(/../*/max|/@.defaults/*/max)/$?value.int
         _:1
 
   /*
-   * Returning container widget wrapping actual star rater widget.
+   * Returning container widget wrapping our actual extension star rater widget.
    */
   return
     container
-      .star-rater
       events
 
 
