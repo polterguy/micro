@@ -46,7 +46,7 @@ create-event:micro.widgets.star-rating
    * Applying arguments.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/max!/.data-field!/class!/read-only)
+    src:x:/@.signal/--(!/max!/.data-field!/class!/read-only!/value)
 
   /*
    * Making sure we set our hidden input element's [.data-field] if caller supplied
@@ -55,6 +55,16 @@ create-event:micro.widgets.star-rating
   if:x:/@.signal/--/.data-field?value
     add:x:/../*/return/*/container/*/widgets/*/input
       src:x:/../*/.data-field
+
+  /*
+   * Making sure we set initial value of hidden input element, if 
+   * caller supplied an initial value.
+   */
+  if:x:/@.signal/--/value?value
+    eval-x:x:/+/*/*
+    add:x:/../*/return/*/container/*/widgets/*/input
+      src
+        value:x:/../*/value?value
 
   /*
    * Adding the CSS class, either the explicitly given one, or our default class.
@@ -137,7 +147,7 @@ create-event:micro.widgets.star-rating
        * change the star's CSS class to the "empty star" value.
        */
       if:x:/../*/value?value.int
-        <:int:0
+        <=:int:0
         set:x:/@_value?value
           src:icon-star-empty
 
