@@ -8,6 +8,9 @@
  * of your widget's value when serialized, and [value] being its initial value.
  * If you don't supply a [max] value, a default max value of 5 will be assumed.
  *
+ * In addition, you can optionally pass in [read-only] and set its value to true,
+ * at which point it's not possible to modify the value of the widget.
+ *
  * All other arguments are added as attributes/properties to your main widget 
  * being rendered.
  *
@@ -37,12 +40,13 @@ create-event:micro.widgets.star-rating
   micro.lambda.contract.optional:x:/..
     max:int
     value:int
+    read-only:bool
 
   /*
    * Applying arguments.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/max!/.data-field!/class)
+    src:x:/@.signal/--(!/max!/.data-field!/class!/read-only)
 
   /*
    * Making sure we set our hidden input element's [.data-field] if caller supplied
@@ -74,6 +78,19 @@ create-event:micro.widgets.star-rating
      */
     set:x:/@_value?value
       src:icon-star-full
+
+  /*
+   * Checking if widget is supposed to be read-only
+   */
+  if:x:/../*/read-only?value
+
+    /*
+     * Widget is read-only.
+     */
+    set:x:/../*/while/**/a/*/onclick/*
+    add:x:/../*/while/**/a
+      src
+        style:"cursor:default;"
 
   /*
    * Creating each star we need to add to our widget.
