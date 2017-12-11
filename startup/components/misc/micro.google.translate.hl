@@ -20,6 +20,12 @@ create-event:micro.google.translate
     src-lang:auto
 
   /*
+   * Sanity check.
+   */
+  micro.lambda.contract.min:x:/..
+    dest-lang:string
+
+  /*
    * URL encoding text.
    */
   p5.html.url-encode:x:/../*/_arg?value
