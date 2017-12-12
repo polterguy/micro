@@ -1,0 +1,33 @@
+﻿
+/*
+ * Creates the Active Event responsible for returning a MIME type from a filename.
+ *
+ * Will look at the file's extension, and return the correct MIME type accordingly.
+ * Pass in [_arg] as filename.
+ */
+create-event:micro.mime.filename2type
+
+  /*
+   * Used to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+
+  /*
+   * Loading our "MIME to file extension mapping file", to figure out what to return.
+   */
+  load-file:@MICRO/configuration/MIME-types.hl
+
+  /*
+   * Finding filename's extension, and doing lookup into our MIME types file, for its
+   * associated MIME type.
+   */
+  split:x:/../*/_arg?value
+    =:.
+  return:x:/@load-file/*/{0}?value
+    :x:/@split/0/-?name

@@ -3,13 +3,8 @@
  * Creates the Active Event responsible for downloading a file to client.
  *
  * Pass in filename as [_arg], and any additional HTTP headers as key/value children.
- * Notice, the caller is responsible for making sure the correct HTTP headers are added,
- * such as for instance "Content-Type" and "Content-Disposition".
- *
- * This event does not add any HTTP headers at all to the response object, and the
- * HTTP parameters of [Content-Type] and [Content-Disposition] are mandatory.
- * The event relies upon the URL resolver of Micro, which you can find 
- * in "/modules/micro/launch.hl".
+ * If no [Content-Type] and/or [Content-Disposition] arguments are supplied, these will be 
+ * intelligently deducted from the filename specified.
  */
 create-event:micro.download.file
 
@@ -23,21 +18,75 @@ create-event:micro.download.file
    */
   micro.lambda.contract.min:x:/..
     _arg:string
+
+  /*
+   * Sanity checking optional parameters.
+   *
+   * Notice, event has many more optional parameters, but since these are all legal
+   * MIME headers, mentioning them all, would not be adequate.
+   *
+   * These are the two main optional arguments though.
+   */
+  micro.lambda.contract.optional:x:/..
     Content-Type:string
     Content-Disposition:string
+
+  /*
+   * Holds default arguments, more specifically [Content-Type] and [Content-Disposition],
+   * unless these are explicitly specifed by caller.
+   *
+   * Both of these defaults are deducted from the filename caller wants to download,
+   * and would for most cases be sane defaults.
+   */
+  .defaults
+
+  /*
+   * Creating our default values, which will kick in, if no [Content-Type] and/or
+   * [Content-Disposition] is explicitly given.
+   *
+   * First [Content-Type].
+   */
+  if:x:/@.signal/--/Content-Type
+    not
+
+    /*
+     * Figuring out content MIME type, according to filename.
+     */
+    micro.mime.filename2type:x:/../*/_arg?value
+    add:x:/@.defaults
+      src:@"Content-Type:""{0}"""
+        :x:/@micro.mime.filename2type?value
+
+  /*
+   * Then [Content-Disposition].
+   */
+  if:x:/@.signal/--/Content-Disposition
+    not
+
+    /*
+     * Making sure we default Content-Disposition to "attachment", using the
+     * name of the file that we are downloading.
+     */
+    split:x:/../*/_arg?value
+      =:/
+    micro.mime.filename2type:x:/../*/_arg?value
+    add:x:/@.defaults
+      src:@"Content-Disposition:attachment; filename=""{0}"""
+        :x:/@split/0/-?name
 
   /*
    * Storing filename and HTTP headers in session.
    */
   eval-x:x:/../*/p5.web.session.set/*/*/file
   add:x:/../*/p5.web.session.set/*/*
-    src:x:/@.signal/--(!/_arg)
+    src:x:(/@.signal/--(!/_arg)|/@.defaults/*)/$
   p5.web.session.set:micro.download.file
     src
       file:x:/@.signal/--/_arg?value
 
   /*
-   * Re-directing client to URL resolver of Micro, which will download the file.
+   * Re-directing client to URL resolver of Micro, which will automatically 
+   * download the file.
    */
   p5.io.unroll-path:@MICRO/
   split:x:/@p5.io.unroll-path?value
