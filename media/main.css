@@ -96,6 +96,12 @@ mark {
 small {
     font-size: 80%;
 }
+h1 small,
+h2 small,
+h3 small,
+h4 small {
+    font-size: 50%
+}
 
 sub, sup {
     font-size: 75%;
