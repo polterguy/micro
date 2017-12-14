@@ -1,0 +1,42 @@
+﻿
+/*
+ * Invoke this to select items in the widget.
+ *
+ * [_arg] must be the ID of the main tree widget.
+ * [items] must be a collection of items to select.
+ *
+ * Notice, all previously selected items are de-selected.
+ */
+create-event:micro.widgets.tree.select-items
+
+  /*
+   * First finding all previously selected items, and de-selecting them.
+   */
+  p5.web.widgets.find-like:x:/../*/_arg?value
+    class:tree-selected
+  if:x:/@p5.web.widgets.find-like/*/*?count
+    !=:int:0
+
+    /*
+     * Tree has previously selected items, making sure we un-select them.
+     */
+    micro.css.delete:x:/@p5.web.widgets.find-like/*/*?value
+      class:tree-selected
+
+  /*
+   * Then adding the selected CSS class to all items requested by caller.
+   */
+  for-each:x:/../*/items/*?name
+    p5.web.widgets.find:x:/../*/_arg?value
+      _item-id:x:/@_dp?value
+    p5.web.widgets.find:x:/@p5.web.widgets.find/*/*?value
+      element:a
+    micro.css.add:x:/@p5.web.widgets.find/*/0?value
+      class:tree-selected
+
+  /*
+   * Making sure [.onselect] lambda callback is invoked.
+   */
+  add:x:/+
+    src:x:/../*/items
+  micro.widgets.tree._select:x:/../*/_arg?value

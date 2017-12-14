@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
     font-family: Roboto;
     font-style: normal;
     font-weight: 300;
@@ -325,26 +325,154 @@ input[type=checkbox], input[type=radio] {
     background: linear-gradient(#eee,#ccc);
 }
 
+.bg {
+    background-color: #fff;
+    background-image: url(serious/bg.svg);
+}
+
+.hide {
+    display:none;
+}
+
 .micro-modal .micro-modal-content, .micro-tab-border .micro-tab-views {
-    background: var(--wid-lighter-col);
+    background: var(--wid-lighter-col)
 }
 
 .micro-tab-border .micro-tab-buttons {
-    padding-left: 7px;
+    padding-left: 7px
 }
 
 .micro-tab-border .micro-tab-views {
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 @media screen and (min-width:800px) {
     .micro-tab-border .micro-tab-views {
-        padding: 2rem 2rem 1rem;
+        padding: 2rem 2rem 1rem
     }
 }
 
-.bg {
-    background-color: #fff;
-    background-image: url(serious/bg.svg);
+.micro-tree ul.tree-item-children {
+    padding-left: 0;
+    list-style: none;
+    margin-left: 0;
+    margin-bottom:0;
+}
+.micro-tree ul.tree-hidden {
+    display: none;
+}
+.micro-tree li.tree-item {
+    padding-left: 16px;
+    background-repeat: no-repeat;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.micro-tree > ul.tree-item-children > li.tree-item {
+    padding-left: 0;
+}
+.micro-tree li.tree-expanded > ul.tree-item-children > li.tree-item,
+.micro-tree > ul.tree-item-children > li.tree-item > ul.tree-item-children li.tree-expanded {
+    background-image: url(serious/tree-1.png), url(serious/tree-2.png);
+    background-position: 0 -100px, 0 0;
+    background-repeat: no-repeat, repeat-y;
+}
+.micro-tree li.tree-expanded > ul.tree-item-children > li.tree-item:last-child,
+.micro-tree > ul.tree-item-children > li.tree-item > ul.tree-item-children li.tree-expanded:last-child {
+    background-image: url(serious/tree-3.png);
+    background-position: 0 0;
+}
+@keyframes tree-item-children-animation-child-li {
+    0% {
+        opacity: 0;
+        margin-left: -80px;
+    }
+
+    100% {
+        opacity: 1;
+        margin-left: 0;
+    }
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item {
+    opacity: 0;
+    animation-name: tree-item-children-animation-child-li;
+    animation-duration: .3s;
+    animation-fill-mode: forwards;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+1) {
+    animation-delay: .05s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+2) {
+    animation-delay: .1s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+3) {
+    animation-delay: .15s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+4) {
+    animation-delay: .20s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+5) {
+    animation-delay: .25s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+6) {
+    animation-delay: .30s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+7) {
+    animation-delay: .35s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+8) {
+    animation-delay: .40s;
+}
+.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+9) {
+    animation-delay: .45s;
+}
+.micro-tree li.tree-expanded > ul.tree-item-children > li.tree-leaf a.tree-item-label {
+    background-position: 0 -80px;
+}
+.micro-tree a.tree-item-label {
+    padding-left: 16px;
+    background-image: url(serious/tree-1.png);
+    background-position: 0 -40px;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    display: block;
+    height: 100%;
+}
+.micro-tree li.tree-expanded > a.tree-item-label {
+    background-position: 0 -60px;
+}
+.micro-tree a.tree-item-label:hover {
+    background-color: rgba(0,0,0,.1);
+}
+.micro-tree li.tree-item > a.tree-selected {
+    background-color: rgba(128,255,128,.3);
+}
+@keyframes tree-item-animate-icon {
+    0% {
+        color: rgba(255,255,255,0);
+    }
+
+    30% {
+        color: rgba(255,255,128,1);
+    }
+
+    100% {
+        color: rgba(128,128,255,.5);
+    }
+}
+.micro-tree a.tree-item-label span.icon {
+    width: 16px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 3px;
+    margin-top: 2px;
+    margin-bottom: -2px;
+}
+.micro-tree a.tree-item-label .folder {
+    background-image: url(serious/tree-1.png);
+}
+.micro-tree a.tree-item-label .folder-open {
+    background-position: 0 -20px;}
+.micro-tree .file a.tree-item-label .icon {
+    background-image: url(serious/tree-4.png)
 }
