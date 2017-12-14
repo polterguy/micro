@@ -106,23 +106,54 @@ create-event:micro.widgets.tree._create-items
               onclick
 
                 /*
-                 * Getting id of item, and passing into [toggle-items] and [select-items] as [items] collection.
+                 * Getting id of item, and passing into [select-items] as [items] collection.
                  */
                 p5.web.widgets.get-parent:x:/../*/_event?value
                 p5.web.widgets.property.get:x:/-/*/*?value
                   _item-id
-                add:x:/../*/micro.widgets.tree.toggle-items/*|/../*/micro.widgets.tree.select-items/*
-                  src:@"""{0}"""
-                    :x:/../*/p5.web.widgets.property.get/*/*?value
 
                 /*
                  * Then finding "root tree" widget for currently clicked item, such that we can pass it
-                 * into [toggle-items] and [select-items].
+                 * into [select-items] and (possibly) [toggle-items].
                  */
                 p5.web.widgets.find-ancestor:x:/../*/_event?value
                   _root-tree
-                micro.widgets.tree.toggle-items:x:/../*/p5.web.widgets.find-ancestor/*/*?value
-                  items
+
+                /*
+                 * Checking if item is not expanded yet, and if so, making sure we do expand it,
+                 * unless it's a "leaf" item.
+                 */
+                get-widget-property:x:/@p5.web.widgets.get-parent/*/*?value
+                  class
+                if:x:/@get-widget-property/*/*?value
+                  ~:tree-leaf
+                  not
+
+                  /*
+                   * Item is not a "leaf node".
+                   */
+                  p5.web.widgets.find-first:x:/@p5.web.widgets.get-parent/*/*?value
+                    element:ul
+                  if:x:/@p5.web.widgets.find-first/*/*?value
+                    not
+
+                    /*
+                     * Item has not been initially expanded yet, hence expanding it.
+                     *
+                     * Making sure we pass in [_item-id] for "li" element into our [select-items] invocation.
+                     */
+                    add:x:/..if/*/micro.widgets.tree.toggle-items/*
+                      src:@"""{0}"""
+                        :x:/../*/p5.web.widgets.property.get/*/*?value
+                    micro.widgets.tree.toggle-items:x:/../*/p5.web.widgets.find-ancestor/*/*?value
+                      items
+
+                /*
+                 * Making sure we pass in [_item-id] for "li" element into our [select-items] invocation.
+                 */
+                add:x:/../*/micro.widgets.tree.select-items/*
+                  src:@"""{0}"""
+                    :x:/../*/p5.web.widgets.property.get/*/*?value
                 micro.widgets.tree.select-items:x:/../*/p5.web.widgets.find-ancestor/*/*?value
                   items
 
@@ -159,6 +190,35 @@ create-event:micro.widgets.tree._create-items
                   _class-open
                   class
                   innerValue:
+                  role:button
+                  onclick
+
+                    /*
+                     * Getting id of item, and passing into [toggle-items] as [items] collection.
+                     *
+                     * First finding ancestor "li" element, and retrieving its [_item-id].
+                     */
+                    p5.web.widgets.get-parent:x:/../*/_event?value
+                    p5.web.widgets.get-parent:x:/-/*/*?value
+                    p5.web.widgets.property.get:x:/-/*/*?value
+                      _item-id
+
+                    /*
+                     * Adding [_item-id]'s value into [micro.widgets.tree.toggle-items] invocation.
+                     */
+                    add:x:/../*/micro.widgets.tree.toggle-items/*
+                      src:@"""{0}"""
+                        :x:/../*/p5.web.widgets.property.get/*/*?value
+
+                    /*
+                     * Then finding "root tree" widget for currently clicked item, such that we can pass it
+                     * into [toggle-items].
+                     */
+                    p5.web.widgets.find-ancestor:x:/../*/_event?value
+                      _root-tree
+                    micro.widgets.tree.toggle-items:x:/../*/p5.web.widgets.find-ancestor/*/*?value
+                      items
+
                 span
                   innerValue:x:/..for-each/*/_dp/#?name
 

@@ -382,53 +382,22 @@ input[type=checkbox], input[type=radio] {
     background-image: url(serious/tree-3.png);
     background-position: 0 0;
 }
-@keyframes tree-item-children-animation-child-li {
+@keyframes tree-item-children-animate {
     0% {
-        opacity: 0;
-        margin-left: -80px;
+        opacity:0;
     }
-
     100% {
         opacity: 1;
-        margin-left: 0;
     }
 }
-.micro-tree ul.tree-item-children-animate > li.tree-item {
+.micro-tree ul.tree-item-children-animate {
     opacity: 0;
-    animation-name: tree-item-children-animation-child-li;
-    animation-duration: .3s;
-    animation-fill-mode: forwards;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+1) {
-    animation-delay: .05s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+2) {
-    animation-delay: .1s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+3) {
-    animation-delay: .15s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+4) {
-    animation-delay: .20s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+5) {
-    animation-delay: .25s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+6) {
-    animation-delay: .30s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+7) {
-    animation-delay: .35s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+8) {
-    animation-delay: .40s;
-}
-.micro-tree ul.tree-item-children-animate > li.tree-item:nth-child(10n+9) {
-    animation-delay: .45s;
+    animation-name: tree-item-children-animate;
+    animation-duration: .5s;
+    animation-fill-mode: forwards
 }
 .micro-tree li.tree-expanded > ul.tree-item-children > li.tree-leaf a.tree-item-label {
-    background-position: 0 -80px;
-}
+    background-position: 0 -80px}
 .micro-tree a.tree-item-label {
     padding-left: 16px;
     background-image: url(serious/tree-1.png);
@@ -446,19 +415,6 @@ input[type=checkbox], input[type=radio] {
 }
 .micro-tree li.tree-item > a.tree-selected {
     background-color: rgba(128,255,128,.3);
-}
-@keyframes tree-item-animate-icon {
-    0% {
-        color: rgba(255,255,255,0);
-    }
-
-    30% {
-        color: rgba(255,255,128,1);
-    }
-
-    100% {
-        color: rgba(128,128,255,.5);
-    }
 }
 .micro-tree a.tree-item-label span.icon {
     width: 16px;
