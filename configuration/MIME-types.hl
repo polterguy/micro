@@ -116,6 +116,7 @@ hdf:application/x-hdf
 help:application/x-helpfile
 hgl:application/vnd.hp-hpgl
 hh:text/plain
+hl:application/x-hyperlambda
 hlb:text/x-script
 hlp:application/hlp
 hpg:application/vnd.hp-hpgl
