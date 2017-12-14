@@ -14,13 +14,13 @@ create-event:micro.widgets.tree.refresh-items
     /*
      * Finding currently iterated item, and making sure we de-expand it.
      */
-    p5.web.widgets.find:x:/../*/_arg?value
+    p5.web.widgets.find-first:x:/../*/_arg?value
       _item-id:x:/@_dp?value
 
     /*
      * Deleting its old "ul" widget.
      */
-    p5.web.widgets.find:x:/@p5.web.widgets.find/*/*?value
+    p5.web.widgets.find-first:x:/@p5.web.widgets.find-first/*/*?value
       element:ul
     delete-widget:x:/-/*/*?value
 
@@ -36,12 +36,12 @@ create-event:micro.widgets.tree.refresh-items
     /*
      * Checking if we should remove "tree-leaf" class from item.
      */
-    p5.web.widgets.find:x:/..for-each/*/p5.web.widgets.find/[0,1]/*/*?value
+    p5.web.widgets.find-first:x:/..for-each/*/p5.web.widgets.find-first/[0,1]/*/*?value
       element:ul
     if:x:/-/*/*?value
 
       /*
        * Removing "tree-leaf" class on "li" widget.
        */
-      micro.css.delete:x:/..for-each/*/p5.web.widgets.find/[0,1]/*/*?value
+      micro.css.delete:x:/..for-each/*/p5.web.widgets.find-first/[0,1]/*/*?value
         class:tree-leaf
