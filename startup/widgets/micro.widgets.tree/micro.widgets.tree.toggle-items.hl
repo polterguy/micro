@@ -10,8 +10,7 @@
 create-event:micro.widgets.tree.toggle-items
 
   /*
-   * This is the tree caller requested to have items toggled in, 
-   * now looping through all [items] caller wants to toggle.
+   * Looping through all [items] caller wants to toggle.
    */
   for-each:x:/../*/items/*?name
 

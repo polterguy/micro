@@ -1,0 +1,39 @@
+﻿
+/*
+ * Invoke this to delete all children of all [items] in your widget.
+ *
+ * [_arg] must be the ID of the main tree widget.
+ */
+create-event:micro.widgets.tree.delete-children
+
+  /*
+   * Looping through all [items] and re-fetches them.
+   */
+  for-each:x:/../*/items/*?name
+
+    /*
+     * Finding currently iterated item, and making sure we delete its children.
+     */
+    p5.web.widgets.find:x:/../*/_arg?value
+      _item-id:x:/@_dp?value
+
+    /*
+     * Finding "ul" element for item, and deleting it.
+     */
+    p5.web.widgets.find-first:x:/@p5.web.widgets.find/*/*?value
+      element:ul
+    delete-widget:x:/-/*/*?value
+
+    /*
+     * Making sure we update CSS classes of relevant widgets.
+     */
+    micro.css.toggle:x:/@p5.web.widgets.find/*/*?value
+      class:tree-expanded
+    micro.css.add:x:/@p5.web.widgets.find/*/*?value
+      class:tree-leaf
+    p5.web.widgets.find-first:x:/@p5.web.widgets.find/*/*?value
+      element:span
+    micro.css.delete:x:/@p5.web.widgets.find-first/*/*?value
+      class:folder-open
+    micro.css.add:x:/@p5.web.widgets.find-first/*/*?value
+      class:folder-close

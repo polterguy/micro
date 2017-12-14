@@ -97,7 +97,7 @@ create-event:micro.widgets.tree
       oninit
 
         /*
-         * User defined [oninit] arguments, if any.
+         * Evaluating user defined [oninit] arguments, if there are any.
          */
         .lambda
         eval-x:x:/+/*

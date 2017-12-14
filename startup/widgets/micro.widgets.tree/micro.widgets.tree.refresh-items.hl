@@ -1,0 +1,47 @@
+﻿
+/*
+ * Invoke this to refresh all specified [items] in your tree view.
+ *
+ * [_arg] must be the ID of the main tree widget.
+ */
+create-event:micro.widgets.tree.refresh-items
+
+  /*
+   * Looping through all [items] and re-fetches them.
+   */
+  for-each:x:/../*/items/*?name
+
+    /*
+     * Finding currently iterated item, and making sure we de-expand it.
+     */
+    p5.web.widgets.find:x:/../*/_arg?value
+      _item-id:x:/@_dp?value
+
+    /*
+     * Deleting its old "ul" widget.
+     */
+    p5.web.widgets.find:x:/@p5.web.widgets.find/*/*?value
+      element:ul
+    delete-widget:x:/-/*/*?value
+
+    /*
+     * Toggling item, making sure we do a [force-expand].
+     */
+    add:x:/..for-each/*/micro.widgets.tree.toggle-items/*/items
+      src:x:/@_dp?value
+    micro.widgets.tree.toggle-items:x:/../*/_arg?value
+      force-expand:bool:true
+      items
+
+    /*
+     * Checking if we should remove "tree-leaf" class from item.
+     */
+    p5.web.widgets.find:x:/..for-each/*/p5.web.widgets.find/[0,1]/*/*?value
+      element:ul
+    if:x:/-/*/*?value
+
+      /*
+       * Removing "tree-leaf" class on "li" widget.
+       */
+      micro.css.delete:x:/..for-each/*/p5.web.widgets.find/[0,1]/*/*?value
+        class:tree-leaf

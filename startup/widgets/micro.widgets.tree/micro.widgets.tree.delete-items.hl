@@ -1,0 +1,19 @@
+﻿
+/*
+ * Invoke this to delete all [items] from your widget.
+ *
+ * [_arg] must be the ID of the main tree widget.
+ */
+create-event:micro.widgets.tree.delete-items
+
+  /*
+   * Looping through all [items] and re-fetches them.
+   */
+  for-each:x:/../*/items/*?name
+
+    /*
+     * Finding currently iterated item, and making sure we delete it.
+     */
+    p5.web.widgets.find:x:/../*/_arg?value
+      _item-id:x:/@_dp?value
+    delete-widget:x:/-/*/*?value
