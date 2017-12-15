@@ -18,7 +18,37 @@ create-event:micro.widgets.tree.select-items
     !=:int:0
 
     /*
-     * Tree has previously selected items, making sure we un-select them.
+     * Tree has previously selected items, checking if it's the same item that
+     * was selected again.
+     */
+    if:x:/@p5.web.widgets.find-like/*/*?count
+      =:int:1
+      and:x:/../*/items/*?count
+        =:int:1
+
+      /*
+       * Retrieving parent element, to get its [_item-id], and checking if it's
+       * the same item clicked twice.
+       */
+      p5.web.widgets.get-parent:x:/@p5.web.widgets.find-like/*/*?value
+      get-widget-property:x:/-/*/*?value
+        _item-id
+      if:x:/@get-widget-property/*/*?value
+        =:x:/../*/items/0?name
+
+        /*
+         * Currently clicked item was selected from before, making sure we raise
+         * our event as a "double click" event, before returning early since there
+         * are no reasons to update our CSS classes.
+         */
+        add:x:/+
+          src:x:/../*/items
+        micro.widgets.tree._select:x:/../*/_arg?value
+          double-clicked:bool:true
+        return
+
+    /*
+     * Deleting selected CSS classes from previously selected items.
      */
     micro.css.delete:x:/@p5.web.widgets.find-like/*/*?value
       class:tree-selected

@@ -20,7 +20,8 @@
  *                      Callback will be given [_item-id] for which item to retrieve children of.
  *                      Callback is expected to return an [items] collection, similarly to when the tree is initially created.
  *                      See [items] above to understand the collection the tree widget expects.
- * [.onselect]        - Callback lambda to invoke when an item is selected.
+ * [.onselect]        - Callback lambda to invoke when an item is selected. Notice, if the same tree item is clicked twice, a [double-click] will
+ *                      be passed in, and its value will be boolean true.
  */
 create-event:micro.widgets.tree
 
@@ -204,7 +205,7 @@ create-event:micro.widgets.tree
            */
           .lambda
           add:x:/+
-            src:x:/../*/items
+            src:x:/../*(/items|/double-clicked)
           eval:x:/@.lambda
           insert-before:x:
             src:x:/@eval/*
