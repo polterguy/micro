@@ -268,7 +268,7 @@ label {
 }
 
 a {
-    color: #77f;
+    color: #a0d6ff;
 }
 
 .strip label, button, input, select, strip span {
@@ -310,7 +310,6 @@ nav {
     }
 
 button {
-    text-transform: uppercase;
     color: #fff;
     font-size: .9rem;
     padding: 8px 15px 7px;
@@ -497,7 +496,7 @@ input[type=checkbox], input[type=radio] {
     background-color: rgba(0,0,0,.1);
 }
 .micro-tree li.tree-item > a.tree-selected {
-    background-color: rgba(128,255,128,.3);
+    background-color: rgba(220,220,220,.3);
 }
 .micro-tree a.tree-item-label span.icon {
     width: 16px;
