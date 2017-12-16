@@ -78,7 +78,7 @@
 .cm-s-phosphorus .CodeMirror-matchingbracket { outline:1px solid grey; color:black !important; }
 
 /* AutoCompleter CSS */
-.CodeMirror-hints { background:#e7e9db; color:#41323f; }
+.CodeMirror-hints { background:#fafaff; font-family:'Roboto Mono'; color:#41323f; z-index:1001; }
 li.CodeMirror-hint-active { background: #c7c9bb; color:#41323f; }
 
 /* Dialog CSS (used in search for instance) */
