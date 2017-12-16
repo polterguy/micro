@@ -41,9 +41,9 @@ create-event:micro.widgets.codemirror
    * Decorating widget with arguments.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/_arg!/value)
+    src:x:/@.signal/--(!/_arg!/value!/.data-field)
   add:x:/../*/return/*/container/*/widgets/*/literal
-    src:x:/@.signal/--/value
+    src:x:/@.signal/--(/value|/.data-field)
 
   /*
    * Passing in [keys], which are additional keyboard shortcuts.
