@@ -1,0 +1,69 @@
+
+/*
+ * Includes JSON necessary to implement AutoComplete on page.
+ *
+ * Notice, this event will create one file in "/common/documents/public/hypereval-cache/"
+ * for each unique set of [vocabulary] that exists on your server.
+ */
+create-event:micro.widgets.codemirror._include-auto-complete
+
+  /*
+   * Fetching vocabulary of Active Events, to determine what to include on page
+   * for our autocompleter.
+   */
+  vocabulary
+
+  /*
+   * Removing "non productive" events.
+   */
+  set:x:@"/@vocabulary/*(/""=-""|/""=!=""|/""=!~""|/""=%""|/""=*""|/""=/""|/""=^""|/""=~~""|/""=+""|/""=<""|/""=<=""|/""=>=""|/""=~""|/""==""|/""=>""|/""=or""|/""=and""|/""=not"")"
+
+  /*
+   * Creating a SHA1 value, to figure out a unique filename for our JavaScript
+   * inclusion file, which will be the name of our AutoComplete JSON JavaScript file
+   * to include on our page.
+   */
+  p5.crypto.hash.create-sha1:x:/@vocabulary
+    hex:true
+
+  /*
+   * Making sure our AutoCompleter JSON cache folder exists.
+   */
+  if
+    fetch:x:/0/0?value
+      folder-exists:/common/documents/public/hypereval-cache/
+    not
+
+    /*
+     * Creating our JavaScript autocomplete JSON cache file for current vocabulary.
+     */
+    create-folder:/common/documents/public/hypereval-cache/
+
+  /*
+   * Checking if our AutoComplete JSON file has already been created.
+   *
+   * Notice, we only create the file once, but there might exist multiple files,
+   * depending upon what Active Events that the above [vocabulary] invocation returned.
+   */
+  if
+    fetch:x:/0/0?value
+      file-exists:/common/documents/public/hypereval-cache/autocomplete_{0}.js
+        :x:/@p5.crypto.hash.create-sha1?value
+    not
+
+    /*
+     * JavaScript file for current vocabulary does not exist, making sure we create it.
+     */
+    join:x:/@vocabulary/*?value
+      sep:,
+      wrap:'
+    save-file:/common/documents/public/hypereval-cache/autocomplete_{0}.js
+      :x:/@p5.crypto.hash.create-sha1?value
+      src:@"CodeMirror._hyperlambdaKeywords = [{0}];"
+        :x:/@join?value
+
+  /*
+   * Including JavaScript file on page.
+   */
+  p5.web.include-javascript-file:/common/documents/public/hypereval-cache/autocomplete_{0}.js
+    :x:/@p5.crypto.hash.create-sha1?value

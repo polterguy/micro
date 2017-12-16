@@ -1,0 +1,228 @@
+﻿/*
+ * Responsible for creating the CodeMirror Hyperlambda textarea widget.
+ *
+ * All arguments passed in will be added to main root widget, except
+ * [auto-focus], [height], [mode], [keys] and [value], which will be used to determine 
+ * editor's initial value, height, mode, and whether or not it should automatically 
+ * get focus or not - In addition to an additional keyboard shortcut mapping.
+ *
+ * To set its initial value, pass in [value] as its initial code value.
+ */
+create-event:micro.widgets.codemirror
+
+  /*
+   * Used to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity check.
+   */
+  micro.lambda.contract.optional:x:/..
+    auto-focus:bool
+    value:string
+    height:string
+    mode:string
+    keys
+
+  /*
+   * Figuring out font size to use for widget, and other settings.
+   */
+  .defaults
+    font-size:8.25
+    theme:phosphorus
+    line-numbers:bool:true
+    auto-focus:bool:false
+    height:300px
+    mode:hyperlambda
+  select-data:x:/*/*/hypereval.settings
+
+  /*
+   * Decorating widget with arguments.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--(!/_arg!/value)
+  add:x:/../*/return/*/container/*/widgets/*/literal
+    src:x:/@.signal/--/value
+
+  /*
+   * Passing in [keys], which are additional keyboard shortcuts.
+   */
+  add:x:/../*/return/*/container/*/widgets/*/literal/*/oninit/*/.keys
+    src:x:/../*/.keys/*
+
+  /*
+   * Returning widget to caller.
+   */
+  eval-x:x:/+/*/*/style|/+/**(/.theme|/.line-numbers|/.auto-focus|/.height|/.mode)
+  return
+    container
+      style:"font-size:{0}pt;"
+        :x:(/@select-data/*/*/font-size|/../*/.defaults/*/font-size)/$?value
+      widgets
+        literal
+          element:textarea
+          oninit
+
+            /*
+             * Forward evaluated above.
+             */
+            .height:x:(/@.signal/--/height|/@.defaults/*/height)/$?value
+            .mode:x:(/@.signal/--/mode|/@.defaults/*/mode)/$?value
+            .keys
+
+            /*
+             * Building our additional keyboard shortcut mapping.
+             */
+            _keys
+            for-each:x:/@.keys/*
+              set:x:/@_keys?value
+                src:@"{0}'{1}':function(){{{2}}},"
+                  :x:/@_keys?value
+                  :x:/@_dp/#?name
+                  :x:/@_dp/#?value
+            set:x:/@_keys?value
+              trim-left:x:/@_keys?value
+
+            /*
+             * Including CodeMirror JavaScript.
+             *
+             * This file contains CodeMirror, in addition to all essential addons.
+             */
+            p5.web.include-javascript-file
+              @MICRO/media/codemirror-all.min.js
+
+            /*
+             * Checking mode of editor.
+             */
+            switch:x:/@.mode?value
+              case:hyperlambda
+
+                /*
+                 * Including minified Hyperlambda JavaScript file.
+                 */
+                p5.web.include-javascript-file:@MICRO/media/codemirror/mode/hyperlambda/hyperlambda.min.js
+
+                /*
+                 * Including AutoCompletion JSON.
+                 */
+                micro.widgets.codemirror._include-auto-complete
+
+              case:htmlmixed
+
+                /*
+                 * Must include additional dependencies for HTML mode.
+                 */
+                p5.web.include-javascript-file
+                  @MICRO/media/codemirror/addon/hint/javascript-hint.js
+                  @MICRO/media/codemirror/addon/hint/xml-hint.js
+                  @MICRO/media/codemirror/addon/hint/html-hint.js
+                  @MICRO/media/codemirror/addon/hint/css-hint.js
+                  @MICRO/media/codemirror/mode/xml/xml.js
+                  @MICRO/media/codemirror/mode/javascript/javascript.js
+                  @MICRO/media/codemirror/mode/css/css.js
+                  @MICRO/media/codemirror/mode/htmlmixed/htmlmixed.js
+
+              case:javascript
+
+                /*
+                 * Must include additional dependencies for HTML mode.
+                 */
+                p5.web.include-javascript-file
+                  @MICRO/media/codemirror/addon/hint/javascript-hint.js
+                  @MICRO/media/codemirror/mode/javascript/javascript.js
+
+              case:css
+
+                /*
+                 * Must include additional dependencies for HTML mode.
+                 */
+                p5.web.include-javascript-file
+                  @MICRO/media/codemirror/addon/hint/css-hint.js
+                  @MICRO/media/codemirror/mode/css/css.js
+
+              case:xml
+
+                /*
+                 * Must include additional dependencies for XML mode.
+                 */
+                p5.web.include-javascript-file
+                  @MICRO/media/codemirror/addon/hint/xml-hint.js
+                  @MICRO/media/codemirror/mode/xml/xml.js
+
+              default
+
+                /*
+                 * Including generic mode file.
+                 */
+                if
+                  fetch:x:/0/0?value
+                    file-exists:@MICRO/media/codemirror/mode/{0}/{0}.js
+                      :x:/@.mode?value
+                  not
+
+                  /*
+                   * Oops, mode doesn't exist.
+                   */
+                  throw:Oops, unsupported file type
+
+                p5.web.include-javascript-file:@MICRO/media/codemirror/mode/{0}/{0}.js
+                  :x:/@.mode?value
+
+                /*
+                 * Using "anyword-hint" autocompletion.
+                 */
+                p5.web.include-javascript-file:@MICRO/media/codemirror/addon/hint/anyword-hint.js
+
+            /*
+             * Making sure necessary Stylesheet files are included
+             */
+            .theme:x:(/@select-data/*/*/theme|/../*/.defaults/*/theme)/$?value
+            p5.web.include-css-file:@MICRO/media/codemirror-all.min.css
+            p5.web.include-css-file:@MICRO/media/codemirror/theme/{0}.css
+              :x:/@.theme?value
+
+            /*
+             * Transforming input textarea to CodeMirror instance.
+             *
+             * Making sure we transform boolean values to JavaScript counterparts.
+             */
+            .line-numbers:x:(/@select-data/*/*/line-numbers|/../*/.defaults/*/line-numbers)/$?value
+            set:x:/-?value
+              to-lower:x:/./-?value.string
+            .auto-focus:x:(/../*/auto-focus|/../*/.defaults/*/auto-focus)/$?value
+            set:x:/-?value
+              to-lower:x:/./-?value.string
+            p5.io.unroll-path:@HYPEREVAL/
+            p5.web.send-javascript:@"p5['{0}'] = CodeMirror.fromTextArea(p5.$('{0}').el, {{
+  mode:'{6}',
+  theme:'{2}',
+  lineNumbers:{3},
+  styleActiveLine:true,
+  path:'{1}/media/codemirror/',
+  autofocus:{4},
+  tabSize:2,
+  indentAuto:true,
+  autoCloseBrackets:true,
+  showTrailingSpace:true,
+  extraKeys: {{
+    'Ctrl-Space':'autocomplete',
+    'Shift-Tab':'indentLess',
+    'Tab':'indentMore',
+    'Alt-F': 'findPersistent',
+    {7}
+    'Alt-M':function(cm) {{cm.setOption('fullScreen', !cm.getOption('fullScreen'));}}
+  }}
+}});
+p5['{0}'].on('change',function (cMirror) {{
+  p5.$('{0}').el.value = cMirror.getValue();
+}});
+p5['{0}'].setSize('100%', '{5}');"
+              :x:/../*/_event?value
+              :x:/@p5.io.unroll-path?value
+              :x:/@.theme?value
+              :x:/@.line-numbers?value
+              :x:/@.auto-focus?value
+              :x:/@.height?value
+              :x:/@.mode?value
+              :x:/@_keys?value
