@@ -473,7 +473,7 @@ input[type=checkbox], input[type=radio] {
     background-color: rgba(0,0,0,.1);
 }
 .micro-tree li.tree-item > a.tree-selected {
-    background-color: rgba(128,255,128,.3);
+    background-color: rgba(128,128,128,.3);
 }
 .micro-tree a.tree-item-label span.icon {
     width: 16px;
