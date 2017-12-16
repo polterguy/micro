@@ -464,6 +464,7 @@ input[type=checkbox], input[type=radio] {
     text-decoration: none;
     display: block;
     height: 100%;
+    color:#a0a0a0;
 }
 .micro-tree li.tree-expanded > a.tree-item-label {
     background-position: 0 -60px;
@@ -482,11 +483,17 @@ input[type=checkbox], input[type=radio] {
     margin-top: 2px;
     margin-bottom: -2px;
 }
-.micro-tree a.tree-item-label .folder {
-    background-image: url(serious/tree-1.png);
+.micro-tree a.tree-item-label .folder,
+.micro-tree a.tree-item-label .icon {
+    font-family:'icomoon' !important;
+    color:#a0a0a0;
 }
-.micro-tree a.tree-item-label .folder-open {
-    background-position: 0 -20px;}
-.micro-tree .file a.tree-item-label .icon {
-    background-image: url(serious/tree-4.png)
+.micro-tree a.tree-item-label .folder-open:before {
+    content:"\e930";
+}
+.micro-tree a.tree-item-label .folder-close:before {
+    content:"\e92f";
+}
+.micro-tree .file a.tree-item-label .icon:before {
+    content:"\e924";
 }
