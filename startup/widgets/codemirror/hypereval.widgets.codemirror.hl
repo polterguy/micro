@@ -57,6 +57,7 @@ create-event:micro.widgets.codemirror
   eval-x:x:/+/*/*/style|/+/**(/.theme|/.line-numbers|/.auto-focus|/.height|/.mode)
   return
     container
+      class:micro-codemirror-wrapper
       style:"font-size:{0}pt;"
         :x:(/@select-data/*/*/font-size|/../*/.defaults/*/font-size)/$?value
       widgets
