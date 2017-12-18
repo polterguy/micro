@@ -64,6 +64,26 @@ create-event:micro.widgets.tree.select-items
     micro.css.add:x:/@p5.web.widgets.find/*/0?value
       class:tree-selected
 
+    /*
+     * Then making sure all ancestor elements of currently selected item is expanded,
+     * to make sure no selected items are even "invisible", if there are any.
+     */
+    p5.web.widgets.find-ancestor-like:x:/@p5.web.widgets.find/*/*?value
+      class:tree-hidden
+      element:ul
+    if:x:/@p5.web.widgets.find-ancestor-like/*/*
+      not
+      continue
+    micro.css.delete:x:/@p5.web.widgets.find-ancestor-like/*/*?value
+      class:tree-hidden
+    p5.web.widgets.get-parent:x:/@p5.web.widgets.find-ancestor-like/*/*?value
+    micro.css.add:x:/@p5.web.widgets.get-parent/*/*?value
+      class:tree-expanded
+    p5.web.widgets.find-first:x:/@p5.web.widgets.get-parent/*/*?value
+      element:span
+    micro.css.toggle:x:/@p5.web.widgets.find-first/*/*?value
+      class:folder-open folder-close
+
   /*
    * Making sure [.onselect] lambda callback is invoked.
    */
