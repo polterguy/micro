@@ -41,7 +41,7 @@ create-event:micro.widgets.codemirror
    * Decorating widget with arguments.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/_arg!/value!/.data-field)
+    src:x:/@.signal/--(!/_arg!/value!/.data-field!/auto-focus!/height!/mode!/keys)
   add:x:/../*/return/*/container/*/widgets/*/literal
     src:x:/@.signal/--(/value|/.data-field)
 

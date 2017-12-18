@@ -12,8 +12,38 @@ create-event:micro.widgets.tree.delete-items
   for-each:x:/../*/items/*?name
 
     /*
-     * Finding currently iterated item, and making sure we delete it.
+     * Finding currently iterated item.
      */
     p5.web.widgets.find:x:/../*/_arg?value
       _item-id:x:/@_dp?value
-    delete-widget:x:/-/*/*?value
+
+    /*
+     * Retrieving its parent item, to check if it has anymore children items, and
+     * if not, making sure we make it a leaf node, and toggles the "folder-close" 
+     * and "tree-expanded" CSS classes for it, etc.
+     */
+    p5.web.widgets.get-parent:x:/@p5.web.widgets.find/*/*?value
+    p5.web.widgets.get-children:x:/@p5.web.widgets.get-parent/*/*?value
+    if:x:/@p5.web.widgets.get-children/*/*?count
+      =:int:1
+
+      /*
+       * Parent has no more children, except for the currently iterated child.
+       */
+      p5.web.widgets.get-parent:x:/@p5.web.widgets.get-parent/*/*?value
+      micro.css.delete:x:/@p5.web.widgets.get-parent/*/*?value
+        class:tree-expanded
+      micro.css.add:x:/@p5.web.widgets.get-parent/*/*?value
+        class:tree-leaf
+      p5.web.widgets.find-first:x:/@p5.web.widgets.get-parent/*/*?value
+        element:span
+      micro.css.toggle:x:/@p5.web.widgets.find-first/*/*?value
+        class:folder-open folder-close
+      delete-widget:x:/./@p5.web.widgets.get-parent/*/*?value
+
+    else
+
+      /*
+       * Parent has more children, hence we can safely simply delete current tree item.
+       */
+      delete-widget:x:/@p5.web.widgets.find/*/*?value
