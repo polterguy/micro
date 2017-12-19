@@ -371,9 +371,6 @@ input[type=checkbox], input[type=radio] {
     background-color: #e7fdff;
     background-image: url(sea-breeze/bg.svg);
 }
-.hide {
-    display:none;
-}
 
 .micro-tree ul.tree-item-children {
     padding-left: 0;

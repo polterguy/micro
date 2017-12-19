@@ -791,6 +791,9 @@ input[disabled], input[readonly], select[disabled], textarea[disabled] {
 .capitalize {
     text-transform: capitalize;
 }
+.hide {
+    display:none !important;
+}
 
 .micro-license-watermark {
     position: fixed;

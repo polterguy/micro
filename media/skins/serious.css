@@ -330,10 +330,6 @@ input[type=checkbox], input[type=radio] {
     background-image: url(serious/bg.svg);
 }
 
-.hide {
-    display:none;
-}
-
 .micro-modal .micro-modal-content, .micro-tab-border .micro-tab-views {
     background: var(--wid-lighter-col)
 }
