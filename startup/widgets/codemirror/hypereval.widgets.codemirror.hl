@@ -35,7 +35,7 @@ create-event:micro.widgets.codemirror
     auto-focus:bool:false
     height:300px
     mode:hyperlambda
-  select-data:x:/*/*/hypereval.settings
+  select-data:x:/*/*/micro.codemirror.settings
 
   /*
    * Decorating widget with arguments.

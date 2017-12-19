@@ -28,7 +28,7 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 font-size:8.25
-              select-data:x:/*/*/hypereval.settings
+              select-data:x:/*/*/micro.codemirror.settings
               set-widget-property:x:/../*/_event?value
                 value:x:(/@select-data/*/*/font-size|/@.defaults/*/font-size)/$?value
 
@@ -47,7 +47,7 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 theme:hyperlambda
-              select-data:x:/*/*/hypereval.settings
+              select-data:x:/*/*/micro.codemirror.settings
 
               /*
                * Listing all available CSS files from themes folder,
@@ -91,7 +91,7 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 skin:serious
-              select-data:x:/*/*/hypereval.settings
+              select-data:x:/*/*/micro.codemirror.settings
 
               /*
                * Listing all available CSS files from themes folder,
@@ -135,7 +135,7 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 line-numbers:bool:true
-              select-data:x:/*/*/hypereval.settings
+              select-data:x:/*/*/micro.codemirror.settings
               if:x:(/@select-data/*/*/line-numbers|/../*/.defaults/*/line-numbers)/$?value
                 =:bool:true
                 set-widget-property:x:/../*/_event?value
@@ -157,11 +157,11 @@ create-event:micro.codemirror.settings
                    * and applying new settings.
                    */
                   micro.widgets.wizard-form.value:hypereval-settings-data
-                  delete-data:x:/*/*/hypereval.settings
+                  delete-data:x:/*/*/micro.codemirror.settings
                   add:x:/../*/insert-data/*
                     src:x:/@micro.widgets.wizard-form.value/*
                   insert-data
-                    hypereval.settings
+                    micro.codemirror.settings
 
                   /*
                    * Refreshing page, since CodeMirror doesn't handle it very well
