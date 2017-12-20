@@ -479,6 +479,13 @@ input[type=checkbox], input[type=radio] {
     margin-top: 2px;
     margin-bottom: -2px;
 }
+.micro-tree a.tree-item-label span {
+    margin-left:16px;
+}
+.micro-tree a.tree-item-label .folder {
+    margin-left:-16px;
+    padding-left:16px;
+}
 .micro-tree a.tree-item-label .folder,
 .micro-tree a.tree-item-label .icon {
     font-family:'icomoon' !important;
