@@ -2,7 +2,7 @@
 /*
  * Includes JSON necessary to implement AutoComplete on page.
  *
- * Notice, this event will create one file in "/common/documents/public/hypereval-cache/"
+ * Notice, this event will create one file in "/common/documents/public/micro-codemirror-cache/"
  * for each unique set of [vocabulary] that exists on your server.
  */
 create-event:micro.widgets.codemirror._include-auto-complete
@@ -31,13 +31,13 @@ create-event:micro.widgets.codemirror._include-auto-complete
    */
   if
     fetch:x:/0/0?value
-      folder-exists:/common/documents/public/hypereval-cache/
+      folder-exists:/common/documents/public/micro-codemirror-cache/
     not
 
     /*
      * Creating our JavaScript autocomplete JSON cache file for current vocabulary.
      */
-    create-folder:/common/documents/public/hypereval-cache/
+    create-folder:/common/documents/public/micro-codemirror-cache/
 
   /*
    * Checking if our AutoComplete JSON file has already been created.
@@ -47,7 +47,7 @@ create-event:micro.widgets.codemirror._include-auto-complete
    */
   if
     fetch:x:/0/0?value
-      file-exists:/common/documents/public/hypereval-cache/autocomplete_{0}.js
+      file-exists:/common/documents/public/micro-codemirror-cache/autocomplete_{0}.js
         :x:/@p5.crypto.hash.create-sha1?value
     not
 
@@ -57,7 +57,7 @@ create-event:micro.widgets.codemirror._include-auto-complete
     join:x:/@vocabulary/*?value
       sep:,
       wrap:'
-    save-file:/common/documents/public/hypereval-cache/autocomplete_{0}.js
+    save-file:/common/documents/public/micro-codemirror-cache/autocomplete_{0}.js
       :x:/@p5.crypto.hash.create-sha1?value
       src:@"CodeMirror._hyperlambdaKeywords = [{0}];"
         :x:/@join?value
@@ -65,5 +65,5 @@ create-event:micro.widgets.codemirror._include-auto-complete
   /*
    * Including JavaScript file on page.
    */
-  p5.web.include-javascript-file:/common/documents/public/hypereval-cache/autocomplete_{0}.js
+  p5.web.include-javascript-file:/common/documents/public/micro-codemirror-cache/autocomplete_{0}.js
     :x:/@p5.crypto.hash.create-sha1?value
