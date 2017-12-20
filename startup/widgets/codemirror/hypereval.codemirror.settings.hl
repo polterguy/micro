@@ -46,7 +46,7 @@ create-event:micro.codemirror.settings
                * Retrieving currently selected theme, defaulting to "hyperlambda".
                */
               .defaults
-                theme:hyperlambda
+                theme:phosphorus
               select-data:x:/*/*/micro.codemirror.settings
 
               /*
