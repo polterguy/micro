@@ -1077,3 +1077,7 @@ This small inconvenience and added complexity for **[radio-group]** widgets, is 
 possible to solve generically in P5.
 
 Notice, the __[micro.widgets.wizard-form.value]__ lambda event for the wizard form, is just a thin layer on top of the __[micro.form.serialize]__ Active Event.
+
+## Installation
+
+Micro is automatically installed as you install [Phosphorus Five](https://github.com/polterguy/phosphorusfive).
