@@ -59,16 +59,16 @@ create-event:micro.widgets.tree.select-items
   for-each:x:/../*/items/*?name
     p5.web.widgets.find:x:/../*/_arg?value
       _item-id:x:/@_dp?value
-    p5.web.widgets.find:x:/@p5.web.widgets.find/*/*?value
+    p5.web.widgets.find-first:x:/@p5.web.widgets.find/*/*?value
       element:a
-    micro.css.add:x:/@p5.web.widgets.find/*/0?value
+    micro.css.add:x:/@p5.web.widgets.find-first/*/0?value
       class:tree-selected
 
     /*
      * Then making sure all ancestor elements of currently selected item is expanded,
      * to make sure no selected items are even "invisible", if there are any.
      */
-    p5.web.widgets.find-ancestor-like:x:/@p5.web.widgets.find/*/*?value
+    p5.web.widgets.find-ancestor-like:x:/@p5.web.widgets.find-first/*/*?value
       class:tree-hidden
       element:ul
     if:x:/@p5.web.widgets.find-ancestor-like/*/*
