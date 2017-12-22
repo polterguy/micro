@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Responsible for creating the CodeMirror Hyperlambda textarea widget.
  *
  * All arguments passed in will be added to main root widget, except
@@ -61,6 +61,10 @@ create-event:micro.widgets.codemirror
       style:"font-size:{0}pt;"
         :x:(/@select-data/*/*/font-size|/../*/.defaults/*/font-size)/$?value
       widgets
+        input
+          type:hidden
+          data-field:dirty-flag
+          value:clean
         literal
           element:textarea
           oninit
@@ -216,7 +220,11 @@ create-event:micro.widgets.codemirror
   }}
 }});
 p5['{0}'].on('change',function (cMirror) {{
-  p5.$('{0}').el.value = cMirror.getValue();
+  var el = p5.$('{0}').el;
+  el.value = cMirror.getValue();
+  var anc = el.parentElement;
+  var dirty = anc.querySelectorAll('[data-field=""dirty-flag""]')[0];
+  dirty.value = cMirror.isClean() ? 'clean' : 'dirty';
 }});
 p5['{0}'].setSize('100%', '{5}');"
               :x:/../*/_event?value
