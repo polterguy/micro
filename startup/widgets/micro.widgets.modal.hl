@@ -1,4 +1,3 @@
-
 /*
  * Creates the Modal extension widget.
  *
@@ -55,7 +54,7 @@ create-event:micro.widgets.modal
          */
         p5.web.include-css-file:@MICRO/media/main.css
 
-      onclick:@"if (event.currentTarget == event.target) {{p5.$(document.querySelectorAll('[data-window=""modal""]')[0].id).raise('.ondelete');}}"
+      onclick:@"if (event.currentTarget == event.target) {event.target.style.display='none';event.target.className='nothing';p5.$(event.target.id).raise('.ondelete');}"
       .ondelete
         delete-widget:x:/../*/_event?value
       widgets
