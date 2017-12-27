@@ -73,11 +73,6 @@ create-event:micro.page.create-dropzone
     throw:You can only have one dropzone for each page in your system, and there already exists another one from before
 
   /*
-   * Including Micro's CSS files.
-   */
-  p5.web.include-css-file:@MICRO/media/main.css
-
-  /*
    * Including JavaScript that creates our dropzone on the client side.
    */
   p5.web.include-javascript-file:@MICRO/media/dropzone.js

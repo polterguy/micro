@@ -47,13 +47,6 @@ create-event:micro.widgets.modal
       // Hack to make sure window doesn't flicker during initial display.
       style:"display:none;"
       data-window:modal
-      oninit
-
-        /*
-         * Making sure we include Micro's CSS file.
-         */
-        p5.web.include-css-file:@MICRO/media/main.css
-
       onclick:@"if (event.currentTarget == event.target) {event.target.style.display='none';event.target.className='nothing';p5.$(event.target.id).raise('.ondelete');}"
       .ondelete
         delete-widget:x:/../*/_event?value

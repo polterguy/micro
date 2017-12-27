@@ -30,30 +30,6 @@ create-event:micro.widgets.obscurer
     src:x:/@.signal/--(!/message)
 
   /*
-   * Checking if caller specified on [oninit], in which case we make sure
-   * we include JavaScript inside of his [oninit], otherwise we create our
-   * own [oninit] doing nothing but including JavaScript.
-   */
-  if:x:/../*/return/*/container/*/oninit
-    add:x:/../*/return/*/container/*/oninit
-      src
-
-        /*
-         * Making sure we include Micro's CSS file.
-         */
-        p5.web.include-css-file:@MICRO/media/main.css
-
-  else
-    add:x:/../*/return/*/container
-      src
-        oninit
-
-          /*
-           * Making sure we include Micro's CSS file.
-           */
-          p5.web.include-css-file:@MICRO/media/main.css
-
-  /*
    * Checking if caller specified a widgets collection, and if not, making
    * sure we explicitly add one.
    */

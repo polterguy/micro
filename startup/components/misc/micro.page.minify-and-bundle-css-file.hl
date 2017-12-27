@@ -1,0 +1,101 @@
+﻿
+/*
+ * Will minify all the specified CSS files, and bundle them into a single file, 
+ * and include that single CSS file on your page.
+ *
+ * All bundles created this way, will be stored in "/common/documents/public/micro-css-cache/",
+ * and all relative URLs inside of the CSS file will be updated, and end up having an "absolute path",
+ * to avoid breaking relative references to for instance images and such.
+ */
+create-event:micro.page.minify-and-bundle-css-file
+
+  /*
+   * Signal node, to separate the arguments from the rest of our lambda.
+   *
+   * Also used to store all CSS file, as names of children nodes.
+   */
+  .signal
+
+  /*
+   * Looping through each CSS file supplied as arguments, and appending into
+   * above [.signal] node.
+   */
+  for-each:x:/../*/_arg?value
+    p5.io.unroll-path:x:/@_dp?value
+    add:x:/@.signal
+      src:x:/@p5.io.unroll-path?value
+  for-each:x:/@.signal/--(!/_arg)/<-?name
+    p5.io.unroll-path:x:/@_dp?value
+    add:x:/@.signal
+      src:x:/@p5.io.unroll-path?value
+
+  /*
+   * Creating a SHA1 hash as value of all arguments, to have a unique filename for
+   * our "wrapper" CSS file.
+   */
+  p5.crypto.hash.create-sha1:x:/@.signal/*?name
+    hex:true
+
+  /*
+   * Checking that our wrapper "cache" folder exists, and creating it if it 
+   * doesn't exist.
+   */
+  if
+    fetch:x:/0/0?value
+      folder-exists:/common/documents/public/micro-css-cache/
+    not
+
+    /*
+     * Creating CSS cache folder.
+     */
+    create-folder:/common/documents/public/micro-css-cache/
+
+  /*
+   * Checking if wrapper file has already been created (and cached).
+   */
+  if
+    fetch:x:/0/0?value
+      file-exists:/common/documents/public/micro-css-cache/cache-{0}.css
+        :x:/@p5.crypto.hash.create-sha1?value
+    not
+
+    /*
+     * Loading and minifying all CSS files, concatenating them into one, and saving them as
+     * a single file, using the hash value from above to get a unique filename.
+     *
+     * Notice, we also make sure we correct any URLs in each CSS file, such that they become
+     * absolute URLs, in order to have image references and such map out correctly.
+     */
+    load-file:x:/@.signal/*?name
+
+    /*
+     * Updating all URL references in document.
+     */
+    for-each:x:/@load-file/*
+      split:x:/@_dp/#?name
+        =:/
+      set:x:/@split/0/-
+      join:x:/@split/*?name
+        sep:/
+      set:x:/@_dp/#?value
+        replace:x:/@_dp/#?value
+          src:regex:/url\s*\('(?!http)/
+          dest:url('/{0}/
+            :x:/@join?value
+
+    /*
+     * Minifying CSS content, joining everything into one single file, and saving
+     * the results to our "/common/public/" folder.
+     */
+    p5.web.css.minify:x:/@load-file/*?value
+    join:x:/@p5.web.css.minify/*?value
+      sep:"\r\n"
+    save-file:/common/documents/public/micro-css-cache/cache-{0}.css
+      :x:/@p5.crypto.hash.create-sha1?value
+      src:x:/@join?value
+
+  /*
+   * Including minifies (and bundled) results on page.
+   */
+  p5.web.include-css-file:/common/documents/public/micro-css-cache/cache-{0}.css
+    :x:/@p5.crypto.hash.create-sha1?value

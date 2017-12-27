@@ -111,13 +111,6 @@ create-event:micro.widgets.tab
   return
     container
       _tab
-      oninit
-
-        /*
-         * Making sure we include Micro's CSS file.
-         */
-        p5.web.include-css-file:@MICRO/media/main.css
-
       widgets
         container
           class:micro-tab-buttons

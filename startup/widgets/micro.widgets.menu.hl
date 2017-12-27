@@ -24,12 +24,6 @@ create-event:micro.widgets.menu
   .signal
 
   /*
-   * Automatically including relevant CSS.
-   */
-  p5.web.include-css-file
-    @MICRO/media/main.css
-
-  /*
    * Recursively adding items to menu.
    */
   add:x:/../*/return/*/nav/*/widgets
