@@ -1,13 +1,12 @@
 ﻿
 /*
- * Will minify and bundle all specified CSS files,  and return path to minified 
- * version to caller.
+ * Will minify and bundle all specified KavaScript files, and include bundle file on your page.
  *
  * All bundles created this way, will be stored in "/common/documents/public/micro-css-cache/",
  * and all relative URLs inside of the CSS file will be updated, and end up having an "absolute path",
  * to avoid breaking relative references to for instance images and other "url()" references.
  */
-create-event:micro.page.minify-and-bundle-css-file
+create-event:micro.page.minify-and-bundle-javascript-file
 
   /*
    * Signal node, to separate the arguments from the rest of our lambda.
@@ -43,20 +42,20 @@ create-event:micro.page.minify-and-bundle-css-file
    */
   if
     fetch:x:/0/0?value
-      folder-exists:/common/documents/public/micro-css-cache/
+      folder-exists:/common/documents/public/micro-javascript-cache/
     not
 
     /*
-     * Creating CSS cache folder.
+     * Creating JavaScript cache folder.
      */
-    create-folder:/common/documents/public/micro-css-cache/
+    create-folder:/common/documents/public/micro-javascript-cache/
 
   /*
    * Checking if wrapper file has already been created (and cached).
    */
   if
     fetch:x:/0/0?value
-      file-exists:/common/documents/public/micro-css-cache/bundle-{0}.css
+      file-exists:/common/documents/public/micro-javascript-cache/bundle-{0}.js
         :x:/@p5.crypto.hash.create-sha1?value
     not
 
@@ -96,12 +95,12 @@ create-event:micro.page.minify-and-bundle-css-file
      */
     p5.web.css.minify:x:/@load-file/*?value
     join:x:/@p5.web.css.minify/*?value
-    save-file:/common/documents/public/micro-css-cache/bundle-{0}.css
+    save-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
       :x:/@p5.crypto.hash.create-sha1?value
       src:x:/@join?value
 
   /*
    * Including minified (and bundled) resulting single CSS file on page.
    */
-  return:/common/documents/public/micro-css-cache/bundle-{0}.css
+  p5.web.include-css-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
     :x:/@p5.crypto.hash.create-sha1?value
