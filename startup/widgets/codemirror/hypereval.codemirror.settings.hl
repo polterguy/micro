@@ -5,6 +5,17 @@
 create-event:micro.codemirror.settings
 
   /*
+   * Signal node, to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Adding any (optional) additional settings.
+   */
+  insert-after:x:/../*/create-widgets/**/micro.widgets.wizard-form/*/checkbox/*/.data-field/=line-numbers/.
+    src:x:/@.signal/--/<-
+
+  /*
    * Allowing user to edit his CM settings through a modal window.
    */
   create-widgets
@@ -155,11 +166,18 @@ create-event:micro.codemirror.settings
                   /*
                    * Serializing form, saving settings to p5.data database, 
                    * and applying new settings.
+                   *
+                   * Making sure we keep any additional "plugin settings".
                    */
                   micro.widgets.wizard-form.value:hypereval-settings-data
+                  select-data:x:/*/*/micro.codemirror.settings
+                  for-each:x:/-/*/*
+                    if:x:/@micro.widgets.wizard-form.value/*/{0}
+                      :x:/@_dp/#?name
+                      set:x:/@_dp/#
                   delete-data:x:/*/*/micro.codemirror.settings
                   add:x:/../*/insert-data/*
-                    src:x:/@micro.widgets.wizard-form.value/*
+                    src:x:(/@micro.widgets.wizard-form.value/*|/@select-data/*/*)
                   insert-data
                     micro.codemirror.settings
 
