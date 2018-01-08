@@ -184,9 +184,8 @@ create-event:micro.widgets.codemirror
              */
             .theme:x:(/@select-data/*/*/theme|/../*/.defaults/*/theme)/$?value
             p5.web.include-css-file:@MICRO/media/codemirror-all.min.css
-            micro.page.minify-and-bundle-css-file:@MICRO/media/codemirror/theme/{0}.css
+            p5.web.include-css-file:@MICRO/media/codemirror/theme/{0}.css
               :x:/@.theme?value
-            p5.web.include-css-file:x:/-?value
 
             /*
              * Transforming input textarea to CodeMirror instance.
