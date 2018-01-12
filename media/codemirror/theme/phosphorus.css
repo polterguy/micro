@@ -47,8 +47,8 @@
   src: local('Roboto Mono'), local('RobotoMono-Regular'), url(https://fonts.gstatic.com/s/robotomono/v5/hMqPNLsu_dywMa4C_DEpY4gp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
 }
-.cm-s-phosphorus { font-family:'Roboto Mono'; background:#ffffff; color:#41323f; border-radius:var(--border-radius); border:solid 1px #e0e0e0; margin-top:-1px; }
-.cm-s-phosphorus .CodeMirror-gutters { background: #ffffff; border-right: solid 1px #f0f0f0; }
+.cm-s-phosphorus { font-family:'Roboto Mono'; background:#fefefe; color:#41323f; border-radius:var(--border-radius); border:solid 1px #e0e0e0; margin-top:-1px; }
+.cm-s-phosphorus .CodeMirror-gutters { background: #fefefe; border-right: solid 1px #f0f0f0; }
 .cm-s-phosphorus .CodeMirror-guttermarker { color: black; }
 .cm-s-phosphorus .CodeMirror-guttermarker-subtle { color: #8d8687; }
 .cm-s-phosphorus .CodeMirror-hints {z-index:2000 !important;}
@@ -78,12 +78,12 @@
 .cm-s-phosphorus .CodeMirror-matchingbracket { outline:1px solid grey; color:black !important; }
 
 /* AutoCompleter CSS */
-.CodeMirror-hints { background:#ffffff; color:#5050a0; font-family:'Roboto Mono'; font-size:8.25pt; color:#41323f; z-index:1001; }
+.CodeMirror-hints { background:#fefefe; color:#5050a0; font-family:'Roboto Mono'; font-size:8.25pt; color:#41323f; z-index:1001; }
 .CodeMirror-hints li { color:#0000ff; }
 li.CodeMirror-hint-active { background: #fafafa; color:#41323f; }
 
 /* Dialog CSS (used in search for instance) */
-.CodeMirror-dialog { background-color: #ffffff; box-shadow:3px 3px 5px rgba(0,0,0,.2); }
+.CodeMirror-dialog { background-color: #fefefe; box-shadow:3px 3px 5px rgba(0,0,0,.2); }
 .CodeMirror-dialog-top { border-bottom: 1px solid #909090; top:0;}
 .CodeMirror-dialog-bottom { border-top: 1px solid #909090; bottom:0;}
 .CodeMirror-dialog input { border: none; outline:none; background:transparent; width: 20em; color: inherit; }

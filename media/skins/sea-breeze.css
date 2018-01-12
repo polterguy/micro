@@ -438,13 +438,13 @@ input[type=radio]:checked:after {
 }
 
 .micro-tree a.tree-item-label .folder-open:before {
-    content: ""
+    content: "\e930"
 }
 
 .micro-tree a.tree-item-label .folder-close:before {
-    content: ""
+    content: "\e92f"
 }
 
 .micro-tree .file a.tree-item-label .icon:before {
-    content: ""
+    content: "\e925"
 }
