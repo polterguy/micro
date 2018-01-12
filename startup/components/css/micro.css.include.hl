@@ -1,0 +1,32 @@
+
+/*
+ * Helper Active Event to include CSS files for micro.
+ *
+ * Expects [skin] being the name of some skin file, e.g. "serious", etc.
+ */
+create-event:micro.css.include
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    skin:string
+
+  /*
+   * Retrieving version of Micro, to make sure we get a unique URL, such that
+   * each version of Micro includes a unique CSS file, which is useful to make
+   * sure we include the file again, without any browser cache kicking in, each
+   * time we create a new release.
+   */
+  micro.version
+
+  /*
+   * Including CSS files, making sure we append version number.
+   */
+  p5.web.include-css-file:@MICRO/media/main.css?v={0}
+    :x:/@micro.version?value
+  p5.web.include-css-file:@MICRO/media/fonts.css?v={0}
+    :x:/@micro.version?value
+  p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
+    :x:/../*/skin?value
+    :x:/@micro.version?value
