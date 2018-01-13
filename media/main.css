@@ -325,12 +325,13 @@ button {
     color: var(--wid-txt-col);
     padding: 7px 15px;
     background-size:1px 76px;
-    transition:background .25s;
+    transition:background-position .25s;
+    background-position:-1px -1px;
 }
 
 button:active,button:focus,button:hover {
-    transition:background .25s;
-    background-position:38px;
+    transition:background-position .25s;
+    background-position:-1px -38px;
 }
 
 button.toggled {
@@ -455,7 +456,7 @@ input[type=radio]:checked:after {
 
 .fill {
     display: table-cell;
-    width: 100%
+    width: 100% !important;
 }
 
 div.fill {

@@ -181,7 +181,12 @@ nav a,nav a:active,nav a:focus,nav a:hover {
 button {
     color: #7a7a7a;
     font-size: .9rem;
-    padding: 8px 15px 7px
+    padding: 8px 15px 7px;
+    transition:box-shadow, background-position .25s;
+}
+button:focus {
+    box-shadow:0 0 7px rgba(128,128,128,.5);
+    transition:box-shadow .25s;
 }
 
 input[type=checkbox]:checked:after,input[type=radio]:checked:after {
@@ -435,7 +440,7 @@ input[type=radio]:checked:after {
     border:solid 1px var(--wid-border-col);
 }
 input[type=text]:focus,input[type=password]:focus,input[type=color]:focus,input[type=date]:focus,input[type=datetime-local]:focus,input[type=email]:focus,input[type=month]:focus,input[type=number]:focus,input[type=search]:focus,input[type=tel]:focus,input[type=time]:focus,input[type=url]:focus,input[type=week]:focus,input[type=date]:focus,input[type=checkbox]:focus,input[type=radio]:focus,select:focus,textarea:focus {
-    box-shadow:0 0 7px rgba(0,0,255,.5);
+    box-shadow:0 0 7px rgba(128,128,128,.5);
     transition:box-shadow .25s;
 }
 
