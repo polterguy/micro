@@ -181,7 +181,7 @@ nav a,nav a:active,nav a:focus,nav a:hover {
 button {
     color: #7a7a7a;
     font-size: .9rem;
-    padding: 8px 15px 7px;
+    padding: 8px 20px 7px 20px;
     transition:box-shadow, background-position .25s;
 }
 button:focus {

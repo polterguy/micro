@@ -38,7 +38,7 @@ create-event:micro.codemirror.settings
                * Making sure we set value to whatever it already is, if anything.
                */
               .defaults
-                font-size:8.25
+                font-size:9.25
               select-data:x:/*/*/micro.codemirror.settings
               set-widget-property:x:/../*/_event?value
                 value:x:(/@select-data/*/*/font-size|/@.defaults/*/font-size)/$?value
@@ -159,7 +159,8 @@ create-event:micro.codemirror.settings
             class:right
             widgets
               button:hypereval-settings-ok-button
-                style:"margin-bottom:0;padding-left:35px;padding-right:35px;"
+                style:"margin-bottom:0;"
+                class:larger
                 innerValue:Save
                 onclick
 

@@ -29,7 +29,7 @@ create-event:micro.widgets.codemirror
    * Figuring out font size to use for widget, and other settings.
    */
   .defaults
-    font-size:8.25
+    font-size:9.25
     theme:phosphorus
     line-numbers:bool:true
     auto-focus:bool:false
