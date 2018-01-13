@@ -178,13 +178,13 @@ nav a,nav a:active,nav a:focus,nav a:hover {
     color: var(--wid-dark-col)
 }
 
-button {
+button,input[type=submit],input[type=reset],input[type=button] {
     color: #7a7a7a;
     font-size: .9rem;
     padding: 8px 20px 7px 20px;
     transition:box-shadow, background-position .25s;
 }
-button:focus {
+button:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=button]:focus {
     box-shadow:0 0 7px rgba(128,128,128,.5);
     transition:box-shadow .25s;
 }

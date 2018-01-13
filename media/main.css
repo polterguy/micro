@@ -189,7 +189,7 @@ fieldset {
     padding: .35em .625em .75em
 }
 
-button,pre {
+button,input[type=button],input[type=submit],input[type=reset],pre {
     border-radius: var(--border-radius)
 }
 
@@ -313,37 +313,18 @@ hr {
     color: var(--placeholder-col)
 }
 
-.strip label,button,input,select,strip span {
+.strip label,button,select,strip span,input {
     height: 42px;
     color: var(--form-txt-col);
     font-weight: 400
 }
-
-button {
-    border: var(--border-width) solid var(--wid-border-col);
-    background: var(--wid-dark-col);
-    color: var(--wid-txt-col);
-    padding: 7px 15px;
-    background-size:1px 76px;
-    transition:background-position .25s;
-    background-position:-1px -1px;
-}
-button.larger {
+button.larger,input[type=button].larger,input[type=submit].larger,input[type=reset].larger {
     padding-left:40px;
     padding-right:40px;
 }
 
-button:active,button:focus,button:hover {
-    transition:background-position .25s;
-    background-position:-1px -38px;
-}
-
-button.toggled {
+button.toggled,input[type=button].toggled,input[type=submit].toggled,input[type=reset] {
     background: var(--wid-dark-col-invert);
-}
-
-button.toggled:active,button.toggled:focus,button.toggled:hover {
-    background: var(--wid-darker-col-invert);
 }
 
 input[type=text],input[type=password],input[type=color],input[type=date],input[type=datetime-local],input[type=email],input[type=month],input[type=number],input[type=search],input[type=tel],input[type=time],input[type=url],input[type=week],input[type=date],input[type=checkbox],input[type=radio],select,textarea {
@@ -357,8 +338,35 @@ input[type=text],input[type=password],input[type=color],input[type=date],input[t
     transition:box-shadow .25s;
 }
 
-input:active,input:focus,input:hover,select:active,select:focus,select:hover,textarea:active,textarea:focus,textarea:hover {
-    background: var(--wid-lighter-col)
+input:active,input:focus,input:hover,
+select:active,select:focus,select:hover,
+textarea:active,textarea:focus,textarea:hover {
+    background: var(--wid-lighter-col);
+}
+
+button,input[type=button],input[type=submit],input[type=reset] {
+    border: var(--border-width) solid var(--wid-border-col);
+    background: var(--wid-dark-col);
+    color: var(--wid-txt-col);
+    padding: 7px 15px;
+    background-size:1px 76px;
+    transition:background-position .25s;
+    background-position:-1px -1px;
+    outline:none;
+}
+
+button:active,button:focus,button:hover,
+input[type=button]:active,input[type=button]:focus,input[type=button]:hover,
+input[type=submit]:active,input[type=submit]:focus,input[type=submit]:hover,
+input[type=reset]:active,input[type=reset]:focus,input[type=reset]:hover{
+    transition:background-position .25s;
+    background-position:-1px -38px;
+}
+
+button.toggled:active,button.toggled:focus,button.toggled:hover,
+input[type=button].toggled:active,input[type=button].toggled:focus,input[type=button].toggled:hover,
+input[type=submit].toggled:active,input[type=submit].toggled:focus,input[type=submit].toggled:hover{
+    background: var(--wid-darker-col-invert);
 }
 
 input[type=checkbox],input[type=radio],select {
@@ -711,12 +719,12 @@ table.hover tbody tr {
         width: 200px
     }
 
-    button {
+    button,input[type=button],input[type=submit],input[tyoe=reset] {
         padding: 7px 15px
     }
 }
 
-button[disabled],button[disabled].toggled {
+button[disabled],button[disabled].toggled{
     color: var(--placeholder-col);
     cursor: not-allowed;
     background-size:1px 76px;
@@ -1209,10 +1217,11 @@ nav.expanded hr {
     cursor: pointer;
     box-shadow: 2px 3px 7px rgba(0,0,0,.7);
     animation-name: micro-windows-info;
-    animation-duration: 1.5s;
+    animation-duration: 2.5s;
     border-left:solid 1px rgba(0,0,0,.2);
     border-bottom:solid 1px rgba(0,0,0,.2);
     font-size:.9rem;
+    background-size:1px 200%;
 }
 
 .micro-windows-info label {
