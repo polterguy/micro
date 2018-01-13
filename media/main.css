@@ -149,7 +149,7 @@ button,select {
     text-transform: none
 }
 
-button,html input[type=button],input[type=reset],input[type=submit] {
+button,htmlinput[type=button],input[type=reset],input[type=submit]  {
     -webkit-appearance: button;
     cursor: pointer
 }
@@ -313,6 +313,12 @@ hr {
     color: var(--placeholder-col)
 }
 
+.strip:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .strip label,button,select,strip span,input {
     height: 42px;
     color: var(--form-txt-col);
@@ -326,8 +332,28 @@ button.larger,input[type=button].larger,input[type=submit].larger,input[type=res
 button.toggled,input[type=button].toggled,input[type=submit].toggled,input[type=reset] {
     background: var(--wid-dark-col-invert);
 }
+input[type=search]{
+    box-sizing:border-box;
+}
 
-input[type=text],input[type=password],input[type=color],input[type=date],input[type=datetime-local],input[type=email],input[type=month],input[type=number],input[type=search],input[type=tel],input[type=time],input[type=url],input[type=week],input[type=date],input[type=checkbox],input[type=radio],select,textarea {
+input[type=text],
+input[type=password],
+input[type=color],
+input[type=date],
+input[type=datetime-local],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+input[type=date],
+input[type=radio],
+input[type=checkbox],
+select,
+textarea {
     border-radius: var(--border-radius);
     width: 250px;
     border: var(--border-width)solid var(--wid-border-col);
@@ -486,10 +512,6 @@ div.fill>input[type=color],div.fill>input[type=date],div.fill>input[type=datetim
 
 label {
     display: inline-block
-}
-
-label.input-label {
-    min-width: 180px
 }
 
 label input {
@@ -707,7 +729,22 @@ table.hover tbody tr {
         line-height: 1.45833333
     }
 
-    input,select,textarea {
+    input[type=text],
+    input[type=password],
+    input[type=color],
+    input[type=date],
+    input[type=datetime-local],
+    input[type=email],
+    input[type=month],
+    input[type=number],
+    input[type=search],
+    input[type=tel],
+    input[type=time],
+    input[type=url],
+    input[type=week],
+    input[type=date],
+    select,
+    textarea {
         width: 350px
     }
 
@@ -719,7 +756,7 @@ table.hover tbody tr {
         width: 200px
     }
 
-    button,input[type=button],input[type=submit],input[tyoe=reset] {
+    button,input[type=button],input[type=submit],input[type=reset] {
         padding: 7px 15px
     }
 }
@@ -764,6 +801,10 @@ input[disabled],input[readonly],select[disabled],textarea[disabled] {
 
 .no-air {
     margin: 0
+}
+
+.no-bottom-air {
+    margin-bottom:0 !important;
 }
 
 .emphasized,.rounded,.shaded,.success,.warning {
