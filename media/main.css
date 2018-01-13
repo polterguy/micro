@@ -408,6 +408,7 @@ input[type=radio]:checked:after {
     border-left-style: none;
     background: var(--wid-dark-col);
     background-size:1px 76px;
+    background-position:-1px -1px;
     color: var(--wid-light-col);
     padding: 8px 15px;
     margin-bottom: 1rem;
@@ -431,7 +432,9 @@ input[type=radio]:checked:after {
     border-bottom-right-radius: var(--border-radius) !important;
     border-bottom-left-radius: 0
 }
-
+.strip>label:first-child {
+    min-width: 100px
+}
 .strip span input[type=checkbox],.strip span input[type=radio] {
     margin: 0;
     border-left-style: solid;
@@ -1203,31 +1206,21 @@ nav.expanded hr {
     top: 0;
     right: 0;
     animation-fill-mode: forwards;
-    border-bottom-left-radius: var(--border-radius);
-    border-left: solid var(--border-width) var(--wid-border-col);
-    border-bottom: solid var(--border-width) var(--wid-border-col);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     padding: 1rem 1.5rem;
     background: var(--wid-dark-col);
     z-index: 1000;
     user-select: none;
     cursor: pointer;
-    box-shadow: 3px 3px 2px rgba(0,0,0,.2)
-}
-
-.micro-windows-info span,.micro-windows-info-sticky span {
-    margin-right: 15px;
-    float: left;
-    display: block;
-    margin-bottom: 1rem
-}
-
-.micro-windows-info span:last-child,.micro-windows-info-sticky span:last-child {
-    margin-bottom: 0
-}
-
-.micro-windows-info {
+    box-shadow: 3px 3px 2px rgba(0,0,0,.2);
     animation-name: micro-windows-info;
-    animation-duration: 5s
+    animation-duration: 5s;
+}
+
+.micro-windows-info label {
+    margin-bottom: 0;
 }
 
 @keyframes micro-dropzone-dragover {

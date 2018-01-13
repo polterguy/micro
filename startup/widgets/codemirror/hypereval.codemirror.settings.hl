@@ -101,7 +101,7 @@ create-event:micro.codemirror.settings
                * Retrieving currently selected theme, defaulting to "hyperlambda".
                */
               .defaults
-                skin:off-white
+                skin:serious
               select-data:x:/*/*/micro.codemirror.settings
 
               /*

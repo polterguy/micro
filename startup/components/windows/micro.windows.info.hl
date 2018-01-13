@@ -1,13 +1,12 @@
 
 /*
- * Creates a small "information bubble" window, that will be displayed on the form for n seconds, 
+ * Creates a small "information bubble" window, that will be displayed on the page for n seconds, 
  * before automatically disappearing.
+ * Notice, the user can also click it to make it vanish faster.
  *
  * Pass in text to display as [_arg].
  * Optionally pass in [parent] as parent widget to where to display window, [class] to override default 
  * class or [onclick] to provide a user defined lambda callback that will be invoked when user clicks the bubble window.
- *
- * Alternatively, you can also pass in a [widgets] collection, which will be appended into the information bubble as is.
  */
 create-event:micro.windows.info
 
@@ -53,12 +52,6 @@ create-event:micro.windows.info
       src:x:/../*/onclick/*
 
   /*
-   * Adding custom widgets to information bubble.
-   */
-  add:x:/../*/create-widget/*/widgets
-    src:x:/../*/widgets/*
-
-  /*
    * Creating new information bubble window.
    */
   create-widget:micro-windows-info
@@ -77,5 +70,5 @@ create-event:micro.windows.info
       delete-widget:micro-windows-info
 
     widgets
-      span
+      label
         innerValue:x:/../*/_arg?value
