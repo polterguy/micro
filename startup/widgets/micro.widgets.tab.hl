@@ -45,14 +45,14 @@ create-event:micro.widgets.tab
            * Removing active state from all buttons, and adding for currently clicked afterwards.
            */
           p5.web.widgets.find-first-like:x:/@p5.web.widgets.find-first-ancestor/*/*?value
-            class:micro-tab-buttons
+            class:micro-widgets-tab-buttons
           micro.css.delete:x:/@p5.web.widgets.find-first-like/*/*?value
-            class:micro-tab-display-buttons
+            class:micro-widgets-tab-display-buttons
           p5.web.widgets.get-children:x:/@p5.web.widgets.find-first-like/*/*?value
           micro.css.delete:x:/@p5.web.widgets.get-children/*/*?value
-            class:micro-tab-active
+            class:micro-widgets-tab-active
           set-widget-property:x:/../*/_event?value
-            class:micro-tab-active
+            class:micro-widgets-tab-active
 
   /*
    * Databinding the views of our tab.
@@ -86,7 +86,7 @@ create-event:micro.widgets.tab
    */
   add:x:/../*/return/**/widgets/=buttons/0
     src
-      class:micro-tab-active
+      class:micro-widgets-tab-active
 
   /*
    * Adding "hamburger toggle button".
@@ -94,7 +94,7 @@ create-event:micro.widgets.tab
   add:x:/../*/return/**/widgets/=buttons
     src
       button
-        class:micro-tab-hamburger
+        class:micro-widgets-tab-hamburger
         innerValue:=
         onclick
 
@@ -103,7 +103,7 @@ create-event:micro.widgets.tab
            */
           p5.web.widgets.get-parent:x:/../*/_event?value
           micro.css.toggle:x:/-/*/*?value
-            class:micro-tab-display-buttons
+            class:micro-widgets-tab-display-buttons
 
   /*
    * Returning widget to caller.
@@ -113,8 +113,8 @@ create-event:micro.widgets.tab
       _tab
       widgets
         container
-          class:micro-tab-buttons
+          class:micro-widgets-tab-buttons
           widgets:buttons
         container
-          class:micro-tab-views
+          class:micro-widgets-tab-views
           widgets:views

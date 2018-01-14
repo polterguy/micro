@@ -1,4 +1,3 @@
-
 /*
  * Helper Active Event to include CSS files for micro.
  *
@@ -23,7 +22,7 @@ create-event:micro.css.include
   /*
    * Including CSS files, making sure we append version number.
    */
-  p5.web.include-css-file:@MICRO/media/main.css?v={0}
+  p5.web.include-css-file:@MICRO/media/micro.css?v={0}
     :x:/@micro.version?value
   p5.web.include-css-file:@MICRO/media/fonts.css?v={0}
     :x:/@micro.version?value

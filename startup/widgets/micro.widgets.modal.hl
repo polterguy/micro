@@ -6,7 +6,7 @@
  * which actually is an "obscurer" that is shown in fixed position, obscuring all other widgets on page.
  *
  * Unless you want to explicitly override the default CSS classes, you should at the very least supply
- * a [class] argument, having a value of "micro-modal".
+ * a [class] argument, having a value of "micro-widgets-modal".
  */
 create-event:micro.widgets.modal
 
@@ -35,7 +35,7 @@ create-event:micro.widgets.modal
     not
     add:x:/../*/return/*/container
       src
-        class:micro-modal
+        class:micro-widgets-modal
 
   /*
    * Returning widget to caller.
@@ -52,7 +52,7 @@ create-event:micro.widgets.modal
         delete-widget:x:/../*/_event?value
       widgets
         container
-          class:micro-modal-content
+          class:micro-widgets-modal-content
           widgets
             container
               widgets:widgets

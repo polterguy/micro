@@ -1,0 +1,1102 @@
+/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,html [type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-cancel-button,[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
+
+/* Micro CSS, GPLv3 license, copyright 2016 - 2018, Thomas Hansen, thomas@gaiasoul.com */
+
+/* CSS variables for most things that are "skin related", to make it easier to create custom skins */
+:root {
+    --font-family: sans-serif;
+
+    /* 
+     * The ONLY pixel based value in Micro. Change this variable to increase the font-size of your pages.
+     * Basically, all other sizes are "derived" from this one, one way or another.
+     * So if you cange this value, you change the size of all form controls, and everything on your page.
+     */
+    --font-size: 18px;
+    --color: #777;
+    --background: #fbfbfb;
+    --button-color: #777;
+    --button-background: linear-gradient(#f9f9f9,#b0b0b0);
+    --anchor-color: #99f;
+    --anchor-active-color: #77e;
+    --form-element-color: #777;
+    --form-element-background: #ffffff;
+    --form-element-disabled-background: #fefefe;
+    --form-element-disabled-color: #ccc;
+    --active-form-element-background: #ffffff;
+    --placeholder-color: #ccc;
+    --border-color: #bbb;
+    --border-radius: .5rem;
+    --shadow-color: rgba(0,0,0,.4);
+    --success-background: linear-gradient(#efe,#afa);
+    --warning-background: linear-gradient(#fee,#faa);
+    --max-viewport-width: 1120px;
+    --table-striped-background: rgba(0,0,0,.01);
+    --table-selected-background: rgba(0,0,0,.1);
+    --table-hover-background: rgba(0,0,0,.01);
+}
+
+/* "Global stuff" */
+* {
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+}
+html {
+    /* 
+     * Notice, this is the **only** absolute sized value in Micro, which makes it very
+     * easy for anyone to change the font size, and hence all other related sizing properties
+     * of Micro. Simply change the value of the "--font-size" variable in your own CSS file/skin, 
+     * and you have changed the size of the entire website.
+     */
+    font-size: var(--font-size);
+    font-family: var(--font-family);
+    color: var(--color);
+    background: var(--background);
+}
+
+/* Specific element types */
+
+/* "All" elements, or most of them at least */
+blockquote,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend,ol,p,pre,select,table,textarea,ul,article {
+    margin-bottom: 1rem;
+}
+
+/* All headers */
+h1, h2, h3, h4, h5, h6 {
+    margin-top:0;
+}
+
+/* All form elements, including buttons */
+input, button, textarea, select {
+    padding: .5rem 1rem;
+}
+
+/* All form elements, including buttons */
+input, button, textarea, select {
+    border: solid 1px var(--border-color);
+    border-radius: var(--border-radius);
+    outline: none;
+}
+
+/* All button types of elements */
+button, input[type=button], input[type=submit], input[type=reset] {
+    color: var(--button-color);
+    background: var(--button-background);
+    background-size: 1px 4.8rem;
+    background-position: -1px -1px;
+    transition: background .2s ease-out, box-shadow .2s ease-out;
+    font-weight: 600;
+    max-height:2.25rem; /* In case icons are too large */
+}
+button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+    background-position: -1px -2.4rem;
+    transition: background .2s ease-out, box-shadow .2s ease-out;
+}
+button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus,
+button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+    background-position: -1px -2.4rem;
+    box-shadow: 0 0 7px var(--shadow-color);
+    transition: background .2s ease-out, box-shadow .2s ease-out;
+}
+button[disabled], button[disabled].toggled,
+input[type=submit][disabled], input[type=submit][disabled].toggled {
+    color: var(--form-element-disabled-color);
+    cursor: not-allowed;
+    background-position: -1px -1px;
+    cursor: not-allowed;
+}
+button[disabled]:hover, button[disabled]:hover.toggled {
+    background-position:inherit;
+}
+button[disabled]:hover, button[disabled].toggled:hover,
+input[type=submit][disabled]:hover, input[type=submit][disabled]:hover.toggled {
+    color: var(--form-element-disabled-color);
+    cursor: not-allowed;
+    background-position: -1px -1px;
+    box-shadow: none;
+}
+
+/* All non button types of form elements */
+input:not([type=button]):not([type=submit]):not([type=reset]), textarea, select {
+    background: var(--form-element-background);
+    transition: box-shadow .2s ease-out;
+    background: var(--form-element-background);
+}
+input:not([type=button]):not([type=submit]):not([type=reset]):focus,
+input:not([type=button]):not([type=submit]):not([type=reset]):active,
+textarea:focus, textarea:active, 
+select:focus, textarea:active {
+    box-shadow: 0 0 7px var(--shadow-color);
+    transition: box-shadow .2s ease-out;
+    background: var(--active-form-element-background);
+}
+input:not([type=button]):not([type=submit]):not([type=reset])[disabled], 
+textarea[disabled], select[disabled] {
+    background: var(--form-element-disabled-background);
+    color: var(--placeholder-color);
+    cursor: not-allowed;
+}
+
+/* All input elements, except checkbox, radio, and buttons - Including textarea and select */
+input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
+select, textarea {
+    width: 100%;
+    color: var(--form-element-color);
+}
+
+/* Placeholder for all types of elements that supports it */
+::-webkit-input-placeholder {
+    color: var(--placeholder-color);
+}
+::-moz-placeholder {
+    color: var(--placeholder-color);
+}
+::-ms-input-placeholder {
+    color: var(--placeholder-color);
+}
+
+/* Making sure we can actually style select elements, radio buttons and checkboxes */
+select, input[type=checkbox], input[type=radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; /* Will hopefully work in the future */
+}
+
+/* Checkbox and radio buttons special styles */
+input[type=checkbox], input[type=radio] {
+    position: relative;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 1rem;
+}
+label input[type=checkbox], label input[type=radio] {
+    margin-bottom: -.5rem; /* Since height is 1.5, we'll need to remove .5 in margin somehow */
+    margin-top: -2px;/* Accommodating for border */
+}
+input[type=checkbox]:checked:after, input[type=radio]:checked:after {
+    position: absolute;
+    color: var(--form-txt-col);
+    display: block;
+}
+input[type=checkbox]:checked:after {
+    top:5%;
+    left:5%;
+    content: "\002714";
+    font-size: calc(1.5rem - 20%);
+    color: var(--color);
+}
+input[type=checkbox][disabled]:checked:after {
+    color: var(--form-element-disabled-color);
+    cursor: not-allowed;
+}
+input[type=radio] {
+    border-radius: 50%;
+}
+input[type=radio]:checked:after {
+    top:15%;
+    left:15%;
+    content: ' ';
+    background: var(--color);
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+}
+input[type=radio][disabled]:checked:after {
+    background: var(--form-element-disabled-color);
+    cursor: not-allowed;
+}
+
+/* Labels */
+label {
+    user-select: none;
+    font-weight: 600;
+    display:inline-block;
+    margin-top:.5rem;
+}
+label>span:first-child {
+    margin-right:.5rem;
+}
+
+/* Hyperlinks */
+a {
+    text-decoration: none;
+    color: var(--anchor-color);
+    outline: none;
+}
+a:active, a:focus {
+    color: var(--anchor-active-color);
+}
+
+/* Special styles for pre and code elements */
+pre {
+    border-radius: var(--border-radius);
+    background: #f9f9f9;
+    padding: 1rem;
+}
+code,pre {
+    font-family: monospace;
+}
+
+/* ul and ol elements */
+ol,ul {
+    margin-left: 2.5rem;
+}
+
+/* Horizontal ruler */
+hr {
+    height: 0;
+    border-color: var(--border-color);
+}
+
+/* Blockquotes */
+blockquote {
+    font-size: 1.25em;
+    padding-left: .5rem;
+    position: relative;
+    color: #bbb;
+}
+blockquote:before {
+    content: "\201C";
+    font-size: 3rem;
+    position: absolute;
+    top: -.5rem;
+    left: -1rem;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+table td, table th {
+    padding: .2rem 1rem .2rem 0;
+}
+table td:last-child, table th:last-child {
+    padding: .2rem 0;
+}
+table td {
+    border-top: solid 1px var(--border-color);
+}
+table tr:first-child td {
+    border-top-style: none;
+}
+table button {
+    padding:5px 12px;
+    font-size:.9rem;
+    margin-bottom:0;
+}
+table.striped tr:nth-child(2n) td {
+    background: var(--table-striped-background);
+}
+table td.selected, table tr.selected, table.hover tr:hover td, table.striped td.selected, table.striped tr.selected {
+    background: var(--table-selected-background);
+}
+table.striped tr.no-hover:hover:nth-child(2n) td {
+    background: var(--table-hover-background);
+}
+table.hover tbody tr {
+    cursor: pointer;
+}
+
+/* Grid system */
+
+/* Containers */
+.container, .container-fullscreen {
+    padding: 1rem 1rem 1rem 0;
+    overflow: visible;
+    position: relative;
+}
+.container {
+    margin: 0 auto;
+    max-width: var(--max-viewport-width);
+}
+.container-fullscreen {
+    width: 100%;
+}
+
+/* Rows */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row .row {
+    margin-left: -1rem;
+}
+
+/* Columns */
+.col,.col-10,.col-20,.col-25,.col-30,.col-33,.col-40,.col-50,.col-60,.col-67,.col-70,.col-75,.col-80,.col-90,.col-100 {
+    flex: 100%;
+    padding: 0 0 0 1rem;
+    max-width: 100%;
+}
+
+.grow {
+    min-width:min-content;
+}
+
+/* Wide screens */
+@media screen and (min-width:800px) {
+.col {
+    flex: 1
+}
+.col-10 {
+    flex: 10%;
+    max-width: 10%;
+}
+.col-20 {
+    flex: 20%;
+    max-width: 20%;
+}
+.col-25 {
+    flex: 25%;
+    max-width: 25%;
+}
+.col-30 {
+    flex: 30%;
+    max-width: 30%;
+}
+.col-33 {
+    flex: 33%;
+    max-width: 33%;
+}
+.col-40 {
+    flex: 40%;
+    max-width: 40%;
+}
+.col-50 {
+    flex: 50%;
+    max-width: 50%;
+}
+.col-60 {
+    flex: 60%;
+    max-width: 60%;
+}
+.col-67 {
+    flex: 67%;
+    max-width: 67%;
+}
+.col-70 {
+    flex: 70%;
+    max-width: 70%;
+}
+.col-75 {
+    flex: 75%;
+    max-width: 75%;
+}
+.col-80 {
+    flex: 80%;
+    max-width: 80%;
+}
+.col-90 {
+    flex: 90%;
+    max-width: 90%;
+}
+.col-100 {
+    flex: 100%;
+    max-width: 100%;
+}
+.offset-10 {
+    margin-left: 10%;
+}
+.offset-20 {
+    margin-left: 20%;
+}
+.offset-25 {
+    margin-left: 25%;
+}
+.offset-30 {
+    margin-left: 30%;
+}
+.offset-33 {
+    margin-left: 33%;
+}
+.offset-40 {
+    margin-left: 40%;
+}
+.offset-50 {
+    margin-left: 50%;
+}
+.offset-60 {
+    margin-left: 60%;
+}
+.offset-67 {
+    margin-left: 67%;
+}
+.offset-70 {
+    margin-left: 70%;
+}
+.offset-75 {
+    margin-left: 75%;
+}
+.offset-80 {
+    margin-left: 80%;
+}
+.offset-90 {
+    margin-left: 90%;
+}
+
+/* All input elements, except checkbox, radio, and buttons - Including textarea and select */
+input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
+select, textarea {
+    width: 400px;
+    max-width: 100%;
+    color: var(--form-element-color);
+}
+}
+
+/* Strips */
+.strip {
+    margin-bottom: 1rem;
+}
+.strip>* {
+    margin-bottom: 0;
+    float: left;
+    border: solid 1px var(--border-color);
+    border-radius: 0;
+    border-left-style: none;
+}
+.strip:not([style*="display:none"])>:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    border-left-style: solid;
+}
+.strip:not([style*="display:none"])>:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+.strip>label {
+    padding: .5rem 1rem;
+    background: var(--button-background);
+    background-size: 1px 4.8rem;
+    background-position: -1px -1px;
+    color: var(--form-element-color);
+    margin-top:0;
+}
+.strip>label>input[type=checkbox], .strip>label>input[type=radio] {
+    margin-right:0;
+}
+.strip>span>label:not(:last-child) {
+    margin-right:1rem;
+}
+.strip>span>label>input {
+    margin-top: calc(-.5rem - 1px);
+    margin-bottom: calc(-.5rem + 1px);
+}
+.strip>label:first-child {
+    min-width: 7rem;
+}
+.strip:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Fill */
+.fill {
+    width: 100% !important;
+}
+.fill.strip {
+    display: flex;
+}
+.fill.strip>* {
+    white-space: nowrap;
+    min-width: auto;
+}
+.fill.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=radio]):not([type=checkbox]),
+.fill.strip>select {
+    flex: 2;
+    min-width: 3rem !important;
+    width: auto;
+}
+
+/* Misc classes */
+.air {
+    margin: 1rem;
+}
+.air-top {
+    margin-top: 1rem;
+}
+.air-right {
+    margin-right: 1rem;
+}
+.air-bottom {
+    margin-bottom: 1rem;
+}
+.air-left {
+    margin-left: 1rem;
+}
+.air-inner {
+    padding: 1rem 1rem 0 1rem;
+}
+.bg {
+    background-color:#fefefe;
+}
+.success {
+    background: var(--success-background);
+}
+.warning {
+    background: var(--warning-background);
+}
+.center {
+    text-align: center;
+}
+.left {
+    text-align: left;
+}
+.right {
+    text-align: right;
+}
+.justify {
+    text-align: justify;
+}
+.shaded {
+    box-shadow: 2px 2px 5px var(--shadow-color);
+    margin-bottom:1rem;
+}
+.rounded {
+    border-radius: var(--border-radius);
+}
+.hide {
+    display: none !important
+}
+
+/* Extension widgets */
+
+/* Modal widget */
+.micro-widgets-modal, .micro-widgets-modal .micro-widgets-modal-content {
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+@keyframes micro-fade-in {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+}
+@keyframes micro-drop-down {
+from {
+    margin-top: -500px;
+    opacity: .1;
+}
+to {
+    margin-top: 2rem;
+    opacity: 1;
+}
+}
+.micro-widgets-modal {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.4);
+    z-index: 1000;
+    animation-name: micro-fade-in;
+    overflow-y: auto;
+}
+.micro-widgets-modal-content {
+    width: calc(vw - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background: var(--background);
+    border-radius: 5px;
+    padding: 1rem 2rem 0 2rem;
+    overflow: auto;
+    animation-name: micro-drop-down;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+@media screen and (min-width:800px) {
+.micro-widgets-modal-content {
+    width: calc(800px - 2rem);
+    margin-left:auto;
+    margin-right:auto;
+}
+}
+
+/* Tab control */
+.micro-widgets-tab-buttons button {
+    display: none
+}
+.micro-widgets-tab-display-buttons button {
+    display: list-item;
+    width: 150px;
+    margin-right: 15px
+}
+button.micro-widgets-tab-hamburger {
+    display: inline-block;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-right: 5px;
+    width: auto;
+    float: none
+}
+.micro-widgets-tab-active {
+    background: var(--wid-darker-col)
+}
+.micro-widgets-tab .micro-widgets-tab-views {
+    border-top: solid var(--border-width) var(--wid-border-col);
+    padding-top: 1rem
+}
+.micro-widgets-tab-border .micro-widgets-tab-views {
+    border: var(--border-width) solid var(--wid-border-col);
+    border-radius: 0 var(--border-radius) 0 0;
+    padding: 1rem
+}
+
+/* Bubble window */
+@keyframes micro-windows-info {
+0%,100% {
+    margin-top: -200px;
+    opacity: 0;
+}
+
+20%,80% {
+    margin-top: 0;
+    opacity: 1;
+}
+}
+.micro-windows-info {
+    position: fixed;
+    top: 0;
+    right: 0;
+    animation-fill-mode: forwards;
+    border-bottom-left-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    background: var(--background);
+    z-index: 1000;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 2px 3px 7px var(--shadow-color);
+    animation-name: micro-windows-info;
+    animation-duration: 2.5s;
+    border-left:solid 1px rgba(0,0,0,.2);
+    border-bottom:solid 1px rgba(0,0,0,.2);
+    font-size:.8rem;
+}
+.micro-windows-info label {
+    margin-bottom: 0;
+    font-weight:normal;
+    color:#999;
+}
+
+
+
+
+
+
+
+
+
+/* Not yet fixed */
+
+@keyframes micro-ajax-wait-dominos {
+    50% {
+        opacity: .7
+    }
+
+    75% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg)
+    }
+
+    80% {
+        opacity: 1
+    }
+}
+
+@keyframes micro-ajax-wait {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: .7
+    }
+}
+
+.micro-ajax-wait {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation-name: micro-ajax-wait;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-delay: .5s;
+    background-color: #000;
+    color: rgba(0,0,0,.7);
+    z-index: 5000;
+    opacity: 0
+}
+
+.micro-ajax-wait-animations {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    top: 15px;
+    right: 55px
+}
+
+@keyframes micro-ajax-wait-info-flash {
+    0% {
+        color: #fefefe
+    }
+
+    100% {
+        color: #b0b0b0
+    }
+}
+
+.micro-ajax-wait-info {
+    margin-top: 4rem;
+    text-align: center;
+    animation: micro-ajax-wait-info-flash 1.5s ease infinite;
+    animation-direction: alternate
+}
+
+.micro-ajax-square {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 25px;
+    height: 7px;
+    background: #fff;
+    box-shadow: 2px 2px 3px 0 #000
+}
+
+.micro-ajax-square-1 {
+    left: 70px;
+    animation: micro-ajax-wait-dominos 1s 125ms ease infinite
+}
+
+.micro-ajax-square-2 {
+    left: 60px;
+    animation: micro-ajax-wait-dominos 1s .3s ease infinite
+}
+
+.micro-ajax-square-3 {
+    left: 50px;
+    animation: micro-ajax-wait-dominos 1s 425ms ease infinite
+}
+
+.micro-ajax-square-4 {
+    left: 40px;
+    animation: micro-ajax-wait-dominos 1s 540ms ease infinite
+}
+
+.micro-ajax-square-5 {
+    left: 30px;
+    animation: micro-ajax-wait-dominos 1s 665ms ease infinite
+}
+
+.micro-ajax-square-6 {
+    left: 20px;
+    animation: micro-ajax-wait-dominos 1s .79s ease infinite
+}
+
+.micro-ajax-square-7 {
+    left: 10px;
+    animation: micro-ajax-wait-dominos 1s .9s ease infinite
+}
+
+.micro-ajax-square-8 {
+    left: 0;
+    animation: micro-ajax-wait-dominos 1s 1s ease infinite
+}
+
+.micro-dropzone-drop,.micro-dropzone-hover {
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse
+}
+
+
+
+
+
+
+
+
+
+
+
+@keyframes micro-dropzone-dragover {
+    0% {
+        background-color: rgba(255,255,0,0)
+    }
+
+    100% {
+        background-color: rgba(255,255,0,.5)
+    }
+}
+
+@keyframes micro-dropzone-dropped {
+    0% {
+        background-color: rgba(0,255,0,0)
+    }
+
+    100% {
+        background-color: rgba(0,255,0,.5)
+    }
+}
+
+.micro-dropzone-hover {
+    animation-name: micro-dropzone-dragover;
+    animation-duration: .5s
+}
+
+.micro-dropzone-drop {
+    animation-name: micro-dropzone-dropped;
+    animation-duration: .5s
+}
+
+.micro-dropzone-error {
+    background-color: #f00
+}
+
+.micro-star-rater {
+    font-size: 2.5em
+}
+
+.micro-star-rater a {
+    color: #ffd700 !important
+}
+
+@media screen and (min-width:600px) {
+    .micro-star-rater {
+        font-size: 3.5em
+    }
+}
+
+@media screen and (min-width:800px) {
+    .micro-star-rater {
+        font-size: 5em
+    }
+}
+
+.p5-exception {
+    z-index: 10000
+}
+
+.p5-exception h1 {
+    font-size: 1.8rem
+}
+
+.p5-exception>div {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 400px
+}
+
+
+
+
+
+
+
+.micro-tree ul.tree-item-children {
+    padding-left: 0;
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 0
+}
+
+.micro-tree ul.tree-hidden {
+    display: none
+}
+
+.micro-tree li.tree-item {
+    padding-left: 16px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+.micro-tree>ul.tree-item-children>li.tree-item {
+    padding-left: 0
+}
+
+.micro-tree li.tree-expanded>ul.tree-item-children>li.tree-item,.micro-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded {
+    background-image: url('tree-1.png'),url('tree-2.png');
+    background-position: 0 -100px,0 0;
+    background-repeat: no-repeat,repeat-y
+}
+
+.micro-tree li.tree-expanded>ul.tree-item-children>li.tree-item:last-child,.micro-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded:last-child {
+    background-image: url('tree-3.png');
+    background-position: 0 0
+}
+
+@keyframes tree-item-children-animate {
+    0% {
+        opacity: 0;
+        margin-left: -80px
+    }
+
+    100% {
+        opacity: 1;
+        margin-left: 0
+    }
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item {
+    opacity: 0;
+    animation-name: tree-item-children-animate;
+    animation-duration: .25s;
+    animation-fill-mode: forwards
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+1) {
+    animation-delay: .02s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+2) {
+    animation-delay: .04s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+3) {
+    animation-delay: .06s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+4) {
+    animation-delay: .08s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+5) {
+    animation-delay: .1s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+6) {
+    animation-delay: .12s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+7) {
+    animation-delay: .14s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+8) {
+    animation-delay: .16s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+9) {
+    animation-delay: .18s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+10) {
+    animation-delay: .2s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+11) {
+    animation-delay: .22s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+12) {
+    animation-delay: .24s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+13) {
+    animation-delay: .26s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+14) {
+    animation-delay: .28s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+15) {
+    animation-delay: .3s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+16) {
+    animation-delay: .32s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+17) {
+    animation-delay: .34s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+18) {
+    animation-delay: .36s
+}
+
+.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+19) {
+    animation-delay: .38s
+}
+
+.micro-tree li.tree-expanded>ul.tree-item-children>li.tree-leaf a.tree-item-label {
+    background-position: 0 -80px
+}
+
+.micro-tree a.tree-item-label {
+    padding-left: 16px;
+    background-image: url('tree-1.png');
+    background-position: 0 -40px;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    display: block;
+    height: 100%;
+    color: #a0a0a0
+}
+
+.micro-tree li.tree-expanded>a.tree-item-label {
+    background-position: 0 -60px
+}
+
+.micro-tree a.tree-item-label:hover {
+    background-color: rgba(0,0,0,.1)
+}
+
+.micro-tree li.tree-item>a.tree-selected {
+    background-color: rgba(128,128,128,.3)
+}
+
+.micro-tree a.tree-item-label span.icon {
+    width: 16px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 3px;
+    margin-top: 2px;
+    margin-bottom: -2px
+}
+
+.micro-tree a.tree-item-label span {
+    margin-left: 16px
+}
+
+.micro-tree a.tree-item-label .folder {
+    margin-left: -16px;
+    padding-left: 16px
+}
+
+.micro-tree a.tree-item-label .folder,.micro-tree a.tree-item-label .icon {
+    font-family: 'icomoon' !important;
+    color: #a0a0a0
+}
+
+.micro-tree a.tree-item-label .folder-open:before {
+    content: "\e930"
+}
+
+.micro-tree a.tree-item-label .folder-close:before {
+    content: "\e92f"
+}
+
+.micro-tree .file a.tree-item-label .icon:before {
+    content: "\e924"
+}
+.micro-codemirror-wrapper {
+    margin-bottom: 1rem;
+}

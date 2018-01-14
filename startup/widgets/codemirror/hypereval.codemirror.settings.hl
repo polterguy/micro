@@ -159,7 +159,6 @@ create-event:micro.codemirror.settings
             class:right
             widgets
               button:hypereval-settings-ok-button
-                style:"margin-bottom:0;"
                 class:larger
                 innerValue:Save
                 onclick
