@@ -59,7 +59,7 @@ html {
 /* Specific element types */
 
 /* "All" elements, or most of them at least */
-blockquote,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend,ol,p,pre,select,table,textarea,ul,article {
+blockquote,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend,ol,p,pre,select,table,textarea,ul,article,.button {
     margin-bottom: 1rem;
 }
 
@@ -69,48 +69,51 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* All form elements, including buttons */
-input, button, textarea, select {
+input, button, textarea, select, .button {
     padding: .5rem 1rem;
 }
 
 /* All form elements, including buttons */
-input, button, textarea, select {
+input, button, textarea, select, .button {
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
     outline: none;
 }
 
 /* All button types of elements */
-button, input[type=button], input[type=submit], input[type=reset] {
+button, input[type=button], input[type=submit], input[type=reset], .button {
     color: var(--button-color);
     background: var(--button-background);
-    background-size: 1px 4.8rem;
+    background-size: 1px calc(200% + 1rem);
     background-position: -1px -1px;
     transition: background .2s ease-out, box-shadow .2s ease-out;
     font-weight: 600;
     max-height:2.25rem; /* In case icons are too large */
 }
-button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
     background-position: -1px -2.4rem;
     transition: background .2s ease-out, box-shadow .2s ease-out;
 }
-button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus,
-button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus, .button:focus,
+button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active, .button:active {
     background-position: -1px -2.4rem;
     box-shadow: 0 0 7px var(--shadow-color);
     transition: background .2s ease-out, box-shadow .2s ease-out;
 }
 button[disabled], button[disabled].toggled,
+.button[disabled], .button[disabled].toggled,
 input[type=submit][disabled], input[type=submit][disabled].toggled {
     color: var(--form-element-disabled-color);
     cursor: not-allowed;
     background-position: -1px -1px;
     cursor: not-allowed;
 }
-button[disabled]:hover, button[disabled]:hover.toggled {
+button[disabled]:hover, button[disabled]:hover.toggled,
+.button[disabled]:hover, .button[disabled]:hover.toggled {
     background-position:inherit;
 }
 button[disabled]:hover, button[disabled].toggled:hover,
+.button[disabled]:hover, .button[disabled].toggled:hover,
 input[type=submit][disabled]:hover, input[type=submit][disabled]:hover.toggled {
     color: var(--form-element-disabled-color);
     cursor: not-allowed;
@@ -172,8 +175,8 @@ input[type=checkbox], input[type=radio] {
     margin-right: 1rem;
 }
 label input[type=checkbox], label input[type=radio] {
-    margin-bottom: -.5rem; /* Since height is 1.5, we'll need to remove .5 in margin somehow */
-    margin-top: -2px;/* Accommodating for border */
+    margin-bottom: calc(-.5rem + 1px); /* Since height is 1.5, we'll need to remove .5 in margin somehow, and accommodate for border */
+    margin-top: -1px;/* Accommodating for border */
 }
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     position: absolute;
@@ -182,9 +185,9 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 }
 input[type=checkbox]:checked:after {
     top:5%;
-    left:5%;
+    left:15%;
     content: "\002714";
-    font-size: calc(1.5rem - 20%);
+    font-size: calc(1.5rem - 30%);
     color: var(--color);
 }
 input[type=checkbox][disabled]:checked:after {
@@ -286,6 +289,9 @@ table tr:first-child td {
 table button {
     padding:5px 12px;
     font-size:.9rem;
+    margin-bottom:0;
+}
+table .strip {
     margin-bottom:0;
 }
 table.striped tr:nth-child(2n) td {
@@ -671,7 +677,7 @@ button.micro-widgets-tab-hamburger {
     right: 0;
     animation-fill-mode: forwards;
     border-bottom-left-radius: var(--border-radius);
-    padding: 1rem 1.5rem;
+    padding: .5rem 1.5rem 1rem 1.5rem;
     background: var(--background);
     z-index: 1000;
     user-select: none;
