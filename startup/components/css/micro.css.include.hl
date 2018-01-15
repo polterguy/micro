@@ -8,7 +8,7 @@ create-event:micro.css.include
   /*
    * Sanity checking arguments.
    */
-  micro.lambda.contract.min:x:/..
+  micro.lambda.contract.optional:x:/..
     skin:string
 
   /*
@@ -26,6 +26,26 @@ create-event:micro.css.include
     :x:/@micro.version?value
   p5.web.include-css-file:@MICRO/media/fonts.css?v={0}
     :x:/@micro.version?value
-  p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
-    :x:/../*/skin?value
-    :x:/@micro.version?value
+
+  /*
+   * Checking if caller supplied a skin.
+   */
+  if:x:/../*/skin?value
+    if:x:/../*/skin?value
+      ~:/
+      
+      /*
+       * Absolute path.
+       */
+      p5.web.include-css-file:{0}?v={1}
+        :x:/../*/skin?value
+        :x:/@micro.version?value
+
+    else
+      
+      /*
+       * Relative path.
+       */
+      p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
+        :x:/../*/skin?value
+        :x:/@micro.version?value
