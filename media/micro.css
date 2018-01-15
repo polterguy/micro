@@ -16,7 +16,8 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
     --color: #777;
     --background: #fbfbfb;
     --button-color: #777;
-    --button-background: linear-gradient(#f9f9f9,#b0b0b0);
+    --button-background: linear-gradient(#f9f9f9, #b0b0b0);
+    --button-toggled-background: linear-gradient(#b0b0b0, #f9f9f9);
     --anchor-color: #99f;
     --anchor-active-color: #77e;
     --form-element-color: #777;
@@ -88,7 +89,12 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
     background-position: -1px -1px;
     transition: background .2s ease-out, box-shadow .2s ease-out;
     font-weight: 600;
-    max-height:2.25rem; /* In case icons are too large */
+    height: calc(2.25rem);
+}
+button.toggled,input[type=button].toggled,input[type=submit].toggled,input[type=reset].toggled,.button.toggled {
+    background: var(--button-toggled-background);
+    background-size: 1px calc(200% + 1rem);
+    background-position: -1px -1px;
 }
 button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
     background-position: -1px -2.4rem;
@@ -176,7 +182,7 @@ input[type=checkbox], input[type=radio] {
 }
 label input[type=checkbox], label input[type=radio] {
     margin-bottom: calc(-.5rem + 1px); /* Since height is 1.5, we'll need to remove .5 in margin somehow, and accommodate for border */
-    margin-top: -1px;/* Accommodating for border */
+    margin-top: -2px;/* Accommodating for border */
 }
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     position: absolute;
@@ -244,7 +250,8 @@ code,pre {
 
 /* ul and ol elements */
 ol,ul {
-    margin-left: 2.5rem;
+    margin-left:0;
+    padding-left:2rem;
 }
 
 /* Horizontal ruler */
@@ -293,6 +300,7 @@ table button {
 }
 table .strip {
     margin-bottom:0;
+    height:auto;
 }
 table.striped tr:nth-child(2n) td {
     background: var(--table-striped-background);
@@ -456,6 +464,7 @@ select, textarea {
 /* Strips */
 .strip {
     margin-bottom: 1rem;
+    height: calc(2.25rem); /* In case icons are too large */
 }
 .strip>* {
     margin-bottom: 0;
@@ -554,6 +563,9 @@ select, textarea {
 }
 .right {
     text-align: right;
+}
+.right>.strip {
+    display:inline-block;
 }
 .justify {
     text-align: justify;
