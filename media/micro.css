@@ -9,33 +9,42 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 
     /* 
      * The ONLY pixel based value in Micro. Change this variable to increase the font-size of your pages.
-     * Basically, all other sizes are "derived" from this one, one way or another.
-     * So if you cange this value, you change the size of all form controls, and everything on your page.
+     * Basically, all other sizes are "derived" from this one, one way or another indirectly.
+     * So if you cange this value, you change the size of all form controls, and everything on your page
+     * will resize accordingly.
+     *
+     * Notice, the TreeView uses pixel based font-size, since it relies upon images to draw its lines.
+     * In a future release, I might consider fixing this, however for these reasons, the treeview cannot
+     * be resized, without overriding it in a skin file or something similar.
      */
-    --font-size: 18px;
+    --font-size: 16px;
     --color: #777;
     --background: #fbfbfb;
     --button-color: #777;
     --button-background: linear-gradient(#f9f9f9, #b0b0b0);
     --button-toggled-background: linear-gradient(#b0b0b0, #f9f9f9);
     --anchor-color: #99f;
+    --anchor-hover-color: #ccf;
     --anchor-active-color: #77e;
     --form-element-color: #777;
-    --form-element-background: #ffffff;
-    --form-element-disabled-background: #fefefe;
-    --form-element-disabled-color: #ccc;
-    --active-form-element-background: #ffffff;
+    --form-element-background: #fefefe;
+    --form-element-active-background: #ffffff;
+    --form-element-disabled-color: #aaa;
+    --form-element-disabled-background: #f5f5f5;
+    --form-element-padding: .5rem;
     --placeholder-color: #ccc;
     --border-color: #bbb;
-    --border-radius: .5rem;
+    --border-radius: .25rem;
     --shadow-color: rgba(0,0,0,.4);
     --success-background: linear-gradient(#efe,#afa);
-    --warning-background: linear-gradient(#fee,#faa);
+    --warning-background: linear-gradient(#fee,#fcc);
     --max-viewport-width: 1120px;
-    --table-striped-background: rgba(0,0,0,.01);
+    --table-striped-background: rgba(0,0,0,.05);
     --table-selected-background: rgba(0,0,0,.1);
-    --table-hover-background: rgba(0,0,0,.01);
+    --table-hover-background: rgba(0,0,0,.1);
 }
+
+
 
 /* "Global stuff" */
 * {
@@ -45,87 +54,86 @@ html, body {
     height: 100%;
 }
 html {
-    /* 
-     * Notice, this is the **only** absolute sized value in Micro, which makes it very
-     * easy for anyone to change the font size, and hence all other related sizing properties
-     * of Micro. Simply change the value of the "--font-size" variable in your own CSS file/skin, 
-     * and you have changed the size of the entire website.
-     */
     font-size: var(--font-size);
     font-family: var(--font-family);
     color: var(--color);
     background: var(--background);
 }
 
-/* Specific element types */
+
 
 /* "All" elements, or most of them at least */
-blockquote,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend,ol,p,pre,select,table,textarea,ul,article,.button {
-    margin-bottom: 1rem;
+blockquote,label,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend,ol,p,pre,select,table,textarea,ul,article,.button {
+    margin: 0 0 1rem 0;
 }
 
-/* All headers */
-h1, h2, h3, h4, h5, h6 {
-    margin-top:0;
+
+
+/* Specific element types */
+
+
+
+/* Sub-headers */
+h1>small, h2>small, h3>small, h4>small {
+    color:#aaa;
+    font-weight:300;
+    font-size:50%;
 }
+
+
 
 /* All form elements, including buttons */
 input, button, textarea, select, .button {
-    padding: .5rem 1rem;
-}
-
-/* All form elements, including buttons */
-input, button, textarea, select, .button {
+    padding: .4rem var(--form-element-padding); /* Notice .4rem, which makes sure p/q/etc shows their lower halfs in select elements */
+    vertical-align:top;
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
     outline: none;
+    height:2rem;
 }
 
-/* All button types of elements */
+
+
+/* Textarea specifics to allow for rows attribute to define height */
+textarea {
+    height:inherit;
+}
+
+
+
+/* Button types of elements */
 button, input[type=button], input[type=submit], input[type=reset], .button {
     color: var(--button-color);
     background: var(--button-background);
-    background-size: 1px calc(200% + 1rem);
-    background-position: -1px -1px;
-    transition: background .2s ease-out, box-shadow .2s ease-out;
-    font-weight: 600;
-    height: calc(2.25rem);
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 0;
+    transition: background-position .2s ease-out, box-shadow .2s ease-out;
+    min-width: 3rem;
 }
-button.toggled,input[type=button].toggled,input[type=submit].toggled,input[type=reset].toggled,.button.toggled {
+button.toggled, .button.toggled {
     background: var(--button-toggled-background);
-    background-size: 1px calc(200% + 1rem);
-    background-position: -1px -1px;
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 0;
 }
 button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
-    background-position: -1px -2.4rem;
-    transition: background .2s ease-out, box-shadow .2s ease-out;
+    background-position: 0 -2rem;
+    transition: background-position .2s ease-out, box-shadow .2s ease-out;
 }
 button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus, .button:focus,
 button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active, .button:active {
-    background-position: -1px -2.4rem;
+    background-position: 0 -2rem;
     box-shadow: 0 0 7px var(--shadow-color);
-    transition: background .2s ease-out, box-shadow .2s ease-out;
+    transition: background-position .2s ease-out, box-shadow .2s ease-out;
 }
-button[disabled], button[disabled].toggled,
-.button[disabled], .button[disabled].toggled,
-input[type=submit][disabled], input[type=submit][disabled].toggled {
+button[disabled], .button[disabled], 
+input[type=button][disabled], input[type=submit][disabled], input[type=reset][disabled] {
     color: var(--form-element-disabled-color);
     cursor: not-allowed;
-    background-position: -1px -1px;
+    background-position: 0 0;
     cursor: not-allowed;
 }
-button[disabled]:hover, button[disabled]:hover.toggled,
-.button[disabled]:hover, .button[disabled]:hover.toggled {
-    background-position:inherit;
-}
-button[disabled]:hover, button[disabled].toggled:hover,
-.button[disabled]:hover, .button[disabled].toggled:hover,
-input[type=submit][disabled]:hover, input[type=submit][disabled]:hover.toggled {
-    color: var(--form-element-disabled-color);
-    cursor: not-allowed;
-    background-position: -1px -1px;
-    box-shadow: none;
-}
+
+
 
 /* All non button types of form elements */
 input:not([type=button]):not([type=submit]):not([type=reset]), textarea, select {
@@ -136,10 +144,10 @@ input:not([type=button]):not([type=submit]):not([type=reset]), textarea, select 
 input:not([type=button]):not([type=submit]):not([type=reset]):focus,
 input:not([type=button]):not([type=submit]):not([type=reset]):active,
 textarea:focus, textarea:active, 
-select:focus, textarea:active {
+select:focus, select:active {
     box-shadow: 0 0 7px var(--shadow-color);
     transition: box-shadow .2s ease-out;
-    background: var(--active-form-element-background);
+    background: var(--form-element-active-background);
 }
 input:not([type=button]):not([type=submit]):not([type=reset])[disabled], 
 textarea[disabled], select[disabled] {
@@ -148,14 +156,18 @@ textarea[disabled], select[disabled] {
     cursor: not-allowed;
 }
 
-/* All input elements, except checkbox, radio, and buttons - Including textarea and select */
+
+
+/* All form elements, except checkbox and radio buttons */
 input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
 select, textarea {
-    width: 100%;
+    width: 100%; /* This will only kick in if viewport width is less than 800px wide */
     color: var(--form-element-color);
 }
 
-/* Placeholder for all types of elements that supports it */
+
+
+/* Placeholder values for text-input types of elements and textarea elements */
 ::-webkit-input-placeholder {
     color: var(--placeholder-color);
 }
@@ -166,50 +178,77 @@ select, textarea {
     color: var(--placeholder-color);
 }
 
-/* Making sure we can actually style select elements, radio buttons and checkboxes */
+
+
+/* Spans inside of labels */
+label>span {
+    vertical-align: middle;
+    margin-right:.5rem;
+}
+label>input[type=checkbox], label>input[type=radio] {
+    margin-right:1rem;
+}
+
+
+
+/* Labels */
+label {
+    height: calc(2rem - 2px); /* Accommodating for borders on other elements */
+    user-select: none;
+    display: inline-block;
+    padding: .4rem 0;
+    font-weight: bold;
+}
+
+
+
+/* Select elements, radio buttons, and checkboxes */
 select, input[type=checkbox], input[type=radio] {
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none; /* Will hopefully work in the future */
+    appearance: none;
 }
 
-/* Checkbox and radio buttons special styles */
+
+
+/* Checkbox and radio buttons commonalities */
 input[type=checkbox], input[type=radio] {
     position: relative;
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-right: 1rem;
-}
-label input[type=checkbox], label input[type=radio] {
-    margin-bottom: calc(-.5rem + 1px); /* Since height is 1.5, we'll need to remove .5 in margin somehow, and accommodate for border */
-    margin-top: -2px;/* Accommodating for border */
+    height: 1.25rem;
+    width: 1.25rem;
 }
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     position: absolute;
-    color: var(--form-txt-col);
+    color: var(--color);
     display: block;
+    padding: .125rem;
 }
+
+
+
+/* Checkbox styles */
 input[type=checkbox]:checked:after {
-    top:5%;
-    left:15%;
     content: "\002714";
-    font-size: calc(1.5rem - 30%);
     color: var(--color);
 }
 input[type=checkbox][disabled]:checked:after {
     color: var(--form-element-disabled-color);
     cursor: not-allowed;
 }
+
+
+
+/* Radio buttons styles */
 input[type=radio] {
     border-radius: 50%;
 }
 input[type=radio]:checked:after {
-    top:15%;
-    left:15%;
+    top: calc(.25rem - 1px);
+    left: calc(.25rem - 1px);
     content: ' ';
     background: var(--color);
-    width: 70%;
-    height: 70%;
+    width: .5rem;
+    height: .5rem;
     border-radius: 50%;
 }
 input[type=radio][disabled]:checked:after {
@@ -217,16 +256,7 @@ input[type=radio][disabled]:checked:after {
     cursor: not-allowed;
 }
 
-/* Labels */
-label {
-    user-select: none;
-    font-weight: 600;
-    display:inline-block;
-    margin-top:.5rem;
-}
-label>span:first-child {
-    margin-right:.5rem;
-}
+
 
 /* Hyperlinks */
 a {
@@ -237,33 +267,44 @@ a {
 a:active, a:focus {
     color: var(--anchor-active-color);
 }
+a:hover {
+    color: var(--anchor-hover-color);
+}
+
+
 
 /* Special styles for pre and code elements */
 pre {
     border-radius: var(--border-radius);
-    background: #f9f9f9;
     padding: 1rem;
 }
-code,pre {
+code, pre {
     font-family: monospace;
+    background: #f0f0f0;
 }
 
+
+
 /* ul and ol elements */
-ol,ul {
+ol, ul {
     margin-left:0;
     padding-left:2rem;
 }
 
+
+
 /* Horizontal ruler */
 hr {
-    height: 0;
-    border-color: var(--border-color);
+    border-top: 1px solid #c7c7c7;
+    margin:1rem .5rem;
 }
+
+
 
 /* Blockquotes */
 blockquote {
     font-size: 1.25em;
-    padding-left: .5rem;
+    padding-left: 1.5rem;
     position: relative;
     color: #bbb;
 }
@@ -272,8 +313,10 @@ blockquote:before {
     font-size: 3rem;
     position: absolute;
     top: -.5rem;
-    left: -1rem;
+    left: 0;
 }
+
+
 
 /* Tables */
 table {
@@ -283,6 +326,7 @@ table {
 }
 table td, table th {
     padding: .2rem 1rem .2rem 0;
+    text-align: left;
 }
 table td:last-child, table th:last-child {
     padding: .2rem 0;
@@ -293,29 +337,34 @@ table td {
 table tr:first-child td {
     border-top-style: none;
 }
-table button {
-    padding:5px 12px;
-    font-size:.9rem;
+table>tbody>tr>td>button {
     margin-bottom:0;
 }
-table .strip {
+table>tbody>tr>td>div.strip {
     margin-bottom:0;
-    height:auto;
 }
 table.striped tr:nth-child(2n) td {
     background: var(--table-striped-background);
 }
-table td.selected, table tr.selected, table.hover tr:hover td, table.striped td.selected, table.striped tr.selected {
+table td.selected, table tr.selected, table.striped td.selected, table.striped tr.selected {
     background: var(--table-selected-background);
 }
-table.striped tr.no-hover:hover:nth-child(2n) td {
+table.hover tr:hover td {
     background: var(--table-hover-background);
 }
-table.hover tbody tr {
-    cursor: pointer;
+table.hover>tbody>tr {
+    cursor: default;
+}
+table td>pre,
+table td>p:last-child {
+    margin-bottom: 0;
 }
 
+
+
 /* Grid system */
+
+
 
 /* Containers */
 .container, .container-fullscreen {
@@ -331,28 +380,466 @@ table.hover tbody tr {
     width: 100%;
 }
 
+
+
 /* Rows */
 .row {
     display: flex;
     flex-wrap: wrap;
 }
 .row .row {
-    margin-left: -1rem;
+    margin-left: -1rem; /* Since each column has 1rem left padding, we remove this here, to allow for nesting rows */
 }
+
+
 
 /* Columns */
 .col,.col-10,.col-20,.col-25,.col-30,.col-33,.col-40,.col-50,.col-60,.col-67,.col-70,.col-75,.col-80,.col-90,.col-100 {
     flex: 100%;
     padding: 0 0 0 1rem;
     max-width: 100%;
+    position: relative;
 }
 
 .grow {
+    /* This class allows for the content of a column to have a minimum size according to its content, which prevents overflow when elements are too large to display in given width */
     min-width:min-content;
 }
 
+
+
+/* Strips */
+.strip {
+    margin-bottom: 1rem;
+    display: flex;
+    border: solid 1px var(--border-color);
+    border-radius: var(--border-radius);
+    max-width: fit-content;
+}
+.strip>* {
+    margin-bottom: 0;
+    white-space: nowrap;
+    height: 2rem;
+    border: none;
+    border-left: solid 1px var(--border-color);
+    border-radius: 0;
+}
+.strip>*:first-child {
+    border-left: none;
+}
+.strip>label {
+    background: var(--button-background);
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 0;
+    color: var(--form-element-color);
+    padding-left:.5rem;
+    padding-right:.5rem;
+}
+.strip>label>input[type=checkbox], label>input[type=radio] {
+    margin-right:0;
+}
+.strip>select,
+.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]) {
+    min-width: 5rem;
+}
+.strip:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+/* Fill */
+.fill {
+    min-width: 100%;
+}
+.fill.strip {
+    display: flex;
+}
+.fill.strip>* {
+    white-space: nowrap;
+}
+.fill.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=radio]):not([type=checkbox]),
+.fill.strip>select {
+    flex: 2;
+}
+
+
+
+/* Extension widgets */
+
+
+
+/* Modal widget */
+.micro-body-open {
+    /* Preventing body scroll when window is open */
+    overflow-y: hidden;
+}
+.micro-widgets-modal, .micro-widgets-modal-content {
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+@keyframes micro-fade-in {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+}
+@keyframes micro-drop-down {
+from {
+    margin-top: -500px;
+    opacity: .1;
+}
+to {
+    margin-top: 2rem;
+    opacity: 1;
+}
+}
+.micro-widgets-modal {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 1000;
+    animation-name: micro-fade-in;
+    overflow-y: auto;
+}
+.micro-widgets-modal-content {
+    width: calc(vw - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background: var(--background);
+    border-radius: var(--border-radius);
+    padding: 1.5rem 2rem 0 2rem;
+    overflow: auto;
+    animation-name: micro-drop-down;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+@media screen and (min-width:800px) {
+.micro-widgets-modal-content {
+    width: calc(800px - 2rem);
+    margin-left:auto;
+    margin-right:auto;
+}
+}
+
+
+
+/* Tab control */
+.micro-widgets-tab-buttons {
+    margin-left: var(--border-radius);
+}
+.micro-widgets-tab-buttons button {
+    display: none; /* Overridden when viewport exceeds 800px */
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-right: .125rem;
+}
+.micro-widgets-tab-display-buttons button {
+    display: inline-block;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom: solid 1px var(--border-color);
+}
+button.micro-widgets-tab-hamburger {
+    display: inline-block;
+    width: 3rem;
+}
+button.micro-widgets-tab-active {
+    background: var(--background);
+    height: calc(2rem + 1px);
+    margin-bottom: -1px;
+    box-shadow: none;
+}
+.micro-widgets-tab-views {
+    border: solid 1px var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+
+
+/* Info window */
+@keyframes micro-windows-info {
+0%,100% {
+    margin-top: -200px;
+    opacity: 0;
+}
+
+20%,80% {
+    margin-top: 0;
+    opacity: 1;
+}
+}
+.micro-windows-info {
+    position: fixed;
+    top: 0;
+    right: 0;
+    animation-fill-mode: forwards;
+    border-bottom-left-radius: var(--border-radius);
+    padding: .5rem 1.5rem .5rem 1.5rem;
+    background: var(--background);
+    z-index: 5000;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 2px 3px 7px var(--shadow-color);
+    animation-name: micro-windows-info;
+    animation-duration: 2.5s;
+    border-left: solid 1px rgba(0,0,0,.2);
+    border-bottom: solid 1px rgba(0,0,0,.2);
+    font-size: .8rem;
+}
+.micro-windows-info label {
+    margin-bottom: 0;
+    font-weight: normal;
+    color: #999;
+}
+
+
+
+/* TreeView */
+.micro-widgets-tree {
+    font-size: 16px; /* NOTICE, since the treeview relies upon images to draw its lines by default, we must override its font size */
+}
+.micro-widgets-tree span {
+    vertical-align: inherit;
+}
+.micro-widgets-tree ul.tree-item-children {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+    margin-top: -2px;
+}
+.micro-widgets-tree ul.tree-hidden {
+    display: none;
+}
+.micro-widgets-tree li.tree-item {
+    padding-left: 16px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.micro-widgets-tree>ul.tree-item-children>li.tree-item {
+    padding-left: 0;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item,.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded {
+    background-image: url('images/tree-1.png'),url('images/tree-2.png');
+    background-position: 0 -60px,0 0;
+    background-repeat: no-repeat,repeat-y;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item:last-child,
+.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded:last-child {
+    background-image: url('images/tree-3.png');
+    background-position: 0 0;
+}
+@keyframes tree-item-children-animate {
+0% {
+    opacity: 0;
+    margin-left: -80px;
+}
+
+100% {
+    opacity: 1;
+    margin-left: 0;
+}
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item {
+    opacity: 0;
+    animation-name: tree-item-children-animate;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+1) {
+    animation-delay: .02s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+2) {
+    animation-delay: .04s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+3) {
+    animation-delay: .06s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+4) {
+    animation-delay: .08s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+5) {
+    animation-delay: .1s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+6) {
+    animation-delay: .12s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+7) {
+    animation-delay: .14s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+8) {
+    animation-delay: .16s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+9) {
+    animation-delay: .18s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+10) {
+    animation-delay: .2s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+11) {
+    animation-delay: .22s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+12) {
+    animation-delay: .24s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+13) {
+    animation-delay: .26s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+14) {
+    animation-delay: .28s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+15) {
+    animation-delay: .3s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+16) {
+    animation-delay: .32s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+17) {
+    animation-delay: .34s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+18) {
+    animation-delay: .36s;
+}
+.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+19) {
+    animation-delay: .38s;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-leaf a.tree-item-label {
+    background-position: 0 -40px;
+}
+.micro-widgets-tree a.tree-item-label {
+    padding-left: 16px;
+    background-image: url('images/tree-1.png');
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    display: block;
+    height: 100%;
+    color: #a0a0a0;
+}
+.micro-widgets-tree li.tree-expanded>a.tree-item-label {
+    background-position: 0 -20px;
+}
+.micro-widgets-tree a.tree-item-label:hover {
+    background-color: rgba(0,0,0,.1);
+}
+.micro-widgets-tree li.tree-item>a.tree-selected {
+    background-color: rgba(128,128,128,.3);
+}
+.micro-widgets-tree a.tree-item-label span.icon {
+    width: 16px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 3px;
+    margin-top: 2px;
+    margin-bottom: -2px;
+}
+.micro-widgets-tree a.tree-item-label span {
+    margin-left: 16px;
+}
+.micro-widgets-tree a.tree-item-label .folder {
+    margin-left: -16px;
+    padding-left: 16px;
+}
+.micro-widgets-tree a.tree-item-label .folder,.micro-widgets-tree a.tree-item-label .icon {
+    font-family: 'icomoon' !important;
+    color: #a0a0a0;
+}
+.micro-widgets-tree a.tree-item-label .folder-open:before {
+    content: "\e930";
+}
+.micro-widgets-tree a.tree-item-label .folder-close:before {
+    content: "\e92f";
+}
+.micro-widgets-tree .file a.tree-item-label .icon:before {
+    content: "\e924";
+}
+
+
+
+/* Misc classes */
+.air {
+    margin: 1rem;
+}
+.air-top {
+    margin-top: 1rem;
+}
+.air-right {
+    margin-right: 1rem;
+}
+.air-bottom {
+    margin-bottom: 1rem;
+}
+.air-left {
+    margin-left: 1rem;
+}
+.air-inner {
+    padding: 1rem 1rem 0 1rem;
+}
+.bg {
+    background-color:#fefefe;
+}
+.success {
+    background: var(--success-background);
+}
+.warning {
+    background: var(--warning-background);
+}
+.left {
+    text-align: left;
+}
+.left>.strip,
+.left.strip {
+    float: left;
+    overflow: auto;
+}
+.right {
+    text-align: right;
+    overflow: auto;
+}
+.right>.strip,
+.right.strip {
+    float: right;
+}
+.center {
+    text-align: center;
+}
+.justify {
+    text-align: justify;
+}
+.shaded {
+    box-shadow: 2px 2px 5px var(--shadow-color);
+    margin-bottom: 1rem;
+}
+.rounded {
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+}
+.hide {
+    display: none !important
+}
+.capitalize:first-letter {
+    text-transform: capitalize;
+}
+
+
+
 /* Wide screens */
 @media screen and (min-width:800px) {
+
+/* Columns */
 .col {
     flex: 1
 }
@@ -412,6 +899,8 @@ table.hover tbody tr {
     flex: 100%;
     max-width: 100%;
 }
+
+/* Offset */
 .offset-10 {
     margin-left: 10%;
 }
@@ -452,260 +941,41 @@ table.hover tbody tr {
     margin-left: 90%;
 }
 
-/* All input elements, except checkbox, radio, and buttons - Including textarea and select */
+/* All input elements, except checkboxes, radio button, and buttons - Including textarea and select */
+/* This ensures that these elements doesn't take up 100% width, which is their default value, beneath 800px viewport sizes */
 input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
 select, textarea {
-    width: 400px;
+    width: 15rem;
     max-width: 100%;
-    color: var(--form-element-color);
 }
+button.large {
+    min-width: 5rem;
+    padding-left: 35px;
+    padding-right: 35px;
 }
-
-/* Strips */
-.strip {
-    margin-bottom: 1rem;
-    height: calc(2.25rem); /* In case icons are too large */
+.strip>label.description {
+    min-width: 5rem;
 }
-.strip>* {
-    margin-bottom: 0;
-    float: left;
-    border: solid 1px var(--border-color);
-    border-radius: 0;
-    border-left-style: none;
-}
-.strip:not([style*="display:none"])>:first-child {
-    border-top-left-radius: var(--border-radius);
-    border-bottom-left-radius: var(--border-radius);
-    border-left-style: solid;
-}
-.strip:not([style*="display:none"])>:last-child {
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-}
-.strip>label {
-    padding: .5rem 1rem;
-    background: var(--button-background);
-    background-size: 1px 4.8rem;
-    background-position: -1px -1px;
-    color: var(--form-element-color);
-    margin-top:0;
-}
-.strip>label>input[type=checkbox], .strip>label>input[type=radio] {
-    margin-right:0;
-}
-.strip>span>label:not(:last-child) {
-    margin-right:1rem;
-}
-.strip>span>label>input {
-    margin-top: calc(-.5rem - 1px);
-    margin-bottom: calc(-.5rem + 1px);
-}
-.strip>label:first-child {
+.strip>label.description-7 {
     min-width: 7rem;
 }
-.strip:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Fill */
-.fill {
-    width: 100% !important;
-}
-.fill.strip {
-    display: flex;
-}
-.fill.strip>* {
-    white-space: nowrap;
-    min-width: auto;
-}
-.fill.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=radio]):not([type=checkbox]),
-.fill.strip>select {
-    flex: 2;
-    min-width: 3rem !important;
-    width: auto;
-}
-
-/* Misc classes */
-.air {
-    margin: 1rem;
-}
-.air-top {
-    margin-top: 1rem;
-}
-.air-right {
-    margin-right: 1rem;
-}
-.air-bottom {
-    margin-bottom: 1rem;
-}
-.air-left {
-    margin-left: 1rem;
-}
-.air-inner {
-    padding: 1rem 1rem 0 1rem;
-}
-.bg {
-    background-color:#fefefe;
-}
-.success {
-    background: var(--success-background);
-}
-.warning {
-    background: var(--warning-background);
-}
-.center {
-    text-align: center;
-}
-.left {
-    text-align: left;
-}
-.right {
-    text-align: right;
-}
-.right>.strip {
-    display:inline-block;
-}
-.justify {
-    text-align: justify;
-}
-.shaded {
-    box-shadow: 2px 2px 5px var(--shadow-color);
-    margin-bottom:1rem;
-}
-.rounded {
-    border-radius: var(--border-radius);
-}
-.hide {
-    display: none !important
-}
-
-/* Extension widgets */
-
-/* Modal widget */
-.micro-widgets-modal, .micro-widgets-modal .micro-widgets-modal-content {
-    animation-duration: .5s;
-    animation-fill-mode: forwards;
-}
-@keyframes micro-fade-in {
-from {
-    opacity: 0;
-}
-to {
-    opacity: 1;
-}
-}
-@keyframes micro-drop-down {
-from {
-    margin-top: -500px;
-    opacity: .1;
-}
-to {
-    margin-top: 2rem;
-    opacity: 1;
-}
-}
-.micro-widgets-modal {
-    display: block !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.4);
-    z-index: 1000;
-    animation-name: micro-fade-in;
-    overflow-y: auto;
-}
-.micro-widgets-modal-content {
-    width: calc(vw - 2rem);
-    margin-left: 1rem;
-    margin-right: 1rem;
-    background: var(--background);
-    border-radius: 5px;
-    padding: 1rem 2rem 0 2rem;
-    overflow: auto;
-    animation-name: micro-drop-down;
-    position: relative;
-    margin-bottom: 2rem;
-}
-
-@media screen and (min-width:800px) {
-.micro-widgets-modal-content {
-    width: calc(800px - 2rem);
-    margin-left:auto;
-    margin-right:auto;
-}
-}
-
-/* Tab control */
 .micro-widgets-tab-buttons button {
-    display: none
-}
-.micro-widgets-tab-display-buttons button {
-    display: list-item;
-    width: 150px;
-    margin-right: 15px
+    display: inline-block;
 }
 button.micro-widgets-tab-hamburger {
-    display: inline-block;
-    margin-bottom: 0;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: none;
-    margin-right: 5px;
-    width: auto;
-    float: none
+    display: none;
 }
-.micro-widgets-tab-active {
-    background: var(--wid-darker-col)
-}
-.micro-widgets-tab .micro-widgets-tab-views {
-    border-top: solid var(--border-width) var(--wid-border-col);
-    padding-top: 1rem
-}
-.micro-widgets-tab-border .micro-widgets-tab-views {
-    border: var(--border-width) solid var(--wid-border-col);
-    border-radius: 0 var(--border-radius) 0 0;
-    padding: 1rem
-}
+} /* End of @media query 800px */
 
-/* Bubble window */
-@keyframes micro-windows-info {
-0%,100% {
-    margin-top: -200px;
-    opacity: 0;
-}
 
-20%,80% {
-    margin-top: 0;
-    opacity: 1;
-}
-}
-.micro-windows-info {
-    position: fixed;
-    top: 0;
-    right: 0;
-    animation-fill-mode: forwards;
-    border-bottom-left-radius: var(--border-radius);
-    padding: .5rem 1.5rem 1rem 1.5rem;
-    background: var(--background);
-    z-index: 1000;
-    user-select: none;
-    cursor: pointer;
-    box-shadow: 2px 3px 7px var(--shadow-color);
-    animation-name: micro-windows-info;
-    animation-duration: 2.5s;
-    border-left:solid 1px rgba(0,0,0,.2);
-    border-bottom:solid 1px rgba(0,0,0,.2);
-    font-size:.8rem;
-}
-.micro-windows-info label {
-    margin-bottom: 0;
-    font-weight:normal;
-    color:#999;
-}
+
+
+
+
+
+
+
+
 
 
 
@@ -905,216 +1175,3 @@ button.micro-widgets-tab-hamburger {
     }
 }
 
-.p5-exception {
-    z-index: 10000
-}
-
-.p5-exception h1 {
-    font-size: 1.8rem
-}
-
-.p5-exception>div {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 400px
-}
-
-
-
-
-
-
-
-.micro-tree ul.tree-item-children {
-    padding-left: 0;
-    list-style: none;
-    margin-left: 0;
-    margin-bottom: 0
-}
-
-.micro-tree ul.tree-hidden {
-    display: none
-}
-
-.micro-tree li.tree-item {
-    padding-left: 16px;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    white-space: nowrap
-}
-
-.micro-tree>ul.tree-item-children>li.tree-item {
-    padding-left: 0
-}
-
-.micro-tree li.tree-expanded>ul.tree-item-children>li.tree-item,.micro-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded {
-    background-image: url('tree-1.png'),url('tree-2.png');
-    background-position: 0 -100px,0 0;
-    background-repeat: no-repeat,repeat-y
-}
-
-.micro-tree li.tree-expanded>ul.tree-item-children>li.tree-item:last-child,.micro-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded:last-child {
-    background-image: url('tree-3.png');
-    background-position: 0 0
-}
-
-@keyframes tree-item-children-animate {
-    0% {
-        opacity: 0;
-        margin-left: -80px
-    }
-
-    100% {
-        opacity: 1;
-        margin-left: 0
-    }
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item {
-    opacity: 0;
-    animation-name: tree-item-children-animate;
-    animation-duration: .25s;
-    animation-fill-mode: forwards
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+1) {
-    animation-delay: .02s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+2) {
-    animation-delay: .04s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+3) {
-    animation-delay: .06s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+4) {
-    animation-delay: .08s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+5) {
-    animation-delay: .1s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+6) {
-    animation-delay: .12s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+7) {
-    animation-delay: .14s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+8) {
-    animation-delay: .16s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+9) {
-    animation-delay: .18s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+10) {
-    animation-delay: .2s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+11) {
-    animation-delay: .22s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+12) {
-    animation-delay: .24s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+13) {
-    animation-delay: .26s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+14) {
-    animation-delay: .28s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+15) {
-    animation-delay: .3s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+16) {
-    animation-delay: .32s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+17) {
-    animation-delay: .34s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+18) {
-    animation-delay: .36s
-}
-
-.micro-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+19) {
-    animation-delay: .38s
-}
-
-.micro-tree li.tree-expanded>ul.tree-item-children>li.tree-leaf a.tree-item-label {
-    background-position: 0 -80px
-}
-
-.micro-tree a.tree-item-label {
-    padding-left: 16px;
-    background-image: url('tree-1.png');
-    background-position: 0 -40px;
-    background-repeat: no-repeat;
-    text-decoration: none;
-    display: block;
-    height: 100%;
-    color: #a0a0a0
-}
-
-.micro-tree li.tree-expanded>a.tree-item-label {
-    background-position: 0 -60px
-}
-
-.micro-tree a.tree-item-label:hover {
-    background-color: rgba(0,0,0,.1)
-}
-
-.micro-tree li.tree-item>a.tree-selected {
-    background-color: rgba(128,128,128,.3)
-}
-
-.micro-tree a.tree-item-label span.icon {
-    width: 16px;
-    height: 14px;
-    display: inline-block;
-    margin-right: 3px;
-    margin-top: 2px;
-    margin-bottom: -2px
-}
-
-.micro-tree a.tree-item-label span {
-    margin-left: 16px
-}
-
-.micro-tree a.tree-item-label .folder {
-    margin-left: -16px;
-    padding-left: 16px
-}
-
-.micro-tree a.tree-item-label .folder,.micro-tree a.tree-item-label .icon {
-    font-family: 'icomoon' !important;
-    color: #a0a0a0
-}
-
-.micro-tree a.tree-item-label .folder-open:before {
-    content: "\e930"
-}
-
-.micro-tree a.tree-item-label .folder-close:before {
-    content: "\e92f"
-}
-
-.micro-tree .file a.tree-item-label .icon:before {
-    content: "\e924"
-}
-.micro-codemirror-wrapper {
-    margin-bottom: 1rem;
-}

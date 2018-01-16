@@ -94,7 +94,7 @@ create-event:micro.widgets.tree
   return
     container
       _root-tree
-      class:micro-tree
+      class:micro-widgets-tree
       oninit
 
         /*

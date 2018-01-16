@@ -2,24 +2,8 @@
 :root {
     --font-family: Roboto;
     --font-size:16px;
-    --color: #777;
-    --background: #fbfbfb;
-    --button-color: #777;
-    --button-background: linear-gradient(#f9f9f9,#b0b0b0);
-    --anchor-color: #99f;
-    --anchor-active-color:#77e;
-    --form-element-color: #777;
-    --form-element-background: #ffffff;
-    --form-element-disabled-background:#fefefe;
-    --form-element-disabled-color:#ccc;
-    --active-form-element-background: #ffffff;
-    --placeholder-color: #ccc;
-    --border-color: #bbb;
     --border-radius: .2rem;
     --shadow-color: rgba(0,0,0,.3);
-    --success-background:linear-gradient(#efe,#afa);
-    --warning-background:linear-gradient(#fee,#faa);
-    --max-viewport-width:1120px;
 }
 
 /* Importing Robota font from Google */
