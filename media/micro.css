@@ -415,6 +415,7 @@ table td>p:last-child {
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
     max-width: fit-content;
+    overflow: hidden;
 }
 .strip>* {
     margin-bottom: 0;
@@ -521,14 +522,6 @@ to {
     animation-name: micro-drop-down;
     position: relative;
     margin-bottom: 2rem;
-}
-
-@media screen and (min-width:800px) {
-.micro-widgets-modal-content {
-    width: calc(800px - 2rem);
-    margin-left:auto;
-    margin-right:auto;
-}
 }
 
 
@@ -964,6 +957,11 @@ button.large {
 }
 button.micro-widgets-tab-hamburger {
     display: none;
+}
+.micro-widgets-modal-content {
+    width: calc(800px - 2rem);
+    margin-left:auto;
+    margin-right:auto;
 }
 } /* End of @media query 800px */
 
