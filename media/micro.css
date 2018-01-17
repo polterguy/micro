@@ -52,6 +52,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 }
 html, body {
     height: 100%;
+    overflow: auto;
 }
 html {
     font-size: var(--font-size);
@@ -209,8 +210,9 @@ label.above {
 label.above>span {
     display: block;
     height: 2rem;
+    margin-bottom: var(--form-element-padding);
 }
-label.above>input,label.above>textarea {
+label.above>input, label.above>textarea {
     margin-bottom: 1rem;
 }
 
@@ -389,10 +391,12 @@ table td>p:last-child {
 .strip>* {
     margin-bottom: 0;
     white-space: nowrap;
-    height: 2rem;
     border: none;
     border-left: solid 1px var(--border-color);
     border-radius: 0;
+}
+.strip>*:first-child {
+    border-left: none;
 }
 .strip>label {
     background: var(--button-background);
@@ -547,18 +551,16 @@ to {
 }
 button.micro-widgets-tab-hamburger {
     display: inline-block;
-    width: 3rem;
 }
 button.micro-widgets-tab-active {
     background: var(--background);
-    height: calc(2rem + 1px);
-    margin-bottom: -1px;
     box-shadow: none;
 }
 .micro-widgets-tab-views {
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
     padding: 1rem;
+    margin-top: -1px;
 }
 
 
