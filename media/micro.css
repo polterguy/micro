@@ -239,7 +239,6 @@ input[type=checkbox], input[type=radio] {
 }
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     position: absolute;
-    color: var(--color);
     display: block;
     padding: .125rem;
 }
@@ -249,7 +248,7 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 /* Checkbox styles */
 input[type=checkbox]:checked:after {
     content: "\002714";
-    color: var(--color);
+    color: var(--form-element-color);
 }
 input[type=checkbox][disabled]:checked:after {
     color: var(--form-element-disabled-color);
@@ -266,7 +265,7 @@ input[type=radio]:checked:after {
     top: calc(.25rem - 1px);
     left: calc(.25rem - 1px);
     content: ' ';
-    background: var(--color);
+    background: var(--form-element-color);
     width: .5rem;
     height: .5rem;
     border-radius: 50%;

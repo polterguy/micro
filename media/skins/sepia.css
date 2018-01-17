@@ -1,0 +1,52 @@
+/* Setting color scheme for our skin */
+:root {
+    --font-family: 'Times New Roman';
+    --font-size: 18px;
+    --color: #e0e0e0;
+    --background: #555;
+    --form-element-color: #888;
+    --form-element-background-color: #e0e0e0;
+    --form-element-active-background: #fafafa;
+    --form-element-disabled-background-color: #c0c0c0;
+    --button-color: #888;
+    --button-background: linear-gradient(#e0e0e0, #c0c0c0);
+    --button-toggled-background: linear-gradient(#c0c0c0, #e0e0e0);
+    --border-color: #999;
+    --border-radius: 3px;
+
+    --anchor-color: #99f;
+    --anchor-hover-color: #ccf;
+    --anchor-active-color: #77e;
+    --form-element-disabled-color: #aaa;
+    --form-element-padding: .5rem;
+    --placeholder-color: #ccc;
+    --shadow-color: rgba(0,0,0,.4);
+    --success-background: linear-gradient(#efe,#afa);
+    --warning-background: linear-gradient(#fee,#fcc);
+    --max-viewport-width: 1120px;
+    --table-striped-background: rgba(0,0,0,.05);
+    --table-selected-background: rgba(0,0,0,.1);
+    --table-hover-background: rgba(0,0,0,.1);
+}
+
+h1, h2, h3, h4, h5, h6, label {
+    font-family: Helvetica;
+    font-weight: normal;
+}
+pre, code {
+    color: #777;
+}
+code {
+    color: #777;
+    border-radius: var(--border-radius);
+}
+
+
+/* Adding borders to "shaded" class */
+.shaded {
+    border:solid 1px var(--border-color);
+}
+
+.bg {
+    background: linear-gradient(#777,#555);
+}
