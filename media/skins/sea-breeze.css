@@ -7,7 +7,7 @@
     --button-background: linear-gradient(#fefeff, #b0b0fe);
     --button-toggled-background: linear-gradient(#b0b0fe, #fefeff);
     --form-element-color: #7777d0;
-    --form-element-background: #fafaff;
+    --form-element-background-color: #fafaff;
     --form-element-active-background: #fdfdff;
     --form-element-padding: 1rem;
     --placeholder-color: #d0d0fe;

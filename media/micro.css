@@ -27,10 +27,10 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
     --anchor-hover-color: #ccf;
     --anchor-active-color: #77e;
     --form-element-color: #777;
-    --form-element-background: #fefefe;
+    --form-element-background-color: #fdfdfd;
     --form-element-active-background: #ffffff;
     --form-element-disabled-color: #aaa;
-    --form-element-disabled-background: #f5f5f5;
+    --form-element-disabled-background-color: #f5f5f5;
     --form-element-padding: .5rem;
     --placeholder-color: #ccc;
     --border-color: #bbb;
@@ -75,28 +75,29 @@ blockquote,label,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend
 
 /* Sub-headers */
 h1>small, h2>small, h3>small, h4>small {
-    color:#aaa;
-    font-weight:300;
-    font-size:50%;
+    color: #aaa;
+    font-weight: 300;
+    font-size: 50%;
 }
 
 
 
 /* All form elements, including buttons */
 input, button, textarea, select, .button {
-    padding: .4rem var(--form-element-padding); /* Notice .4rem, which makes sure p/q/etc shows their lower halfs in select elements */
-    vertical-align:top;
+    padding: var(--form-element-padding);
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
     outline: none;
-    height:2rem;
+    height: calc (1rem + 2 * var(--form-element-padding));
+    vertical-align: top;
+    display: inline-block;
 }
 
 
 
 /* Textarea specifics to allow for rows attribute to define height */
 textarea {
-    height:inherit;
+    height: inherit;
 }
 
 
@@ -107,7 +108,7 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
     background: var(--button-background);
     background-size: 1px calc(200% + 2px);
     background-position: 0 0;
-    transition: background-position .2s ease-out, box-shadow .2s ease-out;
+    transition: background-position .2s ease-out;
     min-width: 3rem;
 }
 button.toggled, .button.toggled {
@@ -117,13 +118,12 @@ button.toggled, .button.toggled {
 }
 button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
     background-position: 0 -2rem;
-    transition: background-position .2s ease-out, box-shadow .2s ease-out;
+    transition: background-position .2s ease-out;
 }
 button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus, .button:focus,
 button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active, .button:active {
     background-position: 0 -2rem;
-    box-shadow: 0 0 7px var(--shadow-color);
-    transition: background-position .2s ease-out, box-shadow .2s ease-out;
+    transition: background-position .2s ease-out;
 }
 button[disabled], .button[disabled], 
 input[type=button][disabled], input[type=submit][disabled], input[type=reset][disabled] {
@@ -137,23 +137,28 @@ input[type=button][disabled], input[type=submit][disabled], input[type=reset][di
 
 /* All non button types of form elements */
 input:not([type=button]):not([type=submit]):not([type=reset]), textarea, select {
-    background: var(--form-element-background);
-    transition: box-shadow .2s ease-out;
-    background: var(--form-element-background);
+    background-color: var(--form-element-background-color);
+    transition: background-color .2s ease-out;
 }
 input:not([type=button]):not([type=submit]):not([type=reset]):focus,
 input:not([type=button]):not([type=submit]):not([type=reset]):active,
 textarea:focus, textarea:active, 
 select:focus, select:active {
-    box-shadow: 0 0 7px var(--shadow-color);
-    transition: box-shadow .2s ease-out;
-    background: var(--form-element-active-background);
+    background-color: var(--form-element-active-background);
+    transition: background-color .2s ease-out;
 }
 input:not([type=button]):not([type=submit]):not([type=reset])[disabled], 
 textarea[disabled], select[disabled] {
-    background: var(--form-element-disabled-background);
+    background-color: var(--form-element-disabled-background-color);
     color: var(--placeholder-color);
     cursor: not-allowed;
+}
+
+/* All input elements, except checkboxes, radio button, and buttons - Including textarea and select */
+input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
+select, textarea {
+    width: 10rem;
+    max-width: 100%;
 }
 
 
@@ -161,7 +166,6 @@ textarea[disabled], select[disabled] {
 /* All form elements, except checkbox and radio buttons */
 input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
 select, textarea {
-    width: 100%; /* This will only kick in if viewport width is less than 800px wide */
     color: var(--form-element-color);
 }
 
@@ -180,24 +184,34 @@ select, textarea {
 
 
 
-/* Spans inside of labels */
-label>span {
-    vertical-align: middle;
-    margin-right:.5rem;
-}
-label>input[type=checkbox], label>input[type=radio] {
-    margin-right:1rem;
+/* Select and text types of inputs inside of labels */
+label>select, label>input {
+    margin-top: calc(-1 * var(--form-element-padding));
+    margin-bottom: calc(-1 * var(--form-element-padding));
 }
 
 
 
 /* Labels */
 label {
-    height: calc(2rem - 2px); /* Accommodating for borders on other elements */
     user-select: none;
     display: inline-block;
-    padding: .4rem 0;
+    padding: var(--form-element-padding) 0;
     font-weight: bold;
+    margin-right: 1rem;
+    white-space: nowrap;
+}
+label.above {
+    display: block;
+    margin-bottom: 0;
+    margin-top: -.5rem;
+}
+label.above>span {
+    display: block;
+    height: 2rem;
+}
+label.above>input,label.above>textarea {
+    margin-bottom: 1rem;
 }
 
 
@@ -216,6 +230,7 @@ input[type=checkbox], input[type=radio] {
     position: relative;
     height: 1.25rem;
     width: 1.25rem;
+    margin-top: -2px;
 }
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     position: absolute;
@@ -274,13 +289,13 @@ a:hover {
 
 
 /* Special styles for pre and code elements */
-pre {
-    border-radius: var(--border-radius);
-    padding: 1rem;
-}
 code, pre {
     font-family: monospace;
     background: #f0f0f0;
+}
+pre {
+    border-radius: var(--border-radius);
+    padding: 1rem;
 }
 
 
@@ -362,6 +377,52 @@ table td>p:last-child {
 
 
 
+/* Strips */
+.strip {
+    margin-bottom: 1rem;
+    display: flex;
+    border: solid 1px var(--border-color);
+    border-radius: var(--border-radius);
+    width: fit-content;
+    overflow: hidden; /* Otherwise border-radius won't work! */
+}
+.strip>* {
+    margin-bottom: 0;
+    white-space: nowrap;
+    height: 2rem;
+    border: none;
+    border-left: solid 1px var(--border-color);
+    border-radius: 0;
+}
+.strip>label {
+    background: var(--button-background);
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 0;
+    color: var(--form-element-color);
+    padding: var(--form-element-padding);
+    margin-right: 0;
+}
+.strip>select,
+.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]) {
+    min-width: 5rem;
+}
+
+
+
+/* Fill */
+.fill {
+    min-width: 100%;
+}
+.fill.strip {
+    display: flex;
+}
+.fill.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=radio]):not([type=checkbox]),
+.fill.strip>select {
+    flex: 2;
+}
+
+
+
 /* Grid system */
 
 
@@ -404,66 +465,6 @@ table td>p:last-child {
 .grow {
     /* This class allows for the content of a column to have a minimum size according to its content, which prevents overflow when elements are too large to display in given width */
     min-width:min-content;
-}
-
-
-
-/* Strips */
-.strip {
-    margin-bottom: 1rem;
-    display: flex;
-    border: solid 1px var(--border-color);
-    border-radius: var(--border-radius);
-    max-width: fit-content;
-    overflow: hidden;
-}
-.strip>* {
-    margin-bottom: 0;
-    white-space: nowrap;
-    height: 2rem;
-    border: none;
-    border-left: solid 1px var(--border-color);
-    border-radius: 0;
-}
-.strip>*:first-child {
-    border-left: none;
-}
-.strip>label {
-    background: var(--button-background);
-    background-size: 1px calc(200% + 2px);
-    background-position: 0 0;
-    color: var(--form-element-color);
-    padding-left:.5rem;
-    padding-right:.5rem;
-}
-.strip>label>input[type=checkbox], label>input[type=radio] {
-    margin-right:0;
-}
-.strip>select,
-.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]) {
-    min-width: 5rem;
-}
-.strip:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-
-
-/* Fill */
-.fill {
-    min-width: 100%;
-}
-.fill.strip {
-    display: flex;
-}
-.fill.strip>* {
-    white-space: nowrap;
-}
-.fill.strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=radio]):not([type=checkbox]),
-.fill.strip>select {
-    flex: 2;
 }
 
 
@@ -798,6 +799,11 @@ button.micro-widgets-tab-active {
     float: left;
     overflow: auto;
 }
+.left.strip::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .right {
     text-align: right;
     overflow: auto;
@@ -805,6 +811,11 @@ button.micro-widgets-tab-active {
 .right>.strip,
 .right.strip {
     float: right;
+}
+.right.strip::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 .center {
     text-align: center;
@@ -933,13 +944,9 @@ button.micro-widgets-tab-active {
 .offset-90 {
     margin-left: 90%;
 }
-
-/* All input elements, except checkboxes, radio button, and buttons - Including textarea and select */
-/* This ensures that these elements doesn't take up 100% width, which is their default value, beneath 800px viewport sizes */
 input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
 select, textarea {
     width: 15rem;
-    max-width: 100%;
 }
 button.large {
     min-width: 5rem;
@@ -960,8 +967,8 @@ button.micro-widgets-tab-hamburger {
 }
 .micro-widgets-modal-content {
     width: calc(800px - 2rem);
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 } /* End of @media query 800px */
 
