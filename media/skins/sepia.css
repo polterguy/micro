@@ -1,7 +1,7 @@
 /* Setting color scheme for our skin */
 :root {
     --font-family: 'Times New Roman';
-    --font-size: 18px;
+    --font-size: 14px;
     --color: #e0e0e0;
     --background: #555;
     --form-element-color: #888;
