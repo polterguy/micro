@@ -190,6 +190,9 @@ label>select, label>input {
     margin-top: calc(-1 * var(--form-element-padding));
     margin-bottom: calc(-1 * var(--form-element-padding));
 }
+label>*:first-child {
+    margin-right: .5rem;
+}
 
 
 
@@ -416,6 +419,7 @@ table td>p:last-child {
 /* Fill */
 .fill {
     min-width: 100%;
+    max-width: 100%;
 }
 .fill.strip {
     display: flex;
