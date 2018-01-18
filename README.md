@@ -1,4 +1,4 @@
-# Micro CSS and Ajax
+# Micro CSS Framework
 
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
 also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive). 
