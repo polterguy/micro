@@ -1,4 +1,3 @@
-
 /*
  * Given a specific [_arg] widget, will recursively serialize all form elements beneath that element, 
  * and return in a uniform way to caller.
@@ -59,7 +58,7 @@ create-event:micro.form.serialize
           return
 
     /*
-     * Select and textarea widgets have the same logic.
+     * Select and textarea widgets have (almost) the same logic.
      */
     case:textarea
     case:select

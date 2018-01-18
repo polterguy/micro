@@ -35,6 +35,7 @@ h1, h2, h3, h4, h5, h6, label {
 }
 pre, code {
     color: #777;
+    background: #c0c0c0;
 }
 code {
     color: #777;
