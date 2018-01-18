@@ -1,4 +1,3 @@
-
 # Micro CSS and Ajax
 
 Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is 
@@ -19,4 +18,12 @@ You can use Micro as a stand alone CSS framework, or you can use it in combinati
 If you choose the latter, you can [download Phosphorus Five here](https://github.com/polterguy/phosphorusfive/releases),
 which includes Micro, Hyper IDE, and everything you need to get started with Phosphorus Five development.
 
-Micro also includes a whole range of additional extension Ajax widgets if you choose the latter.
+Micro also includes a whole range of additional extension Ajax widgets if you choose the latter. Below is
+a screenshot of the _"desktop"_ in Phosphorus Five, entirely made from Micro.
+
+![alt screenshot](screenshots/micro-desktop-screenshot.png)
+
+## License
+
+Micro is distributed under the terms of the GPL version 3 license, but [proprietary options exists](https://gaiasoul.com/license/)
+if you wish to use it to create closed source software.
