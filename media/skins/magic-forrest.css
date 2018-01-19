@@ -1,0 +1,82 @@
+/* Setting color scheme for our skin */
+/*
+ * Basic color scheme;
+ *
+ * #004332
+ * #18a779
+ * #48872f
+ * #90bc42
+ * #afd377
+ */
+:root {
+    --font-family: 'Helvetica';
+    --font-size: 14px;
+    --background: #004232;
+    --color: #afd377;
+    --form-element-color: #004232;
+    --form-element-background-color: #90bc42;
+    --form-element-active-background: #afd377;
+    --form-element-disabled-background-color: #48872f;
+    --button-color: #afd377;
+    --button-background: linear-gradient(#48872f, #004232);
+    --button-toggled-background: linear-gradient(#004232, #48872f);
+    --border-color: rgba(0,0,0,.05);
+    --border-radius: 1rem;
+
+    --anchor-color: #18a779;
+    --anchor-hover-color: #48872f;
+    --anchor-active-color: #90bc42;
+    --form-element-padding: .5rem;
+    --placeholder-color: #18a779;
+    --shadow-color: #48872f;
+    --success-background: linear-gradient(#efe,#afa);
+    --warning-background: linear-gradient(#fee,#fcc);
+    --table-striped-background: rgba(0,0,0,.05);
+    --table-selected-background: rgba(0,0,0,.1);
+    --table-hover-background: rgba(0,0,0,.1);
+
+    --form-element-disabled-color: #48872f;
+}
+
+h1, h2, h3, h4, h5, h6, label {
+    font-family: Helvetica;
+    font-weight: normal;
+}
+
+
+/* Adding borders to "shaded" class */
+.shaded {
+    border:solid 1px var(--border-color);
+}
+
+.bg {
+    background: linear-gradient(#004232, #48872f);
+    background-size: 300%;
+}
+pre, code {
+    background-color: #18a779;
+    color: #004232;
+}
+
+
+.micro-widgets-modal-content {
+    background: linear-gradient(#004232, #48872f);
+    background-size: 300%;
+    border-radius: 25px;
+    box-shadow: 0 0 10px #afd377;
+}
+
+input:not([type=radio]):not([type=checkbox]),
+select, textarea, button {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+span[class*="icon-"] {
+    font-size: .8rem;
+}
+
+.strip>label {
+    color: #90bc42;
+}
+

@@ -76,7 +76,6 @@ blockquote,label,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend
 
 /* Sub-headers */
 h1>small, h2>small, h3>small, h4>small {
-    color: #aaa;
     font-weight: 300;
     font-size: 50%;
 }

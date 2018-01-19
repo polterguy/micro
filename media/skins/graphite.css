@@ -9,9 +9,9 @@
     --form-element-active-background: #fefefe;
     --form-element-disabled-background-color: #c0c0c0;
     --button-color: #888;
-    --button-background: linear-gradient(#e0e0e0, #c0c0c0);
-    --button-toggled-background: linear-gradient(#c0c0c0, #e0e0e0);
-    --border-color: #999;
+    --button-toggled-background: linear-gradient(#d5d5d5, #707070);
+    --button-background: linear-gradient(#f0f0f0, #909090);
+    --border-color: #777;
     --border-radius: 3px;
 
     --anchor-color: #99f;
