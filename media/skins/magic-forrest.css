@@ -20,10 +20,10 @@
     --button-color: #afd377;
     --button-background: linear-gradient(#48872f, #004232);
     --button-toggled-background: linear-gradient(#004232, #48872f);
-    --border-color: rgba(0,0,0,.05);
+    --border-color: rgba(0,0,0,.3);
     --border-radius: 1rem;
 
-    --anchor-color: #18a779;
+    --anchor-color: #034ab4;
     --anchor-hover-color: #48872f;
     --anchor-active-color: #90bc42;
     --form-element-padding: .5rem;
@@ -47,11 +47,13 @@ h1, h2, h3, h4, h5, h6, label {
 /* Adding borders to "shaded" class */
 .shaded {
     border:solid 1px var(--border-color);
+    box-shadow: 0px 0px 5px #afd377;
 }
 
 .bg {
     background: linear-gradient(#004232, #48872f);
     background-size: 300%;
+    box-shadow: 0 0 10px #afd377;
 }
 pre, code {
     background-color: #18a779;
@@ -68,8 +70,11 @@ pre, code {
 
 input:not([type=radio]):not([type=checkbox]),
 select, textarea, button {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+button, input[type=button], input[type=submit], input[type=reset], .button {
+    background-position: 0 -1px;
 }
 
 span[class*="icon-"] {
@@ -78,5 +83,10 @@ span[class*="icon-"] {
 
 .strip>label {
     color: #90bc42;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+.strip>label.description {
+    min-width: 7rem;
 }
 

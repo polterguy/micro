@@ -606,8 +606,9 @@ button.micro-widgets-tab-active {
 
 
 /* TreeView */
-.micro-widgets-tree {
-    font-size: 16px; /* NOTICE, since the treeview relies upon images to draw its lines by default, we must override its font size */
+.micro-widgets-tree a {
+    font-weight: normal;
+    text-decoration: none;
 }
 .micro-widgets-tree span {
     vertical-align: inherit;
@@ -725,7 +726,6 @@ button.micro-widgets-tab-active {
     text-decoration: none;
     display: block;
     height: 100%;
-    color: #a0a0a0;
 }
 .micro-widgets-tree li.tree-expanded>a.tree-item-label {
     background-position: 0 -20px;
@@ -753,7 +753,6 @@ button.micro-widgets-tab-active {
 }
 .micro-widgets-tree a.tree-item-label .folder,.micro-widgets-tree a.tree-item-label .icon {
     font-family: 'icomoon' !important;
-    color: #a0a0a0;
 }
 .micro-widgets-tree a.tree-item-label .folder-open:before {
     content: "\e930";
