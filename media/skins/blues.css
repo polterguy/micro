@@ -103,7 +103,7 @@ select, textarea, .strip>label {
 }
 
 .micro-widgets-tree li.tree-item {
-    padding-left: .5rem;
+    padding-left: .67rem;
 }
 .micro-widgets-tree a.tree-item-label {
     background-image: none;

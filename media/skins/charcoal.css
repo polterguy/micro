@@ -18,7 +18,8 @@
     --anchor-active-color: #77e;
     --form-element-disabled-color: #66667c;
     --form-element-padding: .5rem;
-    --placeholder-color: #ccc;
+    --placeholder-color: #66667c;
+
     --shadow-color: #515060;
     --success-background: linear-gradient(#efe,#afa);
     --warning-background: linear-gradient(#fee,#fcc);
@@ -35,6 +36,9 @@ h1, h2, h3, h4, h5, h6, label {
 pre, code {
     color: #777;
     background: #c0c0c0;
+}
+a {
+    color: #7e7cbe;
 }
 code {
     color: #777;
@@ -54,4 +58,12 @@ select, textarea, button {
 
 .bg {
     background: linear-gradient(#66667c, #515060);
+}
+
+.micro-widgets-tab-buttons button {
+    background: #7e7c8e;
+    color: var(--button-color);
+}
+button.micro-widgets-tab-active {
+    background: var(--button-background);
 }
