@@ -1,11 +1,13 @@
 /* Setting color scheme for our skin */
-:root {
-    --font-family: Roboto;
-    --font-size:16px;
-    --border-radius: .2rem;
-    --shadow-color: rgba(0,0,0,.3);
-}
-
+/*
+ * Basic color scheme;
+ *
+ * #d0ccd0
+ * #fbfcff
+ * #1c6e8c
+ * #274156
+ * #615d6c
+ */
 /* Importing Robota font from Google */
 @font-face {
     font-family: Roboto;
@@ -95,12 +97,101 @@
 @font-face {
     font-family:Roboto;font-style:italic;font-weight:700;src:local('Roboto Bold Italic'),local('Roboto-BoldItalic'),url(https://fonts.gstatic.com/s/roboto/v16/t6Nd4cfPRhZP44Q5QAjcC4gp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2C6,U+2DA,U+2DC,U+2000-206F,U+2074,U+20AC,U+2212,U+2215
 }
+:root {
+    --font-family: 'Roboto';
+    --font-size: 16px;
+    --background: linear-gradient(#fbfcff, #d0ccd0);
+    --color: #274156;
+    --form-element-color: #274156;
+    --form-element-background-color: #d0ccd0;
+    --form-element-active-background: #fbfcff;
+    --button-color: #d0ccd0;
+    --button-background: linear-gradient(#615d6c, #274156);
+    --button-toggled-background: linear-gradient(#274156, #615d6c);
+    --border-color: #615d6c;
+    --border-radius: .25rem;
+    --anchor-color: #1c6e8c;
+    --anchor-hover-color: #274156;
+    --anchor-active-color: #615d6c;
+    --form-element-padding: .5rem;
+    --placeholder-color: #b0b0b0;
+    --shadow-color: #617380;
 
-/* Adding borders to "shaded" class */
-.shaded {
+    --form-element-disabled-background-color: #888888;
+    --success-background: linear-gradient(#efe,#cfc);
+    --warning-background: linear-gradient(#fee,#fbb);
+    --table-striped-background: rgba(0,0,0,.05);
+    --table-selected-background: rgba(0,0,0,.1);
+    --table-hover-background: rgba(0,0,0,.1);
+
+    --form-element-disabled-color: #888888;
+}
+
+.shaded, .rounded {
     border:solid 1px var(--border-color);
 }
 
-.bg {
-    background-image: url('serious/bg.svg');
+.shaded {
+    box-shadow: 3px 3px 5px #384858;
 }
+
+.bg {
+    background: linear-gradient(#d0ccd0, #615d6c);
+}
+
+pre, code {
+    background-color: #617380;
+    color: #fbfcff;
+}
+.micro-widgets-tab-buttons button {
+    color: #fbfcff;
+}
+
+button.micro-widgets-tab-active {
+    background: linear-gradient(#617380, #384858);
+    background-size: 1px 200%;
+}
+
+.micro-widgets-modal-content {
+    background: linear-gradient(#d0ccd0, #615d6c);
+    box-shadow: 3px 3px 5px #384858;
+}
+
+input[type=button], input[type=submit], input[type=reset], button {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+input:not([type=button]):not([type=submit]):not([type=reset]):not([type=radio]):not([type=checkbox]),
+select, textarea, .strip>label {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.strip>label {
+    color: #d0ccd0;
+}
+
+.strip>label.description {
+    min-width: 7rem;
+}
+
+.strip>label.description-7 {
+    min-width: 9rem;
+}
+
+.micro-widgets-tree li.tree-item {
+    padding-left: .67rem;
+}
+.micro-widgets-tree a.tree-item-label {
+    background-image: none;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item, 
+.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded {
+    background-image: none;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item:last-child, 
+.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded:last-child {
+    background-image: none;
+}
+
