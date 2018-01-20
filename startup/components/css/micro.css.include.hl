@@ -41,7 +41,7 @@ create-event:micro.css.include
         :x:/../*/skin?value
         :x:/@micro.version?value
 
-    else
+    else-if:x:/../*/skin?value
       
       /*
        * Relative path.
@@ -49,3 +49,11 @@ create-event:micro.css.include
       p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
         :x:/../*/skin?value
         :x:/@micro.version?value
+
+  else
+
+    /*
+     * Including default skin.
+     */
+    p5.web.include-css-file:@MICRO/media/skins/air.css?v={0}
+      :x:/@micro.version?value

@@ -556,13 +556,20 @@ button.micro-widgets-tab-hamburger {
 }
 button.micro-widgets-tab-active {
     background: var(--background);
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 -1px;
     box-shadow: none;
+    transition: background-position .2s ease-out;
+}
+button.micro-widgets-tab-active:hover,
+button.micro-widgets-tab-active:focus,
+button.micro-widgets-tab-active:active {
+    background-position: 0 calc(100% + 1px);
 }
 .micro-widgets-tab-views {
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
-    padding: 1rem;
-    margin-top: -1px;
+    padding: 1rem 1rem 0 1rem;
 }
 
 
@@ -829,10 +836,12 @@ button.micro-widgets-tab-active {
 .shaded {
     box-shadow: 2px 2px 5px var(--shadow-color);
     margin-bottom: 1rem;
+    overflow-y: auto;
 }
 .rounded {
     border-radius: var(--border-radius);
     margin-bottom: 1rem;
+    overflow-y: auto;
 }
 .hide {
     display: none !important
@@ -957,10 +966,10 @@ button.large {
     padding-right: 35px;
 }
 .strip>label.description {
-    min-width: 5rem;
+    min-width: 7rem;
 }
 .strip>label.description-7 {
-    min-width: 7rem;
+    min-width: 9rem;
 }
 .micro-widgets-tab-buttons button {
     display: inline-block;

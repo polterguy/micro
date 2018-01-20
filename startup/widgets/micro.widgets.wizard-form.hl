@@ -77,7 +77,7 @@ create-event:micro.widgets.wizard-form
                 label
                   innerValue:x:/@_dp/#/*/info?value
                   for:x:/@_dp/#?value
-                  class:description
+                  class:description-7
                 input:x:/@_dp/#?value
                   type:text
                   placeholder:{0} ...
@@ -124,7 +124,7 @@ create-event:micro.widgets.wizard-form
               widgets
                 label
                   innerValue:x:/@_dp/#/*/info?value
-                  class:description
+                  class:description-7
                 select:x:/@_dp/#?value
                   widgets
 
