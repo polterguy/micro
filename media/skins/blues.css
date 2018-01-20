@@ -19,7 +19,7 @@
     --form-element-disabled-background-color: #888888;
     --button-color: #9bb7ce;
     --button-background: linear-gradient(#617380, #384858);
-    --button-toggled-background: #384858;
+    --button-toggled-background: linear-gradient(#384858, #617380);
     --border-color: #617380;
     --border-radius: .5rem;
     --anchor-color: #384858;

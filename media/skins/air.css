@@ -133,8 +133,14 @@ pre, code {
     color: #006bbd;
     background: #c2afa8;
 }
+pre {
+    border-radius: 2px;
+}
 code {
     border-radius: 2px;
+}
+blockquote {
+    color: #284177;
 }
 
 input:not([type=radio]):not([type=checkbox]),
