@@ -1,0 +1,101 @@
+/* 
+ * Basic colors;
+ *
+ * #1ed1ff
+ * #92d638
+ * #f6679f
+ * #d739cf
+ * #f93440
+ */
+/* latin-ext */
+@font-face {
+  font-family: 'Berkshire Swash';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Berkshire Swash Regular'), local('BerkshireSwash-Regular'), url(https://fonts.gstatic.com/s/berkshireswash/v6/4RZJjVRPjYnC2939hKCAik2Mm8lZ4zSajD6SHeUiwCw.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Berkshire Swash';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Berkshire Swash Regular'), local('BerkshireSwash-Regular'), url(https://fonts.gstatic.com/s/berkshireswash/v6/4RZJjVRPjYnC2939hKCAigPd3B1x2G-B3iFVpRu072s.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+:root {
+    --font-family: 'Berkshire Swash';
+    --font-size: 18px;
+    --color: #92d638;
+    --background: #d739cf;
+    --form-element-background-color: #f6679f;
+    --form-element-active-background: #d739cf;
+    --form-element-color: #92d638;
+    --form-element-disabled-background-color: #d739cf;
+    --button-color: #f93440;
+    --button-background: linear-gradient(#1ed1ff, #92d638);
+    --button-toggled-background: linear-gradient(#92d638, #1ed1ff);
+    --border-color: #f6679f;
+    --border-radius: 1rem;
+    --anchor-color: #1ed1ff;
+    --anchor-hover-color: #92d638;
+    --anchor-active-color: #92d638;
+    --form-element-disabled-color: #66667c;
+    --form-element-padding: 1rem;
+    --placeholder-color: #66667c;
+
+    --shadow-color: #f6679f;
+    --success-background: linear-gradient(#efe,#5f5);
+    --warning-background: linear-gradient(#fee,#f55);
+    --max-viewport-width: 1420px;
+    --table-striped-background: rgba(0,0,0,.1);
+    --table-selected-background: rgba(0,0,0,.2);
+    --table-hover-background: rgba(0,0,0,.5);
+}
+
+
+pre, code {
+    color: #eed968;
+    background: #c6773f;
+}
+code {
+    border-radius: 2px;
+}
+
+input:not([type=radio]):not([type=checkbox]),
+select, textarea, button {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-family: 'Berkshire Swash';
+}
+
+.strip>label {
+    color: #555555;
+}
+
+.micro-widgets-modal-content {
+    background: linear-gradient(#d739cf, #f6679f);
+    box-shadow: 0 0 10px #92d638;
+}
+
+.bg {
+    background: linear-gradient(#d739cf, #f6679f);
+}
+
+.micro-widgets-tab-buttons button {
+    color: #555555;
+}
+
+.micro-widgets-tree li.tree-item {
+}
+.micro-widgets-tree a.tree-item-label {
+    background-image: none;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item, 
+.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded {
+    background-image: none;
+}
+.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item:last-child, 
+.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded:last-child {
+    background-image: none;
+}
