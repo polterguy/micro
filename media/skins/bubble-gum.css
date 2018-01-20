@@ -10,22 +10,22 @@
 :root {
     --font-family: 'Comic Sans MS';
     --font-size: 18px;
-    --color: #92d638;
-    --background: #d739cf;
-    --form-element-background-color: #f6679f;
-    --form-element-active-background: #d739cf;
-    --form-element-color: #92d638;
+    --color: #d739cf;
+    --background: linear-gradient(#1ed1ff, #92d638);
+    --form-element-background-color: #1ed1ff;
+    --form-element-active-background: #92d638;
+    --form-element-color: #555;
     --form-element-disabled-background-color: #d739cf;
-    --button-color: #f93440;
-    --button-background: linear-gradient(#1ed1ff, #92d638);
-    --button-toggled-background: linear-gradient(#92d638, #1ed1ff);
-    --border-color: #f6679f;
+    --button-color: #1ed1ff;
+    --button-background: linear-gradient(#f6679f, #1ed1ff);
+    --button-toggled-background: linear-gradient(#1ed1ff, #f6679f);
+    --border-color: rgba(0,0,0,.2);
     --border-radius: 1rem;
-    --anchor-color: #1ed1ff;
+    --anchor-color: #f6679f;
     --anchor-hover-color: #92d638;
     --anchor-active-color: #92d638;
     --form-element-disabled-color: #66667c;
-    --form-element-padding: .75rem;
+    --form-element-padding: .5rem;
     --placeholder-color: #66667c;
 
     --shadow-color: #f6679f;
@@ -54,16 +54,26 @@ select, textarea, button {
 }
 
 .strip>label {
-    color: #555555;
+    color: #1ed1ff;
+}
+.strip>label.description {
+    min-width: 7rem;
+}
+.strip>label.description-7 {
+    min-width: 9rem;
 }
 
 .micro-widgets-modal-content {
-    background: linear-gradient(#d739cf, #f6679f);
+    background: linear-gradient(#1ed1ff, #92d638);
     box-shadow: 0 0 10px #92d638;
 }
 
+.shaded {
+    box-shadow: 0 0 10px #f6679f;
+}
+
 .bg {
-    background: linear-gradient(#d739cf, #f6679f);
+    background: linear-gradient(#1ed1ff, #92d638);
 }
 
 .micro-widgets-tab-buttons button {
