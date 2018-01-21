@@ -11,8 +11,8 @@
 :root {
     --font-family: 'Helvetica';
     --font-size: 14px;
-    --background: #004232;
-    --color: #afd377;
+    --background: #afd377;
+    --color: #004232;
     --form-element-color: #004232;
     --form-element-background-color: #90bc42;
     --form-element-active-background: #afd377;
@@ -23,9 +23,9 @@
     --border-color: rgba(0,0,0,.3);
     --border-radius: 1rem;
 
-    --anchor-color: #90bc42;
-    --anchor-hover-color: #48872f;
-    --anchor-active-color: #90bc42;
+    --anchor-color: #48872f;
+    --anchor-hover-color: #18a779;
+    --anchor-active-color: #18a779;
     --form-element-padding: .5rem;
     --placeholder-color: #18a779;
     --shadow-color: #48872f;
@@ -36,6 +36,7 @@
     --table-hover-background: rgba(0,0,0,.1);
 
     --form-element-disabled-color: #48872f;
+    --code-background: #e5fee5;
 }
 
 h1, h2, h3, h4, h5, h6, label {
@@ -47,11 +48,11 @@ h1, h2, h3, h4, h5, h6, label {
 /* Adding borders to "shaded" class */
 .shaded {
     border:solid 1px var(--border-color);
-    box-shadow: 0px 0px 5px #afd377;
+    box-shadow: 0px 0px 5px #004232;
 }
 
 .bg {
-    background: linear-gradient(#004232, #48872f);
+    background: linear-gradient(#afd377, #90bc42);
     background-size: 300%;
     box-shadow: 0 0 10px #afd377;
 }
@@ -59,10 +60,13 @@ pre, code {
     background-color: #18a779;
     color: #004232;
 }
+hr {
+    border-color:#48872f;
+}
 
 
 .micro-widgets-modal-content {
-    background: linear-gradient(#004232, #48872f);
+    background: linear-gradient(#afd377, #90bc42);
     background-size: 300%;
     border-radius: 25px;
     box-shadow: 0 0 10px #afd377;

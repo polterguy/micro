@@ -42,6 +42,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
     --table-striped-background: rgba(0,0,0,.05);
     --table-selected-background: rgba(0,0,0,.1);
     --table-hover-background: rgba(0,0,0,.1);
+    --code-background: var(--background);
 }
 
 
@@ -51,8 +52,9 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
     box-sizing: border-box;
 }
 html, body {
-    height: 100%;
+    min-height: 100%;
     overflow: auto;
+    height: 100%;
 }
 html {
     font-size: var(--font-size);
@@ -119,6 +121,7 @@ button.toggled, .button.toggled {
 button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
     background-position: 0 calc(100% + 1px);
     transition: background-position .2s ease-out;
+    color: var(--button-color);
 }
 button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus, .button:focus,
 button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active, .button:active {
@@ -313,7 +316,8 @@ ol, ul {
 
 /* Horizontal ruler */
 hr {
-    border-top: 1px solid #c7c7c7;
+    border-top: 1px solid var(--border-color);
+    border-color: var(--border-color);
     margin:1rem .5rem;
 }
 
@@ -367,7 +371,7 @@ table.striped tr:nth-child(2n) td {
 table td.selected, table tr.selected, table.striped td.selected, table.striped tr.selected {
     background: var(--table-selected-background);
 }
-table.hover tr:hover td {
+table.hover tr:hover:not(.no-hover) td {
     background: var(--table-hover-background);
 }
 table.hover>tbody>tr {
@@ -538,12 +542,20 @@ to {
     margin-left: var(--border-radius);
 }
 .micro-widgets-tab-buttons button {
+    background: var(--button-toggled-background);
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 -1px;
     display: none; /* Overridden when viewport exceeds 800px */
     margin-bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom: none;
     margin-right: .125rem;
+}
+.micro-widgets-tab-buttons button:hover,
+.micro-widgets-tab-buttons button:focus,
+.micro-widgets-tab-buttons button:active {
+    background-position: 0 calc(100% + 1px);
 }
 .micro-widgets-tab-display-buttons button {
     display: inline-block;
@@ -555,7 +567,7 @@ button.micro-widgets-tab-hamburger {
     display: inline-block;
 }
 button.micro-widgets-tab-active {
-    background: var(--background);
+    background: var(--button-background);
     background-size: 1px calc(200% + 2px);
     background-position: 0 -1px;
     box-shadow: none;
@@ -614,11 +626,9 @@ button.micro-widgets-tab-active:active {
 
 /* TreeView */
 .micro-widgets-tree a {
+    font-size: 16px !important;
     font-weight: normal;
     text-decoration: none;
-}
-.micro-widgets-tree span {
-    vertical-align: inherit;
 }
 .micro-widgets-tree ul.tree-item-children {
     padding-left: 0;
@@ -732,7 +742,7 @@ button.micro-widgets-tab-active:active {
     background-repeat: no-repeat;
     text-decoration: none;
     display: block;
-    height: 100%;
+    height: 20px;
 }
 .micro-widgets-tree li.tree-expanded>a.tree-item-label {
     background-position: 0 -20px;
@@ -743,9 +753,17 @@ button.micro-widgets-tab-active:active {
 .micro-widgets-tree li.tree-item>a.tree-selected {
     background-color: rgba(128,128,128,.3);
 }
+.micro-widgets-tree>ul>li>a.tree-item-label>span:not(.icon),
+.micro-widgets-tree>ul>li>ul>li>a.tree-item-label>span:not(.icon) {
+    margin-left: 12px;
+}
+.micro-widgets-tree a.tree-item-label>span:not(.icon) {
+    vertical-align:text-top;
+    line-height: 16px;
+}
 .micro-widgets-tree a.tree-item-label span.icon {
     width: 16px;
-    height: 14px;
+    height: 16px;
     display: inline-block;
     margin-right: 3px;
     margin-top: 2px;
@@ -770,7 +788,6 @@ button.micro-widgets-tab-active:active {
 .micro-widgets-tree .file a.tree-item-label .icon:before {
     content: "\e924";
 }
-
 
 
 /* Misc classes */

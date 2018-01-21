@@ -11,7 +11,7 @@
 :root {
     --font-family: 'Helvetica';
     --font-size: 13px;
-    --background: linear-gradient(#9bb7ce, #617380);
+    --background: #9bb7ce;
     --color: #385858;
     --form-element-color: #9bb7ce;
     --form-element-background-color: #617380;
@@ -51,16 +51,22 @@ h1, h2, h3, h4, h5, h6, label {
 }
 
 .bg {
-    background: linear-gradient(#9bb7ce, #617380);
+    background: #9bb7ce;
 }
 
 pre, code {
     background-color: #617380;
     color: #004232;
 }
+hr {
+    border-color:#617380;
+}
 
 a {
     font-weight: bold;
+}
+.CodeMirror {
+    border: solid 1px var(--border-color) !important;
 }
 
 .micro-widgets-tab-buttons button {
@@ -74,8 +80,6 @@ button.micro-widgets-tab-active {
 }
 
 .micro-widgets-modal-content {
-    background: linear-gradient(#9bb7ce, #617380);
-    background-size: 150%;
     box-shadow: 5px 5px 10px #384858;
 }
 

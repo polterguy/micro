@@ -108,7 +108,7 @@
     --button-color: #d0ccd0;
     --button-background: linear-gradient(#615d6c, #274156);
     --button-toggled-background: linear-gradient(#274156, #615d6c);
-    --border-color: #615d6c;
+    --border-color: #d0ccd0;
     --border-radius: .25rem;
     --anchor-color: #1c6e8c;
     --anchor-hover-color: #274156;
@@ -136,12 +136,15 @@
 }
 
 .bg {
-    background: linear-gradient(#d0ccd0, #615d6c);
+    background: linear-gradient(#fbfcff, #d0ccd0);
 }
 
 pre, code {
     background-color: #617380;
     color: #fbfcff;
+}
+hr {
+    border-color:#d0ccd0;
 }
 .micro-widgets-tab-buttons button {
     color: #fbfcff;
@@ -153,7 +156,7 @@ button.micro-widgets-tab-active {
 }
 
 .micro-widgets-modal-content {
-    background: linear-gradient(#d0ccd0, #615d6c);
+    background: linear-gradient(#fbfcff, #d0ccd0);
     box-shadow: 3px 3px 5px #384858;
 }
 

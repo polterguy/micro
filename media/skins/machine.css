@@ -1,0 +1,102 @@
+/* Setting color scheme for our skin */
+/* vietnamese */
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  src: local('VT323 Regular'), local('VT323-Regular'), url(https://fonts.gstatic.com/s/vt323/v9/hpNOqKrMYVp5zXv_aYAr7oDGDUGfDkXyfkzVDelzfFk.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  src: local('VT323 Regular'), local('VT323-Regular'), url(https://fonts.gstatic.com/s/vt323/v9/laIvVS86YUITp2VS5LnmsoDGDUGfDkXyfkzVDelzfFk.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  src: local('VT323 Regular'), local('VT323-Regular'), url(https://fonts.gstatic.com/s/vt323/v9/vB0CfoJ37mvN-Rdp92NUWaCWcynf_cDxXwCLxiixG1c.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+:root {
+    --font-family: 'VT323';
+    --font-size: 20px;
+    --color: #c1b6c6;
+    --background: #364251;
+    --form-element-color: #364251;
+    --form-element-background-color: #c1b6c6;
+    --form-element-active-background: #d1c6d6;
+    --form-element-disabled-background-color: #7e7cbe;
+    --button-color: #364251;
+    --button-toggled-background: linear-gradient(#7e7c8e, #c1b6c6);
+    --button-background: linear-gradient(#c1b6c6, #7e7c8e);
+    --border-color: #66667c;
+    --border-radius: 2px;
+    --anchor-color: #99f;
+    --anchor-hover-color: #ccf;
+    --anchor-active-color: #77e;
+    --form-element-disabled-color: #66667c;
+    --form-element-padding: .5rem;
+    --placeholder-color: #66667c;
+
+    --shadow-color: #515060;
+    --success-background: linear-gradient(#efe,#afa);
+    --warning-background: linear-gradient(#fee,#fcc);
+    --max-viewport-width: 1280px;
+    --table-striped-background: rgba(0,0,0,.1);
+    --table-selected-background: rgba(0,0,0,.2);
+    --table-hover-background: rgba(0,0,0,.05);
+    --code-background: #f0f0f0;
+}
+
+.cm-s-phosphorus .CodeMirror-linenumber {
+    color: #364251 !important;
+}
+
+
+h1, h2, h3, h4, h5, h6, label {
+    font-family: 'VT323';
+    font-weight: normal;
+}
+pre, code {
+    color: #777;
+    background: #c0c0c0;
+}
+a {
+    color: #7e7cbe;
+}
+code {
+    color: #777;
+    border-radius: var(--border-radius);
+}
+hr {
+    border-color:#7e7c8e;
+}
+
+input:not([type=radio]):not([type=checkbox]),
+select, textarea, button {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+/* Adding borders to "shaded" class */
+.shaded {
+    border:solid 1px var(--border-color);
+}
+
+.bg {
+    background: linear-gradient(#364251, #515060);
+}
+
+.micro-widgets-tab-buttons button {
+    background: var(--button-toggled-background);
+    color: var(--button-color);
+}
+button.micro-widgets-tab-active {
+    background: var(--button-background);
+}

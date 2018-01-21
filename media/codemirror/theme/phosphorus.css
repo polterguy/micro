@@ -1,12 +1,12 @@
 .cm-s-phosphorus {
     font-family: monospace;
-    background: var(--background);
+    background: var(--code-background);
     color: var(--color);
     border-radius: var(--border-radius);
     border: none;
 }
 .cm-s-phosphorus .CodeMirror-gutters {
-    background: transparent;
+    background: var(--code-background);
     border-right: solid 1px rgba(0,0,0,.05);
 }
 .cm-s-phosphorus .CodeMirror-linenumber {

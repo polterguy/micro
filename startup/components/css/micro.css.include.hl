@@ -1,7 +1,8 @@
 /*
  * Helper Active Event to include CSS files for micro.
  *
- * Expects [skin] being the name of some skin file, e.g. "serious", etc.
+ * Optionally pass in [skin] being the name of some skin file, e.g. "serious", etc.
+ * [skin] can also be an absolute path to a skin file, you have in some other folder.
  */
 create-event:micro.css.include
 
@@ -31,6 +32,10 @@ create-event:micro.css.include
    * Checking if caller supplied a skin.
    */
   if:x:/../*/skin?value
+
+    /*
+     * [skin] argument was supplied.
+     */
     if:x:/../*/skin?value
       ~:/
       
@@ -53,7 +58,28 @@ create-event:micro.css.include
   else
 
     /*
-     * Including default skin.
+     * Including skin according to user's settings.
      */
-    p5.web.include-css-file:@MICRO/media/skins/air.css?v={0}
-      :x:/@micro.version?value
+    whoami
+    if:x:/-/*/default?value
+      =:bool:true
+
+      /*
+       * Default user, including default skin for website.
+       */
+      p5.config.get:p5.desktop.guest-skin
+      p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
+        :x:/@p5.config.get/*?value
+        :x:/@micro.version?value
+
+    else
+
+      /*
+       * Logged in user, including user's preferred skin.
+       */
+      .defaults
+        skin:air
+      p5.auth.my-settings.get
+      p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
+        :x:(/@p5.auth.my-settings.get/*/desktop/*/skin|/../*/.defaults/*/skin)/$?value
+        :x:/@micro.version?value
