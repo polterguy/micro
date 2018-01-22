@@ -53,8 +53,10 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 }
 html, body {
     min-height: 100%;
-    overflow: auto;
     height: 100%;
+}
+body {
+    overflow: auto;
 }
 html {
     font-size: var(--font-size);
@@ -486,7 +488,7 @@ table td>p:last-child {
 /* Modal widget */
 .micro-body-open {
     /* Preventing body scroll when window is open */
-    overflow-y: hidden;
+    overflow: hidden !important;
 }
 .micro-widgets-modal, .micro-widgets-modal-content {
     animation-duration: .5s;

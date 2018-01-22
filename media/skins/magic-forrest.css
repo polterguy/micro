@@ -20,8 +20,8 @@
     --button-color: #afd377;
     --button-background: linear-gradient(#48872f, #004232);
     --button-toggled-background: linear-gradient(#004232, #48872f);
-    --border-color: rgba(0,0,0,.3);
-    --border-radius: 1rem;
+    --border-color: rgba(0,0,0,.5);
+    --border-radius: .75rem;
 
     --anchor-color: #48872f;
     --anchor-hover-color: #18a779;
@@ -36,7 +36,7 @@
     --table-hover-background: rgba(0,0,0,.1);
 
     --form-element-disabled-color: #48872f;
-    --code-background: #e5fee5;
+    --code-background: #e0ffe0;
 }
 
 h1, h2, h3, h4, h5, h6, label {
@@ -68,7 +68,7 @@ hr {
 .micro-widgets-modal-content {
     background: linear-gradient(#afd377, #90bc42);
     background-size: 300%;
-    border-radius: 25px;
+    border-radius: .75rem;
     box-shadow: 0 0 10px #afd377;
 }
 

@@ -53,8 +53,10 @@ create-event:micro.widgets.modal
       oninit
         p5.web.send-javascript:@"
 document.body.classList.add ('micro-body-open');
-p5.$('{0}').el.addEventListener ('DOMNodeRemoved', function(){{
-  document.body.classList.remove('micro-body-open');
+p5.$('{0}').el.addEventListener ('DOMNodeRemoved', function(e){{
+  if (e.target.id == '{0}') {{
+    document.body.classList.remove('micro-body-open');
+  }}
 }});"
           :x:/../*/_event?value
       widgets

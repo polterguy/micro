@@ -100,7 +100,7 @@
 :root {
     --font-family: 'Roboto';
     --font-size: 16px;
-    --background: linear-gradient(#fbfcff, #d0ccd0);
+    --background: linear-gradient(#eae5ff, #d0ccd0);
     --color: #274156;
     --form-element-color: #274156;
     --form-element-background-color: #d0ccd0;
