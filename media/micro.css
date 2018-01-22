@@ -55,6 +55,8 @@ body {
     height: auto;
 }
 html {
+    height: auto;
+    min-height: 100%;
     font-size: var(--font-size);
     font-family: var(--font-family);
     color: var(--color);
@@ -487,6 +489,7 @@ body.micro-body-open {
     /* Preventing body scroll when window is open */
     overflow: hidden !important;
     height: 100%;
+    min-height: 100%;
 }
 .micro-widgets-modal, .micro-widgets-modal-content {
     animation-duration: .5s;
