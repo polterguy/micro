@@ -36,6 +36,7 @@
     --table-hover-background: rgba(0,0,0,.1);
 
     --form-element-disabled-color: #888888;
+    --code-background: #d6e1eb;
 }
 
 h1, h2, h3, h4, h5, h6, label {

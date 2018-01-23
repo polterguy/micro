@@ -234,6 +234,7 @@
 :root {
     --font-family: 'Roboto';
     --font-size: 14px;
+    --font-break-size: 16px;
     --color: #284177;
     --background: linear-gradient(#fefefe, #80c8ee);
     --button-color: #006bbd;
@@ -242,8 +243,8 @@
     --border-color: rgba(0,0,0,.2);
     --border-radius: .35rem;
     --anchor-color: #006bbd;
-    --anchor-hover-color: #284177;
-    --anchor-active-color: #284177;
+    --anchor-hover-color: #000000;
+    --anchor-active-color: #000000;
     --shadow-color: rgba(0,0,0,.2);
 
     --form-element-background-color: #d7e7ff;
@@ -261,7 +262,7 @@
     --table-striped-background: rgba(0,0,0,.03);
     --table-selected-background: rgba(0,0,0,.15);
     --table-hover-background: rgba(0,0,0,.07);
-    --code-background: #bfe3f6;
+    --code-background: #dbeffa;
 }
 
 
@@ -302,7 +303,7 @@ select, textarea, button, .button {
 }
 
 .micro-widgets-modal-content {
-    background: var(--background);
+    background: linear-gradient(#fefefe, #c5e5f7);
     box-shadow: 2px 2px 2px var(--shadow-color);
     transition: box-shadow .2s ease-out;
 }
@@ -315,5 +316,6 @@ select, textarea, button, .button {
     background: var(--background);
 }
 
-.micro-widgets-tab-buttons button {
+.shaded, .rounded {
+    background: linear-gradient(#fefefe, #c5e5f7);
 }

@@ -18,6 +18,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
      * be resized, without overriding it in a skin file or something similar.
      */
     --font-size: 16px;
+    --font-break-size: var(--font-size);
     --color: #777;
     --background: #fbfbfb;
     --button-color: #777;
@@ -53,14 +54,23 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 }
 body {
     height: auto;
+    overflow: auto;
 }
 html {
+    /* Notice, no "overflow:auto" - Since it prevents us from "locking" scrolling when a modal window is open!! */
     height: auto;
     min-height: 100%;
-    font-size: var(--font-size);
+    font-size: var(--font-break-size);
     font-family: var(--font-family);
     color: var(--color);
     background: var(--background);
+}
+body.micro-body-open {
+
+    /* Preventing body scroll when window is open */
+    overflow: hidden !important;
+    height: 100%;
+    min-height: 100%;
 }
 
 
@@ -484,13 +494,6 @@ table td>p:last-child {
 
 
 /* Modal widget */
-body.micro-body-open {
-
-    /* Preventing body scroll when window is open */
-    overflow: hidden !important;
-    height: 100%;
-    min-height: 100%;
-}
 .micro-widgets-modal, .micro-widgets-modal-content {
     animation-duration: .5s;
     animation-fill-mode: forwards;
@@ -874,6 +877,9 @@ button.micro-widgets-tab-active:active {
 
 /* Wide screens */
 @media screen and (min-width:800px) {
+html {
+    font-size: var(--font-size);
+}
 
 /* Columns */
 .col {

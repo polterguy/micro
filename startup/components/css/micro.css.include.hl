@@ -81,5 +81,5 @@ create-event:micro.css.include
         skin:air
       p5.auth.my-settings.get
       p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
-        :x:(/@p5.auth.my-settings.get/*/desktop/*/skin|/../*/.defaults/*/skin)/$?value
+        :x:(/@p5.auth.my-settings.get/*/desktop/*/skin|/@.defaults/*/skin)/$?value
         :x:/@micro.version?value
