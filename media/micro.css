@@ -252,7 +252,6 @@ input[type=checkbox], input[type=radio] {
 input[type=checkbox]:checked:after, input[type=radio]:checked:after {
     position: absolute;
     display: block;
-    padding: .0625rem .125rem;
 }
 
 
@@ -261,6 +260,7 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 input[type=checkbox]:checked:after {
     content: "\002714";
     color: var(--form-element-color);
+    padding: .0625rem .125rem;
 }
 input[type=checkbox][disabled]:checked:after {
     color: var(--form-element-disabled-color);
@@ -281,6 +281,7 @@ input[type=radio]:checked:after {
     width: .5rem;
     height: .5rem;
     border-radius: 50%;
+    padding: .125rem;
 }
 input[type=radio][disabled]:checked:after {
     background: var(--form-element-disabled-color);
@@ -631,40 +632,47 @@ button.micro-widgets-tab-active:active {
 
 
 /* TreeView */
-.micro-widgets-tree a {
-    font-size: 16px !important;
-    font-weight: normal;
-    text-decoration: none;
+.micro-widgets-tree {
+    margin-bottom: 1rem;
 }
-.micro-widgets-tree ul.tree-item-children {
+.micro-widgets-tree ul.children {
     padding-left: 0;
     list-style: none;
     margin-bottom: 0;
-    margin-top: -2px;
 }
-.micro-widgets-tree ul.tree-hidden {
-    display: none;
-}
-.micro-widgets-tree li.tree-item {
-    padding-left: 16px;
-    background-repeat: no-repeat;
+.micro-widgets-tree li.item {
+    padding-left: .75rem;
     overflow: hidden;
     white-space: nowrap;
 }
-.micro-widgets-tree>ul.tree-item-children>li.tree-item {
+.micro-widgets-tree>ul>li.item {
+    /* Root item should not be indented */
     padding-left: 0;
 }
-.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item,.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded {
-    background-image: url('images/tree-1.png'),url('images/tree-2.png');
-    background-position: 0 -60px,0 0;
-    background-repeat: no-repeat,repeat-y;
+.micro-widgets-tree a.item-label {
+    display: block;
 }
-.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-item:last-child,
-.micro-widgets-tree>ul.tree-item-children>li.tree-item>ul.tree-item-children li.tree-expanded:last-child {
-    background-image: url('images/tree-3.png');
-    background-position: 0 0;
+.micro-widgets-tree a.item-label:hover {
+    background-color: var(--table-hover-background);
 }
-@keyframes tree-item-children-animate {
+.micro-widgets-tree li.item>a.tree-selected {
+    background-color: var(--table-selected-background);
+}
+.micro-widgets-tree a.item-label .folder,
+.micro-widgets-tree a.item-label .icon {
+    font-family: 'icomoon' !important;
+    margin-right: .25rem;
+}
+.micro-widgets-tree a.item-label .folder-open:before {
+    content: "\e930";
+}
+.micro-widgets-tree a.item-label .folder-close:before {
+    content: "\e92f";
+}
+.micro-widgets-tree .file a.item-label .icon:before {
+    content: "\e924";
+}
+@keyframes tree-animate {
 0% {
     opacity: 0;
     margin-left: -80px;
@@ -675,124 +683,68 @@ button.micro-widgets-tab-active:active {
     margin-left: 0;
 }
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item {
+.micro-widgets-tree ul.tree-animate>li.item {
     opacity: 0;
-    animation-name: tree-item-children-animate;
+    animation-name: tree-animate;
     animation-duration: .25s;
     animation-fill-mode: forwards;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+1) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+1) {
     animation-delay: .02s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+2) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+2) {
     animation-delay: .04s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+3) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+3) {
     animation-delay: .06s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+4) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+4) {
     animation-delay: .08s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+5) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+5) {
     animation-delay: .1s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+6) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+6) {
     animation-delay: .12s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+7) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+7) {
     animation-delay: .14s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+8) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+8) {
     animation-delay: .16s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+9) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+9) {
     animation-delay: .18s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+10) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+10) {
     animation-delay: .2s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+11) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+11) {
     animation-delay: .22s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+12) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+12) {
     animation-delay: .24s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+13) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+13) {
     animation-delay: .26s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+14) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+14) {
     animation-delay: .28s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+15) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+15) {
     animation-delay: .3s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+16) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+16) {
     animation-delay: .32s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+17) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+17) {
     animation-delay: .34s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+18) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+18) {
     animation-delay: .36s;
 }
-.micro-widgets-tree ul.tree-item-children-animate>li.tree-item:nth-child(20n+19) {
+.micro-widgets-tree ul.tree-animate>li.item:nth-child(20n+19) {
     animation-delay: .38s;
-}
-.micro-widgets-tree li.tree-expanded>ul.tree-item-children>li.tree-leaf a.tree-item-label {
-    background-position: 0 -40px;
-}
-.micro-widgets-tree a.tree-item-label {
-    padding-left: 16px;
-    background-image: url('images/tree-1.png');
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    text-decoration: none;
-    display: block;
-    height: 20px;
-}
-.micro-widgets-tree li.tree-expanded>a.tree-item-label {
-    background-position: 0 -20px;
-}
-.micro-widgets-tree a.tree-item-label:hover {
-    background-color: rgba(0,0,0,.1);
-}
-.micro-widgets-tree li.tree-item>a.tree-selected {
-    background-color: rgba(128,128,128,.3);
-}
-.micro-widgets-tree>ul>li>a.tree-item-label>span:not(.icon),
-.micro-widgets-tree>ul>li>ul>li>a.tree-item-label>span:not(.icon) {
-    margin-left: 12px;
-}
-.micro-widgets-tree a.tree-item-label>span:not(.icon) {
-    vertical-align:text-top;
-    line-height: 16px;
-}
-.micro-widgets-tree a.tree-item-label span.icon {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin-right: 3px;
-    margin-top: 2px;
-    margin-bottom: -2px;
-}
-.micro-widgets-tree a.tree-item-label span {
-    margin-left: 16px;
-}
-.micro-widgets-tree a.tree-item-label .folder {
-    margin-left: -16px;
-    padding-left: 16px;
-}
-.micro-widgets-tree a.tree-item-label .folder,.micro-widgets-tree a.tree-item-label .icon {
-    font-family: 'icomoon' !important;
-}
-.micro-widgets-tree a.tree-item-label .folder-open:before {
-    content: "\e930";
-}
-.micro-widgets-tree a.tree-item-label .folder-close:before {
-    content: "\e92f";
-}
-.micro-widgets-tree .file a.tree-item-label .icon:before {
-    content: "\e924";
 }
 
 

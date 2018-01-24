@@ -29,7 +29,7 @@ create-event:micro.widgets.tree.toggle-items
       throw:Oops, that item doesn't exist!
 
     /*
-     * Now checking if there already exist a "ul" HTML widget beneath the main "tree-item".
+     * Now checking if there already exist a "ul" HTML widget beneath the main "item".
      * If a "ul" widget exist, and it is not hidden, we hide it, unless [force-expand] is true.
      * If the "ul" widget exist, and is hidden, we show it.
      * If it doesn't exist, we invoke the lambda callback provided during creation, to retrieve 
@@ -56,15 +56,15 @@ create-event:micro.widgets.tree.toggle-items
        * Checking if "ul" HTML widget is simply hidden.
        */
       if:x:/@p5.web.widgets.property.get/*/*?value
-        ~:tree-hidden
+        ~:hide
 
         /*
-         * "ul" HTML widget was simply hidden, making sure we show it, by deleting the "tree-hidden" class, and
+         * "ul" HTML widget was simply hidden, making sure we show it, by deleting the "hide" class, and
          * add the "tree-expanded" CSS class to main "li" HTML widget, before finally updating the "icon CSS class"
          * to the [_class-open] value.
          */
         micro.css.delete:x:/@p5.web.widgets.get-children/*/*/container/[1,2]?value
-          class:tree-hidden
+          class:hide
         micro.css.add:x:/@p5.web.widgets.find/*/*?value
           class:tree-expanded
 
@@ -87,10 +87,10 @@ create-event:micro.widgets.tree.toggle-items
 
           /*
            * "ul" HTML widget is visible, and caller did not supply [force-expand] as true,
-           * hence we hide it, by applying the "tree-hidden" class to the main "ul" HTML widget.
+           * hence we hide it, by applying the "hide" class to the main "ul" HTML widget.
            */
           micro.css.add:x:/@p5.web.widgets.get-children/*/*/container/[1,2]?value
-            class:tree-hidden
+            class:hide
 
           /*
            * Then we delete the "tree-expanded" CSS class to our main "li" HTML widget.
@@ -151,12 +151,12 @@ create-event:micro.widgets.tree.toggle-items
           parent:x:/..for-each/*/p5.web.widgets.find/*/*?value
 
       /*
-       * Making sure we add the "tree-item-children-animate" CSS class to our widget, since this is
+       * Making sure we add the "tree-animate" CSS class to our widget, since this is
        * a dynamically created child control collection. To create some nice animations, as the items shows
        * up on page initially.
        */
       set:x:/@micro.widgets.tree._create-items/*/*/class?value
-        src:tree-item-children tree-item-children-animate
+        src:children tree-animate
 
       /*
        * Now we can simply [eval] the returned lambda from the above [micro.widgets.tree._create-items] invocation,

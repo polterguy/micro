@@ -86,7 +86,7 @@ create-event:micro.widgets.tree._create-items
      */
     if:x:/..for-each/*/_dp/#/*/class?value
       set:x:/..for-each/*/add/[1,2]/*/*/*/class?value
-        src:tree-item {0}
+        src:item {0}
           :x:/..for-each/*/_dp/#/*/class?value
 
     /*
@@ -96,13 +96,13 @@ create-event:micro.widgets.tree._create-items
     add:x:/../*/return/*/*
       src
         li
-          class:tree-item
+          class:item
           _item-id:x:/..for-each/*/_dp/#?value
           widgets
             a
               href:#
               role:button
-              class:tree-item-label
+              class:item-label
               onclick
 
                 /*
@@ -227,5 +227,5 @@ create-event:micro.widgets.tree._create-items
    */
   return
     ul
-      class:tree-item-children
+      class:children
       widgets

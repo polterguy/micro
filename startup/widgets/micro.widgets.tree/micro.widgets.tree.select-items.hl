@@ -69,13 +69,13 @@ create-event:micro.widgets.tree.select-items
      * to make sure no selected items are even "invisible", if there are any.
      */
     p5.web.widgets.find-ancestor-like:x:/@p5.web.widgets.find-first/*/*?value
-      class:tree-hidden
+      class:hide
       element:ul
     if:x:/@p5.web.widgets.find-ancestor-like/*/*
       not
       continue
     micro.css.delete:x:/@p5.web.widgets.find-ancestor-like/*/*?value
-      class:tree-hidden
+      class:hide
     p5.web.widgets.get-parent:x:/@p5.web.widgets.find-ancestor-like/*/*?value
     micro.css.add:x:/@p5.web.widgets.get-parent/*/*?value
       class:tree-expanded
