@@ -11,12 +11,12 @@
 :root {
     --font-family: 'Helvetica';
     --font-size: 13px;
-    --background: #9bb7ce;
+    --background: #bbcedd;
     --color: #385858;
     --form-element-color: #9bb7ce;
     --form-element-background-color: #617380;
     --form-element-active-background: #384858;
-    --form-element-disabled-background-color: #888888;
+    --form-element-disabled-background-color: #555555;
     --button-color: #9bb7ce;
     --button-background: linear-gradient(#617380, #384858);
     --button-toggled-background: linear-gradient(#384858, #617380);
@@ -26,7 +26,7 @@
     --anchor-hover-color: #617380;
     --anchor-active-color: #888888;
     --form-element-padding: .5rem;
-    --placeholder-color: #888888;
+    --placeholder-color: #a0a0a0;
     --shadow-color: #617380;
 
     --success-background: linear-gradient(#efe,#afa);
@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6, label {
 
 pre, code {
     background-color: #617380;
-    color: #004232;
+    color: #bbcedd;
 }
 hr {
     border-color:#617380;
@@ -68,16 +68,6 @@ a {
 }
 .CodeMirror {
     border: solid 1px var(--border-color) !important;
-}
-
-.micro-widgets-tab-buttons button {
-    color: #384858;
-}
-
-button.micro-widgets-tab-active {
-    background: linear-gradient(#617380, #384858);
-    background-size: 1px 200%;
-    color: var(--button-color);
 }
 
 .micro-widgets-modal-content {

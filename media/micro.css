@@ -19,19 +19,19 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
      */
     --font-size: 16px;
     --font-break-size: var(--font-size);
-    --color: #777;
+    --color: #555;
     --background: #fbfbfb;
     --button-color: #777;
     --button-background: linear-gradient(#f9f9f9, #b0b0b0);
     --button-toggled-background: linear-gradient(#b0b0b0, #f9f9f9);
-    --anchor-color: #99f;
-    --anchor-hover-color: #ccf;
+    --anchor-color: #5959c9;
+    --anchor-hover-color: #007;
     --anchor-active-color: #77e;
     --form-element-color: #777;
     --form-element-background-color: #fdfdfd;
     --form-element-active-background: #ffffff;
     --form-element-disabled-color: #aaa;
-    --form-element-disabled-background-color: #f5f5f5;
+    --form-element-disabled-background-color: #e5e5e5;
     --form-element-padding: .5rem;
     --placeholder-color: #ccc;
     --border-color: #bbb;
@@ -76,7 +76,7 @@ body.micro-body-open {
 
 
 /* "All" elements, or most of them at least */
-blockquote,label,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,label,legend,ol,p,pre,select,table,textarea,ul,article,.button {
+blockquote,button,caption,fieldset,h1,h2,h3,h4,h5,h6,hr,input,legend,ol,p,pre,select,table,textarea,ul,article,.button {
     margin: 0 0 1rem 0;
 }
 
@@ -103,6 +103,7 @@ input, button, textarea, select, .button {
     height: calc (1rem + 2 * var(--form-element-padding));
     vertical-align: top;
     display: inline-block;
+    font-family: inherit;
 }
 
 

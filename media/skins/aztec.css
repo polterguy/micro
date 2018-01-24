@@ -56,10 +56,10 @@
     --form-element-background-color: #eed9a8;
     --form-element-active-background: #ede19b;
     --form-element-color: #c6773f;
-    --form-element-disabled-background-color: #c6773f;
+    --form-element-disabled-background-color: #c0c0c0;
     --button-color: #ce5517;
-    --button-background: linear-gradient(#eed9a8, #ce5517);
-    --button-toggled-background: linear-gradient(#c6773f, #eed9a8);
+    --button-background: linear-gradient(#eed9a8, #E68C4F);
+    --button-toggled-background: linear-gradient(#E68C4F, #eed9a8);
     --border-color: #c6773f;
     --border-radius: 4px;
     --anchor-color: #be6527;

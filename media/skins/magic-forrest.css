@@ -11,11 +11,11 @@
 :root {
     --font-family: 'Helvetica';
     --font-size: 14px;
-    --background: #adc587;
+    --background: linear-gradient(#afd377, #7FB255);
     --color: #004232;
     --form-element-color: #004232;
-    --form-element-background-color: #c4d1ad;
-    --form-element-active-background: #afd377;
+    --form-element-background-color: #afd377;
+    --form-element-active-background: #c4d1ad;
     --form-element-disabled-background-color: #48872f;
     --button-color: #acc18a;
     --button-background: linear-gradient(#48872f, #004232);
@@ -23,8 +23,8 @@
     --border-color: rgba(0,0,0,.5);
     --border-radius: .75rem;
 
-    --anchor-color: #4d7f39;
-    --anchor-hover-color: #174f3d;
+    --anchor-color: #355828;
+    --anchor-hover-color: #0b281f;
     --anchor-active-color: #174f3d;
     --form-element-padding: .5rem;
     --placeholder-color: #18a779;
@@ -54,7 +54,6 @@ h1, h2, h3, h4, h5, h6, label {
 .bg {
     background: linear-gradient(#afd377, #567128);
     background-size: 300%;
-    box-shadow: 0 0 10px #afd377;
 }
 pre, code {
     background-color: #18a779;
@@ -66,10 +65,10 @@ hr {
 
 
 .micro-widgets-modal-content {
-    background: linear-gradient(#afd377, #567128)
+    background: linear-gradient(#afd377, #567128);
     background-size: 300%;
     border-radius: .75rem;
-    box-shadow: 0 0 10px #afd377;
+    box-shadow: 0px 0px 5px #fefe55;
 }
 
 input:not([type=radio]):not([type=checkbox]),
