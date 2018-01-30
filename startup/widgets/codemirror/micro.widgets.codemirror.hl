@@ -1,5 +1,6 @@
+
 /*
- * Responsible for creating the CodeMirror Hyperlambda textarea widget.
+ * Creates the CodeMirror extension widget.
  *
  * All arguments passed in will be added to main root widget, except
  * [auto-focus], [height], [mode], [keys] and [value], which will be used to determine 
@@ -7,6 +8,21 @@
  * get focus or not - In addition to an additional keyboard shortcut mapping.
  *
  * To set its initial value, pass in [value] as its initial code value.
+ *
+ * Arguments;
+ *
+ * - [auto-focus] - If true, the editor will get initial focus.
+ * - [height] - Height in pixels, percent or any other unit for editor.
+ * - [mode] - Language mode for editor, e.g. "htmlmixed" or "hyperlambda", etc. Defaults to "hyperlambda".
+ * - [keys] - CodeMirror keyboard-shortcut to JavaScript callback list. E.g. "Ctrl-T:function(){alert('x');}"
+ * - [value] - Initial value of editor.
+ * - [.data-field] - Data field name, used when for instance serialising editor's content.
+ * 
+ * All other arguments are appended into the root container for the widget, allowing you to create for instance hidden attributes,
+ * etc.
+ *
+ * The widget will use the currently logged in user's settings for determining which theme, and font size to use, etc.
+ * See the [micro.codemirror.settings] Active Event for how these are changed.
  */
 create-event:micro.widgets.codemirror
 
@@ -61,10 +77,18 @@ create-event:micro.widgets.codemirror
       style:"font-size:{0}pt;"
         :x:(/@p5.auth.my-settings.get/*/codemirror/*/font-size|/../*/.defaults/*/font-size)/$?value
       widgets
+
+        /*
+         * Hidden input field, declaring whether or not the editor's content is dirty or not.
+         */
         input
           type:hidden
           data-field:dirty-flag
           value:clean
+
+        /*
+         * CodeMirror editor's textarea element.
+         */
         literal
           element:textarea
           oninit
@@ -90,12 +114,21 @@ create-event:micro.widgets.codemirror
               trim-left:x:/@_keys?value
 
             /*
-             * Including CodeMirror JavaScript.
-             *
-             * This file contains CodeMirror, in addition to all essential addons.
+             * Including CodeMirror editor's JavaScript file(s).
              */
             p5.web.include-javascript-file
-              @MICRO/media/codemirror-all.min.js
+              @MICRO/media/codemirror/lib/codemirror.js
+              @MICRO/media/codemirror/addon/dialog/dialog.js
+              @MICRO/media/codemirror/addon/search/searchcursor.js
+              @MICRO/media/codemirror/addon/search/search.js
+              @MICRO/media/codemirror/addon/search/jump-to-line.js
+              @MICRO/media/codemirror/addon/edit/closebrackets.js
+              @MICRO/media/codemirror/addon/edit/trailingspace.js
+              @MICRO/media/codemirror/addon/hint/show-hint.js
+              @MICRO/media/codemirror/addon/search/match-highlighter.js
+              @MICRO/media/codemirror/addon/selection/mark-selection.js
+              @MICRO/media/codemirror/addon/selection/active-line.js
+              @MICRO/media/codemirror/addon/display/fullscreen.js
 
             /*
              * Checking mode of editor.
@@ -169,7 +202,7 @@ create-event:micro.widgets.codemirror
                   /*
                    * Oops, mode doesn't exist.
                    */
-                  throw:Oops, unsupported file type
+                  throw:Oops, unsupported CodeMirror mode
 
                 p5.web.include-javascript-file:@MICRO/media/codemirror/mode/{0}/{0}.js
                   :x:/@.mode?value
@@ -183,7 +216,12 @@ create-event:micro.widgets.codemirror
              * Making sure necessary Stylesheet files are included
              */
             .theme:x:(/@p5.auth.my-settings.get/*/codemirror/*/theme|/../*/.defaults/*/theme)/$?value
-            p5.web.include-css-file:@MICRO/media/codemirror-all.min.css
+            p5.web.include-css-file
+              @MICRO/media/codemirror/lib/codemirror.css
+              @MICRO/media/codemirror/addon/dialog/dialog.css
+              @MICRO/media/codemirror/addon/display/fullscreen.css
+              @MICRO/media/codemirror/addon/hint/show-hint.css
+
             p5.web.include-css-file:@MICRO/media/codemirror/theme/{0}.css
               :x:/@.theme?value
 
