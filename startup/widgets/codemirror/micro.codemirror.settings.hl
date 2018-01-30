@@ -1,5 +1,6 @@
+
 /*
- * Creates Active Event to allow the user to edit his CodeMirror settings.
+ * Creates the Active Event that allows the user to edit his CodeMirror settings.
  */
 create-event:micro.codemirror.settings
 
@@ -9,7 +10,7 @@ create-event:micro.codemirror.settings
   .signal
 
   /*
-   * Adding any (optional) additional settings.
+   * Adding any (optional) additional settings widgets.
    */
   insert-after:x:/../*/create-widgets/**/micro.widgets.wizard-form/*/checkbox/*/.data-field/=line-numbers/.
     src:x:/@.signal/--/<-
@@ -38,9 +39,9 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 font-size:9.25
-              select-data:x:/*/*/micro.codemirror.settings
+              p5.auth.my-settings.get
               set-widget-property:x:/../*/_event?value
-                value:x:(/@select-data/*/*/font-size|/@.defaults/*/font-size)/$?value
+                value:x:(/@p5.auth.my-settings.get/*/codemirror/*/font-size|/@.defaults/*/font-size)/$?value
 
               /*
                * Setting initial focus to font-size widget.
@@ -57,7 +58,7 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 theme:phosphorus
-              select-data:x:/*/*/micro.codemirror.settings
+              p5.auth.my-settings.get
 
               /*
                * Listing all available CSS files from themes folder,
@@ -79,7 +80,7 @@ create-event:micro.codemirror.settings
                  * Checking if this is our currently selected theme.
                  */
                 if:x:/@split/0/-2?name
-                  =:x:(/@select-data/*/*/theme|/../*/.defaults/*/theme)/$?value
+                  =:x:(/@p5.auth.my-settings.get/*/codemirror/*/theme|/../*/.defaults/*/theme)/$?value
                   add:x:/..for-each/*/create-literal-widget
                     src:selected
 
@@ -101,8 +102,8 @@ create-event:micro.codemirror.settings
                */
               .defaults
                 line-numbers:bool:true
-              select-data:x:/*/*/micro.codemirror.settings
-              if:x:(/@select-data/*/*/line-numbers|/../*/.defaults/*/line-numbers)/$?value
+              p5.auth.my-settings.get
+              if:x:(/@p5.auth.my-settings.get/*/codemirror/*/line-numbers|/../*/.defaults/*/line-numbers)/$?value
                 =:bool:true
                 set-widget-property:x:/../*/_event?value
                   checked
@@ -119,22 +120,19 @@ create-event:micro.codemirror.settings
                 onclick
 
                   /*
-                   * Serializing form, saving settings to p5.data database, 
-                   * and applying new settings.
+                   * Serializing form, saving settings, and applying new settings.
                    *
                    * Making sure we keep any additional "plugin settings".
                    */
                   micro.widgets.wizard-form.value:hypereval-settings-data
-                  select-data:x:/*/*/micro.codemirror.settings
-                  for-each:x:/-/*/*
-                    if:x:/@micro.widgets.wizard-form.value/*/{0}
-                      :x:/@_dp/#?name
-                      set:x:/@_dp/#
-                  delete-data:x:/*/*/micro.codemirror.settings
-                  add:x:/../*/insert-data/*
-                    src:x:(/@micro.widgets.wizard-form.value/*|/@select-data/*/*)
-                  insert-data
-                    micro.codemirror.settings
+                  p5.auth.my-settings.get
+                  set:x:/@p5.auth.my-settings.get/*/codemirror
+                  add:x:/../*/p5.auth.my-settings.set/*/codemirror
+                    src:x:/@micro.widgets.wizard-form.value/*
+                  add:x:/../*/p5.auth.my-settings.set
+                    src:x:/@p5.auth.my-settings.get/*
+                  p5.auth.my-settings.set
+                    codemirror
 
                   /*
                    * Refreshing page, since CodeMirror doesn't handle it very well

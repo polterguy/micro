@@ -35,7 +35,7 @@ create-event:micro.widgets.codemirror
     auto-focus:bool:false
     height:300px
     mode:hyperlambda
-  select-data:x:/*/*/micro.codemirror.settings
+  p5.auth.my-settings.get
 
   /*
    * Decorating widget with arguments.
@@ -59,7 +59,7 @@ create-event:micro.widgets.codemirror
     container
       class:micro-codemirror-wrapper
       style:"font-size:{0}pt;"
-        :x:(/@select-data/*/*/font-size|/../*/.defaults/*/font-size)/$?value
+        :x:(/@p5.auth.my-settings.get/*/codemirror/*/font-size|/../*/.defaults/*/font-size)/$?value
       widgets
         input
           type:hidden
@@ -182,7 +182,7 @@ create-event:micro.widgets.codemirror
             /*
              * Making sure necessary Stylesheet files are included
              */
-            .theme:x:(/@select-data/*/*/theme|/../*/.defaults/*/theme)/$?value
+            .theme:x:(/@p5.auth.my-settings.get/*/codemirror/*/theme|/../*/.defaults/*/theme)/$?value
             p5.web.include-css-file:@MICRO/media/codemirror-all.min.css
             p5.web.include-css-file:@MICRO/media/codemirror/theme/{0}.css
               :x:/@.theme?value
@@ -192,7 +192,7 @@ create-event:micro.widgets.codemirror
              *
              * Making sure we transform boolean values to JavaScript counterparts.
              */
-            .line-numbers:x:(/@select-data/*/*/line-numbers|/../*/.defaults/*/line-numbers)/$?value
+            .line-numbers:x:(/@p5.auth.my-settings.get/*/codemirror/*/line-numbers|/../*/.defaults/*/line-numbers)/$?value
             set:x:/-?value
               to-lower:x:/./-?value.string
             .auto-focus:x:(/../*/auto-focus|/../*/.defaults/*/auto-focus)/$?value
