@@ -1,4 +1,3 @@
-
 /*
  * Creates the Active Event that allows the user to edit his CodeMirror settings.
  */
@@ -112,7 +111,7 @@ create-event:micro.codemirror.settings
             innerValue:@"<strong>Warning</strong> - Saving your settings will reload your page!"
 
           div
-            class:right
+            class:right strip
             widgets
               button:hypereval-settings-ok-button
                 class:larger
@@ -139,3 +138,14 @@ create-event:micro.codemirror.settings
                    * when font is changed dynamically.
                    */
                   p5.web.reload-location
+
+              button
+                class:larger
+                innerValue:Close
+                title:Close without saving your settings
+                onclick
+
+                  /*
+                   * Simply deletes modal widget.
+                   */
+                  delete-widget:hypereval-settings-modal
