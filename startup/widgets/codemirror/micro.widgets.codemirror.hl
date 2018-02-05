@@ -1,4 +1,3 @@
-
 /*
  * Creates the CodeMirror extension widget.
  *
@@ -17,7 +16,10 @@
  * - [keys] - CodeMirror keyboard-shortcut to JavaScript callback list. E.g. "Ctrl-T:function(){alert('x');}"
  * - [value] - Initial value of editor.
  * - [.data-field] - Data field name, used when for instance serialising editor's content.
- * 
+ * - [theme] - Optional theme override. If not given, will use the user's settings, defaulting to _"phosphorus"_.
+ * - [font-size] - Optional font size for content. If not given, will use user's settings, defaulting to 9,25pt if no settings exists.
+ * - [tab-size] - Optional tab size. Defaults to 2.
+ *
  * All other arguments are appended into the root container for the widget, allowing you to create for instance hidden attributes,
  * etc.
  *
@@ -39,6 +41,9 @@ create-event:micro.widgets.codemirror
     value:string
     height:string
     mode:string
+    theme:string
+    font-size:string
+    tab-size:int
     keys
 
   /*
@@ -51,6 +56,7 @@ create-event:micro.widgets.codemirror
     auto-focus:bool:false
     height:300px
     mode:hyperlambda
+    tab-size:int:2
   p5.auth.my-settings.get
 
   /*
@@ -70,12 +76,12 @@ create-event:micro.widgets.codemirror
   /*
    * Returning widget to caller.
    */
-  eval-x:x:/+/*/*/style|/+/**(/.theme|/.line-numbers|/.auto-focus|/.height|/.mode)
+  eval-x:x:/+/*/*/style|/+/**(/.theme|/.line-numbers|/.auto-focus|/.height|/.mode|/.tab-size)
   return
     container
       class:micro-codemirror-wrapper
       style:"font-size:{0}pt;"
-        :x:(/@p5.auth.my-settings.get/*/codemirror/*/font-size|/../*/.defaults/*/font-size)/$?value
+        :x:(/@.signal/--/*/font-size|/@p5.auth.my-settings.get/*/codemirror/*/font-size|/../*/.defaults/*/font-size)/$?value
       widgets
 
         /*
@@ -98,6 +104,7 @@ create-event:micro.widgets.codemirror
              */
             .height:x:(/@.signal/--/height|/@.defaults/*/height)/$?value
             .mode:x:(/@.signal/--/mode|/@.defaults/*/mode)/$?value
+            .tab-size:x:(/@.signal/--/tab-size|/@.defaults/*/tab-size)/$?value
             .keys
 
             /*
@@ -215,7 +222,7 @@ create-event:micro.widgets.codemirror
             /*
              * Making sure necessary Stylesheet files are included
              */
-            .theme:x:(/@p5.auth.my-settings.get/*/codemirror/*/theme|/../*/.defaults/*/theme)/$?value
+            .theme:x:(/@.signal/--/*/theme|/@p5.auth.my-settings.get/*/codemirror/*/theme|/../*/.defaults/*/theme)/$?value
             p5.web.include-css-file
               @MICRO/media/codemirror/lib/codemirror.css
               @MICRO/media/codemirror/addon/dialog/dialog.css
@@ -244,7 +251,8 @@ create-event:micro.widgets.codemirror
   styleActiveLine:true,
   path:'{1}/media/codemirror/',
   autofocus:{4},
-  tabSize:2,
+  tabSize:{8},
+  indentUnit:{8},
   indentAuto:true,
   autoCloseBrackets:true,
   showTrailingSpace:true,
@@ -273,3 +281,4 @@ p5['{0}'].setSize('100%', '{5}');"
               :x:/@.height?value
               :x:/@.mode?value
               :x:/@_keys?value
+              :x:/@.tab-size?value

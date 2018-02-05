@@ -7,7 +7,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 :root {
     --font-family: sans-serif;
 
-    /* 
+    /*
      * The ONLY pixel based value in Micro. Change this variable to increase the font-size of your pages.
      * Basically, all other sizes are "derived" from this one, one way or another indirectly.
      * So if you cange this value, you change the size of all form controls, and everything on your page
@@ -844,6 +844,27 @@ button.micro-widgets-tab-active:active {
 
 
 
+/* Star rater widget */
+.micro-widgets-stars {
+    font-size: 2.5em
+}
+.micro-widgets-stars a {
+    color: #ffd700;
+}
+@media screen and (min-width:600px) {
+.micro-widgets-stars {
+    font-size: 3.5em
+}
+}
+@media screen and (min-width:800px) {
+.micro-widgets-stars {
+    font-size: 5em
+}
+}
+
+
+
+
 /* Misc classes */
 .air {
     margin: 1rem;
@@ -1244,25 +1265,5 @@ button.micro-widgets-tab-hamburger {
 
 .micro-dropzone-error {
     background-color: #f00
-}
-
-.micro-star-rater {
-    font-size: 2.5em
-}
-
-.micro-star-rater a {
-    color: #ffd700 !important
-}
-
-@media screen and (min-width:600px) {
-    .micro-star-rater {
-        font-size: 3.5em
-    }
-}
-
-@media screen and (min-width:800px) {
-    .micro-star-rater {
-        font-size: 5em
-    }
 }
 

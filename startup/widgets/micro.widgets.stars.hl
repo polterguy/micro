@@ -1,0 +1,245 @@
+
+/*
+ * An extension widget that allows people to supply feedback by star rating,
+ * allowing them to click 1-x stars.
+ *
+ * Optionally supply [max] being the number of stars to render, becoming the
+ * maximum value of the widget, [.data-field] becoming the data-field name
+ * of your widget's value when serialized, and [value] being its initial value.
+ * If you don't supply a [max] value, a default max value of 5 will be assumed.
+ *
+ * In addition, you can optionally pass in [read-only] and set its value to true,
+ * at which point it's not possible to modify the value of the widget.
+ *
+ * All other arguments are added as attributes/properties to your main widget 
+ * being rendered.
+ *
+ * The widget's default CSS class, if none is given, will be "micro-widgets-stars".
+ */
+create-event:micro.widgets.stars
+
+  /*
+   * Used to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Default argument values, if no arguments are supplied.
+   */
+  .defaults
+    max:int:5
+    class:micro-widgets-stars
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.optional:x:/..
+    max:int
+    value:int
+    read-only:bool
+
+  /*
+   * Applying arguments.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--(!/max!/.data-field!/class!/read-only!/value)
+
+  /*
+   * Making sure we set our hidden input element's [.data-field] if caller supplied
+   * a [.data-field] argument.
+   */
+  if:x:/@.signal/--/.data-field?value
+    add:x:/../*/return/*/container/*/widgets/*/input
+      src:x:/../*/.data-field
+
+  /*
+   * Making sure we set initial value of hidden input element, if 
+   * caller supplied an initial value.
+   */
+  if:x:/@.signal/--/value?value
+    eval-x:x:/+/*/*
+    add:x:/../*/return/*/container/*/widgets/*/input
+      src
+        value:x:/../*/value?value
+
+  /*
+   * Adding the CSS class, either the explicitly given one, or our default class.
+   */
+  add:x:/../*/return/*/container
+    src:x:(/../*/class|/@.defaults/*/class)/$
+
+  /*
+   * Checking if an initial [value] was supplied, at which point we set the initial
+   * value of our star rater to the specified [value], by making sure we start out
+   * our iterator iterating each star to create with a "star-full" CSS class.
+   */
+  _value:icon-star-empty
+  if:x:/../*/value?value
+    and:x:/../*/value?value.int
+      >:int:0
+
+    /*
+     * An initial [value] was supplied, and it was above 0.
+     * Making sure we set the default star CSS class to "full".
+     */
+    set:x:/@_value?value
+      src:icon-star-full
+
+  /*
+   * Checking if widget is supposed to be read-only
+   */
+  if:x:/../*/read-only?value
+
+    /*
+     * Widget is read-only.
+     */
+    set:x:/../*/while/**/a/*/onclick/*
+    add:x:/../*/while/**/a
+      src
+        style:"cursor:default;"
+
+  /*
+   * Creating each star we need to add to our widget.
+   */
+  while:x:(/../*/max|/@.defaults/*/max)/$?value.int
+    >:int:0
+
+    /*
+     * Adding one hyperlink button for currently iterated value.
+     */
+    eval-x:x:/+/*/*/*/innerValue
+    add:x:/../*/return/*/container/*/widgets
+      src
+        a
+          href:#
+          role:button
+          innerValue:@"<span class=""{0}""></span>"
+            :x:/@_value?value
+          onclick
+
+            /*
+             * Invoking event that toggles our stars accordingly.
+             */
+            p5.web.widgets.get-parent:x:/../*/_event?value
+            eval-x:x:/+/*
+            micro.widgets.star-rating._internal.toggle:x:/@p5.web.widgets.get-parent/*/*?value
+              widget:x:/../*/_event?value
+
+    /*
+     * Checking if [value] was provided, and if we are above it in our iteration.
+     */
+    if:x:/../*/value?value
+
+      /*
+       * A [value] was provided, making sure we decrement it, such that we can check
+       * if we have passed it, at which point we change our star CSS class to "empty".
+       */
+      set:x:/../*/value?value
+        -:x:/../*/value?value.int
+          _:1
+
+      /*
+       * Checking if we're above our initial [value], at which point we should
+       * change the star's CSS class to the "empty star" value.
+       */
+      if:x:/../*/value?value.int
+        <=:int:0
+        set:x:/@_value?value
+          src:icon-star-empty
+
+    /*
+     * Decrementing "counter", such that we can track if we've passed the initial value
+     * in our next iteration.
+     */
+    set:x:(/../*/max|/@.defaults/*/max)/$?value
+      -:x:(/../*/max|/@.defaults/*/max)/$?value.int
+        _:1
+
+  /*
+   * Returning container widget wrapping our actual extension star rater widget.
+   */
+  return
+    container
+      events
+
+
+        /*
+         * Toggles stars according to which star was clicked.
+         *
+         * Expects [_arg] being main star widget, and [widget] being child widget that
+         * was actualyl clicked (star).
+         */
+        micro.widgets.star-rating._internal.toggle
+
+          /*
+           * Verifying this is our instance.
+           */
+          if:x:/../*/_arg?value
+            !=:x:/../*/_event?value
+
+            /*
+             * Not our guy.
+             */
+            return
+
+          /*
+           * Retrieving child widgets, and looping through them, making sure we
+           * correctly toggle their CSS classes.
+           */
+          _on:icon-star-full
+          _off:icon-star-empty
+          _cur:_on
+          _no:int:0
+          p5.web.widgets.get-children:x:/../*/_event?value
+          for-each:x:/@p5.web.widgets.get-children/*/*?value
+
+            /*
+             * Checking if this is our hidden input element, at which point we simply
+             * ignore it.
+             */
+            get-widget-property:x:/@_dp?value
+              element
+            if:x:/@get-widget-property/*/*?value
+              =:input
+              continue
+
+            /*
+             * Updating CSS class of currently iterated star.
+             */
+            set-widget-property:x:/@_dp?value
+              innerValue:@"<span class=""{0}""></span>"
+                :x:/@{0}?value
+                  :x:/@_cur?value
+
+            /*
+             * Checking if we're still in our "on" iteration, at which point we
+             * increment the [_no] to later being able to accurately set the hidden
+             * input element's value.
+             */
+            if:x:/@_cur?value
+              =:_on
+              set:x:/@_no?value
+                +:x:/@_no?value.int
+                  _:1
+
+            /*
+             * Checking if this was the widget that was clicked, at which point
+             * we change our "CSS class referencer" to the "off" value.
+             */
+            if:x:/@_dp?value
+              =:x:/../*/widget?value
+              set:x:/@_cur?value
+                src:_off
+
+          /*
+           * Updating input element's value.
+           */
+          p5.web.widgets.find:x:/../*/_event?value
+            element:input
+            type:hidden
+          set-widget-property:x:/@p5.web.widgets.find/*/*?value
+            value:x:/@_no?value
+
+      widgets
+        input
+          type:hidden

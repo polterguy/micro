@@ -1,4 +1,3 @@
-
 /*
  * Helper Active Event to inject a PayPal button, which once clicked, will allow
  * the user to perform a purchase at PayPal, before some action is taken.
@@ -174,7 +173,7 @@ create-event:micro.widgets.paypal-button.ensure-checkout-js
       fetch:x:/0/0?value
         p5.web.viewstate.get:micro.widgets.paypal-button.included
       not
-      throw:@"You must include PayPal's JS file using [micro.widgets.paypal-button.ensure-checkout-js] in the initial load of your page when using the PayPal widget."
+      throw:You must include PayPal's JS file using [micro.widgets.paypal-button.ensure-checkout-js] in the initial load of your page when using the PayPal widget.
   p5.web.viewstate.set:micro.widgets.paypal-button.included
     src:bool:true
 
@@ -183,4 +182,4 @@ create-event:micro.widgets.paypal-button.ensure-checkout-js
    * we directly include the PayPal JavaScript file from PayPal's servers.
    */
   p5.web.include-javascript-file:@"https://www.paypalobjects.com/api/checkout.js"
-    
+
