@@ -1,0 +1,64 @@
+/*
+ * Creates the "cover" widget, which will cover the entire browser surface
+ * with a semi transparent background, preventing interaction with any other
+ * widgets on your page.
+ *
+ * Pass in [message] to explicitly choose which text to display to user as he waits.
+ * If you don't pass in a [message] argument, the default will be "Please wait ...".
+ * All other arguments are used as is on main widget.
+ *
+ * The default class for the widget is "micro-widgets-cover".
+ */
+create-event:micro.widgets.cover
+
+  /*
+   * Used to separate parameters from the rest of the event.
+   */
+  .signal
+
+  /*
+   * Defaults.
+   */
+  .defaults
+    message:Please wait ...
+    class:micro-widgets-cover
+
+  /*
+   * Adding all specified arguments into return widget.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--(!/message!/class)
+
+  /*
+   * Adding class.
+   */
+  add:x:/../*/return/*/container
+    src:x:(/@.signal/--/class|/@.defaults/*/class)/$
+
+  /*
+   * Returning widget to caller.
+   */
+  eval-x:x:/+/*/*/widgets/*/h1/*/innerValue
+  return
+    container
+      widgets
+        h1
+          innerValue:x:(/@.signal/--/message|/@.defaults/*/message)/$?value
+        div
+          widgets
+            literal
+              element:span
+            literal
+              element:span
+            literal
+              element:span
+            literal
+              element:span
+            literal
+              element:span
+            literal
+              element:span
+            literal
+              element:span
+            literal
+              element:span

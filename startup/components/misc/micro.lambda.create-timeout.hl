@@ -1,5 +1,5 @@
 /*
- * Create the Active Event that allows user to invoke some piece of 
+ * Create the Active Event that allows user to invoke some piece of
  * Hyperlambda n milliseconds from now.
  *
  * Expects [onfinish] to contain the lambda to be evaluated once [milliseconds]
@@ -17,7 +17,7 @@ create-event:micro.lambda.create-timeout
   /*
    * Passing in [onfinish] to [.lambda] node inside of our hidden Ajax event.
    */
-  add:x:/../*/create-literal-widget/*/.ondone/*/.lambda
+  add:x:/../*/create-widget/*/.ondone/*/.lambda
     src:x:/../*/onfinish/*
 
   /*
