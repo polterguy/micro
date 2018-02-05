@@ -1,3 +1,4 @@
+
 /*
  * Creates the wizard form extension widget.
  *
@@ -21,20 +22,18 @@
  * you to add up for instance a [checked] or [selected] argument, to a specific option, to make sure it is by default selected.
  *
  * All other arguments to all other widgets are automatically added as arguments into the specific widget, allowing you to add for instance a
- * [value] to a [text] widget, specifying an initial value for it, or a [checked] argument to a [checkbox] specifying it is initially checked, etc.
+ * [value] to a [text] widget, specifying an initial value for it, or a [checked] argument to a [checkbox] specifying if it is initially checked, etc.
  *
  * You can serialize the form manually if you wish, but you can also use the [micro.form.serialize] event to retrieve all values of
  * a specific form in your page.
  *
  * Notice, when used in combination with [micro.form.serialize], you can add a [.data-field] to most widgets, to avoid using the widget ID
  * as a data-field name, for cases when you have multiple form widgets with unpredictable names on your form.
- * If you do, you need to add a [.data-value] for every [radio-group] option element. The [.data-field] will be what is returned for the specific
- * widget during invocation of [micro.form.serialize].
+ * If you do, you'll probably want to add a [.data-value] for every [radio-group] option element. The [.data-field] will be what is returned
+ * for the specific widget during invocation of [micro.form.serialize].
  *
  * You don't need to add a [.data-value] for your select widget's option elements, since these values will be taken from the option element's value,
  * and not its ID, which anyways can have multiple similar values globally on your form.
- *
- * Notice, you can use [micro.widgets.wizard-form.value] passing in the ID of your wizard form, to retrieve its values.
  */
 create-event:micro.widgets.wizard-form
 
@@ -239,24 +238,4 @@ create-event:micro.widgets.wizard-form
     src:x:/../*(/class|/style)
   return
     container
-      events
-
-        /*
-         * Serializes the form, and returns its values, using [micro.form.serialize]
-         */
-        micro.widgets.wizard-form.value
-
-          /*
-           * Verifying requested form is ID of current.
-           */
-          if:x:/../*/_arg?value
-            =:x:/../*/_event?value
-
-            /*
-             * Using [micro.form.serialize] to retrieve value of form
-             * and returning to caller.
-             */
-            micro.form.serialize:x:/../*/_arg?value
-            return:x:/@micro.form.serialize/*
-
       widgets

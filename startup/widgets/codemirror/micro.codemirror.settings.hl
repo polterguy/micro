@@ -123,11 +123,11 @@ create-event:micro.codemirror.settings
                    *
                    * Making sure we keep any additional "plugin settings".
                    */
-                  micro.widgets.wizard-form.value:hypereval-settings-data
+                  micro.form.serialize:hypereval-settings-data
                   p5.auth.my-settings.get
                   set:x:/@p5.auth.my-settings.get/*/codemirror
                   add:x:/../*/p5.auth.my-settings.set/*/codemirror
-                    src:x:/@micro.widgets.wizard-form.value/*
+                    src:x:/@micro.form.serialize/*
                   add:x:/../*/p5.auth.my-settings.set
                     src:x:/@p5.auth.my-settings.get/*
                   p5.auth.my-settings.set
