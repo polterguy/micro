@@ -3,4 +3,4 @@
  */
 create-event:micro.version
 
-  return:decimal:7.1
+  return:decimal:7.2
