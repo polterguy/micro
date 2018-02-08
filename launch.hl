@@ -1,8 +1,8 @@
-
 /*
  * URL resolver for Micro.
  *
- * Includes support for downloading files using [micro.download.file] among other things.
+ * Includes support for downloading files using [micro.download.file] and uploading files
+ * using the [micro.widgets.upload-button].
  */
 
 
@@ -41,6 +41,52 @@ if:x:/@split/1?name
 
     /*
      * The client is not supposed to be allowed to download a file at this time.
+     */
+    p5.web.response.set-status-code:404
+    p5.web.echo:Oops 404, the place where URLs go to die!
+
+if:x:/@split/1?name
+  =:upload
+
+  /*
+   * Upload request.
+   *
+   * Verifying that user has previously created an upload button, to avoid drowning
+   * server in fake uploads.
+   */
+  if
+    fetch:x:/0/0?value
+      p5.web.session.get:micro.widgets.upload-button
+
+    /*
+     * Uploads allowed.
+     *
+     * First parsing mime message, using "/temp/" folder as attachment folder.
+     */
+    p5.web.request.parse-mime
+      attachment-folder:~/temp/
+
+    /*
+     * Then returning all files that were successfully uploaded to client as JSON.
+     */
+    .files
+    for-each:x:/@p5.web.request.parse-mime/*/multipart/*/*/filename
+      eval-x:x:/+/*/*
+      add:x:/@.files
+        src
+          :{0}{1}{2}
+            :x:/@_dp/#/*/folder?value
+            :x:/@_dp/#/*/prefix?value
+            :x:/@_dp/#?value
+    lambda2json:x:/@.files/*
+    p5.web.header.set:Content-Type
+      src:application/json
+    p5.web.echo:x:/@lambda2json?value
+
+  else
+
+    /*
+     * Uploads not allowed, since there doesn't exist any upload button on page.
      */
     p5.web.response.set-status-code:404
     p5.web.echo:Oops 404, the place where URLs go to die!

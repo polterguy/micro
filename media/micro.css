@@ -864,10 +864,22 @@ button.micro-widgets-tab-active:active {
 
 
 
+/* Upload button widget */
+.micro-widgets-upload-input {
+    opacity:0 !important;
+    position:absolute !important;
+    width:0;
+    height:0;
+    z-index:-1;
+    top:-5000px;
+    left:0;
+}
+
+
 
 /* Misc classes */
 .air {
-    margin: 1rem;
+    margin: 1rem
 }
 .air-top {
     margin-top: 1rem;

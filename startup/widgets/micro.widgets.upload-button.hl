@@ -1,0 +1,126 @@
+/*
+ * Creates an upload widget extension button.
+ *
+ * Pass in [.onupload] as lambda callback for what to do when one or more files are uploaded.
+ * Optionally pass in [multiple] to allow for multiple files being uploaded.
+ * All other arguments will become attributes/properties of actual button itself.
+ * This allows you to override the [class] and [style] attributes of the upload button, as
+ * you see fit.
+ * Notice, the button will be rendered with a span "icon-upload2" icon as a child element.
+ *
+ * Notice, when one or more files have been uploaded, your [.onupload] lambda callback
+ * will be invoked, with a [files] list, with each file as physically existing on disc
+ * as a child of this list, and its original filename as a child of each physical file.
+ * This is necessary to make sure we have unique physical filenames on our server, to avoid
+ * having different files overwrite each other. An example of how this might look like can be
+ * found below.
+ *
+ * files
+ *  physical-file:/users/root/temp/0efc121b42e241bdb8b5ba6e37deafa2-DUiRsjqXUAAgANI.jpg
+ *    original-filename:DUiRsjqXUAAgANI.jpg
+ *  physical-file:/users/root/temp/b04e930103bd4fe8a63e247f56cc9af8-todo.txt
+ *    original-filename:todo.txt
+ *
+ * The [physical-file] parts above is the file, as it physically exists on your server.
+ * The [original-filename] is the name of the file as it was on the client.
+ * You are responsible for moving your file yourself, by invoking e.g. [move-file] or something
+ * similar, if you want to keep your file somewhere on your server.
+ */
+create-event:micro.widgets.upload-button
+
+  /*
+   * Signal node, to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    .onupload
+
+  /*
+   * Parametrizing our button.
+   */
+  add:x:/../*/return/*/button
+    src:x:/@.signal/--/<-(!/.onupload!/multiple)
+  add:x:/../*/return/*/button/*/widgets/*/input
+    src:x:/@.signal/--(/multiple)
+  add:x:/../*/return/**/.onupload
+    src:x:/@.onupload
+
+  /*
+   * Returning actual button to caller.
+   */
+  return
+    button
+      onclick:@"if(event.target.tagName!='INPUT'){this.getElementsByTagName('input')[0].click();return false;}"
+      oninit
+
+        /*
+         * Making sure se set a server-side signal indicating that there's an upload button on page.
+         */
+        p5.web.session.set:micro.widgets.upload-button
+          src:bool:true
+
+        /*
+         * Including JavaScript that creates our upload request.
+         */
+        p5.web.include-javascript:@"p5.micro_widgets_upload_button = function (files, self) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (this.readyState == XMLHttpRequest.DONE) {
+      if (this.status == 200) {
+        var responseText = this.responseText;
+        p5.$(self).raise('.onupload',{
+          onbefore: function (pars, evt){pars.push(['micro.widgets.upload-widget.files', responseText]);}
+        });
+      } else {
+        alert(this.responseText);
+      }
+    }
+  };
+  xhr.open('POST', '/micro/upload', true);
+  var fd = new FormData();
+  for (var i = 0; i < files.length; i++) {
+    fd.append('file' + i, files[i]);
+  }
+  xhr.send(fd);
+}"
+      widgets
+        literal
+          element:span
+          class:icon-upload2
+        input
+          type:file
+          class:micro-widgets-upload-input
+          onchange:@"p5.micro_widgets_upload_button(this.files, this);"
+          .onupload
+
+            /*
+             * Retrieving files that were successfully uploaded, and passing them into our
+             * onuploaded lambda event.
+             */
+            p5.web.post.get:micro.widgets.upload-widget.files
+            json2lambda:x:/-/*?value
+            for-each:x:/@json2lambda/*/*?value
+              add:x:/../*/eval/*/files
+                src:@"physical-file:""{0}"""
+                  :x:/@_dp?value
+              split:x:/@_dp?value
+                =:/
+              split:x:/@split/0/-?name
+                =:int:33
+              add:x:/../*/eval/*/files/0/-
+                src:@"original-filename:""{0}"""
+                  :x:/@split/0/-?name
+
+            /*
+             * Invoking lambda callback supplied by caller.
+             * Notice, [.onupload] is the widget's lambda callback that was automatically
+             * added to this lambda further up, before widget was created.
+             */
+            add:x:/../*/eval
+              src:x:/../*/files
+            eval:x:/../*/.onupload
+              files
