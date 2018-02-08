@@ -3,6 +3,8 @@
  *
  * Pass in [.onupload] as lambda callback for what to do when one or more files are uploaded.
  * Optionally pass in [multiple] to allow for multiple files being uploaded.
+ * Optionally also pass in a [accept] argument, which is a comma separated list of legal
+ * file extensions, such as e.g. ".png,.jpg,.jpeg,.gif" etc.
  * All other arguments will become attributes/properties of actual button itself.
  * This allows you to override the [class] and [style] attributes of the upload button, as
  * you see fit.
@@ -38,14 +40,16 @@ create-event:micro.widgets.upload-button
    */
   micro.lambda.contract.min:x:/..
     .onupload
+  micro.lambda.contract.optional:x:/..
+    filter:string
 
   /*
    * Parametrizing our button.
    */
   add:x:/../*/return/*/button
-    src:x:/@.signal/--/<-(!/.onupload!/multiple)
+    src:x:/@.signal/--/<-(!/.onupload!/multiple!/accept)
   add:x:/../*/return/*/button/*/widgets/*/input
-    src:x:/@.signal/--(/multiple)
+    src:x:/@.signal/--(/multiple|/accept)
   add:x:/../*/return/**/.onupload
     src:x:/@.onupload
 
