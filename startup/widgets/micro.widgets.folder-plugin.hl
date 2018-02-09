@@ -1,0 +1,46 @@
+
+/*
+ * An extension widget that will automatically load all Hyperlambda files
+ * from the given [folder], and append these as children to itself.
+ *
+ * Pass in [folder] to declare which folder you wish to load your plugins from.
+ * All other arguments are passed in "as is".
+ */
+create-event:micro.widgets.folder-plugin
+
+  /*
+   * Used to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    folder:string
+
+  /*
+   * Loading all Hyperlambda files from specified [folder].
+   */
+  list-files:x:/@.signal/--/folder?value
+    filter:.hl
+  load-file:x:/@list-files/*?name
+
+  /*
+   * Adsing all files as widgets into return value.
+   */
+  add:x:/../*/return/*/container/*/widgets
+    src:x:/@load-file/*/*
+
+  /*
+   * Adding all other arguments to return value.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--/<-(!/_arg!/folder)
+
+  /*
+   * Returning extension widget to caller.
+   */
+  return
+    container
+      widgets
