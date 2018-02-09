@@ -70,7 +70,10 @@ create-event:micro.widgets.upload-button
         /*
          * Including JavaScript that creates our upload request.
          */
-        p5.web.include-javascript:@"p5.micro_widgets_upload_button = function (files, self) {
+        p5.web.include-javascript:@"p5.micro_widgets_upload_button = function (self) {
+  if(self.files.length == 0) {
+    return;
+  }
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE) {
@@ -86,9 +89,10 @@ create-event:micro.widgets.upload-button
   };
   xhr.open('POST', '/micro/upload', true);
   var fd = new FormData();
-  for (var i = 0; i < files.length; i++) {
-    fd.append('file' + i, files[i]);
+  for (var i = 0; i < self.files.length; i++) {
+    fd.append('file' + i, self.files[i]);
   }
+  self.value = '';
   xhr.send(fd);
 }"
       widgets
@@ -98,7 +102,7 @@ create-event:micro.widgets.upload-button
         input
           type:file
           class:micro-widgets-upload-input
-          onchange:@"p5.micro_widgets_upload_button(this.files, this);"
+          onchange:@"p5.micro_widgets_upload_button(this);"
           .onupload
 
             /*
