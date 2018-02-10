@@ -1,0 +1,16 @@
+﻿
+/*
+ * Creates the Active Event that returns the URL entities of the current request.
+ */
+create-event:micro.url.get-entities
+
+  /*
+   * Retrieves the root URL location, without any query parameters, splits
+   * it into its different folders, and returns results to caller.
+   */
+  p5.web.get-relative-location-url
+  split:x:/@p5.web.get-relative-location-url?value
+    =:/
+  add:x:/+
+    src:x:/@split/*
+  return
