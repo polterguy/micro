@@ -55,7 +55,9 @@ create-event:micro.widgets.modal
 document.body.classList.add ('micro-body-open');
 p5.$('{0}').el.addEventListener ('DOMNodeRemoved', function(e){{
   if (e.target.id == '{0}') {{
-    document.body.classList.remove('micro-body-open');
+    if(document.querySelectorAll('[data-window=""modal""]').length == 1) {{
+      document.body.classList.remove('micro-body-open');
+    }}
   }}
 }});"
           :x:/../*/_event?value
