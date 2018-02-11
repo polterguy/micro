@@ -10,8 +10,9 @@ create-event:micro.css.toggle
    * Sanity checking invocation.
    */
   micro.lambda.contract.min:x:/..
-    _arg:string
     class:string
+  micro.lambda.contract.optional:x:/..
+    _arg:string
 
   /*
    * Splitting upon every given CSS class caller wants to toggle.
