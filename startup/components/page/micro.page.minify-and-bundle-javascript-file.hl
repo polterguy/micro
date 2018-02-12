@@ -1,10 +1,8 @@
 ﻿
 /*
- * Will minify and bundle all specified KavaScript files, and include bundle file on your page.
+ * Will minify and bundle all specified JavaScript files, and include bundle file on your page.
  *
- * All bundles created this way, will be stored in "/common/documents/public/micro-css-cache/",
- * and all relative URLs inside of the CSS file will be updated, and end up having an "absolute path",
- * to avoid breaking relative references to for instance images and other "url()" references.
+ * All bundles created this way, will be stored in "/common/documents/public/micro-javascript-cache/".
  */
 create-event:micro.page.minify-and-bundle-javascript-file
 
@@ -22,13 +20,8 @@ create-event:micro.page.minify-and-bundle-javascript-file
    * Notice, we explicitly unroll the path, before we use it to determine the hash value.
    */
   for-each:x:/../*/_arg?value
-    p5.io.unroll-path:x:/@_dp?value
     add:x:/@.signal
-      src:x:/@p5.io.unroll-path?value
-  for-each:x:/@.signal/--(!/_arg)/<-?name
-    p5.io.unroll-path:x:/@_dp?value
-    add:x:/@.signal
-      src:x:/@p5.io.unroll-path?value
+      p5.io.unroll-path:x:/@_dp?value
 
   /*
    * Creating a SHA1 hash from all file path arguments, to have a unique filename for
@@ -60,47 +53,25 @@ create-event:micro.page.minify-and-bundle-javascript-file
     not
 
     /*
-     * Loading and minifying all CSS files, bundling the result into a single file, 
+     * Loading and minifying all JavaScript files, bundling the result into a single file, 
      * and saving it, using the hash value from above to get a unique filename for each
      * distinct bundle.
-     *
-     * Notice, we also make sure we correct any URLs in each CSS file, such that they become
-     * absolute URLs, in order to have "url()" references and such map correctly.
      */
     load-file:x:/@.signal/*?name
 
     /*
-     * Updating all URL references in CSS files.
+     * Minifying JavaScript content, joining everything into one single file, and saving
+     * the results to our "/common/" folder.
      */
-    for-each:x:/@load-file/*
-      split:x:/@_dp/#?name
-        =:/
-      set:x:/@split/0/-
-      join:x:/@split/*?name
-        sep:/
-      set:x:/@_dp/#?value
-        replace:x:/@_dp/#?value
-          src:regex:/url\s*\('(?!http)/
-          dest:url('/{0}/
-            :x:/@join?value
-      set:x:/@_dp/#?value
-        replace:x:/@_dp/#?value
-          src:regex:/url\s*\((?!http)(?!')/
-          dest:url(/{0}/
-            :x:/@join?value
-
-    /*
-     * Minifying CSS content, joining everything into one single file, and saving
-     * the results to our "/common/public/" folder.
-     */
-    p5.web.css.minify:x:/@load-file/*?value
-    join:x:/@p5.web.css.minify/*?value
+    p5.web.javascript.minify:x:/@load-file/*?value
+    join:x:/@p5.web.javascript.minify/*?value
+      sep:";"
     save-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
       :x:/@p5.crypto.hash.create-sha1?value
       src:x:/@join?value
 
   /*
-   * Including minified (and bundled) resulting single CSS file on page.
+   * Including minified (and bundled) resulting single JavaScript file on page.
    */
-  p5.web.include-css-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
+  p5.web.include-javascript-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
     :x:/@p5.crypto.hash.create-sha1?value

@@ -23,13 +23,8 @@ create-event:micro.page.minify-and-bundle-css-file
    * Notice, we explicitly unroll the path, before we use it to determine the hash value.
    */
   for-each:x:/../*/_arg?value
-    p5.io.unroll-path:x:/@_dp?value
     add:x:/@.signal
-      src:x:/@p5.io.unroll-path?value
-  for-each:x:/@.signal/--(!/_arg)/<-?name
-    p5.io.unroll-path:x:/@_dp?value
-    add:x:/@.signal
-      src:x:/@p5.io.unroll-path?value
+      p5.io.unroll-path:x:/@_dp?value
 
   /*
    * Creating a SHA1 hash from all file path arguments, to have a unique filename for
@@ -79,6 +74,10 @@ create-event:micro.page.minify-and-bundle-css-file
       set:x:/@split/0/-
       join:x:/@split/*?name
         sep:/
+
+      /*
+       * Doing a regex replace of all "url()" references in JavaScript file.
+       */
       set:x:/@_dp/#?value
         replace:x:/@_dp/#?value
           src:regex:/url\s*\('(?!http)/
@@ -103,5 +102,5 @@ create-event:micro.page.minify-and-bundle-css-file
   /*
    * Including minified (and bundled) resulting single CSS file on page.
    */
-  return:/common/documents/public/micro-css-cache/bundle-{0}.css
+  p5.web.include-css-file:/common/documents/public/micro-css-cache/bundle-{0}.css
     :x:/@p5.crypto.hash.create-sha1?value

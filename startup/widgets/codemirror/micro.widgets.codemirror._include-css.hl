@@ -1,0 +1,19 @@
+
+/*
+ * Creates the Active Event that includes the core CSS on page.
+ */
+create-event:micro.widgets.codemirror._include-css
+
+  /*
+   * JavaScript files that needs to be minified and bundled.
+   */
+  .files
+    @MICRO/media/codemirror/lib/codemirror.css
+    @MICRO/media/codemirror/addon/dialog/dialog.css
+    @MICRO/media/codemirror/addon/display/fullscreen.css
+    @MICRO/media/codemirror/addon/hint/show-hint.css
+
+  /*
+   * Bundle file doesn't exist, making sure we create it.
+   */
+  micro.page.minify-and-bundle-css-file:x:/@.files/*?name
