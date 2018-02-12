@@ -16,6 +16,7 @@
  * - [read-only] - If true, widget is read only. Defaults to false.
  * - [class] - CSS class to use for wrapper widget. Defaults to "micro-codemirror-wrapper".
  * - [style] - CSS styles to use for widget. Notice, will add font-size style automatically, to accommodate for CodeMirror settings.
+ * - [oninit] - Lambda callback to be evaluated during initialization of widget.
  *
  * All other arguments are appended into the root container for the widget, allowing you to create for instance hidden attributes,
  * etc on the main container widget wrapping CodeMirror instance.
@@ -43,6 +44,7 @@ create-event:micro.widgets.codemirror
     read-only:bool
     class:string
     style:string
+    oninit
 
   /*
    * Figuring out settings to use for widget, making sure we use "sane defaults".
@@ -64,9 +66,11 @@ create-event:micro.widgets.codemirror
    * Decorating widget with arguments.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/_arg!/value!/.data-field!/auto-focus!/height!/mode!/keys!/read-only!/class)
+    src:x:/@.signal/--(!/_arg!/value!/.data-field!/auto-focus!/height!/mode!/keys!/read-only!/class!/oninit)
   add:x:/../*/return/*/container/*/widgets/*/literal
     src:x:(/@.signal/--(/value|/.data-field)|/@.defaults/*/.data-field)/$
+  add:x:/../*/return/*/container/*/widgets/*/literal/*/oninit/*/.oninit
+    src:x:/@.signal/--/oninit/*
   add:x:/../*/return/*/container
     src:x:(/@.signal/--/class|/@.defaults/*/class)/$
 
@@ -129,7 +133,7 @@ create-event:micro.widgets.codemirror
              */
             micro.lambda.contract.optional:x:/..
               _arg:string
-              content:string
+              content
 
             /*
              * Finding textarea widget and setting its value.
@@ -352,3 +356,11 @@ p5['{0}'].setSize('100%', '{5}');"
               :x:/@_keys?value
               :x:/@.tab-size?value
               :x:/@.read-only?value
+
+            /*
+             * Contains [oninit] passed in during creation.
+             */
+            .oninit
+            eval-x:x:/+/*
+            eval:x:/@.oninit
+              _event:x:/../*/_event?value
