@@ -252,7 +252,7 @@
     --form-element-color: #284177;
 
     --form-element-disabled-background-color: #f0f0f0;
-    --form-element-disabled-color: #66667c;
+    --form-element-disabled-color: rgba(0,0,0,.2);
     --form-element-padding: .5rem;
     --placeholder-color: #c0c0c0;
 

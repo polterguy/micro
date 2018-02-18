@@ -6,6 +6,10 @@
  * Pass in [folder] and/or [files] to declare which files or folder you wish to
  * load your plugins from.
  * All other arguments are passed in "as is".
+ *
+ * Notice, you can also add static widgets to this widget, by adding a [widgets]
+ * collection, which will also become a part of the widget's children widget
+ * collection.
  */
 create-event:micro.widgets.file
 
@@ -20,26 +24,55 @@ create-event:micro.widgets.file
   micro.lambda.contract.optional:x:/..
     folder:string
     files
+    widgets
 
   /*
-   * Loading all Hyperlambda files from specified [folder].
+   * Making sure we get [widgets], [files] and [folder] widgets added in order
+   * specified by caller.
    */
-  list-files:x:/@.signal/--/folder?value
-    filter:.hl
-  load-file:x:/@list-files/*?name
-  load-file:x:/../*/files/*?name
+  for-each:x:/@.signal/--/<-?name
+    switch:x:/@_dp?value
+      case:widgets
 
-  /*
-   * Adding all files as widgets into return container widget's widgets collection.
-   */
-  add:x:/../*/return/*/container/*/widgets
-    src:x:/../*/load-file/*/*
+        /*
+         * Adding widgets.
+         */
+        add:x:/../*/return/*/container/*/widgets
+          src:x:/../*/widgets/*
+
+      case:files
+
+        /*
+         * Loading all Hyperlambda files from specified [folder].
+         */
+        load-file:x:/../*/files/*?name
+
+        /*
+         * Adding widgets.
+         */
+        add:x:/../*/return/*/container/*/widgets
+          src:x:/@load-file/*/*
+
+      case:folder
+
+        /*
+         * Loading all Hyperlambda files from specified [folder].
+         */
+        list-files:x:/@.signal/--/folder?value
+          filter:.hl
+        load-file:x:/@list-files/*?name
+
+        /*
+         * Adding widgets.
+         */
+        add:x:/../*/return/*/container/*/widgets
+          src:x:/@load-file/*/*
 
   /*
    * Adding all other arguments to returned container widget.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--/<-(!/_arg!/folder!/files)
+    src:x:/@.signal/--/<-(!/_arg!/folder!/files!/widgets)
 
   /*
    * Returning extension widget to caller.
