@@ -157,33 +157,6 @@ create-event:micro.widgets.tree._create-items
                 micro.widgets.tree.select-items:x:/../*/p5.web.widgets.find-ancestor/*/*?value
                   items
 
-              /*
-               * To make sure we are able to create our SEO URL in hyperlink, we handle [oninit],
-               * since at that point, the widget is "rooted", and we can traverse all "li" elements
-               * upwards in hierarchy, all the way to the "root" widget, to retrieve all IDs of elements.
-               */
-              oninit
-
-                /*
-                 * Retrieving parent "li" HTML widget, and passing it into [_create-url], which will
-                 * traverse the hierarchy upwards, adding all necessary IDs, and creating a URL that will
-                 * expand all items leading to "current item".
-                 */
-                p5.web.widgets.find-ancestor:x:/../*/_event?value
-                  _root-tree
-                p5.web.widgets.property.get:x:/-/*/*?value
-                  _root-tree
-
-                /*
-                 * Notice, if the [_root-tree] hidden property on root widget contains something, it means we should
-                 * create an SEO friendly tree, and use the value of [_root-tree] as the HTTP GET parameter name while doing.
-                 */
-                if:x:/-/*/*?value
-                  p5.web.widgets.get-parent:x:/../*/_event?value
-                  micro.widgets.tree._create-url:x:/-/*/*?value
-                  p5.web.widgets.property.set:x:/../*/_event?value
-                    href:x:/..if/*/micro.widgets.tree._create-url?value
-
               widgets
                 span
                   _class-close
@@ -227,5 +200,4 @@ create-event:micro.widgets.tree._create-items
    */
   return
     ul
-      class:children
       widgets

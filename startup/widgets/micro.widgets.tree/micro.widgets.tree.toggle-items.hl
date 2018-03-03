@@ -151,14 +151,6 @@ create-event:micro.widgets.tree.toggle-items
           parent:x:/..for-each/*/p5.web.widgets.find/*/*?value
 
       /*
-       * Making sure we add the "tree-animate" CSS class to our widget, since this is
-       * a dynamically created child control collection. To create some nice animations, as the items shows
-       * up on page initially.
-       */
-      set:x:/@micro.widgets.tree._create-items/*/*/class?value
-        src:children tree-animate
-
-      /*
        * Now we can simply [eval] the returned lambda from the above [micro.widgets.tree._create-items] invocation,
        * since it is now a [p5.web.widgets.create-container] invocation, correctly creating items, appending to tree item,
        * specified in currently iterated [items] argument.

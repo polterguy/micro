@@ -3,10 +3,6 @@
  * Creates an Ajax TreeView widget, which allows for hierarchically browsing relational tree structures, such as for instance a file
  * system, etc.
  *
- * The TreeView is "SEO friendly", which means that it will allow spiders to crawl the nodes in your tree, as if they were hyperlinks,
- * while still retaining the single page app feeling for human users, through Ajax functionality. But only if you explicitly set
- * the [crawl] paremeter to true. If you do, you can override the default name of the HTTP GET parameter, by supplying it as [crawl-get-name].
- *
  * Arguments;
  * 
  * [items]            - Collection of items to show initially as "root items".
@@ -14,8 +10,6 @@
  *                      item, used to uniquely identify the item, when the item is clicked for instance, etc.
  *                      Optionally you can supply child nodes for each item, declaring the CSS classes used to display it as [_class-close]
  *                      and [_class-open]. Their default values are "icon folder-close" and "icon folder-open".
- * [crawl]            - If true, the tree will be rendered in SEO mode, meaning that crawling is enabled, through hyperlinks.
- * [crawl-get-name]   - Allows you to override the default crawling HTTP GET parameter name. Its default value is "micro-widgets-tree-unroll".
  * [.onexpand]        - Callback lambda evaluated when the tree need more items.
  *                      Callback will be given [_item-id] for which item to retrieve children of.
  *                      Callback is expected to return an [items] collection, similarly to when the tree is initially created.
@@ -26,67 +20,45 @@
 create-event:micro.widgets.tree
 
   /*
-   * Applying options for widget, with default values.
+   * Defaults.
    */
   .defaults
-    .onexpand
-    .onselect
-    crawl-get-name:micro-widgets-tree-unroll
-    crawl:bool:false
-  .options
-  add:x:/@.options
-    src:x:(/@.defaults(/--!/_arg)|/@.defaults/*)/$
+    class:micro-widgets-tree
 
   /*
    * Making sure caller supplied at the very least one item.
    */
-  if:x:/../*/.options/*/items/*
+  if:x:/../*/items/*
     not
     throw:You have to supply at the very least one root item when creating your tree widget.
 
-
   /*
-   * Adding initial items recursively to return widget.
+   * Adding initial [items] recursively to return widget.
    */
   eval-x:x:/+/*/*
   add:x:/../*/return/*/container/*/widgets
     micro.widgets.tree._create-items
-      items:x:/../*/.options/*/items
-
+      items:x:/../*/items
 
   /*
    * Adding [.onexpand] callback into [micro.widgets.tree._get-items]
    */
   add:x:/../*/return/*/*/events/*/micro.widgets.tree._get-items/*/.lambda
-    src:x:/../*/.options/*/.onexpand/*
-
+    src:x:/@.defaults/--/.onexpand/*
 
   /*
    * Adding [.onselect] callback into [micro.widgets.tree._select]
    */
   add:x:/../*/return/*/*/events/*/micro.widgets.tree._select/*/.lambda
-    src:x:/../*/.options/*/.onselect/*
-
-
-  /*
-   * Checking if crawling is enabled.
-   */
-  if:x:/../*/.options/*/crawl?value.bool
-    set:x:/../*/return/*/*/_root-tree?value
-      src:x:/../*/.options/*/crawl-get-name?value
-
+    src:x:/@.defaults/--/.onselect/*
 
   /*
-   * Adding all other arguments as is, making sure we remove default class, if
-   * caller specified his own.
+   * Adding all other arguments.
    */
-  if:x:/@.defaults/--/class
-    set:x:/../*/return/*/container/*/class
   add:x:/../*/return/*/container
-    src:x:/@.defaults/--(!/_arg!/items!/craw!/crawl-get-name!/.onexpand!/.onselect!/oninit)
+    src:x:(/@.defaults/--(!/_arg!/items!/.onexpand!/.onselect!/oninit)|/@.defaults/*)/$
   add:x:/../*/return/*/container/*/oninit/*/.lambda
     src:x:/@.defaults/--/oninit/*
-
 
   /*
    * Returning widget to caller.
@@ -94,7 +66,6 @@ create-event:micro.widgets.tree
   return
     container
       _root-tree
-      class:micro-widgets-tree
       oninit
 
         /*
@@ -104,49 +75,6 @@ create-event:micro.widgets.tree
         eval-x:x:/+/*
         eval:x:/@.lambda
           _event:x:/../*/_event?value
-
-        /*
-         * Checking URL to determine if we should "unroll" items.
-         */
-        p5.web.widgets.property.get:x:/../*/_event?value
-          _root-tree
-        if:x:/@p5.web.widgets.property.get/*/*?value
-          not
-
-          /*
-           * Tree is not in SEO mode.
-           */
-          return
-
-        p5.web.query.get:x:/@p5.web.widgets.property.get/*/*?value
-        if:x:/@p5.web.query.get/*?value
-          not
-
-          /*
-           * No "unroll URL" specified.
-           */
-          return
-
-        /*
-         * Splitting up every ID from URL, and adding every ID to invocation of [toggle-items],
-         * while forcing an "unrolling" through [_force-expand].
-         */
-        p5.string.split:x:/@p5.web.query.get/*?value
-          =:|
-        add:x:/+/*/items
-          src:x:/@p5.string.split/*?name
-        micro.widgets.tree.toggle-items:x:/../*/_event?value
-          items
-          _force-expand:bool:true
-
-        /*
-         * Making sure we select outer most item.
-         */
-        add:x:/../*/micro.widgets.tree.select-items/*
-          src:x:/@p5.string.split/0/-?name
-        micro.widgets.tree.select-items:x:/../*/_event?value
-          items
-
 
       /*
        * Events for tree widget.
@@ -211,12 +139,3 @@ create-event:micro.widgets.tree
             src:x:/@eval/*
 
       widgets
-
-
-
-
-
-/*
- * Evaluting additional startup files.
- */
-micro.evaluate.folder:@MICRO/startup/widgets/micro.widgets.tree/
