@@ -74,7 +74,7 @@ a {
     box-shadow: 5px 5px 10px #384858;
 }
 
-input[type=button], input[type=submit], input[type=reset], button {
+input[type=button], input[type=submit], input[type=reset], button, .button {
     padding-left: 25px;
     padding-right: 25px;
 }

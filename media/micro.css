@@ -684,7 +684,7 @@ button.micro-widgets-tab-active:active {
     margin-left: 0;
 }
 }
-.micro-widgets-tree ul>li.item {
+.micro-widgets-tree>ul ul>li.item {
     opacity: 0;
     animation-name: tree-animate;
     animation-duration: .25s;
@@ -746,6 +746,85 @@ button.micro-widgets-tab-active:active {
 }
 .micro-widgets-tree ul>li.item:nth-child(20n+19) {
     animation-delay: .38s;
+}
+
+
+
+/* Navbar style TreeView */
+@keyframes tree-animate-navbar {
+0% {
+    opacity: 0;
+    margin-left: -100%;
+}
+
+100% {
+    opacity: 1;
+    margin-left: 0;
+}
+}
+.micro-widgets-tree-navbar {
+  background: var(--button-background);
+  padding: 0;
+  border-radius: var(--border-radius);
+  border: solid 1px var(--border-color);
+  background-size: 1px calc(200% + 2px);
+  background-position: 0 -1px;
+}
+.micro-widgets-tree-navbar a {
+  color: var(--button-color);
+}
+@media screen and (min-width:800px) {
+.micro-widgets-tree-navbar>ul>li.tree-expanded {
+  display: inline-flex;
+}
+.micro-widgets-tree-navbar>ul>li>ul>li.item {
+  float: left;
+}
+}
+.micro-widgets-tree-navbar>ul>li>a,
+.micro-widgets-tree-navbar>ul>li>ul>li>a{
+  padding: var(--form-element-padding);
+}
+.micro-widgets-tree-navbar>ul>li>ul>li>ul li.item {
+    animation-name: tree-animate-navbar;
+}
+.micro-widgets-tree-navbar>ul>li>a.item-label:hover{
+    background-color: inherit;
+}
+.micro-widgets-tree-navbar>ul>li.item>a.tree-selected{
+    background-color: inherit;
+}
+.micro-widgets-tree-navbar>ul>li>a.item-label>.folder-close:before {
+  content:'\ea42';
+}
+.micro-widgets-tree-navbar>ul>li>a.item-label>.folder-open:before {
+  content:'\ea44';
+}
+.micro-widgets-tree-navbar>ul>li>ul>li a.item-label .folder-close:before {
+  content:'\ea0a';
+  font-size:.7rem;
+  opacity:.3;
+}
+.micro-widgets-tree-navbar>ul>li>ul>li a.item-label .folder-open:before {
+  content:'\ea0b';
+  font-size:.7rem;
+  opacity:.3;
+}
+.micro-widgets-tree-navbar>ul>li .item-label {
+  padding-right: 1rem;
+}
+.micro-widgets-tree-navbar>ul>li>ul li.item {
+  padding-left: 0;
+}
+.micro-widgets-tree-navbar>ul>li>ul>li>ul {
+  margin: .5rem .5rem .5rem 0;
+}
+.micro-widgets-tree-navbar>ul>li>ul>li>ul>li ul {
+  margin: var(--border-radius);
+  margin-left: calc(var(--border-radius) * 3);
+}
+.micro-widgets-tree-navbar>ul>li>ul>li>ul .item-label {
+  padding:.25rem 1rem;
 }
 
 
@@ -879,7 +958,8 @@ button.micro-widgets-tab-active:active {
 
 /* Misc classes */
 .air {
-    margin: 1rem
+    margin: 1rem
+
 }
 .air-top {
     margin-top: 1rem;
