@@ -274,7 +274,7 @@ hr {
 }
 
 input:not([type=radio]):not([type=checkbox]),
-select, textarea, button {
+select, textarea, button, .button {
     padding-left: 18px;
     padding-right: 18px;
 }

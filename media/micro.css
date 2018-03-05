@@ -405,6 +405,9 @@ table td>p:last-child {
     width: fit-content;
     overflow: hidden; /* Otherwise border-radius won't work! */
 }
+.strip:not(.fill) {
+    margin-left: var(--form-element-padding);
+}
 .strip>* {
     margin-bottom: 0;
     white-space: nowrap;
@@ -919,6 +922,14 @@ button.micro-widgets-tab-active:active {
 .micro-widgets-cover>div>span:nth-child(8) {
     left: 0;
     animation: micro-widgets-cover-dominos 1s 1s ease infinite
+}
+
+
+
+/* CodeMirror widget */
+.CodeMirror {
+    border-radius: var(--border-radius);
+    border: solid 1px var(--border-color);
 }
 
 

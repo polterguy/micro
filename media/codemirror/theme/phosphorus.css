@@ -2,8 +2,6 @@
     font-family: monospace;
     background: var(--code-background);
     color: var(--color);
-    border-radius: var(--border-radius);
-    border: none;
 }
 .cm-s-phosphorus .CodeMirror-gutters {
     background: var(--code-background);
