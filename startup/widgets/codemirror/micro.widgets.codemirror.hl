@@ -202,10 +202,6 @@ create-event:micro.widgets.codemirror
 
             /*
              * Including CodeMirror editor's JavaScript file(s).
-             *
-             * Notice, to allow for things such as inline Hyperlambda code in Markdown
-             * files, etc, we include Hyperlambda mode regardless of what mode user
-             * is requesting.
              */
             micro.widgets.codemirror._include-javascript
             micro.widgets.codemirror._include-auto-complete
@@ -245,7 +241,7 @@ create-event:micro.widgets.codemirror
                 .files
                   @MICRO/media/codemirror/addon/hint/javascript-hint.js
                   @MICRO/media/codemirror/mode/javascript/javascript.js
-                micro.page.minify-and-bundle-javascript-file:x:/@files/*?name
+                micro.page.minify-and-bundle-javascript-file:x:/@.files/*?name
 
               case:css
 
