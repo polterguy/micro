@@ -30,7 +30,7 @@ create-event:micro.codemirror.settings
             min:8
             max:20
             step:.25
-            onkeydown:@"if (event.keyCode == 13) {p5.$('hypereval-settings-ok-button').raise('onclick');return false;}"
+            onkeydown:@"if (event.keyCode == 13) {p5.$('hypereval-settings-ok-button').raise('onclick');return false;} else if (event.keyCode == 27) {p5.$('hypereval-settings-cancel-button').raise('onclick');return false;}"
             oninit
 
               /*
@@ -114,7 +114,7 @@ create-event:micro.codemirror.settings
             class:right strip
             widgets
               button:hypereval-settings-ok-button
-                class:larger
+                class:large
                 innerValue:Save
                 onclick
 
@@ -139,8 +139,7 @@ create-event:micro.codemirror.settings
                    */
                   p5.web.reload-location
 
-              button
-                class:larger
+              button:hypereval-settings-cancel-button
                 innerValue:Close
                 title:Close without saving your settings
                 onclick
