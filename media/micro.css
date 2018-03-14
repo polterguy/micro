@@ -123,6 +123,8 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
     background-position: 0 -1px;
     transition: background-position .2s ease-out;
     min-width: 3rem;
+    text-align: center;
+    cursor: default;
 }
 button.toggled, .button.toggled {
     background: var(--button-toggled-background);
