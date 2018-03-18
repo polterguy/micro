@@ -223,7 +223,7 @@ as follows.
 * __[micro.speech.listen]__
 * __[micro.speech.speak]__
 * __[micro.speech.stop]__
-* __[micro.speech.query-voices]__
+* __[micro.speech.speak.query-voices]__
 
 To have the computer speak some sentence for instance, you can use the following code.
 
@@ -309,6 +309,28 @@ create-widget
                 micro.speech.stop
 ```
 
+#### Querying available voices and languages
+
+To figure out which language codes you can use for capturing speech, and which voices you can use to utter
+text, you can use the **[micro.speech.speak.query-voices]** Active Event. This event will have to create a roundtrip
+to the client (browser), to figure out which voices/languages the browser supports - Hence, it requires you
+to provide an **[onfinish]** lambda callback, which will be evaluated with a **[voices]** argument, being
+all available voices for utterance, which also corelates to all available language codes you can use for speech
+recognition. Below is an example of using it.
+
+```hyperlambda-snippet
+micro.speech.speak.query-voices
+  onfinish
+    eval-x:x:/+/**/innerValue
+    create-widgets
+      micro.widgets.modal
+        widgets
+          pre
+            innerValue:x:/../*/voices
+```
+
+**Notice**, if a voice has the property of `local:bool:false`, this implies that the voice will have to create a
+roundtrip to Google, in order to create its speech - Which will have consequences for your privacy.
 
 ### Information "bubble" windows
 
