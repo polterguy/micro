@@ -29,7 +29,6 @@ have that span be a child element of your actual button. You **cannot** add the 
 Below is a snippet you can evaluate to show all icons in Micro.
 
 ```hyperlambda-snippet
-
 /*
  * Loading HTML example file for IcoMoon.
  */
@@ -37,12 +36,12 @@ load-file:"/modules/micro/media/fonts-demo.html"
 
 /*
  * Semantically iterating each "icon-x" class from HTML document retrieved above,
- * and adding one "li" element for each into our [create-widget] invocation below.
+ * and adding one "li" element for each into our [create-widgets] invocation below.
  */
 html2lambda:x:/@load-file/*?value
 for-each:x:@"/@html2lambda/**/\@class/""=:regex:/icon-.{1,}/""?value"
   eval-x:x:/+/*/*/*/*/*
-  add:x:/../*/create-widget/**/ol/*/widgets
+  add:x:/../*/create-widgets/**/ol/*/widgets
     src
       container
         element:li
@@ -58,12 +57,23 @@ for-each:x:@"/@html2lambda/**/\@class/""=:regex:/icon-.{1,}/""?value"
 /*
  * Creating a widget wrapping each icon from IcoMoon.
  */
-create-widget
-  parent:hyper-ide-help-content
-  style:"font-size:24px;"
-  widgets
-    ol
-      widgets
+create-widgets
+  micro.widgets.modal:dox-icons-modal
+    widgets
+      div
+        class:air
+        widgets
+          h3
+            innerValue:Icons
+          ol
+            widgets
+      div
+        class:right
+        widgets
+          button
+            innerValue:Close
+            onclick
+              delete-widget:dox-icons-modal
 ```
 
 Below is an example of a strip with 3 buttons, each having their own icon.
