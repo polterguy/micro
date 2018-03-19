@@ -12,3 +12,4 @@
 delete-event:p5.io.unroll-path.@MICRO
 vocabulary:~micro.
 delete-event:x:/-/*?name
+delete-event:desktop.help-files.micro
