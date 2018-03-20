@@ -101,6 +101,7 @@ create-event:micro.widgets.upload-button
           class:icon-upload2
         input
           type:file
+          tabindex:-1
           class:micro-widgets-upload-input
           onchange:@"p5.micro_widgets_upload_button(this);"
           .onupload
