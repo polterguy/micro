@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Basic colors;
  *
  * #1ed1ff
@@ -12,29 +12,29 @@
     --font-size: 18px;
     --color: #d739cf;
     --background: linear-gradient(#1ed1ff, #92d638);
-    --form-element-background-color: #1ed1ff;
-    --form-element-active-background: #92d638;
-    --form-element-color: #555;
-    --form-element-disabled-background-color: #d739cf;
+    --form-el-bg: #1ed1ff;
+    --form-el-active-bg: #92d638;
+    --form-el-color: #555;
+    --form-el-dis-bg: #d739cf;
     --button-color: #1ed1ff;
-    --button-background: linear-gradient(#f6679f, #1ed1ff);
-    --button-toggled-background: linear-gradient(#1ed1ff, #f6679f);
+    --button-bg: linear-gradient(#f6679f, #1ed1ff);
+    --button-toggled-bg: linear-gradient(#1ed1ff, #f6679f);
     --border-color: rgba(0,0,0,.2);
     --border-radius: 1rem;
     --anchor-color: #f6679f;
     --anchor-hover-color: #92d638;
     --anchor-active-color: #92d638;
-    --form-element-disabled-color: #66667c;
-    --form-element-padding: .5rem;
+    --form-el-dis-color: #66667c;
+    --form-el-pad: .5rem;
     --placeholder-color: #aaa;
 
     --shadow-color: #f6679f;
-    --success-background: linear-gradient(#efe,#5f5);
-    --warning-background: linear-gradient(#fee,#f55);
+    --success-bg: linear-gradient(#efe,#5f5);
+    --warning-bg: linear-gradient(#fee,#f55);
     --max-viewport-width: 1420px;
-    --table-striped-background: rgba(0,0,0,.1);
-    --table-selected-background: rgba(0,0,0,.2);
-    --table-hover-background: rgba(0,0,0,.5);
+    --table-striped-bg: rgba(0,0,0,.1);
+    --table-selected-bg: rgba(0,0,0,.2);
+    --table-hover-bg: rgba(0,0,0,.5);
 }
 
 

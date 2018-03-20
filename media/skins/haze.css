@@ -1,4 +1,4 @@
-/* cyrillic-ext */
+﻿/* cyrillic-ext */
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
@@ -173,8 +173,8 @@
     --color: #284177;
     --background: linear-gradient(#d8efff, #88a6f0);
     --button-color: #006bbd;
-    --button-background: var(--background);
-    --button-toggled-background: linear-gradient(#88a6f0, #d8efff);
+    --button-bg: var(--background);
+    --button-toggled-bg: linear-gradient(#88a6f0, #d8efff);
     --border-color: rgba(0,0,0,.2);
     --border-radius: .35rem;
     --anchor-color: #6464be;
@@ -182,22 +182,22 @@
     --anchor-active-color: #000000;
     --shadow-color: rgba(0,0,0,.2);
 
-    --form-element-background-color: #d7e7ff;
-    --form-element-active-background: #fefefe;
-    --form-element-color: #284177;
+    --form-el-bg: #d7e7ff;
+    --form-el-active-bg: #fefefe;
+    --form-el-color: #284177;
 
-    --form-element-disabled-background-color: #c2afa8;
-    --form-element-disabled-color: #66667c;
-    --form-element-padding: .5rem;
+    --form-el-dis-bg: #c2afa8;
+    --form-el-dis-color: #66667c;
+    --form-el-pad: .5rem;
     --placeholder-color: #c0c0c0;
 
-    --success-background: linear-gradient(#efe,#dfd);
-    --warning-background: linear-gradient(#fee,#fdd);
+    --success-bg: linear-gradient(#efe,#dfd);
+    --warning-bg: linear-gradient(#fee,#fdd);
     --max-viewport-width: 1280px;
-    --table-striped-background: rgba(0,0,0,.03);
-    --table-selected-background: rgba(0,0,0,.15);
-    --table-hover-background: rgba(0,0,0,.07);
-    --code-background: #d8efff;
+    --table-striped-bg: rgba(0,0,0,.03);
+    --table-selected-bg: rgba(0,0,0,.15);
+    --table-hover-bg: rgba(0,0,0,.07);
+    --code-bg: #d8efff;
 }
 
 

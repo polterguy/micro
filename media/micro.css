@@ -1,4 +1,4 @@
-/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+﻿/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
 html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,html [type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-cancel-button,[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
 
 /* Micro CSS, GPLv3 license, copyright 2016 - 2018, Thomas Hansen, thomas@gaiasoul.com */
@@ -17,33 +17,35 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
      * In a future release, I might consider fixing this, however for these reasons, the treeview cannot
      * be resized, without overriding it in a skin file or something similar.
      */
+    /* VARIABLES_BEGIN */
     --font-size: 16px;
     --font-break-size: var(--font-size);
     --color: #555;
     --background: #fbfbfb;
     --button-color: #777;
-    --button-background: linear-gradient(#f9f9f9, #b0b0b0);
-    --button-toggled-background: linear-gradient(#b0b0b0, #f9f9f9);
+    --button-bg: linear-gradient(#f9f9f9, #b0b0b0);
+    --button-toggled-bg: linear-gradient(#b0b0b0, #f9f9f9);
     --anchor-color: #5959c9;
     --anchor-hover-color: #007;
     --anchor-active-color: #77e;
-    --form-element-color: #777;
-    --form-element-background-color: #fdfdfd;
-    --form-element-active-background: #ffffff;
-    --form-element-disabled-color: #aaa;
-    --form-element-disabled-background-color: #e5e5e5;
-    --form-element-padding: .5rem;
+    --form-el-color: #777;
+    --form-el-bg: #fdfdfd;
+    --form-el-active-bg: #ffffff;
+    --form-el-dis-color: #aaa;
+    --form-el-dis-bg: #e5e5e5;
+    --form-el-pad: .5rem;
     --placeholder-color: #ccc;
     --border-color: #bbb;
     --border-radius: .25rem;
     --shadow-color: rgba(0,0,0,.4);
-    --success-background: linear-gradient(#efe,#afa);
-    --warning-background: linear-gradient(#fee,#fcc);
+    --success-bg: linear-gradient(#efe,#afa);
+    --warning-bg: linear-gradient(#fee,#fcc);
     --max-viewport-width: 1120px;
-    --table-striped-background: rgba(0,0,0,.05);
-    --table-selected-background: rgba(0,0,0,.1);
-    --table-hover-background: rgba(0,0,0,.1);
-    --code-background: var(--background);
+    --table-striped-bg: rgba(0,0,0,.05);
+    --table-selected-bg: rgba(0,0,0,.1);
+    --table-hover-bg: rgba(0,0,0,.1);
+    --code-bg: var(--background);
+    /* VARIABLES_END */
 }
 
 
@@ -96,11 +98,11 @@ h1>small, h2>small, h3>small, h4>small {
 
 /* All form elements, including buttons */
 input, button, textarea, select, .button {
-    padding: var(--form-element-padding);
+    padding: var(--form-el-pad);
     border: solid 1px var(--border-color);
     border-radius: var(--border-radius);
     outline: none;
-    height: calc (1rem + 2 * var(--form-element-padding));
+    height: calc (1rem + 2 * var(--form-el-pad));
     vertical-align: top;
     display: inline-block;
     font-family: inherit;
@@ -118,7 +120,7 @@ textarea {
 /* Button types of elements */
 button, input[type=button], input[type=submit], input[type=reset], .button {
     color: var(--button-color);
-    background: var(--button-background);
+    background: var(--button-bg);
     background-size: 1px calc(200% + 2px);
     background-position: 0 -1px;
     transition: background-position .2s ease-out;
@@ -127,7 +129,7 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
     cursor: default;
 }
 button.toggled, .button.toggled {
-    background: var(--button-toggled-background);
+    background: var(--button-toggled-bg);
     background-size: 1px calc(200% + 2px);
     background-position: 0 -1px;
 }
@@ -143,7 +145,7 @@ button:active, input[type=button]:active, input[type=submit]:active, input[type=
 }
 button[disabled], .button[disabled], 
 input[type=button][disabled], input[type=submit][disabled], input[type=reset][disabled] {
-    color: var(--form-element-disabled-color);
+    color: var(--form-el-dis-color);
     cursor: not-allowed;
     background-position: 0 -1px;
     cursor: not-allowed;
@@ -153,19 +155,19 @@ input[type=button][disabled], input[type=submit][disabled], input[type=reset][di
 
 /* All non button types of form elements */
 input:not([type=button]):not([type=submit]):not([type=reset]), textarea, select {
-    background-color: var(--form-element-background-color);
+    background-color: var(--form-el-bg);
     transition: background-color .2s ease-out;
 }
 input:not([type=button]):not([type=submit]):not([type=reset]):focus,
 input:not([type=button]):not([type=submit]):not([type=reset]):active,
 textarea:focus, textarea:active, 
 select:focus, select:active {
-    background-color: var(--form-element-active-background);
+    background-color: var(--form-el-active-bg);
     transition: background-color .2s ease-out;
 }
 input:not([type=button]):not([type=submit]):not([type=reset])[disabled], 
 textarea[disabled], select[disabled] {
-    background-color: var(--form-element-disabled-background-color);
+    background-color: var(--form-el-dis-bg);
     color: var(--placeholder-color);
     cursor: not-allowed;
 }
@@ -182,7 +184,7 @@ select, textarea {
 /* All form elements, except checkbox and radio buttons */
 input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]), 
 select, textarea {
-    color: var(--form-element-color);
+    color: var(--form-el-color);
 }
 
 
@@ -202,8 +204,8 @@ select, textarea {
 
 /* Select and text types of inputs inside of labels */
 label>select, label>input {
-    margin-top: calc(-1 * var(--form-element-padding));
-    margin-bottom: calc(-1 * var(--form-element-padding));
+    margin-top: calc(-1 * var(--form-el-pad));
+    margin-bottom: calc(-1 * var(--form-el-pad));
 }
 label>*:first-child {
     margin-right: .5rem;
@@ -215,7 +217,7 @@ label>*:first-child {
 label {
     user-select: none;
     display: inline-block;
-    padding: var(--form-element-padding) 0;
+    padding: var(--form-el-pad) 0;
     font-weight: bold;
     margin-right: 1rem;
     white-space: nowrap;
@@ -228,7 +230,7 @@ label.above {
 label.above>span {
     display: block;
     height: 2rem;
-    margin-bottom: var(--form-element-padding);
+    margin-bottom: var(--form-el-pad);
 }
 label.above>input, label.above>textarea {
     margin-bottom: 1rem;
@@ -262,11 +264,11 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 /* Checkbox styles */
 input[type=checkbox]:checked:after {
     content: "\002714";
-    color: var(--form-element-color);
+    color: var(--form-el-color);
     padding: .0625rem .125rem;
 }
 input[type=checkbox][disabled]:checked:after {
-    color: var(--form-element-disabled-color);
+    color: var(--form-el-dis-color);
     cursor: not-allowed;
 }
 
@@ -280,14 +282,14 @@ input[type=radio]:checked:after {
     top: calc(.25rem - 1px);
     left: calc(.25rem - 1px);
     content: ' ';
-    background: var(--form-element-color);
+    background: var(--form-el-color);
     width: .5rem;
     height: .5rem;
     border-radius: 50%;
     padding: .125rem;
 }
 input[type=radio][disabled]:checked:after {
-    background: var(--form-element-disabled-color);
+    background: var(--form-el-dis-color);
     cursor: not-allowed;
 }
 
@@ -380,13 +382,13 @@ table>tbody>tr>td>div.strip {
     margin-bottom:0;
 }
 table.striped tr:nth-child(2n) td {
-    background: var(--table-striped-background);
+    background: var(--table-striped-bg);
 }
 table td.selected, table tr.selected, table.striped td.selected, table.striped tr.selected {
-    background: var(--table-selected-background);
+    background: var(--table-selected-bg);
 }
 table.hover tr:hover:not(.no-hover) td {
-    background: var(--table-hover-background);
+    background: var(--table-hover-bg);
 }
 table.hover>tbody>tr {
     cursor: default;
@@ -408,7 +410,7 @@ table td>p:last-child {
     overflow: hidden; /* Otherwise border-radius won't work! */
 }
 .strip:not(.fill) {
-    margin-left: var(--form-element-padding);
+    margin-left: var(--form-el-pad);
 }
 .strip>* {
     margin-bottom: 0;
@@ -421,11 +423,11 @@ table td>p:last-child {
     border-left: none;
 }
 .strip>label {
-    background: var(--button-background);
+    background: var(--button-bg);
     background-size: 1px calc(200% + 2px);
     background-position: 0 0;
-    color: var(--form-element-color);
-    padding: var(--form-element-padding);
+    color: var(--form-el-color);
+    padding: var(--form-el-pad);
     margin-right: 0;
 }
 .strip>select,
@@ -555,7 +557,7 @@ to {
     margin-left: var(--border-radius);
 }
 .micro-widgets-tab-buttons button {
-    background: var(--button-toggled-background);
+    background: var(--button-toggled-bg);
     background-size: 1px calc(200% + 2px);
     background-position: 0 -1px;
     display: none; /* Overridden when viewport exceeds 800px */
@@ -580,7 +582,7 @@ button.micro-widgets-tab-hamburger {
     display: inline-block;
 }
 button.micro-widgets-tab-active {
-    background: var(--button-background);
+    background: var(--button-bg);
     background-size: 1px calc(200% + 2px);
     background-position: 0 -1px;
     box-shadow: none;
@@ -659,10 +661,10 @@ button.micro-widgets-tab-active:active {
     display: block;
 }
 .micro-widgets-tree a.item-label:hover {
-    background-color: var(--table-hover-background);
+    background-color: var(--table-hover-bg);
 }
 .micro-widgets-tree li.item>a.tree-selected {
-    background-color: var(--table-selected-background);
+    background-color: var(--table-selected-bg);
 }
 .micro-widgets-tree a.item-label .folder,
 .micro-widgets-tree a.item-label .icon {
@@ -768,7 +770,7 @@ button.micro-widgets-tab-active:active {
 }
 }
 .micro-widgets-tree-navbar {
-  background: var(--button-background);
+  background: var(--button-bg);
   padding: 0;
   border-radius: var(--border-radius);
   border: solid 1px var(--border-color);
@@ -788,7 +790,7 @@ button.micro-widgets-tab-active:active {
 }
 .micro-widgets-tree-navbar>ul>li>a,
 .micro-widgets-tree-navbar>ul>li>ul>li>a{
-  padding: var(--form-element-padding);
+  padding: var(--form-el-pad);
 }
 .micro-widgets-tree-navbar>ul>li>ul>li>ul li.item {
     animation-name: tree-animate-navbar;
@@ -993,10 +995,10 @@ button.micro-widgets-tab-active:active {
     background-color:#fefefe;
 }
 .success {
-    background: var(--success-background);
+    background: var(--success-bg);
 }
 .warning {
-    background: var(--warning-background);
+    background: var(--warning-bg);
 }
 .left {
     text-align: left;
@@ -1170,6 +1172,9 @@ button.large {
 }
 .strip>label.description-7 {
     min-width: 9rem;
+}
+.strip>label.description-9 {
+    min-width: 11rem;
 }
 .micro-widgets-tab-buttons button {
     display: inline-block;

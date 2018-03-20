@@ -1,4 +1,4 @@
-/* Setting color scheme for our skin */
+﻿/* Setting color scheme for our skin */
 /*
  * Basic color scheme;
  *
@@ -13,30 +13,30 @@
     --font-size: 14px;
     --background: linear-gradient(#afd377, #7FB255);
     --color: #004232;
-    --form-element-color: #004232;
-    --form-element-background-color: #afd377;
-    --form-element-active-background: #c4d1ad;
-    --form-element-disabled-background-color: #48872f;
+    --form-el-color: #004232;
+    --form-el-bg: #afd377;
+    --form-el-active-bg: #c4d1ad;
+    --form-el-dis-bg: #48872f;
     --button-color: #acc18a;
-    --button-background: linear-gradient(#48872f, #004232);
-    --button-toggled-background: linear-gradient(#004232, #48872f);
+    --button-bg: linear-gradient(#48872f, #004232);
+    --button-toggled-bg: linear-gradient(#004232, #48872f);
     --border-color: rgba(0,0,0,.5);
     --border-radius: .75rem;
 
     --anchor-color: #355828;
     --anchor-hover-color: #0b281f;
     --anchor-active-color: #174f3d;
-    --form-element-padding: .5rem;
+    --form-el-pad: .5rem;
     --placeholder-color: #18a779;
     --shadow-color: #48872f;
-    --success-background: linear-gradient(#efe,#afa);
-    --warning-background: linear-gradient(#fee,#fcc);
-    --table-striped-background: rgba(0,0,0,.05);
-    --table-selected-background: rgba(0,0,0,.1);
-    --table-hover-background: rgba(0,0,0,.1);
+    --success-bg: linear-gradient(#efe,#afa);
+    --warning-bg: linear-gradient(#fee,#fcc);
+    --table-striped-bg: rgba(0,0,0,.05);
+    --table-selected-bg: rgba(0,0,0,.1);
+    --table-hover-bg: rgba(0,0,0,.1);
 
-    --form-element-disabled-color: #48872f;
-    --code-background: #e0ffe0;
+    --form-el-dis-color: #48872f;
+    --code-bg: #e0ffe0;
 }
 
 h1, h2, h3, h4, h5, h6, label {

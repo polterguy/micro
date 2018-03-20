@@ -1,10 +1,10 @@
-.cm-s-phosphorus {
+﻿.cm-s-phosphorus {
     font-family: monospace;
-    background: var(--code-background);
+    background: var(--code-bg);
     color: var(--color);
 }
 .cm-s-phosphorus .CodeMirror-gutters {
-    background: var(--code-background);
+    background: var(--code-bg);
     border-right: solid 1px rgba(0,0,0,.05);
 }
 .cm-s-phosphorus .CodeMirror-linenumber {
@@ -99,7 +99,7 @@ li.CodeMirror-hint-active {
 
 .CodeMirror-dialog {
     box-shadow: 3px 3px 5px rgba(0,0,0,.2);
-    padding: var(--form-element-padding);
+    padding: var(--form-el-pad);
     vertical-align: bottom;
 }
 .CodeMirror-dialog-top {

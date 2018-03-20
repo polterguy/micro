@@ -1,4 +1,4 @@
-/* cyrillic-ext */
+﻿/* cyrillic-ext */
 @font-face {
   font-family: 'Montserrat';
   font-style: italic;
@@ -124,29 +124,29 @@
     --font-break-size: 20px;
     --color: #777777;
     --background: #eed9a8;
-    --form-element-background-color: #eed9a8;
-    --form-element-active-background: #ede19b;
-    --form-element-color: #c6773f;
-    --form-element-disabled-background-color: #c0c0c0;
+    --form-el-bg: #eed9a8;
+    --form-el-active-bg: #ede19b;
+    --form-el-color: #c6773f;
+    --form-el-dis-bg: #c0c0c0;
     --button-color: #ce5517;
-    --button-background: linear-gradient(#eed9a8, #E68C4F);
-    --button-toggled-background: linear-gradient(#E68C4F, #eed9a8);
+    --button-bg: linear-gradient(#eed9a8, #E68C4F);
+    --button-toggled-bg: linear-gradient(#E68C4F, #eed9a8);
     --border-color: #c6773f;
     --border-radius: 4px;
     --anchor-color: #be6527;
     --anchor-hover-color: #7a4824;
     --anchor-active-color: #c19651;
-    --form-element-disabled-color: #66667c;
-    --form-element-padding: .5rem;
+    --form-el-dis-color: #66667c;
+    --form-el-pad: .5rem;
     --placeholder-color: #999;
 
     --shadow-color: #ce5517;
-    --success-background: linear-gradient(#fefefe,#cfc);
-    --warning-background: linear-gradient(#fefefe,#fcc);
+    --success-bg: linear-gradient(#fefefe,#cfc);
+    --warning-bg: linear-gradient(#fefefe,#fcc);
     --max-viewport-width: 1420px;
-    --table-striped-background: rgba(0,0,0,.02);
-    --table-selected-background: rgba(0,0,0,.1);
-    --table-hover-background: rgba(0,0,0,.07);
+    --table-striped-bg: rgba(0,0,0,.02);
+    --table-selected-bg: rgba(0,0,0,.1);
+    --table-hover-bg: rgba(0,0,0,.07);
 }
 
 
