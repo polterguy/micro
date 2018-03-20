@@ -120,8 +120,8 @@
 }
 :root {
     --font-family: 'Montserrat';
-    --font-size: 18px;
-    --font-break-size: 20px;
+    --font-size: 16px;
+    --font-break-size: 18px;
     --color: #777777;
     --background: #eed9a8;
     --form-el-bg: #eed9a8;
@@ -143,7 +143,7 @@
     --shadow-color: #ce5517;
     --success-bg: linear-gradient(#fefefe,#cfc);
     --warning-bg: linear-gradient(#fefefe,#fcc);
-    --max-viewport-width: 1420px;
+    --viewport-width: 1420px;
     --table-striped-bg: rgba(0,0,0,.02);
     --table-selected-bg: rgba(0,0,0,.1);
     --table-hover-bg: rgba(0,0,0,.07);

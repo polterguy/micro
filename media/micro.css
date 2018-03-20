@@ -40,7 +40,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
     --shadow-color: rgba(0,0,0,.4);
     --success-bg: linear-gradient(#efe,#afa);
     --warning-bg: linear-gradient(#fee,#fcc);
-    --max-viewport-width: 1120px;
+    --viewport-width: 1120px;
     --table-striped-bg: rgba(0,0,0,.05);
     --table-selected-bg: rgba(0,0,0,.1);
     --table-hover-bg: rgba(0,0,0,.1);
@@ -464,7 +464,7 @@ table td>p:last-child {
 }
 .container {
     margin: 0 auto;
-    max-width: var(--max-viewport-width);
+    max-width: var(--viewport-width);
 }
 .container-fullscreen {
     width: 100%;

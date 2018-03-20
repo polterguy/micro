@@ -246,7 +246,7 @@
     --shadow-color: #515060;
     --success-bg: linear-gradient(#efe,#afa);
     --warning-bg: linear-gradient(#fee,#fcc);
-    --max-viewport-width: 1280px;
+    --viewport-width: 1280px;
     --table-striped-bg: rgba(0,0,0,.1);
     --table-selected-bg: rgba(0,0,0,.2);
     --table-hover-bg: rgba(0,0,0,.05);

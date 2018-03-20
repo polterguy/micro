@@ -258,7 +258,7 @@
 
     --success-bg: linear-gradient(#efe,#dfd);
     --warning-bg: linear-gradient(#fee,#fdd);
-    --max-viewport-width: 1280px;
+    --viewport-width: 1280px;
     --table-striped-bg: rgba(0,0,0,.03);
     --table-selected-bg: rgba(0,0,0,.15);
     --table-hover-bg: rgba(0,0,0,.07);
