@@ -47,7 +47,7 @@ code {
 }
 
 input:not([type=radio]):not([type=checkbox]),
-select, textarea, button {
+select, textarea, button, .button {
     padding-left: 25px;
     padding-right: 25px;
     font-family: 'Comic Sans MS';

@@ -124,7 +124,7 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
     background-size: 1px calc(200% + 2px);
     background-position: 0 -1px;
     transition: background-position .2s ease-out;
-    min-width: 3rem;
+    min-width: 1rem;
     text-align: center;
     cursor: default;
 }
