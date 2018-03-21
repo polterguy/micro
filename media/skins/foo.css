@@ -1,0 +1,31 @@
+/* CSS variables */
+:root {
+    --font-family: Helvetica;
+    --font-size: 22px;
+    --font-break-size: 26px;
+    --color: #955;
+    --background: #fff9f9;
+    --button-color: #ce5050;
+    --button-bg: linear-gradient(#f9fef9, #b0e0b0);
+    --button-toggled-bg: linear-gradient(#b0f0b0, #f9fef9);
+    --anchor-color: #c95555;
+    --anchor-hover-color: #007;
+    --anchor-active-color: #77e;
+    --form-el-color: #a05050;
+    --form-el-bg: #fdfffd;
+    --form-el-active-bg: #f5fff5;
+    --form-el-dis-color: #aaa;
+    --form-el-dis-bg: #e5e5e5;
+    --form-el-pad: .5rem;
+    --placeholder-color: #ccc;
+    --border-color: #bbb;
+    --border-radius: .5rem;
+    --shadow-color: rgba(128,0,0,.7);
+    --success-bg: linear-gradient(#efe,#cfc);
+    --warning-bg: linear-gradient(#fee,#fdd);
+    --viewport-width: 1120px;
+    --table-striped-bg: rgba(0,0,0,.05);
+    --table-selected-bg: rgba(0,0,0,.1);
+    --table-hover-bg: rgba(0,0,0,.1);
+    --code-bg: var(--background);
+}

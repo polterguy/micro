@@ -1,4 +1,4 @@
-﻿/* cyrillic-ext */
+/* cyrillic-ext */
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
@@ -250,7 +250,7 @@
     --table-striped-bg: rgba(0,0,0,.1);
     --table-selected-bg: rgba(0,0,0,.2);
     --table-hover-bg: rgba(0,0,0,.05);
-    --code-bg: #f0f0f0;
+    --code-bg: #efefef;
 }
 
 .cm-s-phosphorus .CodeMirror-linenumber {

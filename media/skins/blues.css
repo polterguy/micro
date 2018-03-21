@@ -1,13 +1,3 @@
-﻿/* Setting color scheme for our skin */
-/*
- * Basic color scheme;
- *
- * #034ab4
- * #9bb7ce
- * #888888
- * #617380
- * #384858
- */
 :root {
     --font-family: 'Helvetica';
     --font-size: 13px;
@@ -36,7 +26,6 @@
     --table-hover-bg: rgba(0,0,0,.1);
 
     --form-el-dis-color: #888888;
-    --code-bg: #d6e1eb;
 }
 
 h1, h2, h3, h4, h5, h6, label {
