@@ -1,4 +1,4 @@
-﻿/* cyrillic-ext */
+/* cyrillic-ext */
 @font-face {
   font-family: 'Montserrat';
   font-style: italic;
@@ -151,8 +151,8 @@
 
 
 pre, code {
-    color: #ae7968;
-    background: #c6773f;
+    color: #9e5948;
+    background: #c6a77f;
 }
 code {
     border-radius: 2px;
