@@ -236,6 +236,43 @@ The above code will create something resembling the following.
 
 https://phosphorusfive.files.wordpress.com/2018/01/modal-micro-screenshot.png
 
+**Notice**, if you want to create a wider modal window, you can add the `large` CSS class to your main modal widget. However,
+since this will override the default CSS class, you'll also have to explicitly add the default CSS class, which is
+`micro-widgets-modal`. Hence, your complete CSS **[class]** declaration to create a wider modal widget becomes that
+of `micro-widgets-modal large`. Below is an example.
+
+```hyperlambda
+micro.css.include
+create-widget
+  class:container
+  widgets
+    div
+      class:row
+      widgets
+        div
+          class:col
+          widgets
+            button
+              innerValue:Show modal window
+              onclick
+
+                /*
+                 * Here we create our modal widget.
+                 */
+                create-widgets
+                  micro.widgets.modal:my-modal
+                    class:micro-widgets-modal large
+                    widgets
+                      h3
+                        innerValue:Foo bar
+                      p
+                        innerValue:Hello world
+                      button
+                        innerValue:Close
+                        onclick
+                          delete-widget:my-modal
+```
+
 ### Tab widget
 
 This widget allows you to create a _"tab control"_ type of widget, to for instance group
