@@ -9,7 +9,6 @@ previous chapter, and exchange its code with the following.
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating one container with one row containing one col.
@@ -61,7 +60,7 @@ The above form elements doesn't look like much. However, Micro have many additio
 which you can apply, to style your form slightly better. The most important probably being the `fill` and the `strip` classes,
 which we will look at further down in this document.
 
-## Labels, checkboxes and radio buttons
+### Labels, checkboxes and radio buttons
 
 In Micro if you want to create a label for your checkbox or radio buttons, you'll have to wrap your
 checkbox/radio button inside your label. This is any ways an advantage, since it will allow the user to click the
@@ -72,7 +71,6 @@ actual label to change the checked value of your checkbox/radio button. Below is
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating one container with one row containing one col.
@@ -117,9 +115,10 @@ for your own designs. This was one of the crucial design criteria as Micro was c
 style any element you want to us in your app, exactly as you want to style it. In fact, checkbox and radio buttons
 have been historically largely rendered impossible to use because of the difficulty in styling them according to your
 own needs. Micro fixes that problem by intelligently tapping into CSS3 features, allowing us to actually style
-these elements again.
+these elements again. Micro does this by completely overriding the rendering of both radiobuttons and checkboxes,
+allowing you to control every aspect of the rendering of these HTML elements.
 
-## Strips
+### Strips
 
 A `strip` is a bunch of related form elements. You can combine any form elements using strips, and _"couple"_ them
 nicely together, to give visual clues to the user that these are related concepts. Basically, create a wrapper
@@ -130,7 +129,6 @@ div, set its CSS class to `strip`, and add any form elements inside of it as you
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating one container with one row containing one col.
@@ -165,7 +163,7 @@ create-widget
                       innerValue:Button
 ```
 
-The above code will end up being rendered like the following.
+The above code will end up resembling the following.
 
 https://phosphorusfive.files.wordpress.com/2018/01/strips-micro-screenshot.png
 
@@ -177,7 +175,6 @@ Notice, you can mix strips with the `left`, `right` and `fill` classes, to furth
 If you want to have multiple toolbars side by side for instance, but which wraps unto multiple lines if the
 viewport of your browser doesn't have room to show them all - You can add up for instance the `right` class,
 on your strip element. This will render your toolbars side by side, but only if there's room for them all.
-
 Below is an example illustrating this.
 
 ```hyperlambda
@@ -185,7 +182,6 @@ Below is an example illustrating this.
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating one container with one row containing one col.
@@ -226,7 +222,10 @@ create-widget
                   innerValue:Btn
 ```
 
-## Fill
+Try to resize your browser as you view the above example in Hypereval. Notice also the `air-left` class on
+your first strip above. This provides some _"air"_ between your two toolbars.
+
+### Fill
 
 If you add a tiny little CSS class to our above `class:strip`, making it become `class:strip fill`,
 then your strip will fill all available width, whatever that is. It will do this by making sure your
@@ -245,7 +244,6 @@ it would look like the following.
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating one container with one row containing one col.
@@ -282,5 +280,6 @@ create-widget
 
 The `fill` class can also be used on single input elements, textarea elements, or select elements.
 If you add a fill class to a strip element though, you must have at the minimum one input text type
-of element, or a select list in it for it to work.
+of element, or a select list in it for it to work. In fact, the first textbox or select element will
+be resized to fill the available width.
 

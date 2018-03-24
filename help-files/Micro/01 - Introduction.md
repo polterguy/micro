@@ -33,4 +33,5 @@ including any skin files at all, and/or drop including the icons, if you wish to
 
 **Notice**, just because of that Phosphorus Five and Hyper IDE happens to have its own CSS framework, there
 are no reasons why you can't use your own favourite instead, such as Bootstrap or Milligram for instance.
-With Phosphorus Five and Hyperlambda you have (almost) 100% perfect control over the resulting HTML markup.
+With Phosphorus Five and Hyperlambda you have (almost) 100% perfect control over the resulting HTML markup -
+Which implies that Phosphorus Five is 100% compatible with any CSS framework you can find.

@@ -1,8 +1,8 @@
 ## Icons
 
 Micro includes the IcoMoon icon collection, which you can read about in the credits section of these help files.
-There are 200 different icons you can use, and they all obey by the same syntax. You would normally include 
-these by adding an additional span, and settings its CSS class, to whatever icon you want to use. Below is an 
+There are 200 different icons you can use, and they all obey by the same syntax. You would normally include
+these by adding an additional span, and settings its CSS class to whatever icon you want to use. Below is an
 example.
 
 ```hyperlambda
@@ -10,7 +10,6 @@ example.
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating a simple container with one button inside, with the "flash" icon.
@@ -21,6 +20,7 @@ create-widget
     button
       widgets
         literal
+          element:span
           class:icon-flash
 ```
 
@@ -80,7 +80,6 @@ Below is an example of a strip with 3 buttons, each having their own icon.
 
 ```hyperlambda
 micro.css.include
-  skin:graphite
 create-widget
   class:container
   widgets

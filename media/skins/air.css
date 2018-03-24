@@ -224,7 +224,7 @@
 }
 :root {
     --font-family: 'Roboto';
-    --font-size: 14px;
+    --font-size: 16px;
     --font-break-size: 18px;
     --color: #284177;
     --background: linear-gradient(#fefefe, #80c8ee);

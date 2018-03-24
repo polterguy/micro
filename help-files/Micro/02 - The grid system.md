@@ -2,20 +2,16 @@
 
 Micro builds upon the _"flexbox grid system"_. This allows you to easily partition your web pages
 into rows and columns. The grid system in Micro is also _"responsive"_, which implies that it
-renders nicely also on devices with smaller screens. Below is a piece of Hyperlambda that will 
-create a wire frame for you.
-
-If you want to test the code in these tutorials, then the best way is to use [Hypereval](/hypereval),
-and create a new _"empty snippet"_, and save it as a _"page"_. If you do, you can click the _"preview"_ button
-to see the results of what we are going through in these tutorials. If you don't have Hypereval installed,
-you can find it [in the bazar](/bazar?app=hypereval).
+renders nicely also on devices with smaller screens. Below is a piece of Hyperlambda that will
+create a wire frame for you. If you want to test the code in these tutorials, then the easiest way is
+to use [Hypereval](/hypereval), and create a new _"empty snippet"_, and save it as a _"page"_. If you do,
+you can click the _"preview"_ button to see the results of what we are going through in these tutorials.
 
 ```hyperlambda
 /*
  * Includes Micro's CSS files.
  */
 micro.css.include
-  skin:serious
 
 /*
  * Creating one container with one row containing one col.
@@ -43,7 +39,7 @@ is built around a similar structure as Bootstrap CSS, and expects you to have a 
 your root element. There also exists a `container-fullscreen` alternative. Each container can have 
 as many `row` children as you wish, and each row can have multiple `col` elements inside of it again. 
 This is what creates your _"grid system"_, and will automatically layout your page accordingly.
-The above code will end up looking like the following.
+The above code will resemble the following.
 
 https://phosphorusfive.files.wordpress.com/2018/01/micro-hello-world-screenshot-2.png
 
@@ -139,10 +135,9 @@ second column.
 ### Responsive rendering
 
 Micro is designed with the _"mobile first approach"_, which implies that it will render responsively.
-If you resize the width of your browser below 800px, then all `col` classes, regardless of their 
-initial width, will _"pop"_, and fill 100% of the available width. To see this effect, try to resize 
-your browser, and watch how the file explorer to the left on the page, all of a sudden at some threshold
-will require 100% width.
+If you resize the width of your browser below 800px, then all `col` classes, regardless of their
+initial width, will _"pop"_, and fill 100% of the available width. To see this effect, try to resize
+your browser, and watch how these examples _"pops"_ when the width becomes less than 800px.
 
 This makes the process of supporting mobile devices, and devices width smaller viewports, almost automatically.
 However, you should test your apps, also on mobile devices, to make sure they render nicely.

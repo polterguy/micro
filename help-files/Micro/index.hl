@@ -1,12 +1,23 @@
-﻿/*
+/*
  * This is our main "landing page" for our Micro help files.
  */
 h2
   innerValue:Micro
 
+img
+  style:"margin-left:1rem; float:right;max-width: 20%;"
+  src:"https://phosphorusfive.files.wordpress.com/2018/03/micro-icon-dox.png"
+
 p
   innerValue:@"Micro is a general purpose CSS framework, and an Ajax Widget library for Phosphorus Five. These parts of the documentation
 explains how you can use Micro as you create your own applications."
+
+p
+  innerValue:@"The CSS parts of Micro is inspired by Bootstrap CSS, but Micro is <em>significantly smaller in size</em>
+compared to Bootstrap. It also contains a rich extension Ajax widget library, with Ajax widgets such as a tree view,
+tab view, modal widgets, etc - In addition to lots of helper Active Events, solving all sorts of common
+needs you may have while creating your own apps and modules. Micro is the default CSS framework used in
+Phosphorus Five."
 
 
 /*

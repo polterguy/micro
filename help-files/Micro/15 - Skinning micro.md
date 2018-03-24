@@ -6,7 +6,20 @@ evaluate the snippet below, which will open up the _"Aztec"_ skin for you in a H
 
 ```hyperlambda-snippet
 /*
- * Using Hyper IDE's API to open up the Aztec skin for editing.
+ * Verifying Hyper IDE is open.
+ */
+if
+  hyper-ide.is-open
+  not
+
+  /*
+   * Warning user.
+   */
+  micro.windows.info:This example only works from Hyper IDE
+  return
+
+/*
+ * Using Hyper IDE's API to open up the "Aztec" CSS skin file.
  */
 hyper-ide.folder-explorer.select-path:/modules/micro/media/skins/aztec.css
 ```
@@ -62,6 +75,5 @@ of your site's appearance will use the default values from the main Micro CSS fi
 }
 ```
 
-Creating a skin such as the above, and consuming it having opened Hyper IDE, would resemble something like the following.
-
-https://phosphorusfive.files.wordpress.com/2018/03/hyper-ide-foo-skin-screenshot.png
+**Notice**, Hyper IDE contains a _"create skin wizard"_, which even allows you to follow a graphical user
+interface, with preview, to create your skins. No CSS knowledge (really) required.
