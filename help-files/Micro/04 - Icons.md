@@ -58,22 +58,13 @@ for-each:x:@"/@html2lambda/**/\@class/""=:regex:/icon-.{1,}/""?value"
  * Creating a widget wrapping each icon from IcoMoon.
  */
 create-widgets
-  micro.widgets.modal:dox-icons-modal
+  micro.widgets.modal
     widgets
       div
         class:air
         widgets
-          h3
-            innerValue:Icons
           ol
             widgets
-      div
-        class:right
-        widgets
-          button
-            innerValue:Close
-            onclick
-              delete-widget:dox-icons-modal
 ```
 
 Below is an example of a strip with 3 buttons, each having their own icon.
