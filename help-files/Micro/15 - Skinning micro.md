@@ -76,4 +76,17 @@ of your site's appearance will use the default values from the main Micro CSS fi
 ```
 
 **Notice**, Hyper IDE contains a _"create skin wizard"_, which even allows you to follow a graphical user
-interface, with preview, to create your skins. No CSS knowledge (really) required.
+interface, with preview, to create your skins. No CSS knowledge (really) required. To use the skin wizard,
+make sure you select the `/micro/media/skins/` folder in Hyper IDE's folder explorer, and click the _"star"_
+button. At which point your screen will resemble the following.
+
+https://phosphorusfive.files.wordpress.com/2018/03/screenshot-skin-wizard.png
+
+The skin wizard will dynamically fetch all CSS variables from _"micro.css"_, and create a textbox for
+each possible CSS variable, allowing you to fill out its value, creating your own skin. In its preview
+tab view, it will show the results for you visually, with some random widgets displayed. When you're
+happy with your skin, you can click the _"Generate"_ button, at which point you'll be asked for a name
+for your skin.
+
+After you have generated your skin, you can manually edit it in Hyper IDE, to add your own CSS custom
+things - If you want to ...

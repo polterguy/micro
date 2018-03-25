@@ -54,7 +54,7 @@ create-widget
 
 The above code will resemble the following.
 
-https://phosphorusfive.files.wordpress.com/2018/01/micro-forms-screenshot.png
+https://phosphorusfive.files.wordpress.com/2018/03/micro-screenshot-forms.png
 
 The above form elements doesn't look like much. However, Micro have many additional helper tricks and classes
 which you can apply, to style your form slightly better. The most important probably being the `fill` and the `strip` classes,
@@ -165,7 +165,7 @@ create-widget
 
 The above code will end up resembling the following.
 
-https://phosphorusfive.files.wordpress.com/2018/01/strips-micro-screenshot.png
+https://phosphorusfive.files.wordpress.com/2018/03/micro-screenshot-strip.png
 
 Notice, you cannot add a textarea into a strip. Besides from that, all other form elements are nicely
 rendered inside of your strips. This makes strips a nice way for you to create _"toolbar"_ types of

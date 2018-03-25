@@ -139,10 +139,17 @@ micro.widgets.tree.select-items:id-of-your-tree
 
 To retrieve the currently selected item(s) you can use the **[micro.widgets.tree.get-selected-items]** event.
 
+To delete one or more items, invoke the **[micro.widgets.tree.delete-items]** event, and pass in an **[items]**
+collection, resembling that of when selecting item(s).
+
+To _"refetch"_ an item's children, re-invoking its **[.onexpand]**, you can use
+the **[micro.widgets.tree.refresh-items]** event. This event also require an **[items]** collection.
+
+The **[micro.widgets.tree.toggle-items]** toggles all supplied **[items]**, but can in addition be given
+a **[force-expand]** argument - At which point it will never collapse an item, but only expand items.
+
 To see more of how to use the tree, in more complex scenarios, you can see the code for Hyper IDE, which
 consumes it internally. Hyper IDE illustrates refreshing a tree view item, when for instance a file
 or folder is deleted. It also illustrates toggling items, and auto expanding items initially, deleting
 items, etc.
-
-
 

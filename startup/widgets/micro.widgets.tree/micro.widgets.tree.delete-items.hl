@@ -7,7 +7,7 @@
 create-event:micro.widgets.tree.delete-items
 
   /*
-   * Looping through all [items] and re-fetches them.
+   * Looping through all [items] and deletes them from the tree.
    */
   for-each:x:/../*/items/*?name
 

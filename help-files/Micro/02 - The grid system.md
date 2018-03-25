@@ -41,7 +41,7 @@ as many `row` children as you wish, and each row can have multiple `col` element
 This is what creates your _"grid system"_, and will automatically layout your page accordingly.
 The above code will resemble the following.
 
-https://phosphorusfive.files.wordpress.com/2018/01/micro-hello-world-screenshot-2.png
+https://phosphorusfive.files.wordpress.com/2018/03/micro-screenshot-first-micro.png
 
 **Notice**, we chose to wrap our widgets inside of a div widget with the following classes `air-inner shaded rounded`.
 We did this simply to add some _"bling"_ to our page. These classes adds some inner padding, some shade, 

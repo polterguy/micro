@@ -17,6 +17,8 @@ daily use of Phosphorus Five. Below is a list of some of the more important ones
 * __[micro.speech.query-voices]__ - Queries available voices from your client
 * __[micro.windows.info]__ - Shows a small information _"bubble window"_
 * __[micro.url.get-entities]__ - Returns each folder of the URL for the current request
+* __[micro.lambda.contract.min]__ - Creates an expectancy to arguments, and throws if specified arguments are not given
+* __[micro.lambda.contract.optional]__ - Declares optional arguments to your lambda objects
 
 In addition to the above Active Events, you can find some additional Active Events if you look
 at Micro's code. However, the above are the ones I consider _"stable"_ at the time of writing.
@@ -325,3 +327,73 @@ micro.url.get-entities
 
 This makes it easy for you to retrieve the different parts and sub parts of the current request's URL, without
 having to manually parse it yourself, using for instance **[split]** etc.
+
+### Lambda contracts
+
+You can also use the **[micro.lambda.contract.xxx]** events to declare arguments to your lambda objects, such
+as your Active Events or Hyperlambda files for instance. The **[micro.lambda.contract.min]** event, will throw
+an exception if the expected argument is not supplied. Below is an example that will throw an exception, since
+we did not pass in a **[foo]** argument.
+
+```hyperlambda-snippet
+/*
+ * Our lambda object
+ */
+.exe
+  micro.lambda.contract.min:x:/..
+    foo
+
+/*
+ * Invoking our above lambda object, without
+ * a [foo] argument, which results in an exception.
+ */
+eval:x:/@.exe
+  //foo:No foo here ...
+```
+
+If you uncomment the above **[foo]** argument, then no exception will be thrown. Notice, you can also type your
+arguments, such as the following illustrates. Also this code will throw an exception.
+
+```hyperlambda-snippet
+/*
+ * Our lambda object
+ */
+.exe
+  micro.lambda.contract.min:x:/..
+    foo:int
+
+/*
+ * Invoking our above lambda object, with a value
+ * that is not convertible into an "int" (integer number).
+ */
+eval:x:/@.exe
+  foo:This is not an integer value
+```
+
+Changing the above to the following will make our code evaluate without exceptions.
+
+```hyperlambda-snippet
+/*
+ * Our lambda object
+ */
+.exe
+  micro.lambda.contract.min:x:/..
+    foo:int
+
+/*
+ * Invoking our above lambda object, with a value
+ * that IS convertible into an "int" (integer number).
+ */
+eval:x:/@.exe
+  foo:5
+```
+
+If you use the **[micro.lambda.contract.optional]**, then no exception will occur if the argument is not given.
+However, if the argument is given, it will check its type, if supplied in the contract, and throw an exception
+if the argument is given, but with the wrong type.
+
+Both of these Active Events also serves a _"double purpose"_, which is that they give you meta capabilities on
+your Active Events and lambda objects in general, allowing you to _"query"_ your lambda objects/Active Events,
+to have them tell you which arguments they can handle. Hence, you should at least to some extent carefully
+make sure your public API events are correctly consuming these events, which helps others to understand your
+system, even allowing for automated processes querying your API for its legal arguments too.
