@@ -305,7 +305,3 @@ select, textarea, button, .button {
 .bg {
     background: var(--background);
 }
-
-.shaded, .rounded {
-    background: linear-gradient(#fefefe, #c5e5f7);
-}
