@@ -19,6 +19,7 @@ daily use of Phosphorus Five. Below is a list of some of the more important ones
 * __[micro.url.get-entities]__ - Returns each folder of the URL for the current request
 * __[micro.lambda.contract.min]__ - Creates an expectancy to arguments, and throws if specified arguments are not given
 * __[micro.lambda.contract.optional]__ - Declares optional arguments to your lambda objects
+* __[micro.lambda.contract.get]__ - Retrieves the lambda contract associated with event, if any
 
 In addition to the above Active Events, you can find some additional Active Events if you look
 at Micro's code. However, the above are the ones I consider _"stable"_ at the time of writing.
@@ -397,3 +398,33 @@ your Active Events and lambda objects in general, allowing you to _"query"_ your
 to have them tell you which arguments they can handle. Hence, you should at least to some extent carefully
 make sure your public API events are correctly consuming these events, which helps others to understand your
 system, even allowing for automated processes querying your API for its legal arguments too.
+
+#### Retrieving an event's lambda contract
+
+Such lambda contracts can be highly useful, since they allow an event to actually communicate which arguments
+it is expecting its callers to provide. Since Phosphorus Five is built around the axiom of meta cognition,
+retrieving such lambda contracts is obviously a natural. Below is a snippet that retrieves the lambda contract
+for the event **[micro.css.add]**, and displays it in a modal widget.
+
+```hyperlambda-snippet
+/*
+ * Retrieving lambda contract for [micro.css.add]
+ */
+micro.lambda.contract.get:micro.css.add
+
+/*
+ * Displaying results in a modal widget.
+ */
+eval-x:x:/+/*/*/*/*
+create-widgets
+  micro.widgets.modal
+    widgets
+      pre
+        innerValue:x:/@micro.lambda.contract.get
+```
+
+The above construct, allows you to dynamically figure out which arguments, and which types these arguments have -
+And whether or not an argument is optional or not, for any dynamically created Active Events in your system.
+
+The **[micro.lambda.contract.get]** event will only be able to return intelligent information if you have thoroughly
+documented your event's lambda contract using **[micro.lambda.contract.min]** and/or **[micro.lambda.contract.optional]**.

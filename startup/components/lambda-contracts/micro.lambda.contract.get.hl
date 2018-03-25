@@ -1,0 +1,51 @@
+
+/*
+ * Helper Active Event to retrieve the lambda contract associated with some event.
+ */
+create-event:micro.lambda.contract.get
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+
+  /*
+   * Looping through all [_arg]s.
+   */
+  for-each:x:/../*/_arg?value
+
+    /*
+     * Retrieving currently iterated event.
+     */
+    get-event:x:/@_dp?value
+
+    /*
+     * Adding event name as root return value, if it exists.
+     */
+    if:x:/@get-event/*
+
+      /*
+       * Event exists.
+       */
+      add:x:/../*/return
+        src:x:/@_dp?value
+
+      /*
+       * Adding min/optional to return value.
+       */
+      if:x:/@get-event/*/*/micro.lambda.contract.min/*
+        add:x:/../*/return/*
+          src:min
+        add:x:/../*/return/*/*/min
+          src:x:/@get-event/*/*/micro.lambda.contract.min/*
+      if:x:/@get-event/*/*/micro.lambda.contract.optional/*
+        add:x:/../*/return/*
+          src:optional
+        add:x:/../*/return/*/*/optional
+          src:x:/@get-event/*/*/micro.lambda.contract.optional/*
+
+  /*
+   * Returning contract to caller.
+   */
+  return
