@@ -1,4 +1,3 @@
-
 ## Micro Active Events III
 
 This is the continuation of the documentation of Active Events from Micro. Below is a list of which Active Events
@@ -8,6 +7,7 @@ are documented in this file.
 * __[micro.lambda.contract.optional]__ - Declares optional arguments to your lambda objects
 * __[micro.lambda.contract.get]__ - Retrieves the lambda contract associated with event, if any
 * __[micro.lambda.create-timeout]__ - Creates a timer, that once done, will evaluate some piece of Hyperlambda on the server
+* __[micro.page.scroll-into-view]__ - Scrolls an element into view on client
 
 ### Lambda contracts
 
@@ -124,4 +124,17 @@ micro.lambda.create-timeout
   milliseconds:2000
   onfinish
     micro.windows.info:Hell there, 2 seconds just passed!
+```
+
+### Browser scrolling
+
+The **[micro.page.scroll-into-view]** event will (smoothly) scroll some element into view on the client. Specify
+which widget or element you want to scroll into view as **[\_arg]**. Below is an example.
+
+```hyperlambda-snippet
+/*
+ * Scrolls "cnt" element into view, resulting in
+ * that browser will smoothly scroll to top of page.
+ */
+micro.page.scroll-into-view:cnt
 ```

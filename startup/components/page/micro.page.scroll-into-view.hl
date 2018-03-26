@@ -1,0 +1,19 @@
+
+/*
+ * Helper Active Event to scroll some element into view.
+ *
+ * Require [_arg] being the ID of element to scroll into view on the client.
+ */
+create-event:micro.page.scroll-into-view
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+
+  /*
+   * Doing the actual scrolling.
+   */
+  p5.web.send-javascript:@"p5.$('{0}').el.scrollIntoView ({{behavior:'smooth', block:'start'}});"
+    :x:/../*/_arg?value
