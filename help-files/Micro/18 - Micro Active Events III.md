@@ -83,8 +83,9 @@ system, even allowing for automated processes querying your API for its legal ar
 
 Such lambda contracts can be highly useful, since they allow an event to actually communicate which arguments
 it is expecting its callers to provide. Since Phosphorus Five is built around the axiom of meta cognition,
-retrieving such lambda contracts is obviously a natural. Below is a snippet that retrieves the lambda contract
-for the event **[micro.css.add]**, and displays it in a modal widget.
+retrieving such lambda contracts is obviously a natural. This arguably, at least to some extent, allows any
+event to be _"self describing"_ in nature, and document how a caller might want to consume it. Below is a snippet
+that retrieves the lambda contract for the event **[micro.css.add]**, and displays it in a modal widget.
 
 ```hyperlambda-snippet
 /*
@@ -123,7 +124,7 @@ seconds, and such _"poll"_ the server for changes. Below is an example.
 micro.lambda.create-timeout
   milliseconds:2000
   onfinish
-    micro.windows.info:Hell there, 2 seconds just passed!
+    micro.windows.info:Hello there, 2 seconds just passed!
 ```
 
 ### Browser scrolling
