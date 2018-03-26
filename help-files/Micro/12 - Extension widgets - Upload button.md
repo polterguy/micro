@@ -1,4 +1,4 @@
-## Extension widgets - Upload
+## Extension widgets - Upload button
 
 The **[micro.widgets.upload-button]** encapsulates the process of uploading files to your server. It simply
 creates a button, which allows you to upload one (or multiple) files to your server. It requires an

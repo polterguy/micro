@@ -1,4 +1,4 @@
-## Extension widgets - Wizard
+## Extension widgets - Wizard form
 
 The **[micro.widgets.wizard-form]** extension widget provides a convenient short hand for creating form
 input elements, such as textboxes, radio buttons, etc. It will create the necessary boiler plate for
