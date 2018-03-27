@@ -1051,11 +1051,19 @@ button.micro-widgets-tab-active:hover {
     text-transform: capitalize;
 }
 
-
+/* License info */
+.license-info {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    font-size: .8rem;
+}
 
 /* Wide screens */
 @media screen and (min-width:800px) {
-html, .background {
+    html, .background {
     font-size: var(--font-size);
 }
 
