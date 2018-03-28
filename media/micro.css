@@ -1054,10 +1054,10 @@ button.micro-widgets-tab-active:hover {
 /* License info */
 .license-info {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    top: 0;
+    left: 0;
+    margin-left: 1rem;
+    margin-top: 1rem;
     font-size: .8rem;
 }
 

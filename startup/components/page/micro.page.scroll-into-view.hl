@@ -15,5 +15,5 @@ create-event:micro.page.scroll-into-view
   /*
    * Doing the actual scrolling.
    */
-  p5.web.send-javascript:@"p5.$('{0}').el.scrollIntoView ({{behavior:'smooth', block:'start'}});"
+  p5.web.send-javascript:@"p5.$('{0}').el.scrollIntoView ({{behavior:'smooth'}});"
     :x:/../*/_arg?value
