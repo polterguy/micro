@@ -1,7 +1,6 @@
-
 /*
  * Help file Active Event sink.
  */
-create-event:desktop.help-files.micro
+create-event:desktop.help-files.05-micro
 
   return:@MICRO/help-files/Micro/
