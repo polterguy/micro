@@ -1,13 +1,8 @@
 # Micro
 
-Micro is a microscopic CSS and Ajax framework. It can be used stand alone as a pure CSS framework, but is
-also a perfect companion with [Phosphorus Five](https://github.com/polterguy/phosphorusfive).
-
-Micro builds upon a `container/row/col` structure, and is such quite similar to Bootstrap CSS, but is
-significantly smaller in size, and created around the _"flexbox CSS model"_. The last point makes it a
-more modern CSS framework than Bootstrap. Micro is also extremely easy to skin, due to its clever use
-of CSS variables, making it easy to modify any aspect of your HTML hierarchy, by simply creating
-your own skin, and override a couple of CSS variables.
+Micro is a microscopic CSS and Ajax framework for Phosphorus Five. Micro builds upon a `container/row/col` structure,
+and is such quite similar to Bootstrap CSS, but is significantly smaller in size, and created around the _"flexbox CSS model"_.
+Micro is easily skinned, due to clever use of CSS variables.
 
 ## Installation
 
