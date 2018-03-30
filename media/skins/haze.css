@@ -212,7 +212,7 @@ code {
     border-radius: 2px;
 }
 blockquote {
-    color: #284177;
+    color: #888;
 }
 
 input:not([type=radio]):not([type=checkbox]),

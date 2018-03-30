@@ -157,6 +157,9 @@ pre, code {
 code {
     border-radius: 2px;
 }
+blockquote {
+    color: #888;
+}
 hr {
     border-color:#c19651;
 }

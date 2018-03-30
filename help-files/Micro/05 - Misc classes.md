@@ -17,4 +17,5 @@ extra classes.
 * `justify` - Justifies text
 * `capitalize` - Transforms text such that the first character is Capitalized
 * `hide` - Hides an element
+* `button` - Makes for instance a hyperlink resemble a button in its appearance
 * `jumbo-button` - Declares a large button, similar to the Desktop icons for your modules

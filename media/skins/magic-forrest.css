@@ -49,6 +49,9 @@ pre, code {
     background-color: #18a779;
     color: #004232;
 }
+blockquote {
+    color: #777;
+}
 hr {
     border-color:#48872f;
 }

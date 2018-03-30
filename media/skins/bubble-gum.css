@@ -37,6 +37,9 @@ pre, code {
 code {
     border-radius: 2px;
 }
+blockquote {
+    color: #888;
+}
 
 input:not([type=radio]):not([type=checkbox]),
 select, textarea, button, .button {

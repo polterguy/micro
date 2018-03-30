@@ -48,6 +48,9 @@ pre, code {
     background-color: #617380;
     color: #bbcedd;
 }
+blockquote {
+    color: #888;
+}
 hr {
     border-color:#617380;
 }
