@@ -956,6 +956,52 @@ button.micro-widgets-tab-active:hover {
 
 
 
+/* Jumbo button */
+.jumbo-button {
+    box-shadow: 2px 2px 5px var(--shadow-color);
+    border-radius: var(--border-radius);
+    display: inline-block;
+    border: solid 1px var(--border-color);
+    background: var(--button-bg);
+    background-size: 1px calc(200% + 2px);
+    background-position: 0 -1px;
+    transition: transform .2s ease-out, background .2s ease-out, box-shadow .2s ease-out;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    color: var(--button-color);
+}
+.jumbo-button:hover {
+    background-position: 0 calc(100% + 1px);
+    transform: rotate(7deg);
+    transition: transform .2s ease-out, background .2s ease-out, box-shadow .2s ease-out;
+    color: var(--button-color);
+}
+.jumbo-button:hover:nth-child(2n+1) {
+    transform: rotate(-7deg);
+}
+.jumbo-button span {
+    display: block;
+    font-size: .5rem;
+    padding: 0 .25rem .25rem .25rem;
+    text-align: right;
+}
+.jumbo-button span:first-child {
+    padding: .25rem .25rem 0 .25rem;
+}
+.jumbo-button span[class*="icon-"] {
+    font-size: 2rem;
+    width: 5rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: calc(var(--form-el-pad) / 2) calc(var(--form-el-pad) * 3) calc(var(--form-el-pad) * 2) calc(var(--form-el-pad) * 3);
+}
+.jumbo-button span[class*="icon-"]:first-child {
+    padding: calc(var(--form-el-pad) * 2) calc(var(--form-el-pad) * 3) calc(var(--form-el-pad) / 2) calc(var(--form-el-pad) * 3);
+}
+
+
+
 /* Upload button widget */
 .micro-widgets-upload-input {
     opacity:0 !important;
@@ -1200,5 +1246,12 @@ button.micro-widgets-tab-hamburger {
 .micro-widgets-modal.large>.micro-widgets-modal-content {
     width: calc(1200px - 2rem);
     max-width: calc(100% - 2rem);
+}
+.jumbo-button span {
+    font-size: .7rem;
+}
+.jumbo-button span[class*="icon-"] {
+    font-size: 4rem;
+    width: 8rem;
 }
 } /* End of @media query 800px */
