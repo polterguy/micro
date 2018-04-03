@@ -134,7 +134,7 @@ create-event:micro.widgets.codemirror
              */
             micro.lambda.contract.optional:x:/..
               _arg:string
-              content
+              value
 
             /*
              * Finding textarea widget and setting its value.
@@ -142,7 +142,7 @@ create-event:micro.widgets.codemirror
             p5.web.widgets.find:x:/../*/_event?value
               element:textarea
             set-widget-property:x:/@p5.web.widgets.find/*/*?value
-              innerValue:x:/../*/content?value
+              innerValue:x:/../*/value?value
 
             /*
              * Sending JavaScript to client that re-fetches the value from textarea widget.

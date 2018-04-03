@@ -41,7 +41,7 @@ The CodeMirror widget also support retrieving and setting its value property. Be
 to programmatically retrieve or change its value from Hyperlambda.
 
 * __[micro.widgets.codemirror.get-value]__ - Returns the value of the specified __[\_arg]__ CodeMirror instance
-* __[micro.widgets.codemirror.set-value]__ - Sets the value of the specified __[\_arg]__ CodeMirror instance to the spcified __[content]__ value
+* __[micro.widgets.codemirror.set-value]__ - Sets the value of the specified __[\_arg]__ CodeMirror instance to the spcified __[value]__ value
 
 In addition, the CodeMirror widget will also track whether or not it is _"dirty"_, which means that its value has
 been edited since its content was set somehow. You can retrieve the _"dirty"_ status of your CodeMirror instance,
