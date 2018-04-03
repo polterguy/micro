@@ -27,15 +27,28 @@ foo();"
 
 The most important arguments to the CodeMirror widget is as follows.
 
-* __[auto-focus]__ - If true, the editor will get initial focus.
-* __[height]__ - Height in pixels, percent or any other unit for editor, e.g. _"300px"_.
-* __[mode]__ - Language mode for editor, e.g. _"htmlmixed"_, _"hyperlambda"_ or _"javascript"_, etc. Defaults to _"hyperlambda"_.
+* __[auto-focus]__ - If true, the editor will get initial focus
+* __[height]__ - Height in pixels, percent or any other unit for editor, e.g. _"300px"_
+* __[mode]__ - Language mode for editor, e.g. _"htmlmixed"_, _"hyperlambda"_ or _"javascript"_, etc. Defaults to _"hyperlambda"_
 * __[keys]__ - CodeMirror keyboard-shortcut to JavaScript callback list. E.g. `Ctrl-T:function(){alert('x');}`
-* __[value]__ - Initial value of editor.
-* __[.data-field]__ - Data field name, used when for instance serialising editor's content.
-* __[theme]__ - Optional theme override. If not given, will use the user's settings, defaulting to _"phosphorus"_.
-* __[font-size]__ - Optional font size for content. If not given, will use user's settings, defaulting to 9.25pt if no settings exists.
-* __[tab-size]__ - Optional tab size. Defaults to 2.
+* __[value]__ - Initial value of editor
+* __[.data-field]__ - Data field name, used when for instance serialising editor's content
+* __[theme]__ - Optional theme override. If not given, will use the user's settings, defaulting to _"phosphorus"_
+* __[font-size]__ - Optional font size for content. If not given, will use user's settings, defaulting to 9.25pt if no settings exists
+* __[tab-size]__ - Optional tab size. Defaults to 2
+
+The CodeMirror widget also support retrieving and setting its value property. Below are the events that allows you
+to programmatically retrieve or change its value from Hyperlambda.
+
+* __[micro.widgets.codemirror.get-value]__ - Returns the value of the specified __[\_arg]__ CodeMirror instance
+* __[micro.widgets.codemirror.set-value]__ - Sets the value of the specified __[\_arg]__ CodeMirror instance to the spcified __[content]__ value
+
+In addition, the CodeMirror widget will also track whether or not it is _"dirty"_, which means that its value has
+been edited since its content was set somehow. You can retrieve the _"dirty"_ status of your CodeMirror instance,
+by simply serializing your form, using the **[micro.form.serialize]** event, and for instance pass in the ID
+of your CodeMirror instance. This event is documented elsewhere in the documentation for Micro.
+
+### Skinning or changing your CodeMirror "theme"
 
 The CodeMirror widget has 57 different themes you can select from, which you can find in the
 _"/micro/media/codemirror/theme/" folder_. If no theme is explicitly supplied, it will use the theme
@@ -57,10 +70,15 @@ By default, the CodeMirror widget has the following default keyboard shortcuts.
 * __Ctrl+Z__ or __Cmd+Z__ - Undo
 * __Shift+Ctrl+Z__ or __Shift+Cmd+Z__ - Redo
 
+### Supported languages
+
 The supported **[mode]** for the CodeMirror editor is as follows. Not all of these have good autocompletion,
 and the support for different languages vary. But below are all the officially supported modes, according
 to CodeMirror's website. Hyperlambda support is very strong, since it's implemented in Phosphorus Five
-as a plugin mode. HTML, XML, CSS and JavaScript support is also very strong.
+as a plugin mode. HTML, XML, CSS and JavaScript support is also very strong. The JavaScript autocomplete
+object is populated from the _"current JavaScript context"_ on your page though - So you might benefit from
+somehow actually being able to execute the JavaScript from your CodeMirror editor, to have autocomplete
+access to whatever its content is producing.
 
 * apl
 * asciiarmor
