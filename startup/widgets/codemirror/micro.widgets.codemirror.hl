@@ -19,6 +19,8 @@
  *
  * All other arguments are appended into the root container for the widget, allowing you to create for instance hidden attributes,
  * etc on the main container widget wrapping CodeMirror instance.
+ *
+ * Notice, the CodeMirror widget does not support full screen mode if you instantiate it inside of a modal widget.
  */
 create-event:micro.widgets.codemirror
 
@@ -180,6 +182,20 @@ create-event:micro.widgets.codemirror
             .keys
 
             /*
+             * Checking if widget has been instantiated inside of a modal widget.
+             */
+            .allow-fullscreen:true
+            p5.web.widgets.find-first-ancestor:x:/../*/_event?value
+              data-window
+            if:x:/@p5.web.widgets.find-first-ancestor/*/*?value
+
+              /*
+               * Making sure we don't allow "fullscreen mode" for widget.
+               */
+              set:x:/@.allow-fullscreen?value
+                src:false
+
+            /*
              * Making sure all boolean arguments are rendered as JavaScript boolean values.
              */
             set:x:/@.read-only?value
@@ -330,7 +346,7 @@ create-event:micro.widgets.codemirror
     'Tab':'indentMore',
     'Alt-F': 'findPersistent',
     {7}
-    'Alt-M':function(cm) {{cm.setOption('fullScreen', !cm.getOption('fullScreen'));}}
+    'Alt-M':function(cm) {{if (!{10}) {{return;}} cm.setOption('fullScreen', !cm.getOption('fullScreen'));}}
   }}
 }});
 p5['{0}'].on('change',function (cMirror) {{
@@ -351,6 +367,7 @@ p5['{0}'].setSize('100%', '{5}');"
               :x:/@_keys?value
               :x:/@.tab-size?value
               :x:/@.read-only?value
+              :x:/@.allow-fullscreen?value
 
             /*
              * Contains [oninit] passed in during creation.
