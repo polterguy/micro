@@ -38,7 +38,7 @@ create-event:micro.css.include
      */
     if:x:/../*/skin?value
       ~:/
-      
+
       /*
        * Absolute path.
        */
@@ -47,7 +47,7 @@ create-event:micro.css.include
         :x:/@micro.version?value
 
     else-if:x:/../*/skin?value
-      
+
       /*
        * Relative path.
        */
@@ -78,8 +78,8 @@ create-event:micro.css.include
        * Logged in user, including user's preferred skin.
        */
       .defaults
-        skin:air
+        p5.desktop.guest-skin:air
       p5.auth.my-settings.get
       p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
-        :x:(/@p5.auth.my-settings.get/*/desktop/*/skin|/@.defaults/*/skin)/$?value
+        :x:(/@p5.auth.my-settings.get/*/desktop/*/p5.desktop.guest-skin|/@.defaults/*/p5.desktop.guest-skin)/$?value
         :x:/@micro.version?value
