@@ -77,9 +77,8 @@ create-event:micro.css.include
       /*
        * Logged in user, including user's preferred skin.
        */
-      .defaults
-        p5.desktop.guest-skin:air
+      p5.config.get:p5.desktop.guest-skin
       p5.auth.my-settings.get
       p5.web.include-css-file:@MICRO/media/skins/{0}.css?v={1}
-        :x:(/@p5.auth.my-settings.get/*/desktop/*/p5.desktop.guest-skin|/@.defaults/*/p5.desktop.guest-skin)/$?value
+        :x:(/@p5.auth.my-settings.get/*/desktop/*/skin|/@p5.config.get/0)/[0,1]?value
         :x:/@micro.version?value
