@@ -157,18 +157,18 @@ input[type=button][disabled], input[type=submit][disabled], input[type=reset][di
 
 
 /* All non button types of form elements */
-input:not([type=button]):not([type=submit]):not([type=reset]), textarea, select {
+input:not([type=button]):not([type=submit]):not([type=reset]):not(.slider), textarea, select {
     background-color: var(--form-el-bg);
     transition: background-color .2s ease-out;
 }
-input:not([type=button]):not([type=submit]):not([type=reset]):focus,
-input:not([type=button]):not([type=submit]):not([type=reset]):active,
-textarea:focus, textarea:active, 
+input:not([type=button]):not([type=submit]):not([type=reset]):not(.slider):focus,
+input:not([type=button]):not([type=submit]):not([type=reset]):not(.slider):active,
+textarea:focus, textarea:active,
 select:focus, select:active {
     background-color: var(--form-el-active-bg);
     transition: background-color .2s ease-out;
 }
-input:not([type=button]):not([type=submit]):not([type=reset])[disabled], 
+input:not([type=button]):not([type=submit]):not([type=reset])[disabled],
 textarea[disabled], select[disabled] {
     background-color: var(--form-el-dis-bg);
     color: var(--placeholder-color);
@@ -251,13 +251,13 @@ select, input[type=checkbox], input[type=radio] {
 
 
 /* Checkbox and radio buttons commonalities */
-input[type=checkbox], input[type=radio] {
+input[type=checkbox]:not(.slider), input[type=radio]:not(.slider) {
     position: relative;
     height: 1rem;
     width: 1rem;
     margin-top: 0;
 }
-input[type=checkbox]:checked:after, input[type=radio]:checked:after {
+input[type=checkbox]:not(.slider):checked:after, input[type=radio]:not(.slider):checked:after {
     position: absolute;
     display: block;
 }
@@ -265,7 +265,7 @@ input[type=checkbox]:checked:after, input[type=radio]:checked:after {
 
 
 /* Checkbox styles */
-input[type=checkbox]:checked:after {
+input[type=checkbox]:not(.slider):checked:after {
     content: "\002714";
     color: var(--form-el-color);
     padding: 1px;
@@ -296,6 +296,23 @@ input[type=radio][disabled]:checked:after {
     cursor: not-allowed;
 }
 
+
+
+/* Slider type of checkbox styles */
+input[type=checkbox].slider {
+    width: 2rem;
+    height: 1rem;
+    background-color: var(--form-el-color);
+    border: 1px solid var(--border-color);
+    border-radius: .5rem;
+    box-shadow: inset calc(-1rem + 2px) 0px 0px 0px var(--form-el-bg);
+    transition: box-shadow .2s ease-out;
+    vertical-align: super;
+}
+input[type=checkbox].slider:checked {
+    box-shadow: inset calc(1rem - 2px) 0px 0px 0 var(--form-el-active-bg);
+    transition: box-shadow .2s ease-out;
+}
 
 
 /* Hyperlinks */
