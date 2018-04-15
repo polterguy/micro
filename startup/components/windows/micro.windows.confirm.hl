@@ -1,0 +1,73 @@
+/*
+ * Creates a modal confirmation window, that asks the user to confirm some action, by
+ * clicking a "Yes" button, before some lambda object is evaluated.
+ *
+ * Pass in [header], [body] and [onok] as the lambda object to evaluate if the user
+ * clicks the "Yes" button.
+ */
+create-event:micro.windows.confirm
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    onok
+
+  /*
+   * Default arguments.
+   */
+  .defaults
+    header:Confirm
+    body:Please confirm that you really want to do this.
+
+  /*
+   * Creating our modal widget.
+   */
+  add:x:/+/**/.onok
+    src:x:/@onok/*
+  create-widgets
+    micro.widgets.modal
+      widgets
+        h3
+          innerValue:x:(/../*/header|/@.defaults/*/header)/$?value
+        p
+          innerValue:x:(/../*/body|/@.defaults/*/body)/$?value
+        div
+          class:right strip
+          widgets
+            button
+              innerValue:Yes
+              oninit
+
+                /*
+                 * Setting initial focus to "Yes" button.
+                 */
+                micro.page.set-focus:x:/../*/_event?value
+
+              onclick
+
+                /*
+                 * Contains the [onok] lambda callback, supplied during creation
+                 * of our window.
+                 */
+                .onok
+                eval:x:/@.onok
+
+                /*
+                 * Deleting modal widget.
+                 */
+                p5.web.widgets.find-first-ancestor:x:/../*/_event?value
+                  data-window:modal
+                delete-widget:x:/-/*/*?value
+
+            button
+              innerValue:No
+              onclick
+
+                /*
+                 * Simply deleting our modal widget, without evaluating the [onok]
+                 * lambda callback.
+                 */
+                p5.web.widgets.find-first-ancestor:x:/../*/_event?value
+                  data-window:modal
+                delete-widget:x:/-/*/*?value

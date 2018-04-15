@@ -1,12 +1,12 @@
-
 /*
- * Creates a small "information bubble" window, that will be displayed on the page for n seconds, 
+ * Creates a small "information bubble" window, that will be displayed on the page for n seconds,
  * before automatically disappearing.
  * Notice, the user can also click it to make it vanish faster.
  *
  * Pass in text to display as [_arg].
- * Optionally pass in [parent] as parent widget to where to display window, [class] to override default 
- * class or [onclick] to provide a user defined lambda callback that will be invoked when user clicks the bubble window.
+ * Optionally pass in [parent] as parent widget to where to display window, [class] to override default
+ * class or [onclick] to provide a user defined lambda callback that will be invoked when user clicks
+ * the bubble window.
  */
 create-event:micro.windows.info
 
