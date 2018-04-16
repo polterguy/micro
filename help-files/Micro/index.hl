@@ -27,10 +27,6 @@ desktop.help.widgets.help-index
   folder:@MICRO/help-files/Micro/
 
 
-h3
-  innerValue:Files meta information
-
-
 /*
  * Meta information for all files in module.
  */
