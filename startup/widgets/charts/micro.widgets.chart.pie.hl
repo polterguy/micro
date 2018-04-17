@@ -1,0 +1,216 @@
+/*
+ * Creates the pie chart widget, that allows you to create a pie chart.
+ *
+ * Supply your data as **[data]**, as a lambda node, as a label/value type of collection.
+ * Optionally pass in **[has-legend]**, and set its value to boolean _"false"_, if you
+ * do not want to have a legende associated with your pie chart. By default a legend
+ * will be created, and it will have a width of 150px by default.
+ *
+ * Optionally add a **[size]** argument, which becomes the pie chart's width and height
+ * in pixels. The default value is 250.
+ *
+ * You can also override the color of each data child, by providing a **[color]** argument,
+ * at which point your item will be rendered with the specified color. The default colors are
+ * taken from the rainbow's color, in order of appearance.
+ *
+ * Notice, the **[size]** argument is the actual width of the pie itself, implying the widget
+ * as a whole, will require additional width and height, since it requires some space for its
+ * legend, among other things.
+ *
+ * All other arguments will be passed in _"as is"_, implying you can override its CSS class,
+ * create **[onclick]** event handlers for your chart, override style properties, etc.
+ */
+create-event:micro.widgets.chart.pie
+
+  /*
+   * Signal node, to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Defaults, if no arguments are given.
+   */
+  .defaults
+    size:250
+    class:micro-widgets-chart-pie
+    has-legend:bool:true
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    data
+
+  /*
+   * Calculating total amount of all [data] elements supplied.
+   */
+  .total:double:0
+  for-each:x:/../*/data/*?value
+    set:x:/@.total?value
+      +:x:/@.total?value.double
+        _:x:/@_dp?value
+
+  /*
+   * Figuring out x/y of pies.
+   */
+  .size
+  set:x:/@.size?value
+    /:x:(/../*/size|/@.defaults/*/size)/$?value.double
+      _:2
+
+  /*
+   * Figuring out circles' circumference, such that we can get the "gap" of our
+   * stroke-dasharray correctly.
+   */
+  .circumference
+  set:x:/@.circumference?value
+    *:x:/@.size?value
+      _:3.14
+
+  /*
+   * Figuring out circles' circumference, such that we can get the "gap" of our
+   * stroke-dasharray correctly.
+   */
+  .stroke-width
+  set:x:/@.stroke-width?value
+    /:x:/@.size?value
+      _:2
+
+  /*
+   * Looping through each [data] value, creating one "pie" for each,
+   * making sure we store how much we need to rotate each pie, to not obscure
+   * the previous pie.
+   */
+  .current-angle:double:270
+  for-each:x:/../*/data/*
+
+    /*
+     * Figuring out how much the currently iterated pie is of our total percentage,
+     * in addition to other values we need to render our pie piece correctly.
+     */
+    /:x:/@_dp/#?value.double
+      _:x:/@.total?value
+    *:x:/@.circumference?value
+      _:x:/./-?value
+    *:x:/-2?value
+      _:double:360
+    add:x:/+2/**/literal
+      src:x:/@_dp/#/*(!/stroke)
+    if:x:/@_dp/#/*/color
+      eval-x:x:/+/**
+      add:x:/..for-each/*/add/**/literal
+        src
+          stroke:x:/@_dp/#/*/color?value
+
+    /*
+     * Adding currently iterated pie piece to return widget.
+     */
+    eval-x:x:/+/**
+    add:x:/../*/return/*/container/*/widgets
+      src
+        svg
+          class:piece
+          width:x:(/../*/size|/@.defaults/*/size)/$?value
+          height:x:(/../*/size|/@.defaults/*/size)/$?value
+          style:"transform: rotate({0}deg);"
+            :x:/@.current-angle?value
+          widgets
+            literal
+              element:circle
+              r:x:/@.stroke-width?value
+              cx:x:/@.size?value
+              cy:x:/@.size?value
+              style:"stroke-dasharray:{0:#.##} {1:#.##};"
+                :x:/@*/@*?value
+                :x:/@.circumference?value
+    set:x:/@.current-angle?value
+      +:x:/@.current-angle?value
+        _:x:/@*?value
+
+  eval-x:x:/+
+  .widget-width:x:(/../*/size|/@.defaults/*/size)/$?value.int
+
+  /*
+   * Checking if caller wants to use labels.
+   */
+  if:x:(/../*/has-legend|/@.defaults/*/has-legend)/$?value.bool
+    =:bool:true
+
+    /*
+     * Adding labels to return widget.
+     */
+    .legend-left
+    set:x:/-?value
+      +:x:(/../*/size|/@.defaults/*/size)/$?value.int
+        _:25
+    eval-x:x:/+/**
+    add:x:/../*/return/*/container/*/widgets
+      src
+        svg
+          width:150
+          height:x:(/../*/size|/@.defaults/*/size)/$?value.int
+          class:labels
+          style:"left:{0}px;"
+            :x:/@.legend-left?value
+          widgets
+    .no:int:1
+    for-each:x:/../*/data/*
+      *:x:/@.no?value
+        _:20
+      +:x:/-?value
+        _:11
+      if:x:/@_dp/#/*/color?value
+        eval-x:x:/+/**
+        add:x:/..for-each/*/add/*/*/literal/[0,1]
+          src
+            fill:x:/@_dp/#/*/color?value
+      eval-x:x:/+/**
+      add:x:/../*/return/*/container/*/widgets/0/-/*/widgets
+        src
+          literal
+            element:rect
+            x:10
+            y:x:/@*?value
+            width:10
+            height:10
+            stroke:black
+          literal
+            element:text
+            x:25
+            y:x:/@+?value
+            width:10
+            innerValue:x:/@_dp/#?name
+      set:x:/@.no?value
+        +:x:/@.no?value
+          _:1
+
+    /*
+     * Making room for legend, if necessary.
+     */
+    set:x:/@.widget-width?value
+      +:x:/@.widget-width?value.int
+        _:175
+
+  /*
+   * Making some "padding" for main widget.
+   */
+  set:x:/@.widget-width?value.int
+    +:x:/@.widget-width?value.int
+      _:30
+  set:x:(/../*/size|/@.defaults/*/size)/$?value
+    +:x:(/../*/size|/@.defaults/*/size)/$?value.int
+      _:30
+
+  /*
+   * Applying defaults to returned SVG element.
+   */
+  add:x:/../*/return/*/container
+    src:x:(/@.signal/--|/@.defaults/*)/$(!/data!/size!/style!/has-legend)
+  eval-x:x:/+/*/*/style
+  return
+    container
+      style:"width:{0}px;height:{1}px;{2}"
+        :x:/@.widget-width?value
+        :x:(/../*/size|/@.defaults/*/size)/$?value
+        :x:/../*/style?value
+      widgets

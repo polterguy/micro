@@ -1022,14 +1022,85 @@ button.micro-widgets-tab-active:hover {
 
 /* Upload button widget */
 .micro-widgets-upload-input {
-    opacity:0 !important;
-    position:absolute !important;
-    width:0;
-    height:0;
-    z-index:-1;
-    top:-5000px;
-    left:0;
+    opacity: 0 !important;
+    position: absolute !important;
+    width: 0;
+    height: 0;
+    z-index: -1;
+    top: -5000px;
+    left: 0;
 }
+
+
+
+/* Pie chart */
+.micro-widgets-chart-pie {
+    position: relative;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    float: left;
+    border-radius: var(--border-radius);
+    background-color: rgba(0,0,0,.1);
+}
+.micro-widgets-chart-pie svg {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+.micro-widgets-chart-pie svg.piece {
+    border-radius: 50%;
+    box-shadow: 7px 7px 10px rgba(0,0,0,.1);
+}
+.micro-widgets-chart-pie svg circle {
+    fill: transparent;
+    stroke-width: 50%;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+1) circle:not([stroke]) {
+    stroke:red;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+2) circle:not([stroke]) {
+    stroke:orange;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+3) circle:not([stroke]) {
+    stroke:yellow;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+4) circle:not([stroke]) {
+    stroke:green;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+5) circle:not([stroke]) {
+    stroke:blue;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+6) circle:not([stroke]) {
+    stroke:indigo;
+}
+.micro-widgets-chart-pie svg.piece:nth-child(7n+7) circle:not([stroke]) {
+    stroke:purple;
+}
+.micro-widgets-chart-pie svg.labels {
+    margin-left:25px;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+1):not([fill]) {
+    fill:red;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+3):not([fill]) {
+    fill:orange;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+5):not([fill]) {
+    fill:yellow;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+7):not([fill]) {
+    fill:green;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+9):not([fill]) {
+    fill:blue;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+11):not([fill]) {
+    fill:indigo;
+}
+.micro-widgets-chart-pie svg.labels rect:nth-child(14n+13):not([fill]) {
+    fill:purple;
+}
+
 
 
 
