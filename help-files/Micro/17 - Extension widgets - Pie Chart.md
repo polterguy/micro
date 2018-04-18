@@ -106,3 +106,6 @@ create-widgets
 The pie chart widget is rendered roughly the same way as a div element, and allows for floating, putting
 it inside of a grid column to make it responsively rendered, etc, etc, etc. It is created entirely with
 CSS and SVG elements, making it easily styled, and comsuming very little bandwidth.
+
+Its default colors can be overridden in for instance a skin file, by changing the CSS variables `--color1`
+through `--color2`, in for instance your `.micro-widgets-chart-pie` CSS selector.
