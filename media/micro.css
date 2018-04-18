@@ -1035,21 +1035,14 @@ button.micro-widgets-tab-active:hover {
 
 /* Pie chart */
 .micro-widgets-chart-pie {
-    position: relative;
     margin-right: 1rem;
     margin-bottom: 1rem;
-    float: left;
-    border-radius: var(--border-radius);
-    background-color: rgba(0,0,0,.1);
+    position: relative;
 }
-.micro-widgets-chart-pie svg {
+.micro-widgets-chart-pie svg.piece:not(:first-child) {
     position: absolute;
-    top: 15px;
-    left: 15px;
-}
-.micro-widgets-chart-pie svg.piece {
-    border-radius: 50%;
-    box-shadow: 7px 7px 10px rgba(0,0,0,.1);
+    top: 0;
+    left: 0;
 }
 .micro-widgets-chart-pie svg circle {
     fill: transparent;
@@ -1077,7 +1070,16 @@ button.micro-widgets-tab-active:hover {
     stroke:purple;
 }
 .micro-widgets-chart-pie svg.labels {
-    margin-left:25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: visible;
+    width: 40%;
+    border-radius: var(--border-radius);
+    background-color: rgba(255,255,255,.5);
+}
+.micro-widgets-chart-pie svg.labels rect {
+    stroke: black;
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+1):not([fill]) {
     fill:red;
@@ -1100,6 +1102,20 @@ button.micro-widgets-tab-active:hover {
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+13):not([fill]) {
     fill:purple;
 }
+.micro-widgets-chart-pie svg.labels foreignObject span {
+    font-family: var(--font-family);
+    color: var(--color);
+    font-size:.7rem;
+    display: block;
+    margin-top: .1rem;
+}
+
+
+
+
+
+
+
 
 
 

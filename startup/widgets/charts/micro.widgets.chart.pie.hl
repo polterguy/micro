@@ -6,6 +6,11 @@
  * do not want to have a legende associated with your pie chart. By default a legend
  * will be created, and it will have a width of 150px by default.
  *
+ * The **[data]** items you supply does not need to add up to 100, they can be any numbers
+ * you happen to have. The widget will calculate the relative values for each data item,
+ * in comparison to the total value of all your items, and create a pie slice accordingly,
+ * matching your items' values.
+ *
  * Optionally add a **[size]** argument, which becomes the pie chart's width and height
  * in pixels. The default value is 250.
  *
@@ -31,7 +36,6 @@ create-event:micro.widgets.chart.pie
    * Defaults, if no arguments are given.
    */
   .defaults
-    size:250
     class:micro-widgets-chart-pie
     has-legend:bool:true
 
@@ -51,87 +55,58 @@ create-event:micro.widgets.chart.pie
         _:x:/@_dp?value
 
   /*
-   * Figuring out x/y of pies.
-   */
-  .size
-  set:x:/@.size?value
-    /:x:(/../*/size|/@.defaults/*/size)/$?value.double
-      _:2
-
-  /*
-   * Figuring out circles' circumference, such that we can get the "gap" of our
-   * stroke-dasharray correctly.
-   */
-  .circumference
-  set:x:/@.circumference?value
-    *:x:/@.size?value
-      _:3.14
-
-  /*
-   * Figuring out circles' circumference, such that we can get the "gap" of our
-   * stroke-dasharray correctly.
-   */
-  .stroke-width
-  set:x:/@.stroke-width?value
-    /:x:/@.size?value
-      _:2
-
-  /*
-   * Looping through each [data] value, creating one "pie" for each,
-   * making sure we store how much we need to rotate each pie, to not obscure
-   * the previous pie.
+   * Looping through each [data] value, creating one "slice" for each [data] item,
+   * making sure we store how much we need to rotate each pie, to offset rotation
+   * from previous pie.
    */
   .current-angle:double:270
   for-each:x:/../*/data/*
 
     /*
-     * Figuring out how much the currently iterated pie is of our total percentage,
-     * in addition to other values we need to render our pie piece correctly.
+     * Figuring out how much the currently iterated pie is of our total percentage.
      */
     /:x:/@_dp/#?value.double
       _:x:/@.total?value
-    *:x:/@.circumference?value
-      _:x:/./-?value
-    *:x:/-2?value
-      _:double:360
-    add:x:/+2/**/literal
-      src:x:/@_dp/#/*(!/stroke)
+
+    /*
+     * Checking if color provided an explicit [color] for slice.
+     */
     if:x:/@_dp/#/*/color
       eval-x:x:/+/**
-      add:x:/..for-each/*/add/**/literal
+      add:x:/..for-each/*/add/[1,2]/**/literal
         src
           stroke:x:/@_dp/#/*/color?value
 
     /*
      * Adding currently iterated pie piece to return widget.
      */
-    eval-x:x:/+/**
+    add:x:/+2/**/literal
+      src:x:/@_dp/#/*(!/stroke)
+    eval-x:x:/+/**/style
     add:x:/../*/return/*/container/*/widgets
       src
         svg
           class:piece
-          width:x:(/../*/size|/@.defaults/*/size)/$?value
-          height:x:(/../*/size|/@.defaults/*/size)/$?value
+          viewbox:"0 0 100 100"
           style:"transform: rotate({0}deg);"
             :x:/@.current-angle?value
           widgets
             literal
               element:circle
-              r:x:/@.stroke-width?value
-              cx:x:/@.size?value
-              cy:x:/@.size?value
-              style:"stroke-dasharray:{0:#.##} {1:#.##};"
-                :x:/@*/@*?value
-                :x:/@.circumference?value
+              r:25
+              cx:50
+              cy:50
+              width:100
+              height:100
+              style:"stroke-dasharray:calc({0:#.####} * 157.07963) 157.07963;"
+                :x:/..for-each/*/\/?value
     set:x:/@.current-angle?value
       +:x:/@.current-angle?value
-        _:x:/@*?value
-
-  eval-x:x:/+
-  .widget-width:x:(/../*/size|/@.defaults/*/size)/$?value.int
+        *:x:/..for-each/*/\/?value
+          _:360
 
   /*
-   * Checking if caller wants to use labels.
+   * Checking if caller wants to have a legend for the pie chart.
    */
   if:x:(/../*/has-legend|/@.defaults/*/has-legend)/$?value.bool
     =:bool:true
@@ -139,26 +114,21 @@ create-event:micro.widgets.chart.pie
     /*
      * Adding labels to return widget.
      */
-    .legend-left
-    set:x:/-?value
-      +:x:(/../*/size|/@.defaults/*/size)/$?value.int
-        _:25
+    *:x:/../*/data/*?count
+      _:20
+    +:x:/-?value
+      _:30
     eval-x:x:/+/**
     add:x:/../*/return/*/container/*/widgets
       src
         svg
-          width:150
-          height:x:(/../*/size|/@.defaults/*/size)/$?value.int
           class:labels
-          style:"left:{0}px;"
-            :x:/@.legend-left?value
+          height:x:/@+?value
           widgets
     .no:int:1
     for-each:x:/../*/data/*
       *:x:/@.no?value
         _:20
-      +:x:/-?value
-        _:11
       if:x:/@_dp/#/*/color?value
         eval-x:x:/+/**
         add:x:/..for-each/*/add/*/*/literal/[0,1]
@@ -169,48 +139,30 @@ create-event:micro.widgets.chart.pie
         src
           literal
             element:rect
-            x:10
+            x:20
+            y:x:/@*?value
+            width:15
+            height:15
+          container
+            element:foreignObject
+            x:45
             y:x:/@*?value
             width:10
-            height:10
-            stroke:black
-          literal
-            element:text
-            x:25
-            y:x:/@+?value
-            width:10
-            innerValue:x:/@_dp/#?name
+            widgets
+              body
+                widgets
+                  span
+                    innerValue:x:/@_dp/#?name
       set:x:/@.no?value
         +:x:/@.no?value
           _:1
-
-    /*
-     * Making room for legend, if necessary.
-     */
-    set:x:/@.widget-width?value
-      +:x:/@.widget-width?value.int
-        _:175
-
-  /*
-   * Making some "padding" for main widget.
-   */
-  set:x:/@.widget-width?value.int
-    +:x:/@.widget-width?value.int
-      _:30
-  set:x:(/../*/size|/@.defaults/*/size)/$?value
-    +:x:(/../*/size|/@.defaults/*/size)/$?value.int
-      _:30
 
   /*
    * Applying defaults to returned SVG element.
    */
   add:x:/../*/return/*/container
-    src:x:(/@.signal/--|/@.defaults/*)/$(!/data!/size!/style!/has-legend)
+    src:x:(/@.signal/--|/@.defaults/*)/$(!/data!/size!/has-legend)
   eval-x:x:/+/*/*/style
   return
     container
-      style:"width:{0}px;height:{1}px;{2}"
-        :x:/@.widget-width?value
-        :x:(/../*/size|/@.defaults/*/size)/$?value
-        :x:/../*/style?value
       widgets
