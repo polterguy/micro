@@ -1035,79 +1035,86 @@ button.micro-widgets-tab-active:hover {
 
 /* Pie chart */
 .micro-widgets-chart-pie {
-    margin-right: 1rem;
     margin-bottom: 1rem;
     position: relative;
+    page-break-inside: avoid;
+    --color1: #004178;
+    --color2: #006798;
+    --color3: #007AB2;
+    --color4: #129FD4;
+    --color5: #45B4E3;
+    --color6: #77d4e2;
+    --color7: #a9f4f1;
 }
 .micro-widgets-chart-pie svg.piece:not(:first-child) {
     position: absolute;
     top: 0;
     left: 0;
 }
+.micro-widgets-chart-pie.has-legend svg.piece {
+    width: calc(70% - 1rem);
+    border-radius: 50%;
+    box-shadow: 7px 7px 10px rgba(0,0,0,.05);
+}
 .micro-widgets-chart-pie svg circle {
     fill: transparent;
     stroke-width: 50%;
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+1) circle:not([stroke]) {
-    stroke:red;
+    stroke: var(--color1);
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+2) circle:not([stroke]) {
-    stroke:orange;
+    stroke: var(--color2);
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+3) circle:not([stroke]) {
-    stroke:yellow;
+    stroke: var(--color3);
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+4) circle:not([stroke]) {
-    stroke:green;
+    stroke: var(--color4);
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+5) circle:not([stroke]) {
-    stroke:blue;
+    stroke: var(--color5);
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+6) circle:not([stroke]) {
-    stroke:indigo;
+    stroke: var(--color6);
 }
 .micro-widgets-chart-pie svg.piece:nth-child(7n+7) circle:not([stroke]) {
-    stroke:purple;
+    stroke: var(--color7);
 }
 .micro-widgets-chart-pie svg.labels {
-    position: absolute;
-    top: 0;
-    right: 0;
-    overflow: visible;
-    width: 40%;
-    border-radius: var(--border-radius);
-    background-color: rgba(255,255,255,.5);
+    width: 30%;
+    vertical-align: top;
 }
 .micro-widgets-chart-pie svg.labels rect {
     stroke: black;
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+1):not([fill]) {
-    fill:red;
+    fill: var(--color1);
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+3):not([fill]) {
-    fill:orange;
+    fill: var(--color2);
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+5):not([fill]) {
-    fill:yellow;
+    fill: var(--color3);
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+7):not([fill]) {
-    fill:green;
+    fill: var(--color4);
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+9):not([fill]) {
-    fill:blue;
+    fill: var(--color5);
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+11):not([fill]) {
-    fill:indigo;
+    fill: var(--color6);
 }
 .micro-widgets-chart-pie svg.labels rect:nth-child(14n+13):not([fill]) {
-    fill:purple;
+    fill: var(--color7);
 }
-.micro-widgets-chart-pie svg.labels foreignObject span {
+.micro-widgets-chart-pie svg.labels foreignObject span,
+.micro-widgets-chart-pie svg.labels foreignObject a {
     font-family: var(--font-family);
     color: var(--color);
-    font-size:.7rem;
+    font-size:.85rem;
     display: block;
-    margin-top: .1rem;
 }
 
 

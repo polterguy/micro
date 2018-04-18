@@ -1,26 +1,29 @@
 /*
- * Creates the pie chart widget, that allows you to create a pie chart.
+ * Creates the __[micro.widgets.chart.pie]__ _"pie chart widget"_.
  *
- * Supply your data as **[data]**, as a lambda node, as a label/value type of collection.
+ * The pie chart widget allows you to illustrate a chart, with data items,
+ * where each value of your data items, occupies some percentage of the entire circle,
+ * resuling in a _"pie slice"_, according to how large its data value is, in
+ * relationship to the sum of all your data items.
+ * Supply your data items as **[data]** collection, with a label/value type of collection.
+ *
  * Optionally pass in **[has-legend]**, and set its value to boolean _"false"_, if you
  * do not want to have a legende associated with your pie chart. By default a legend
- * will be created, and it will have a width of 150px by default.
+ * will be created, and it will occupy 30% of your chart's width. The width is calculated
+ * according to its parent element, unless explicitly overridden with for instance a style
+ * argument, and the chart as a whole will behave roughly like a div - Filling the available
+ * space.
  *
  * The **[data]** items you supply does not need to add up to 100, they can be any numbers
  * you happen to have. The widget will calculate the relative values for each data item,
  * in comparison to the total value of all your items, and create a pie slice accordingly,
  * matching your items' values.
  *
- * Optionally add a **[size]** argument, which becomes the pie chart's width and height
- * in pixels. The default value is 250.
- *
  * You can also override the color of each data child, by providing a **[color]** argument,
- * at which point your item will be rendered with the specified color. The default colors are
- * taken from the rainbow's color, in order of appearance.
- *
- * Notice, the **[size]** argument is the actual width of the pie itself, implying the widget
- * as a whole, will require additional width and height, since it requires some space for its
- * legend, among other things.
+ * at which point your item will be rendered with the specified color. The default colors goes
+ * from dark blue, to light blue, unless overridde in your Micro skin file.
+ * If you provide more than 7 data items, the colors will be _"reused"_, so it is probably
+ * wise to provide your own colors if you have more than 7 slices in your _"pie"_.
  *
  * All other arguments will be passed in _"as is"_, implying you can override its CSS class,
  * create **[onclick]** event handlers for your chart, override style properties, etc.
@@ -79,9 +82,13 @@ create-event:micro.widgets.chart.pie
 
     /*
      * Adding currently iterated pie piece to return widget.
+     *
+     * Notice, we apply all arguments to the pie slice for currently
+     * iterated [data] item, except any [on-xxx] event handlers, which are
+     * only added to the legend label.
      */
     add:x:/+2/**/literal
-      src:x:/@_dp/#/*(!/stroke)
+      src:x:/@_dp/#/*(!/color!/~on)
     eval-x:x:/+/**/style
     add:x:/../*/return/*/container/*/widgets
       src
@@ -112,6 +119,13 @@ create-event:micro.widgets.chart.pie
     =:bool:true
 
     /*
+     * Making sure we add up has-legend CSS class to default value.
+     */
+    set:x:/@.defaults/*/class?value
+      src:{0} has-legend
+        :x:/@.defaults/*/class?value
+
+    /*
      * Adding labels to return widget.
      */
     *:x:/../*/data/*?count
@@ -127,13 +141,40 @@ create-event:micro.widgets.chart.pie
           widgets
     .no:int:1
     for-each:x:/../*/data/*
+
+      /*
+       * Inreamenting item counter, such that we can make sure each item
+       * gets a y position that doesn't overlap the previous item.
+       */
       *:x:/@.no?value
         _:20
+
+      /*
+       * Checking if an explicit color was supplied for currently
+       * iterated item.
+       */
       if:x:/@_dp/#/*/color?value
         eval-x:x:/+/**
         add:x:/..for-each/*/add/*/*/literal/[0,1]
           src
             fill:x:/@_dp/#/*/color?value
+
+      /*
+       * Adding any additional items to our actual label for our legend item.
+       */
+      add:x:/..for-each/*/add/*/*/container/**/span
+        src:x:/@_dp/#/*
+
+      /*
+       * Checking if caller supplied an [onclick], at which point we
+       * transform our label to a hyperlink.
+       */
+      if:x:/@_dp/#/*/onclick
+        add:x:/..for-each/*/add/*/*/container/**/span
+          src
+            href:#
+        set:x:/..for-each/*/add/*/*/container/**/span?name
+          src:a
       eval-x:x:/+/**
       add:x:/../*/return/*/container/*/widgets/0/-/*/widgets
         src
