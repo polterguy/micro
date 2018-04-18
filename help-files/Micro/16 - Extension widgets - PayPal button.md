@@ -5,7 +5,7 @@ PayPal API to create a window which allows the user to pay for something, or don
 has been successfully confirmed, it will invoke your **[.onok]** lambda callback, allowing you to handle successful
 transactions, any ways you want.
 
-```hyperlambda-snippet
+```hyperlambda
 /*
  * Creates a page with a PayPal button widget in it.
  */
