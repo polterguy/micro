@@ -2,28 +2,39 @@
  * Creates the __[micro.widgets.chart.pie]__ _"pie chart widget"_.
  *
  * The pie chart widget allows you to illustrate a chart, with data items,
- * where each value of your data items, occupies some percentage of the entire circle,
+ * where each value of your data items occupies some percentage of the entire circle,
  * resuling in a _"pie slice"_, according to how large its data value is, in
  * relationship to the sum of all your data items.
- * Supply your data items as **[data]** collection, with a label/value type of collection.
  *
- * Optionally pass in **[has-legend]**, and set its value to boolean _"false"_, if you
+ * Supply your data items as **[data]** collection, with a label/value type of collection.
+ * The label is tha name of your data item, and the value is its (number) value.
+ *
+ * Optionally pass in **[legend]**, and set its value to boolean _"false"_, if you
  * do not want to have a legende associated with your pie chart. By default a legend
- * will be created, and it will occupy 30% of your chart's width. The width is calculated
- * according to its parent element, unless explicitly overridden with for instance a style
- * argument, and the chart as a whole will behave roughly like a div - Filling the available
- * space.
+ * will be created, and it will occupy 30% of your chart's width. Notice, all arguments
+ * beneath your __[legend]__ argument will be applied to the main legend HTML element,
+ * allowing you to override its style properties for instance, to make the legend
+ * relatively larger, in comparison to the pie. If you change the legend's size, you
+ * would probably want to also change the size of each slice, by adding a style argument
+ * to each of your **[data]** items, such that the width in total sums up to the
+ * width of its parent element.
+ *
+ * The width of the pie chart is calculated according to its parent element, unless
+ * explicitly overridden with for instance a style argument. The chart as a whole
+ * will behave roughly like a div - Filling the available space, unless overridden
+ * with an explicit style element, or changed by overriding the chart's CSS class.
  *
  * The **[data]** items you supply does not need to add up to 100, they can be any numbers
  * you happen to have. The widget will calculate the relative values for each data item,
  * in comparison to the total value of all your items, and create a pie slice accordingly,
  * matching your items' values.
  *
- * You can also override the color of each data child, by providing a **[color]** argument,
- * at which point your item will be rendered with the specified color. The default colors goes
- * from dark blue, to light blue, unless overridde in your Micro skin file.
- * If you provide more than 7 data items, the colors will be _"reused"_, so it is probably
- * wise to provide your own colors if you have more than 7 slices in your _"pie"_.
+ * You can also override the color of each data child, by providing a **[color]** argument
+ * to your **[data]** items, at which point your item will be rendered with the specified
+ * color. The default colors goes from dark blue, to light blue, unless overridde in your
+ * Micro skin file. If you provide more than 7 data items, the colors will be _"reused"_,
+ * so it is probably wise to provide your own colors if you have more than 7 slices in
+ * your _"pie"_.
  *
  * All other arguments will be passed in _"as is"_, implying you can override its CSS class,
  * create **[onclick]** event handlers for your chart, override style properties, etc.
@@ -40,7 +51,7 @@ create-event:micro.widgets.chart.pie
    */
   .defaults
     class:micro-widgets-chart-pie
-    has-legend:bool:true
+    legend:bool:true
 
   /*
    * Sanity checking invocation.
@@ -72,31 +83,30 @@ create-event:micro.widgets.chart.pie
       _:x:/@.total?value
 
     /*
-     * Checking if color provided an explicit [color] for slice.
+     * Checking if caller provided an explicit [color] for slice.
      */
     if:x:/@_dp/#/*/color
       eval-x:x:/+/**
-      add:x:/..for-each/*/add/[1,2]/**/literal
+      add:x:/..for-each/*/add/**/literal
         src
           stroke:x:/@_dp/#/*/color?value
 
     /*
-     * Adding currently iterated pie piece to return widget.
+     * Adding currently iterated pie slice to return widget.
      *
-     * Notice, we apply all arguments to the pie slice for currently
-     * iterated [data] item, except any [on-xxx] event handlers, which are
-     * only added to the legend label.
+     * Notice, we don't apply any arguments to the pie slices, since
+     * these are applied to (only) the "legend" element, if caller wants to
+     * have a legend for his pie chart.
      */
-    add:x:/+2/**/literal
-      src:x:/@_dp/#/*(!/color!/~on)
     eval-x:x:/+/**/style
     add:x:/../*/return/*/container/*/widgets
       src
         svg
-          class:piece
+          class:slice
           viewbox:"0 0 100 100"
-          style:"transform: rotate({0}deg);"
+          style:"transform: rotate({0}deg);{1}"
             :x:/@.current-angle?value
+            :x:(/@_dp/#/*/style|/@.defaults/*/style)/$?value
           widgets
             literal
               element:circle
@@ -107,6 +117,10 @@ create-event:micro.widgets.chart.pie
               height:100
               style:"stroke-dasharray:calc({0:#.####} * 157.07963) 157.07963;"
                 :x:/..for-each/*/\/?value
+
+    /*
+     * Incrementing current angle according to slice's size.
+     */
     set:x:/@.current-angle?value
       +:x:/@.current-angle?value
         *:x:/..for-each/*/\/?value
@@ -114,36 +128,59 @@ create-event:micro.widgets.chart.pie
 
   /*
    * Checking if caller wants to have a legend for the pie chart.
+   *
+   * Notice, unless caller explicitly does not want a legend,
+   * a legend is added to our pie by default.
    */
-  if:x:(/../*/has-legend|/@.defaults/*/has-legend)/$?value.bool
+  if:x:(/../*/legend|/@.defaults/*/legend)/$?value.bool
     =:bool:true
 
     /*
-     * Making sure we add up has-legend CSS class to default value.
+     * Making sure we add up legend CSS class to default value.
      */
     set:x:/@.defaults/*/class?value
       src:{0} has-legend
         :x:/@.defaults/*/class?value
 
     /*
-     * Adding labels to return widget.
+     * Calculating legend's height, assuming each legend label
+     * is 20 pixels in height, and adding "margin" of 30 pixels.
      */
     *:x:/../*/data/*?count
       _:20
     +:x:/-?value
       _:30
+
+    /*
+     * Adding root "legend" SVG widget to return widget, which
+     * contains each legend label.
+     */
+    add:x:/+2/*/*
+      src:x:(/../*/legend|/@.defaults/*/legend)/$/*
     eval-x:x:/+/**
     add:x:/../*/return/*/container/*/widgets
       src
         svg
-          class:labels
+          class:legend
           height:x:/@+?value
           widgets
+
+    /*
+     * Iterating through each [data] items, creating one legend label for each.
+     */
     .no:int:1
     for-each:x:/../*/data/*
 
       /*
-       * Inreamenting item counter, such that we can make sure each item
+       * Calculating how large in percentage currently iterated item is.
+       */
+      /:x:/@_dp/#?value.double
+        _:x:/@.total?value
+      *:x:/-?value
+        _:100
+
+      /*
+       * Inrementing item counter, such that we can make sure each item
        * gets a y position that doesn't overlap the previous item.
        */
       *:x:/@.no?value
@@ -160,14 +197,18 @@ create-event:micro.widgets.chart.pie
             fill:x:/@_dp/#/*/color?value
 
       /*
-       * Adding any additional items to our actual label for our legend item.
+       * Adding any additional arguments to our actual label for
+       * our currently iterated legend label.
+       *
+       * Notice, these arguments are added to the "span" widget,
+       * and not to the root label for the legend item.
        */
       add:x:/..for-each/*/add/*/*/container/**/span
         src:x:/@_dp/#/*
 
       /*
        * Checking if caller supplied an [onclick], at which point we
-       * transform our label to a hyperlink.
+       * transform our label to an Ajax hyperlink.
        */
       if:x:/@_dp/#/*/onclick
         add:x:/..for-each/*/add/*/*/container/**/span
@@ -175,6 +216,14 @@ create-event:micro.widgets.chart.pie
             href:#
         set:x:/..for-each/*/add/*/*/container/**/span?name
           src:a
+
+      /*
+       * Adding currently iterated legend label to the "legend"
+       * root widget.
+       *
+       * Notice, we use a "foreignObject" type of HTML element,
+       * since these are more easily styled than "text" items.
+       */
       eval-x:x:/+/**
       add:x:/../*/return/*/container/*/widgets/0/-/*/widgets
         src
@@ -193,7 +242,9 @@ create-event:micro.widgets.chart.pie
               body
                 widgets
                   span
-                    innerValue:x:/@_dp/#?name
+                    innerValue:"{0} - {1:#}%"
+                      :x:/@_dp/#?name
+                      :x:/@*/@*?value
       set:x:/@.no?value
         +:x:/@.no?value
           _:1
@@ -202,7 +253,7 @@ create-event:micro.widgets.chart.pie
    * Applying defaults to returned SVG element.
    */
   add:x:/../*/return/*/container
-    src:x:(/@.signal/--|/@.defaults/*)/$(!/data!/size!/has-legend)
+    src:x:(/@.signal/--|/@.defaults/*)/$(!/data!/legend)
   eval-x:x:/+/*/*/style
   return
     container
