@@ -1,0 +1,158 @@
+/*
+ * Creates the __[micro.widgets.chart.bar]__ _"bar chart widget"_.
+ *
+ * This widget allows you to display a bar chart with vertical bars, where each bar has
+ * a height relative to its value.
+ */
+create-event:micro.widgets.chart.bar
+
+  /*
+   * Signal node, to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Defaults, if no arguments are given.
+   */
+  .defaults
+    class:micro-widgets-chart-bar
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    data
+
+  /*
+   * Finding max value of [data] values, such that we know what scale to use
+   * for our chart.
+   */
+  .max:double:0
+  for-each:x:/../*/data/*
+    if:x:/@_dp/#?value.double
+      >:x:/@.max?value
+      set:x:/@.max?value
+        src:x:/@_dp/#?value.double
+
+  /*
+   * Making sure we set the viewport width to 2 times the height.
+   */
+  .viewport-width
+  set:x:/-?value
+    *:x:/@.max?value.double
+      _:2
+
+  /*
+   * Figuring out width for each bar column.
+   *
+   * Notice, we multiply the width time 0.9, to give some spacing
+   * between each bar column.
+   */
+  .bar-width
+  set:x:/-?value
+    /:x:/@.viewport-width?value
+      *:x:/../*/data/*?count
+  set:x:/@.bar-width?value
+    *:x:/@.bar-width?value
+      _:.9
+
+  /*
+   * Calculating y for labels.
+   */
+  .labels-y
+  set:x:/-?value
+    +:x:/@.max?value
+      _:20
+
+  /*
+   * Iterating through each [data] argument, and creating one bar for each,
+   * keeping track of our x position as we proceed forwards.
+   */
+  .x:long:0
+  for-each:x:/../*/data/*
+
+    /*
+     * Figuring out y position of bar.
+     */
+    .y
+    set:x:/-?value
+      -:x:/@.max?value.double
+        _:x:/@_dp/#?value
+
+    /*
+     * Adding bar to returned widget.
+     */
+    eval-x:x:/+/*/*/*(/width|/height|/x|/y)
+    add:x:/../*/return/*/container/*/widgets
+      src
+        literal
+          element:rect
+          class:bar
+          width:"{0:#.##}"
+            :x:/@.bar-width?value
+          height:x:/@_dp/#?value
+          x:"{0:0.##}"
+            :x:/@.x?value
+          y:"{0:0.##}"
+            :x:/@.y?value
+
+    /*
+     * Adding its label to returned widget.
+     */
+    eval-x:x:/+/**
+    add:x:/../*/return/*/container/*/widgets
+      src
+        foreignObject
+          x:"{0:0.##}"
+            :x:/@.x?value
+          y:x:/@.labels-y?value
+          width:"{0:#.##}"
+            :x:/@.bar-width?value
+          widgets
+            span
+              class:label
+              innerValue:x:/@_dp/#?name
+
+    /*
+     * Incrementing [x] offset.
+     *
+     * "Reversing" our above 0.9 multiplication, and adding to x offset
+     * as we proceed.
+     */
+    set:x:/@.x?value
+      +:x:/@.x?value
+        *:x:/@.bar-width?value
+          _:1.1111111
+
+  /*
+   * Calculating viewport height, adding room for our
+   * labels below our bar columns.
+   */
+  .viewport-height
+  set:x:/-?value
+    *:x:/@.max?value
+      _:1.35
+
+  /*
+   * Creating a negative start for viewport, to make sure we
+   * get some room at the top of our largest bar column
+   */
+  .viewport-y
+  set:x:/-?value
+    /:x:/@.max?value.double
+      _:5
+
+  /*
+   * Returns widget to caller, applying arguments.
+   */
+  add:x:/../*/return/*/container
+    src:x:(/../*/class|/@.defaults/*/class)/$
+  eval-x:x:/+/*/*/viewbox
+  return
+    container
+      element:svg
+      viewbox:"0 -{0:#.##} {1:#.##} {2:#.##}"
+        :x:/@.viewport-y?value
+        :x:/@.viewport-width?value
+        :x:/@.viewport-height?value
+      widgets

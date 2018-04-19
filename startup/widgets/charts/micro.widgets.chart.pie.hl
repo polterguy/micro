@@ -7,7 +7,7 @@
  * relationship to the sum of all your data items.
  *
  * Supply your data items as **[data]** collection, with a label/value type of collection.
- * The label is tha name of your data item, and the value is its (number) value.
+ * The label is the name of your data item, and the value is its (number) value.
  *
  * Optionally pass in **[legend]**, and set its value to boolean _"false"_, if you
  * do not want to have a legende associated with your pie chart. By default a legend
@@ -58,6 +58,8 @@ create-event:micro.widgets.chart.pie
    */
   micro.lambda.contract.min:x:/..
     data
+  micro.lambda.contract.optional:x:/..
+    legend:bool
 
   /*
    * Calculating total amount of all [data] elements supplied.

@@ -1124,11 +1124,28 @@ button.micro-widgets-tab-active:hover {
 
 
 
-
-
-
-
-
+/* Bar chart */
+.micro-widgets-chart-bar {
+    width: 100%;
+    --color: #007AB2;
+    --color-hover: #77d4e2;
+}
+.micro-widgets-chart-bar rect.bar {
+    stroke: rgba(0,0,0,.3);
+    stroke-width: 1px;
+    fill: var(--color);
+    transition: fill .2s ease;
+}
+.micro-widgets-chart-bar rect.bar:hover {
+    fill: var(--color-hover);
+}
+.micro-widgets-chart-bar span.label {
+    font-size: var(--font-size);
+    font-family: var(--font-family);
+    display: block;
+    text-align: center;
+    text-overflow: ellipis;
+}
 
 
 
