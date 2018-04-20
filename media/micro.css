@@ -1090,24 +1090,22 @@ button.micro-widgets-tab-active:hover {
 /* Bar chart */
 .micro-widgets-chart-bar {
     width: 100%;
-    --color: #007AB2;
-    --color-hover: #77d4e2;
+    --color: #a0a0a0;
 }
 .micro-widgets-chart-bar rect.bar {
     stroke: rgba(0,0,0,.3);
-    stroke-width: 1px;
-    fill: var(--color);
+    stroke-width: 2px;
     transition: fill .2s ease;
 }
-.micro-widgets-chart-bar rect.bar:hover {
-    fill: var(--color-hover);
+.micro-widgets-chart-bar rect.bar:not([fill]) {
+    fill: var(--color);
 }
-.micro-widgets-chart-bar span.label {
-    font-size: var(--font-size);
-    font-family: var(--font-family);
+.micro-widgets-chart-bar span.label,
+.micro-widgets-chart-bar a.label {
     display: block;
     text-align: center;
     text-overflow: ellipis;
+    font-size: .7rem;
 }
 
 

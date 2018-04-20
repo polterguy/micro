@@ -68,7 +68,7 @@ create-event:micro.widgets.chart.bar
    * Iterating through each [data] argument, and creating one bar for each,
    * keeping track of our x position as we proceed forwards.
    */
-  .x:long:0
+  .x:long:1
   for-each:x:/../*/data/*
 
     /*
@@ -78,6 +78,19 @@ create-event:micro.widgets.chart.bar
     set:x:/-?value
       -:x:/@.max?value.double
         _:x:/@_dp/#?value
+
+    /*
+     * Checking if item has an explicit color.
+     */
+    if:x:/@_dp/#/*/color
+
+      /*
+       * Adding color for currently iterated bar.
+       */
+      eval-x:x:/+/*/*
+      add:x:/..for-each/*/add/[0,1]/*/*
+        src
+          fill:x:/@_dp/#/*/color?value
 
     /*
      * Adding bar to returned widget.
@@ -97,7 +110,29 @@ create-event:micro.widgets.chart.bar
             :x:/@.y?value
 
     /*
-     * Adding its label to returned widget.
+     * Applying all arguments for currently iterated [data] item to its label.
+     */
+    add:x:/..for-each/**/foreignObject/**/span
+      src:x:/@_dp/#/*
+
+    /*
+     * Checking if caller provided an [onclick] event handler for currently
+     * iterated item, atwhich point we transform label to a hyperlink, to
+     * stay semantically correct.
+     */
+    if:x:/@_dp/#/*/onclick
+
+      /*
+       * Using a hyperlink label.
+       */
+      add:x:/..for-each/**/foreignObject/**/span
+        src
+          href:#
+      set:x:/..for-each/**/foreignObject/**/span?name
+        src:a
+
+    /*
+     * Adding currently iterated label as a "foreignObject" to returned SVG widget.
      */
     eval-x:x:/+/**
     add:x:/../*/return/*/container/*/widgets
