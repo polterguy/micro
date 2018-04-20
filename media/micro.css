@@ -1036,90 +1036,53 @@ button.micro-widgets-tab-active:hover {
 /* Pie chart */
 .micro-widgets-chart-pie {
     margin-bottom: 1rem;
-    position: relative;
     page-break-inside: avoid;
-    --color1: #004178;
-    --color2: #006798;
-    --color3: #007AB2;
-    --color4: #129FD4;
-    --color5: #45B4E3;
-    --color6: #77d4e2;
-    --color7: #a9f4f1;
 }
-.micro-widgets-chart-pie svg.slice:not(:first-child) {
-    position: absolute;
-    top: 0;
-    left: 0;
+.micro-widgets-chart-pie.has-legend {
+    overflow: visible;
 }
-.micro-widgets-chart-pie.has-legend svg.slice {
-    width: calc(70% - 1rem);
+.micro-widgets-chart-pie.has-legend:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+.micro-widgets-chart-pie svg.pie {
     border-radius: 50%;
-    box-shadow: 7px 7px 10px rgba(0,0,0,.05);
+    box-shadow: 3px 3px 5px var(--shadow-color);
 }
-.micro-widgets-chart-pie svg circle {
-    fill: transparent;
+.micro-widgets-chart-pie.has-legend svg.pie {
+    float: left;
+    width: 60%;
+}
+.micro-widgets-chart-pie svg.pie circle.slice {
+    fill: none;
     stroke-width: 50%;
+    r: 25%;
+    cx: 50%;
+    cy: 50%;
 }
-.micro-widgets-chart-pie svg.slice:nth-child(7n+1) circle:not([stroke]) {
-    stroke: var(--color1);
+.micro-widgets-chart-pie ul.legend {
+    list-style: none;
+    padding-left: 1rem;
+    float: right;
+    width: 40%;
+    font-size: .8rem;
+    margin-bottom: 0;
 }
-.micro-widgets-chart-pie svg.slice:nth-child(7n+2) circle:not([stroke]) {
-    stroke: var(--color2);
-}
-.micro-widgets-chart-pie svg.slice:nth-child(7n+3) circle:not([stroke]) {
-    stroke: var(--color3);
-}
-.micro-widgets-chart-pie svg.slice:nth-child(7n+4) circle:not([stroke]) {
-    stroke: var(--color4);
-}
-.micro-widgets-chart-pie svg.slice:nth-child(7n+5) circle:not([stroke]) {
-    stroke: var(--color5);
-}
-.micro-widgets-chart-pie svg.slice:nth-child(7n+6) circle:not([stroke]) {
-    stroke: var(--color6);
-}
-.micro-widgets-chart-pie svg.slice:nth-child(7n+7) circle:not([stroke]) {
-    stroke: var(--color7);
-}
-.micro-widgets-chart-pie svg.legend {
-    width: 30%;
-    vertical-align: top;
-    position: absolute;
-    z-index: 1000;
-    border-radius: var(--border-radius);
-    background-color: rgba(255,255,255,.25);
-}
-.micro-widgets-chart-pie svg.legend rect {
-    stroke: black;
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+1):not([fill]) {
-    fill: var(--color1);
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+3):not([fill]) {
-    fill: var(--color2);
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+5):not([fill]) {
-    fill: var(--color3);
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+7):not([fill]) {
-    fill: var(--color4);
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+9):not([fill]) {
-    fill: var(--color5);
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+11):not([fill]) {
-    fill: var(--color6);
-}
-.micro-widgets-chart-pie svg.legend rect:nth-child(14n+13):not([fill]) {
-    fill: var(--color7);
-}
-.micro-widgets-chart-pie svg.legend foreignObject span,
-.micro-widgets-chart-pie svg.legend foreignObject a {
-    font-family: var(--font-family);
-    color: var(--color);
-    font-size:.85rem;
-    display: block;
+.micro-widgets-chart-pie ul.legend li {
+    margin-bottom: .2rem;
     white-space: nowrap;
+    overflow: visible;
+}
+.micro-widgets-chart-pie ul.legend .legend-label-bg {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    border: solid 1px black;
+}
+.micro-widgets-chart-pie ul.legend .legend-label {
+    vertical-align: top;
+    margin-left: .25rem;
 }
 
 

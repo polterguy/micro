@@ -22,9 +22,10 @@ create-widgets
 
 You can supply items with any number values you wish, and the pie chart widget will automatically calculate
 the relative size of the slice for each of your items. In addition, you can override the **[color]** for one
-or more of your items. The default implementation only has unique colors for your first 7 items, at which
-point it starts reusing your colors - So if you need more than 7 slices, you should probably explicitly
-supply your own colors for each slice, such as illustrated below.
+or more of your items. The default implementation will automatically calculate your color ranging from light
+gray, to dark gray, and evenly distribute your items colors accordingly. Below is an example of overriding
+the color for each of your items.
+
 
 ```hyperlambda-snippet
 /*
@@ -39,13 +40,13 @@ create-widgets
       micro.widgets.chart.pie
         data
           John:50
-            color:red
+            color:#ffa0a0
           Peter:25
-            color:yellow
+            color:#a0ffa0
           Jane:75
-            color:green
+            color:#a0a0ff
           Thomas:125
-            color:#ff00ff
+            color:#ffa0ff
 ```
 
 If you provide an **[onclick]** event handler for your **[data]** items, the legend will be rendered
@@ -103,20 +104,15 @@ create-widgets
           Thomas:125
 ```
 
-The pie chart widget is rendered roughly the same way as a div element, and allows for floating, putting
-it inside of a grid column to make it responsively rendered, etc. It is created entirely with
-CSS and SVG elements, making it easily styled. This also implies that the chart consumes very low
-amounts of bandwidth.
-
-Its default colors can be overridden in for instance a skin file, by changing the CSS variables `--color1`
-through `--color2`, in for instance your `.micro-widgets-chart-pie` CSS selector.
+The pie chart widget is rendered as a div element, with an _"svg"_ element for your pie, and a _"ul"_
+element for your legend, making.
 
 ### Modifying your legend
 
-A legend is by default rendered for your pie chart, and its width is 30% of the chart's available width. If
+A legend is by default rendered for your pie chart, and its width is 40% of the chart's available width. If
 you need a larger legend, you can override the legend's size, by for instance adding a **[style]** argument
-to your chart - At which point you should probably also change the width of each of your slices, to make
-sure your chart as a whole is rendered correctly. Below is an example.
+to your **[legend]** argument - At which point you should probably also change the width of each of your
+slices, by adding a **[pie]** argument, changing your pie's width. Below is an example.
 
 ```hyperlambda-snippet
 /*
@@ -129,20 +125,20 @@ create-widgets
         innerValue:Overriding legend width
       micro.widgets.chart.pie
         legend:bool:true
-          style:"width:60%;"
+          style:"width:80%;"
+        pie
+          style:"width:20%;"
         data
           This is a fairly long label requiring more width:25
-            style:"width:40%;"
           Peter:75
-            style:"width:40%;"
           Jane:55
-            style:"width:40%;"
           Thomas:175
-            style:"width:40%;"
 ```
 
-You can also completely drop the legend, by providing a **[legend]** argument, and setting its value to
-boolean _"false"_ as illustrated below.
+**Notice** - If you provide a __[legend]__ argument, you'll need to make sure its value is set to boolean
+_"true"_, unless you don't want to have a legend at all for your chart. You can also completely drop the
+legend, by providing a **[legend]** argument, and setting its value to boolean _"false"_ as illustrated
+below.
 
 ```hyperlambda-snippet
 /*
@@ -164,16 +160,16 @@ create-widgets
 
 ### CSS selectors for your pie chart
 
-Normally a better way to style your pie chart, is to use a CSS file, overriding your pie chart's styles. Below
-are all CSS classes you can override.
+Normally a better way to style your pie chart if you can, is to use a CSS file, overriding your pie chart's
+styles. Below are all CSS classes you can override.
 
-* __micro-widgets-chart-pie__ - The default root CSS class for your pie chart
+* __micro-widgets-chart-pie__ - The default root CSS class for your pie chart's _"div"_ element
 * __has-legend__ - Added to your pie chart's root element if you choose to render it with a legend
+* __pie__ - The CSS class for the main _"svg"_ element that renders your pie slices
 * __slice__ - The CSS class for your slices
-* __legend__ - The CSS class for your legend
+* __legend__ - The CSS class for your legend _"ul"_ element
+* __legend-label-bg__ - The CSS class for your legend items color square
+* __legend-label__ - The CSS class for your legend items descriptive label
 
-Your legend's color squares are rendered as _"rect"_ SVG elements, and they are 20 pixels in height and width.
-Your legend's labels are rendered as _"foreignObject"_ elements, with a _"span"_ child, unless you provide an
-**[onclick]** event handler for your **[data]** items, at which point they're rendered as hyperlink (_"a"_)
-elements.
-
+Your legend's labels are rendered as a _"span"_ element, unless you provide an __[onclick]__ event handler
+for your item(s), at which point it will render the legend labels as a hyperlink (_"a"_) element instead.
