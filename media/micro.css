@@ -1100,12 +1100,16 @@ button.micro-widgets-tab-active:hover {
 .micro-widgets-chart-bar rect.bar:not([fill]) {
     fill: var(--color);
 }
-.micro-widgets-chart-bar span.label,
-.micro-widgets-chart-bar a.label {
+.micro-widgets-chart-bar label,
+.micro-widgets-chart-bar a {
     display: block;
     text-align: center;
-    text-overflow: ellipis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: .7rem;
+    padding: 0 .5rem 0 .5rem;
+    margin: 0;
 }
 
 
