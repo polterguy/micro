@@ -41,6 +41,67 @@ create-event:micro.widgets.chart.bar
   set:x:/-?value
     *:x:/@.max?value.double
       _:2
+  .viewport-width-room
+  set:x:/-?value
+    /:x:/@.viewport-width?value
+      _:15
+
+  /*
+   * Figuring out font-size to use for labels.
+   */
+  .font-size
+  set:x:/-?value
+    /:x:/@.viewport-width-room?value
+      _:4
+
+  /*
+   * Drawing y-axis lines and numbers.
+   */
+  .step
+  set:x:/-?value
+    /:x:/@.max?value.int
+      _:5
+  .idx-y:int:0
+  while:x:/@.idx-y?value
+    <:x:/@.max?value.int
+    .val
+    set:x:/-?value
+      -:x:/@.max?value
+        _:x:/@.idx-y?value
+    .y
+    set:x:/-?value
+      -:x:/@.idx-y?value
+        /:x:/@.step?value
+          _:50
+    if
+      -:x:/@.max?value.int
+        _:x:/@.idx-y?value.int
+      <:x:/@.step?value.int
+      break
+    eval-x:x:/+/**
+    add:x:/../*/return/*/container/*/widgets
+      src
+        literal
+          element:line
+          x1:0
+          y1:x:/@.idx-y?value
+          x2:x:/@.viewport-width?value
+          y2:x:/@.idx-y?value
+          class:line
+        literal
+          element:text
+          x:"-{0:#.##}"
+            :x:/@.viewport-width-room?value
+          y:x:/@.y?value
+          width:x:/@.viewport-width-room?value
+          height:x:/@.step?value
+          class:label
+          innerValue:x:/@.val?value
+          style:"font-size:{0}px;"
+            :x:/@.font-size?value
+    set:x:/@.idx-y?value
+      +:x:/@.idx-y?value
+        _:x:/@.step?value
 
   /*
    * Figuring out width for each bar column.
@@ -146,6 +207,8 @@ create-event:micro.widgets.chart.bar
           widgets
             label
               innerValue:x:/@_dp/#?name
+              style:"font-size:{0}px;"
+                :x:/@.font-size?value
               title:{0} - {1}
                 :x:/@_dp/#?name
                 :x:/@_dp/#?value
@@ -180,6 +243,13 @@ create-event:micro.widgets.chart.bar
       _:5
 
   /*
+   * Adding room for viewport width.
+   */
+  set:x:/@.viewport-width?value
+    +:x:/@.viewport-width?value
+      _:x:/@.viewport-width-room?value
+
+  /*
    * Returns widget to caller, applying arguments.
    */
   add:x:/../*/return/*/container
@@ -188,7 +258,8 @@ create-event:micro.widgets.chart.bar
   return
     container
       element:svg
-      viewbox:"0 -{0:#.##} {1:#.##} {2:#.##}"
+      viewbox:"-{0:#.##} -{1:#.##} {2:#.##} {3:#.##}"
+        :x:/@.viewport-width-room?value
         :x:/@.viewport-y?value
         :x:/@.viewport-width?value
         :x:/@.viewport-height?value

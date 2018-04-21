@@ -1092,9 +1092,13 @@ button.micro-widgets-tab-active:hover {
     width: 100%;
     --color: #a0a0a0;
 }
+.micro-widgets-chart-bar line {
+    stroke: rgba(0,0,0,.1);
+    stroke-width: .2%;
+}
 .micro-widgets-chart-bar rect.bar {
     stroke: rgba(0,0,0,.3);
-    stroke-width: 2px;
+    stroke-width: .2%;
     transition: fill .2s ease;
 }
 .micro-widgets-chart-bar rect.bar:not([fill]) {
@@ -1107,9 +1111,8 @@ button.micro-widgets-tab-active:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: .7rem;
-    padding: 0 .5rem 0 .5rem;
     margin: 0;
+    padding: 0;
 }
 
 
