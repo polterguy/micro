@@ -1,4 +1,3 @@
-
 /*
  * An extension widget that will automatically load all Hyperlambda files
  * from the given [folder], and append these as children to itself.
@@ -30,37 +29,52 @@ create-event:micro.widgets.file
    * Making sure we get [widgets], [files] and [folder] widgets added in order
    * specified by caller.
    */
-  for-each:x:/@.signal/--/<-?name
-    switch:x:/@_dp?value
+  for-each:x:/@.signal/--/<-
+    switch:x:/@_dp/#?name
       case:widgets
 
         /*
          * Adding widgets.
          */
         add:x:/../*/return/*/container/*/widgets
-          src:x:/../*/widgets/*
+          src:x:/@_dp/#/*
 
       case:files
 
         /*
-         * Loading all Hyperlambda files from specified [folder].
+         * Loading all Hyperlambda files listed beneath [files] as names,
+         * making sure we parametrize each file according to arguments supplied
+         * by caller.
          */
-        load-file:x:/../*/files/*?name
+        for-each:x:/@_dp/#/*
+          load-file:x:/@_dp/#?name
 
-        /*
-         * Adding widgets.
-         */
-        add:x:/../*/return/*/container/*/widgets
-          src:x:/@load-file/*/*
+          /*
+           * Adding all arguments beneath currently iterated node.
+           */
+          add:x:/@load-file/*/*
+            src:x:/@_dp/#/*
+
+          /*
+           * Adding widgets.
+           */
+          add:x:/../*/return/*/container/*/widgets
+            src:x:/@load-file/*/*
 
       case:folder
 
         /*
          * Loading all Hyperlambda files from specified [folder].
          */
-        list-files:x:/@.signal/--/folder?value
+        list-files:x:/@_dp/#?value
           filter:.hl
         load-file:x:/@list-files/*?name
+
+        /*
+         * Adding all arguments beneath currently iterated node.
+         */
+        add:x:/@load-file/*/*
+          src:x:/@_dp/#/*
 
         /*
          * Adding widgets.
