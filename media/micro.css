@@ -1048,7 +1048,8 @@ button.micro-widgets-tab-active:hover {
 }
 .micro-widgets-chart-pie svg.pie {
     border-radius: 50%;
-    box-shadow: 3px 3px 5px var(--shadow-color);
+    box-shadow: 0 3px 5px var(--shadow-color);
+    transform: rotate(-90deg);
 }
 .micro-widgets-chart-pie.has-legend svg.pie {
     float: left;
