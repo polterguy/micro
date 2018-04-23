@@ -1,8 +1,6 @@
 /*
- * Creates the __[micro.widgets.chart.bar]__ _"bar chart widget"_.
- *
- * This widget allows you to display a bar chart with vertical bars, where each bar has
- * a height relative to its value.
+ * Creates the **[micro.widgets.chart.bar]** extension widget that allows
+ * you to display a bar chart.
  */
 create-event:micro.widgets.chart.bar
 
@@ -24,243 +22,255 @@ create-event:micro.widgets.chart.bar
     data
 
   /*
-   * Finding max value of [data] values, such that we know what scale to use
-   * for our chart.
+   * Finding max and min value of [data] values, such that we know what scale to use
+   * for our chart, defaulting min value to 0, unless a negative value was supplied.
+   *
+   * Notice, we need to (also) track the min value, since we want to support negative
+   * bars, even though we default it to 0.
    */
   .max:double:0
+  .min:double:0
   for-each:x:/../*/data/*
+
+    /*
+     * Checking if currently iterated value is larger than the current max value,
+     * or smaller than the current min value.
+     */
     if:x:/@_dp/#?value.double
       >:x:/@.max?value
       set:x:/@.max?value
         src:x:/@_dp/#?value.double
+    else-if:x:/@_dp/#?value.double
+      <:x:/@.min?value
+      set:x:/@.min?value
+        src:x:/@_dp/#?value.double
 
   /*
-   * Making sure we set the viewport width to 2 times the height.
+   * Figuring out size difference between max and min value, which becomes the
+   * total height of our chart.
    */
-  .viewport-width
-  set:x:/-?value
-    *:x:/@.max?value.double
-      _:2
-  .viewport-width-room
-  set:x:/-?value
-    /:x:/@.viewport-width?value
-      _:15
+  .chart-height
+  set:x:/@.chart-height?value
+    -:x:/@.max?value
+      _:x:/@.min?value
 
   /*
-   * Figuring out font-size to use for labels.
+   * Figuring out y position of zero, defaulting to bottom of chart,
+   * changing it if there exists a negative value in our dataset.
    */
-  .font-size
-  set:x:/-?value
-    /:x:/@.viewport-width-room?value
-      _:4
+  .zero-y:double:100
+  if:x:/@.min?value
+    <:double:0
+    set:x:/@.zero-y?value
+      *:double:100
+        /:x:/@.max?value
+          _:x:/@.chart-height?value
 
   /*
-   * Drawing y-axis lines and numbers.
+   * Creating our positive lines.
    */
-  .step
-  set:x:/-?value
-    /:x:/@.max?value.int
-      _:5
-  .idx-y:int:0
-  while:x:/@.idx-y?value
-    <:x:/@.max?value.int
-    .val
-    set:x:/-?value
-      -:x:/@.max?value
-        _:x:/@.idx-y?value
-    .y
-    set:x:/-?value
-      -:x:/@.idx-y?value
-        /:x:/@.step?value
-          _:50
-    if
-      -:x:/@.max?value.int
-        _:x:/@.idx-y?value.int
-      <:x:/@.step?value.int
-      break
-    eval-x:x:/+/**
-    add:x:/../*/return/*/container/*/widgets
+  eval-x:x:/+
+  .line-y:x:/@.zero-y?value
+  .lbl-text:double:0
+  .line-class:zero-line
+  .label-class:zero-label
+  while:x:/@.line-y?value
+    >=:double:0
+    eval-x:x:/+/*/*/*
+    add:x:/../*/return/*/container/*/widgets/*/svg/*/widgets
       src
         literal
-          element:line
-          x1:0
-          y1:x:/@.idx-y?value
-          x2:x:/@.viewport-width?value
-          y2:x:/@.idx-y?value
-          class:line
-        literal
           element:text
-          x:"-{0:#.##}"
-            :x:/@.viewport-width-room?value
-          y:x:/@.y?value
-          width:x:/@.viewport-width-room?value
-          height:x:/@.step?value
-          class:label
-          innerValue:x:/@.val?value
-          style:"font-size:{0}px;"
-            :x:/@.font-size?value
-    set:x:/@.idx-y?value
-      +:x:/@.idx-y?value
-        _:x:/@.step?value
+          class:x:/@.label-class?value
+          x:-1
+          y:"{0:0.##}"
+            :x:/@.line-y?value
+          width:15
+          innerValue:"{0:###,###,##0.##}"
+            :x:/@.lbl-text?value
+        literal
+          element:line
+          class:x:/@.line-class?value
+          x1:0
+          y1:"{0:0.##}"
+            :x:/@.line-y?value
+          x2:165
+          y2:"{0:0.##}"
+            :x:/@.line-y?value
+
+    /*
+     * Decrementing our y position for our next line.
+     */
+    set:x:/@.line-y?value
+      -:x:/@.line-y?value
+        /:x:/@.zero-y?value
+          _:5
+    set:x:/@.lbl-text?value
+      +:x:/@.lbl-text?value
+        /:x:/@.max?value
+          _:5
+
+    /*
+     * Changing CSS class of consecutive lines and labels.
+     */
+    set:x:/@.line-class?value
+      src:line
+    set:x:/@.label-class?value
+      src:label
 
   /*
-   * Figuring out width for each bar column.
-   *
-   * Notice, we multiply the width time 0.9, to give some spacing
-   * between each bar column.
+   * Figuring out width of each bar, which depends upon how many items we have,
+   * making sure we add some spacing.
    */
   .bar-width
-  set:x:/-?value
-    /:x:/@.viewport-width?value
-      *:x:/../*/data/*?count
   set:x:/@.bar-width?value
-    *:x:/@.bar-width?value
-      _:.9
+    +:double:-5
+      /:double:160
+        _:x:/../*/data/*?count
 
   /*
-   * Calculating y for labels.
+   * Adding all items as SVG rect widget to return widget, making sure
+   * we keep track of current x position as we iterate through our items.
    */
-  .labels-y
-  set:x:/-?value
-    +:x:/@.max?value
-      _:10
-
-  /*
-   * Iterating through each [data] argument, and creating one bar for each,
-   * keeping track of our x position as we proceed forwards.
-   */
-  .x:long:1
+  .cur-x:double:5
   for-each:x:/../*/data/*
 
     /*
-     * Figuring out y position of bar.
+     * Figuring out height of currently iterated value.
      */
-    .y
-    set:x:/-?value
-      -:x:/@.max?value.double
-        _:x:/@_dp/#?value
+    .height
+    set:x:/@.height?value
+      *:double:100
+        /:x:/@_dp/#?value.double
+          _:x:/@.chart-height?value
 
     /*
-     * Checking if item has an explicit color.
+     * Keeping track of whether or not this is a negative value or not.
      */
-    if:x:/@_dp/#/*/color
+    .negative:bool:false
+    if:x:/@.height?value
+      <:double:0
+      set:x:/@.height?value
+        *:x:/@.height?value
+          _:-1
+      set:x:/@.negative?value
+        src:bool:true
+
+    /*
+     * Figuring out y position of currently iterated item.
+     */
+    .cur-y:0
+    set:x:/@.cur-y?value
+      -:double:100
+        _:x:/@.height?value
+    if:x:/@.negative?value
+      =:bool:false
 
       /*
-       * Adding color for currently iterated bar.
+       * Subtracting size of negative axis from y position.
        */
+      set:x:/@.cur-y?value
+        -:x:/@.cur-y?value
+          -:double:100
+            _:x:/@.zero-y?value
+
+    else
+
+      /*
+       * This is a negative value, making sure we add correct CSS class to item,
+       * and move it according to it value along its correct y position.
+       */
+      set:x:/@.cur-y?value
+        src:x:/@.zero-y?value
+      set:x:/..for-each/*/add/**/literal/*/element/=rect/./*/class?value
+        src:bar negative
+
+    /*
+     * Checking if caller provided an explicit color for item.
+     */
+    if:x:/@_dp/#/*/color
       eval-x:x:/+/*/*
-      add:x:/..for-each/*/add/[0,1]/*/*
+      add:x:/..for-each/*/add/*/*/literal
         src
           fill:x:/@_dp/#/*/color?value
 
     /*
-     * Adding bar to returned widget.
+     * Checking if caller explicitly does not want to add name labels.
      */
-    eval-x:x:/+/*/*/*(/width|/height|/x|/y)
-    add:x:/../*/return/*/container/*/widgets
+    if:x:/../*/name-labels?value
+      =:bool:false
+      set:x:/..for-each/*/add/*/*/foreignObject
+
+    /*
+     * Adding rect (and possibly name labels) to return widget.
+     */
+    eval-x:x:/+/*/*/*|/+/**(/innerValue|/title)
+    add:x:/../*/return/*/container/*/widgets/*/svg/*/widgets
       src
         literal
           element:rect
           class:bar
-          width:"{0:#.##}"
+          x:x:/@.cur-x?value
+          y:x:/@.cur-y?value
+          width:"{0:0.##}"
             :x:/@.bar-width?value
-          height:x:/@_dp/#?value
-          x:"{0:0.##}"
-            :x:/@.x?value
-          y:"{0:0.##}"
-            :x:/@.y?value
-
-    /*
-     * Applying all arguments for currently iterated [data] item to its label.
-     */
-    add:x:/..for-each/**/foreignObject/**/label
-      src:x:/@_dp/#/*
-
-    /*
-     * Checking if caller provided an [onclick] event handler for currently
-     * iterated item, atwhich point we transform label to a hyperlink, to
-     * stay semantically correct.
-     */
-    if:x:/@_dp/#/*/onclick
-
-      /*
-       * Using a hyperlink label.
-       */
-      add:x:/..for-each/**/foreignObject/**/label
-        src
-          href:#
-      set:x:/..for-each/**/foreignObject/**/label?name
-        src:a
-
-    /*
-     * Adding currently iterated label as a "foreignObject" to returned SVG widget.
-     */
-    eval-x:x:/+/**
-    add:x:/../*/return/*/container/*/widgets
-      src
+          height:"{0:0.##}"
+            :x:/@.height?value
         foreignObject
-          x:"{0:0.##}"
-            :x:/@.x?value
-          y:x:/@.labels-y?value
-          width:"{0:#.##}"
+          class:name-label
+          x:x:/@.cur-x?value
+          y:104
+          width:"{0:0.##}"
             :x:/@.bar-width?value
+          height:10
           widgets
-            label
-              innerValue:x:/@_dp/#?name
-              style:"font-size:{0}px;"
-                :x:/@.font-size?value
-              title:{0} - {1}
+            span
+              innerValue:{0} ({1})
+                :x:/@_dp/#?name
+                :x:/@_dp/#?value
+              title:{0} ({1})
                 :x:/@_dp/#?name
                 :x:/@_dp/#?value
 
     /*
-     * Incrementing [x] offset.
-     *
-     * "Reversing" our above 0.9 multiplication, and adding to x offset
-     * as we proceed.
+     * Incrementing x value by width of bar, plus size of "spacing".
      */
-    set:x:/@.x?value
-      +:x:/@.x?value
-        *:x:/@.bar-width?value
-          _:1.1111111
+    set:x:/@.cur-x?value
+      +:x:/@.cur-x?value
+        _:x:/@.bar-width?value
+        _:5
 
   /*
-   * Calculating viewport height, adding room for our
-   * labels below our bar columns.
+   * Making additional room for labels, if necessary, depending upon how wide our
+   * max label is.
    */
-  .viewport-height
-  set:x:/-?value
-    *:x:/@.max?value
-      _:1.3
+  length:"{0:###,###,##0.##}"
+    :x:/@.max?value
+  if:x:/@length?value
+    >:int:12
+    set:x:/../*/return/*/container/*/widgets/*/svg/*/viewbox?value
+      src:-40 -20 210 130
+  else-if:x:/@length?value
+    >:int:10
+    set:x:/../*/return/*/container/*/widgets/*/svg/*/viewbox?value
+      src:-35 -20 205 130
+  else-if:x:/@length?value
+    >:int:7
+    set:x:/../*/return/*/container/*/widgets/*/svg/*/viewbox?value
+      src:-30 -20 200 130
+  else-if:x:/@length?value
+    >:int:5
+    set:x:/../*/return/*/container/*/widgets/*/svg/*/viewbox?value
+      src:-25 -20 195 130
 
   /*
-   * Creating a negative start for viewport, to make sure we
-   * get some room at the top of our largest bar column
+   * Returning widget to caller.
    */
-  .viewport-y
-  set:x:/-?value
-    /:x:/@.max?value.double
-      _:5
-
-  /*
-   * Adding room for viewport width.
-   */
-  set:x:/@.viewport-width?value
-    +:x:/@.viewport-width?value
-      _:x:/@.viewport-width-room?value
-
-  /*
-   * Returns widget to caller, applying arguments.
-   */
-  add:x:/../*/return/*/container
-    src:x:(/../*/class|/@.defaults/*/class)/$
-  eval-x:x:/+/*/*/viewbox
+  eval-x:x:/+/*/*/class
   return
     container
-      element:svg
-      viewbox:"-{0:#.##} -{1:#.##} {2:#.##} {3:#.##}"
-        :x:/@.viewport-width-room?value
-        :x:/@.viewport-y?value
-        :x:/@.viewport-width?value
-        :x:/@.viewport-height?value
+      class:x:(/../*/class|/@.defaults/*/class)/$?value
       widgets
+        svg
+          viewbox:-20 -20 190 130
+          widgets

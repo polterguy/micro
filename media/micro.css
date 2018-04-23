@@ -1089,30 +1089,58 @@ button.micro-widgets-tab-active:hover {
 
 /* Bar chart */
 .micro-widgets-chart-bar {
+    margin-bottom: 1rem;
     width: 100%;
+    background-color: rgba(255,255,255,.2);
+    border-radius: var(--border-radius);
+    box-shadow: 3px 3px 5px var(--shadow-color);
     --color: #a0a0a0;
+    --hover-color: #d0d0d0;
+    --negative-color: #d0a0a0;
 }
-.micro-widgets-chart-bar line {
+.micro-widgets-chart-bar line.zero-line {
     stroke: rgba(0,0,0,.1);
-    stroke-width: .2%;
+    stroke-width: .2;
+}
+.micro-widgets-chart-bar text.zero-label {
+    fill: #a0a0a0;
+    font-size: .3rem;
+    text-anchor: end;
+}
+.micro-widgets-chart-bar text.label {
+    fill: #a0a0a0;
+    font-size: .3rem;
+    text-anchor: end;
+}
+.micro-widgets-chart-bar line:not(.zero-line) {
+    stroke: rgba(0,0,0,.1);
+    stroke-width: .2;
 }
 .micro-widgets-chart-bar rect.bar {
     stroke: rgba(0,0,0,.3);
-    stroke-width: .2%;
-    transition: fill .2s ease;
+    stroke-width: .2;
 }
 .micro-widgets-chart-bar rect.bar:not([fill]) {
     fill: var(--color);
+    transition: fill .2s ease;
 }
-.micro-widgets-chart-bar label,
-.micro-widgets-chart-bar a {
+.micro-widgets-chart-bar rect.bar.negative:not([fill]) {
+    fill: var(--negative-color);
+}
+.micro-widgets-chart-bar rect.bar:hover,
+.micro-widgets-chart-bar rect.bar.negative:hover{
+    fill: var(--hover-color);
+    transition: fill .2s ease;
+}
+.micro-widgets-chart-bar foreignObject.name-label span {
     display: block;
     text-align: center;
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
-    margin: 0;
-    padding: 0;
+    overflow: hidden;
+    color: #a0a0a0;
+    font-size: .2rem;
+    padding-top: 1px;
 }
 
 
