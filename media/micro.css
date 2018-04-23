@@ -1141,6 +1141,10 @@ button.micro-widgets-tab-active:hover {
     color: #a0a0a0;
     font-size: .2rem;
     padding-top: 1px;
+    transition: color .2s ease;
+}
+.micro-widgets-chart-bar foreignObject.name-label span:hover {
+    color: rgb(0,0,0);
 }
 
 
