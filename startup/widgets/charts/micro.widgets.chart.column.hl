@@ -1,8 +1,8 @@
 /*
- * Creates the **[micro.widgets.chart.bar]** extension widget that allows
- * you to display a bar chart.
+ * Creates the **[micro.widgets.chart.column]** extension widget that allows
+ * you to display a column chart.
  */
-create-event:micro.widgets.chart.bar
+create-event:micro.widgets.chart.column
 
   /*
    * Signal node, to separate arguments from the rest of our lambda.
@@ -13,7 +13,7 @@ create-event:micro.widgets.chart.bar
    * Defaults, if no arguments are given.
    */
   .defaults
-    class:micro-widgets-chart-bar
+    class:micro-widgets-chart-column
 
   /*
    * Sanity checking invocation.
@@ -26,7 +26,7 @@ create-event:micro.widgets.chart.bar
    * for our chart, defaulting min value to 0, unless a negative value was supplied.
    *
    * Notice, we need to (also) track the min value, since we want to support negative
-   * bars, even though we default it to 0.
+   * columns, even though we default it to 0.
    */
   .max:double:0
   .min:double:0
@@ -119,11 +119,11 @@ create-event:micro.widgets.chart.bar
       src:label
 
   /*
-   * Figuring out width of each bar, which depends upon how many items we have,
+   * Figuring out width of each column, which depends upon how many items we have,
    * making sure we add some spacing.
    */
-  .bar-width
-  set:x:/@.bar-width?value
+  .column-width
+  set:x:/@.column-width?value
     +:double:-5
       /:double:160
         _:x:/../*/data/*?count
@@ -183,7 +183,7 @@ create-event:micro.widgets.chart.bar
       set:x:/@.cur-y?value
         src:x:/@.zero-y?value
       set:x:/..for-each/*/add/**/literal/*/element/=rect/./*/class?value
-        src:bar negative
+        src:column negative
 
     /*
      * Checking if caller provided an explicit color for item.
@@ -199,7 +199,30 @@ create-event:micro.widgets.chart.bar
      */
     if:x:/../*/name-labels?value
       =:bool:false
+
+      /*
+       * No name labels should be added.
+       */
       set:x:/..for-each/*/add/*/*/foreignObject
+
+    else
+
+      /*
+       * Name labels should be added, making sure we apply all arguments for item.
+       */
+      add:x:/..for-each/*/add/*/*/foreignObject/*/widgets/*/span
+        src:x:/@_dp/#/*
+
+      /*
+       * Checking if caller supplied an [onclick] for item, at which point
+       * we change item from span to a hyperlink.
+       */
+      if:x:/@_dp/#/*/onclick
+        add:x:/..for-each/*/add/*/*/foreignObject/*/widgets/*/span
+          src
+            href:#
+        set:x:/..for-each/*/add/*/*/foreignObject/*/widgets/*/span?name
+          src:a
 
     /*
      * Adding rect (and possibly name labels) to return widget.
@@ -209,11 +232,11 @@ create-event:micro.widgets.chart.bar
       src
         literal
           element:rect
-          class:bar
+          class:column
           x:x:/@.cur-x?value
           y:x:/@.cur-y?value
           width:"{0:0.##}"
-            :x:/@.bar-width?value
+            :x:/@.column-width?value
           height:"{0:0.##}"
             :x:/@.height?value
         foreignObject
@@ -221,7 +244,7 @@ create-event:micro.widgets.chart.bar
           x:x:/@.cur-x?value
           y:104
           width:"{0:0.##}"
-            :x:/@.bar-width?value
+            :x:/@.column-width?value
           height:10
           widgets
             span
@@ -233,11 +256,11 @@ create-event:micro.widgets.chart.bar
                 :x:/@_dp/#?value
 
     /*
-     * Incrementing x value by width of bar, plus size of "spacing".
+     * Incrementing x value by width of column, plus size of "spacing".
      */
     set:x:/@.cur-x?value
       +:x:/@.cur-x?value
-        _:x:/@.bar-width?value
+        _:x:/@.column-width?value
         _:5
 
   /*
@@ -262,6 +285,12 @@ create-event:micro.widgets.chart.bar
     >:int:5
     set:x:/../*/return/*/container/*/widgets/*/svg/*/viewbox?value
       src:-25 -20 195 130
+
+  /*
+   * Applying additional arguments.
+   */
+  add:x:/../*/return/*/container
+    src:x:/@.signal/--/<-(!/class!/data)
 
   /*
    * Returning widget to caller.

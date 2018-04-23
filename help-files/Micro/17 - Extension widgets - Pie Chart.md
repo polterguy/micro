@@ -105,7 +105,7 @@ create-widgets
 ```
 
 The pie chart widget is rendered as a div element, with an _"svg"_ element for your pie, and a _"ul"_
-element for your legend, making.
+element for your legend.
 
 ### Modifying your legend
 

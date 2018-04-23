@@ -1087,8 +1087,8 @@ button.micro-widgets-tab-active:hover {
 
 
 
-/* Bar chart */
-.micro-widgets-chart-bar {
+/* Column chart */
+.micro-widgets-chart-column {
     margin-bottom: 1rem;
     width: 100%;
     background-color: rgba(255,255,255,.2);
@@ -1098,41 +1098,42 @@ button.micro-widgets-tab-active:hover {
     --hover-color: #d0d0d0;
     --negative-color: #d0a0a0;
 }
-.micro-widgets-chart-bar line.zero-line {
+.micro-widgets-chart-column line.zero-line {
     stroke: rgba(0,0,0,.1);
     stroke-width: .2;
 }
-.micro-widgets-chart-bar text.zero-label {
+.micro-widgets-chart-column text.zero-label {
     fill: #a0a0a0;
     font-size: .3rem;
     text-anchor: end;
 }
-.micro-widgets-chart-bar text.label {
+.micro-widgets-chart-column text.label {
     fill: #a0a0a0;
     font-size: .3rem;
     text-anchor: end;
 }
-.micro-widgets-chart-bar line:not(.zero-line) {
+.micro-widgets-chart-column line:not(.zero-line) {
     stroke: rgba(0,0,0,.1);
     stroke-width: .2;
 }
-.micro-widgets-chart-bar rect.bar {
+.micro-widgets-chart-column rect.column {
     stroke: rgba(0,0,0,.3);
     stroke-width: .2;
 }
-.micro-widgets-chart-bar rect.bar:not([fill]) {
+.micro-widgets-chart-column rect.column:not([fill]) {
     fill: var(--color);
     transition: fill .2s ease;
 }
-.micro-widgets-chart-bar rect.bar.negative:not([fill]) {
+.micro-widgets-chart-column rect.column.negative:not([fill]) {
     fill: var(--negative-color);
 }
-.micro-widgets-chart-bar rect.bar:hover,
-.micro-widgets-chart-bar rect.bar.negative:hover{
+.micro-widgets-chart-column rect.column:hover,
+.micro-widgets-chart-column rect.column.negative:hover{
     fill: var(--hover-color);
     transition: fill .2s ease;
 }
-.micro-widgets-chart-bar foreignObject.name-label span {
+.micro-widgets-chart-column foreignObject.name-label span,
+.micro-widgets-chart-column foreignObject.name-label a {
     display: block;
     text-align: center;
     white-space: nowrap;
@@ -1143,7 +1144,8 @@ button.micro-widgets-tab-active:hover {
     padding-top: 1px;
     transition: color .2s ease;
 }
-.micro-widgets-chart-bar foreignObject.name-label span:hover {
+.micro-widgets-chart-column foreignObject.name-label span:hover,
+.micro-widgets-chart-column foreignObject.name-label a:hover {
     color: rgb(0,0,0);
 }
 
