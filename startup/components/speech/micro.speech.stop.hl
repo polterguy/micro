@@ -1,6 +1,11 @@
 ﻿
 /*
- * Stops speech recognition and speech uttering.
+ * Creates the __[micro.speech.stop]__ Active Event.
+ */
+
+/*
+ * This event stops speech recognition and speech uttering, if any of these are
+ * active on the client.
  */
 create-event:micro.speech.stop
 

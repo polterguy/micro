@@ -1,12 +1,22 @@
-﻿/*
- * Creates the event that allows caller to query what languages and voices exists on the current client.
+﻿
+/*
+ * Creates the __[micro.speech.speak.query-voices]__ Active Event.
+ */
+
+/*
+ * This event allows the caller to query what languages and voices exists on the
+ * current client.
  *
- * This event invokes the specified [onfinish] callback when voices have been retrieved.
- * Your [onfinish] lambda will be invoked with [voices] being the supported voices for the current client.
+ * The event will invoke the specified __[onfinish]__ lambda callback when voices
+ * have been retrieved. Your __[onfinish]__ lambda will be invoked with a
+ * __[voices]__ argument being the supported voices for the current client.
  *
- * Internally, this might requires a roundtrip to the client, injecting a JavaScript component, which then invokes
- * the server again asynchronously, for the first time you invoke this event. 
- * This is necessary, since the client is the one who knows which supported voices and languages it has.
+ * Internally, this might requires a roundtrip to the client, injecting a
+ * JavaScript component, which then invokes the server again asynchronously
+ * the first time you invoke this event. This is necessary, since the client 
+ * is the one who knows which supported voices and languages it has, and there
+ * is no ways to determine this, without having the client inform the server
+ * about which voices it supports.
  */
 create-event:micro.speech.speak.query-voices
 

@@ -1,15 +1,18 @@
 ﻿
 /*
- * Creates the event that allows caller to translate a piece of text from one language to another, using Google Translate.
+ * Creates the event that allows caller to translate a piece of text from one
+ * language to another, using Google Translate.
  *
- * Pass in [_arg] as whatever you want to have translated, and [dest-lang] being the language you wish to have it translated to.
+ * Pass in __[\_arg]__ as whatever you want to have translated, and __[dest-lang]__
+ * being the language you wish to have it translated to.
  *
- * Optionally pass in [src-lang], for explicitly declaring what language your source text is in.
- * If no [src-lang] is specified, then "auto" will be assumed, at which point Google will attempt to intelligently
- * figure out what is your source language by itself.
+ * Optionally pass in __[src-lang]__, for explicitly declaring what language your
+ * source text is in. If no __[src-lang]__ is specified, then _"auto"_ will be
+ * assumed, at which point Google will attempt to intelligently figure out what
+ * your source language actually is.
  *
- * Example of some languages you could use are; "en" English, and "no" for Norwegian, or "nb-NO" for Norwegian Bokmål and "en-US"
- * for American English.
+ * Example of some languages you could use are; _"en"_ English, and _"no"_ for
+ * Norwegian, or _"nb-NO"_ for Norwegian Bokmål and _"en-US"_ for American English.
  */
 create-event:micro.google.translate
 

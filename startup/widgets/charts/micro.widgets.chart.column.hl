@@ -1,6 +1,31 @@
+
 /*
- * Creates the **[micro.widgets.chart.column]** extension widget that allows
- * you to display a column chart.
+ * Creates the __[micro.widgets.chart.column]__ _"column chart extension widget"_.
+ */
+
+/*
+ * The column chart widget allows you to illustrate a column chart, with data items,
+ * where the columns' sizes are automatically calculated relative to each other.
+ *
+ * Supply your data items as **[data]** collection, with a label/value type of collection.
+ * The label is the name of your data item, and the value is its (number) value.
+ *
+ * Optionally pass in **[name-labels]**, and set its value to boolean _"false"_, if you
+ * do not want to have name labels associated with your chart. By default name
+ * labels will be added beneath your columns.
+ *
+ * All arguments beneath the main __[micro.widgets.chart.column]__ node, will be
+ * appended to the main root widget, which is a _"div"_ element, allowing you to
+ * for instance create DOM events for the widget as a whole, etc.
+ *
+ * The **[data]** items you supply does not need to add up to 100, they can be any numbers
+ * you happen to have. The widget will calculate the relative values for each data item,
+ * in comparison to the total value of all your items, and create a column accordingly,
+ * matching your items' values.
+ *
+ * You can also override the color of each data child, by providing a **[color]** argument
+ * to your **[data]** items, at which point your item will be rendered with the specified
+ * color. The default color of your columns is gray.
  */
 create-event:micro.widgets.chart.column
 

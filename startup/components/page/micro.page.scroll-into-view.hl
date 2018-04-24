@@ -1,8 +1,12 @@
 
 /*
- * Helper Active Event to scroll some element into view.
+ * Creates the __[micro.page.scroll-into-view]__ Active Event.
+ */
+
+/*
+ * This event allows you to scroll some element into view.
  *
- * Require [_arg] being the ID of element to scroll into view on the client.
+ * Requires __[\_arg]__ being the ID of element to scroll into view on the client.
  */
 create-event:micro.page.scroll-into-view
 

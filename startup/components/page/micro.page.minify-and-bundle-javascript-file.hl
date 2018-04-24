@@ -1,8 +1,13 @@
 ﻿
 /*
- * Will minify and bundle all specified JavaScript files, and include bundle file on your page.
+ * Creates the __[micro.page.minify-and-bundle-javascript-file]__ Active Event.
+ */
+
+/*
+ * Will minify and bundle all specified JavaScript files, and include bundle file
+ * on your page.
  *
- * All bundles created this way, will be stored in "/common/documents/public/micro-javascript-cache/".
+ * All bundles created this way, will be stored in _"/common/documents/public/micro-javascript-cache/"_.
  */
 create-event:micro.page.minify-and-bundle-javascript-file
 

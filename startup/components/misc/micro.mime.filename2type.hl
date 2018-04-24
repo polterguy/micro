@@ -1,9 +1,13 @@
 ﻿
 /*
- * Creates the Active Event responsible for returning a MIME type from a filename.
+ * Creates the __[micro.mime.filename2type]__ Active Event.
+ */
+
+/*
+ * This event is responsible for returning a MIME type from a filename.
  *
  * Will look at the file's extension, and return the correct MIME type accordingly.
- * Pass in [_arg] as filename.
+ * Pass in __[\_arg]__ as your filename.
  */
 create-event:micro.mime.filename2type
 

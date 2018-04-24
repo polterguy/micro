@@ -1,5 +1,11 @@
+
 /*
- * Help file Active Event sink.
+ * Creates the __[desktop.help-files.06-micro]__ Active Event.
+ */
+
+/*
+ * This event serves as a sink event for the help system, returning the root
+ * folder path for all help files in Micro.
  */
 create-event:desktop.help-files.06-micro
 

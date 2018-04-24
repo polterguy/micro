@@ -1,15 +1,19 @@
 ﻿
 /*
- * Creates our speak Active Event.
+ * Creates our __[micro.speech.speak]__ Active Event.
+ */
+
+/*
+ * This event requires at the very least an __[\_arg]__ argument, being the text
+ * to speak, in addition to optionally a __[voice]__, which defaults to _"en"_.
  *
- * Requires at the very least an [_arg], being the text to speak, in addition to
- * optionally a [voice], which defaults to "en".
+ * The __[voice]__ argument can contain both a locale parts, and a named voice,
+ * such as e.g. _"Veronica,en"_, which will use _"Veronica"_ voice, if it exists,
+ * and is English. Otherwise, it'll default to the first _"en"_ (English) voice
+ * it can find.
  *
- * The voice can contain both a locale parts, and a named voice, such as e.g.
- * "Veronica,en", which will use "Veronica" voice, if she exists, and is English.
- * Otherwise, it'll default to the first "en" (English) voice that exists.
- *
- * Optionally supply [pitch] and [rate].
+ * Optionally supply __[pitch]__ and __[rate]__ to further parametrize the speech
+ * utterance object on the client side.
  */
 create-event:micro.speech.speak
 

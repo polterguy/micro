@@ -1,11 +1,20 @@
+
 /*
- * Given a specific [_arg] widget, will recursively serialize all form elements beneath that element, 
- * and return in a uniform way to caller.
+ * Creates the __[micro.form.serialize]__ Active Event.
+ */
+
+/*
+ * This event, given a specific __[\_arg]__ widget ID, will recursively serialize
+ * all form elements beneath that element, and return in a uniform way their values
+ * to the caller.
  *
- * Notice, if you give a widget a [.data-field] property, the returned name for your widget will be the value of your [.data-field] property.
- * If you use a [.data-field] with a grouped radio buttons collection, each radio button should also have a [.data-value].
- * This allows you to use automatic IDs, which is useful if you can't have unique IDs for your widget, while still returning your data for your
- * form in a semantically correct way, according to its data-field's name, instead of some randomly generated ID.
+ * Notice, if you give a widget a __[.data-field]__ property, the returned name
+ * for your widget will be the value of your __[.data-field]__ property.
+ * If you use a __[.data-field]__ with a grouped radio buttons collection, each
+ * radio button should also have a __[.data-value]__. This allows you to use 
+ * utomatic IDs for your radio buttons, which is useful if you can't have unique
+ * IDs for them - While still returning your data for your form in a semantically
+ * correct way, according to its data-field's name, instead of some randomly generated ID.
  */
 create-event:micro.form.serialize
 

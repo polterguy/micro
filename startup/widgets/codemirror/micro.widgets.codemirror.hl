@@ -1,24 +1,30 @@
+
 /*
  * Creates the CodeMirror extension widget.
+ */
+
+/*
+ * This widget creates a CodeMirror editor for you. The widget supports more than
+ * 100 different language modes, and contains 57 themes out of the box.
  *
  * Arguments;
  *
- * - [mode] - Language mode for editor, e.g. "htmlmixed" or "hyperlambda", etc. Defaults to "hyperlambda".
- * - [value] - Initial value of editor.
- * - [theme] - Optional theme override. If not given, will use the user's settings. Defaults to _"phosphorus"_.
- * - [keys] - CodeMirror keyboard-shortcuts to JavaScript callbacks. E.g. "Ctrl-T:function(){alert('x');}"
- * - [auto-focus] - If true, the editor will get initial focus.
- * - [height] - Height in pixels, percent, or any other unit for editor.
- * - [.data-field] - Data field name, used when for instance serialising editor's content. Defaults to "codemirror".
- * - [font-size] - Optional font size for content. If not given, will use user's settings, defaulting to 9,25pt if no settings exists.
- * - [tab-size] - Optional tab size. Defaults to 2.
- * - [read-only] - If true, widget is read only. Defaults to false.
- * - [class] - CSS class to use for wrapper widget. Defaults to "micro-codemirror-wrapper".
- * - [style] - CSS styles to use for widget. Notice, will add font-size style automatically, to accommodate for CodeMirror settings.
- * - [oninit] - Lambda callback to be evaluated during initialization of widget.
+ * - __[mode]__ - Language mode for editor, e.g. _"htmlmixed"_ or _"hyperlambda"_, etc. Defaults to _"hyperlambda"_.
+ * - __[value]__ - Initial value of editor.
+ * - __[theme]__ - Optional theme override. If not given, will use the user's settings. Defaults to _"phosphorus"_.
+ * - __[keys]__ - CodeMirror keyboard-shortcuts to JavaScript callbacks. E.g. _"Ctrl-T:function(){alert('x');}"_.
+ * - __[auto-focus]__ - If true, the editor will get initial focus.
+ * - __[height]__ - Height in pixels, percent, or any other unit for editor. You can set this to _"auto"_ if you want the editor to be automatically resized according to its content.
+ * - __[.data-field]__ - Data field name, used when for instance serialising editor's content. Defaults to _"codemirror"_.
+ * - __[font-size]__ - Optional font size for content. If not given, will use user's settings, defaulting to _"9,25pt"_ if no settings exists.
+ * - __[tab-size]__ - Optional tab size. Defaults to 2.
+ * - __[read-only]__ - If true, widget is read only. Defaults to false.
+ * - __[class]__ - CSS class to use for wrapper widget. Defaults to _"micro-codemirror-wrapper"_.
+ * - __[style]__ - CSS styles to use for widget. Notice, will add font-size style automatically, to accommodate for CodeMirror settings.
+ * - __[oninit]__ - Lambda callback to be evaluated during initialization of widget.
  *
  * All other arguments are appended into the root container for the widget, allowing you to create for instance hidden attributes,
- * etc on the main container widget wrapping CodeMirror instance.
+ * etc, on the main container widget wrapping your CodeMirror instance.
  *
  * Notice, the CodeMirror widget does not support full screen mode if you instantiate it inside of a modal widget.
  */

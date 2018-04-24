@@ -1,8 +1,15 @@
 
 /*
- * Helper Active Event to toggle CSS class on one or more elements.
+ * Creates the __[micro.css.toggle]__ Active Event.
+ */
+
+/*
+ * This event allows you to toggle CSS class(es) on one or more widgets.
  *
- * Pass in [_arg] as widget ID and [class] as class(es) to toggle on widget.
+ * Pass in __[\_arg]__ as widget IDs and __[class]__ as CSS class(es)
+ * you want to toggle on widget. If any of the class(es) you pass in exists
+ * from before on widget, they will be removed - If they don't exist, they
+ * will be added.
  */
 create-event:micro.css.toggle
 

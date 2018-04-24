@@ -1,8 +1,13 @@
 
 /*
- * Helper Active Event to add CSS class(es) to one or more elements.
+ * Creates the __[micro.css.add]__ Active Event.
+ */
+
+/*
+ * This event allows you to add CSS class(es) to one or more widgets.
  *
- * Pass in [_arg] as widget ID and [class] as class(es) to add on widget.
+ * Pass in __[\_arg]__ as widget IDs and __[class]__ as CSS class(es)
+ * you want to add to widget.
  */
 create-event:micro.css.add
 

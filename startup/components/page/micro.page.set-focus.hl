@@ -1,8 +1,13 @@
 
 /*
- * Helper Active Event to set focus to the given [_arg] widget.
+ * Creates the __[micro.page.set-focus]__ Active Event.
+ */
+
+/*
+ * This event will allow you to set focus to the given __[\_arg]__ widget.
  *
- * If [no-select] is true, it will not select all text in any text widgets.
+ * If __[no-select]__ is true, it will not select all text in any text widgets,
+ * which is its default behavior.
  */
 create-event:micro.page.set-focus
 

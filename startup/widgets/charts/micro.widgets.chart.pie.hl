@@ -1,6 +1,9 @@
+
 /*
- * Creates the __[micro.widgets.chart.pie]__ _"pie chart widget"_.
- *
+ * Creates the __[micro.widgets.chart.pie]__ _"pie chart extension widget"_.
+ */
+
+/*
  * The pie chart widget allows you to illustrate a pie chart, with data items,
  * where each value of your data items creates a _"pie slice"_, with a relative size,
  * according to the sum of all data items.

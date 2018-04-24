@@ -1,6 +1,10 @@
 
 /*
- * Helper Active Event to return only the folder parts from a given path.
+ * Creates the __[micro.path.get-folder]__ Active Event.
+ */
+
+/*
+ * This event allows you to return only the folder parts from a given path.
  *
  * Will strip away the file from a specified path, if there is a file part, and
  * return only the folder of the given path.

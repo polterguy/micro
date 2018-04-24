@@ -1,6 +1,11 @@
 
 /*
- * Helper Active Event to verify expected optional "contract" arguments are given to lambda object correctly.
+ * Creates the __[micro.lambda.contract.optional]__ Active Event.
+ */
+
+/*
+ * Helper Active Event to verify expected optional _"contract"_ arguments are
+ * given (correctly) to lambda object.
  *
  * Loops through the given lambda object, given as [_arg], and verifies that if the expected arguments
  * are found in lambda object, that it obeys by the rules for the contract.

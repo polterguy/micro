@@ -1,11 +1,15 @@
 ﻿
 /*
+ * Creates the __[micro.page.minify-and-bundle-css-file]__ Active Event.
+ */
+
+/*
  * Will minify and bundle all specified CSS files,  and return path to minified 
  * version to caller.
  *
- * All bundles created this way, will be stored in "/common/documents/public/micro-css-cache/",
- * and all relative URLs inside of the CSS file will be updated, and end up having an "absolute path",
- * to avoid breaking relative references to for instance images and other "url()" references.
+ * All bundles created this way, will be stored in _"/common/documents/public/micro-css-cache/"_,
+ * and all relative URLs inside of the CSS file will be updated, and end up having an _"absolute path"_,
+ * to avoid breaking relative references to for instance images and other _"url()"_ references.
  */
 create-event:micro.page.minify-and-bundle-css-file
 

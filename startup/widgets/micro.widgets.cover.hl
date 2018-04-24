@@ -1,13 +1,19 @@
+
 /*
- * Creates the "cover" widget, which will cover the entire browser surface
- * with a semi transparent background, preventing interaction with any other
- * widgets on your page.
+ * Creates the __[micro.widgets.cover]__ extension widget.
+ */
+
+/*
+ * This widget creates a _"cover"_ widget, which will cover the entire browser
+ * surface with a semi transparent background, preventing interaction with any
+ * other widgets on your page - At least with your mouse.
  *
- * Pass in [message] to explicitly choose which text to display to user as he waits.
- * If you don't pass in a [message] argument, the default will be "Please wait ...".
- * All other arguments are used as is on main widget.
+ * Optionally pass in a __[message]__ argument to explicitly choose which text
+ * to display to the user. If you don't pass in an explicit __[message]__ argument,
+ * the default value will be _"Please wait ..."_. All other arguments are passed
+ * in as is to the main widget.
  *
- * The default class for the widget is "micro-widgets-cover".
+ * The default CSS class for the widget is _"micro-widgets-cover"_.
  */
 create-event:micro.widgets.cover
 

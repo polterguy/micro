@@ -1,10 +1,15 @@
 ﻿
 /*
- * Creates the Active Event responsible for downloading a file to client.
+ * Creates the __[micro.download.file]__ Active Event.
+ */
+
+/*
+ * This event is responsible for downloading a file to client.
  *
- * Pass in filename as [_arg], and any additional HTTP headers as key/value children.
- * If no [Content-Type] and/or [Content-Disposition] arguments are supplied, these will be 
- * intelligently deducted from the filename specified.
+ * Pass in filename as __[\_arg]__, and any additional HTTP headers as key/value children.
+ * If no __[Content-Type]__ and/or __[Content-Disposition]__ arguments are supplied, these will be 
+ * intelligently deducted from the filename specified, according to the default MIME
+ * configuration of your Phosphorus Five installation.
  */
 create-event:micro.download.file
 

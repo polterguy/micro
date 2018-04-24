@@ -1,9 +1,14 @@
+
 /*
- * Create the Active Event that allows user to invoke some piece of
- * Hyperlambda n milliseconds from now.
+ * Creates the __[micro.lambda.create-timeout]__ Active Event.
+ */
+
+/*
+ * This event allows the user to invoke some piece of Hyperlambda on the server
+ * some _'n'_ milliseconds from now.
  *
- * Expects [onfinish] to contain the lambda to be evaluated once [milliseconds]
- * have passed.
+ * Expects an __[onfinish]__ argument containing the lambda to be evaluated
+ * once __[milliseconds]__ number of milliseconds have passed.
  */
 create-event:micro.lambda.create-timeout
 
