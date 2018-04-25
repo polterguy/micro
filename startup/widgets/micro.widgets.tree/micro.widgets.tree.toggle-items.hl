@@ -1,13 +1,24 @@
 
 /*
- * Invoked when user wants to "toggle" one or more items.
- * Expects [items] collection.
+ * Creates the __[micro.widgets.tree.toggle-items]__ Active Event.
+ */
+
+/*
+ * This event allows you to _"toggle"_ one or more items, which implies expanding
+ * or collapsing some specified collection of __[items]__ in your tree.
  *
- * Notice, you can force this event to only expand items, by adding the [force-expand] argument, and set its
- * value to being true. If you do, it will not hide already expanded items.
- * This feature is used among other things during "unrolling" of items due to SEO friendly URLs being traversed.
+ * Notice, you can force this event to _only_ expand items, by adding a 
+ * __[force-expand]__ argument, and set its value to boolean _"true"_. If you do,
+ * the event will _not_ hide already expanded items, but only expand items not
+ * already expanded, by (possibly) invoking your __[.onexpand]__ lambda.
  */
 create-event:micro.widgets.tree.toggle-items
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    items
 
   /*
    * Looping through all [items] caller wants to toggle.

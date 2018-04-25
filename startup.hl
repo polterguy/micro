@@ -2,18 +2,18 @@
 /*
  * File responsible for initializing Micro.
  *
- * Creates three Active Events [p5.io.unroll-path.@MICRO] - Which evaluates to the "/micro/" folder, 
- * and is used as a "path variable".
+ * Creates three Active Events __[p5.io.unroll-path.@MICRO]__ - Which evaluates
+ * to the _"/micro/"_ folder, and is used as a _"path variable"_.
  *
- * In addition, it creates both of our [micro.evaluate.xxx] events, one called "file" and another caller "folder",
- * which allows you to evaluate a single Hyperlambda file or evaluate all Hyperlambda files inside of one specified 
- * folder recursively.
+ * In addition, it creates both of our __[micro.evaluate.xxx]__ events, one
+ * called _"file"_ and another caller _"folder"_, which allows you to evaluate
+ * a single Hyperlambda file, or evaluate all Hyperlambda files recursively
+ * inside of a specified folder.
  */
 
 
 /*
- * Creates the "path" Active Event that points to our "/micro/" folder.
- * This is done in such a way that we can install Micro in any folder we wish.
+ * Creates the _"path"_ Active Event that points to our _"/micro/"_ folder.
  */
 split:x:/..?name
   =:/
@@ -30,10 +30,10 @@ create-event:p5.io.unroll-path.@MICRO
 
 
 /*
- * Creates the Active Event that allows you to execute one or more Hyperlambda files. 
+ * This Active Event allows you to execute one or more Hyperlambda files. 
  *
- * The Hyperlambda file(s) you wish to execute is given as [_arg].
- * All other arguments will be passed into your execution as is.
+ * The Hyperlambda file(s) you wish to execute is given as __[\_arg]__.
+ * All other arguments will be passed into your files as arguments.
  */
 create-event:micro.evaluate.file
 
@@ -41,6 +41,12 @@ create-event:micro.evaluate.file
    * Used as "signal object" to separate arguments from the rest of the lambda.
    */
   .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * Loading up all files given as [_arg] arguments.
@@ -73,8 +79,8 @@ create-event:micro.evaluate.file
 /*
  * Evaluates all Hyperlambda files within the specified folder(s) recursively.
  *
- * The Hyperlambda folder(s) you wish to execute is given as [_arg].
- * All other arguments will be passed into your execution as is.
+ * The Hyperlambda folder(s) you wish to execute is given as __[\_arg]__.
+ * All other arguments will be passed into your files as they are being evaluated.
  */
 create-event:micro.evaluate.folder
 
@@ -82,6 +88,12 @@ create-event:micro.evaluate.folder
    * Used as "signal object" to separate arguments from the rest of the lambda.
    */
   .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * Listing all Hyperlambda files in directories we're given.

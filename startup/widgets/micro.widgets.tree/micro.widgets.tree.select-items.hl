@@ -1,13 +1,24 @@
 ﻿
 /*
- * Invoke this to select items in the widget.
+ * Creates the __[micro.widgets.tree.select-items]__ Active Event.
+ */
+
+/*
+ * This event allows you to explicitly select some __[items]__ in your
+ * __[micro.widgets.tree]__ widget.
  *
- * [_arg] must be the ID of the main tree widget.
- * [items] must be a collection of items to select.
+ * Pass in __[\_arg]__ as the ID of the main tree widget you want to select items
+ * within. __[items]__ must be a collection of items to select.
  *
- * Notice, all previously selected items are de-selected.
+ * **Notice**, all previously selected items are de-selected.
  */
 create-event:micro.widgets.tree.select-items
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    items
 
   /*
    * First finding all previously selected items, and de-selecting them.

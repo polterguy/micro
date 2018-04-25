@@ -1,32 +1,46 @@
+
 /*
- * Creates an upload widget extension button.
+ * Creates the __[micro.widgets.upload-button]__ extension widget.
+ */
+
+/*
+ * This widget allows you to easily handle uploading of file(s) in your modules.
  *
- * Pass in [.onupload] as lambda callback for what to do when one or more files are uploaded.
- * Optionally pass in [multiple] to allow for multiple files being uploaded.
- * Optionally also pass in a [accept] argument, which is a comma separated list of legal
- * file extensions, such as e.g. ".png,.jpg,.jpeg,.gif" etc.
- * All other arguments will become attributes/properties of actual button itself.
- * This allows you to override the [class] and [style] attributes of the upload button, as
- * you see fit.
- * Notice, the button will be rendered with a span "icon-upload2" icon as a child element.
+ * Pass in __[.onupload]__ as a lambda callback for what to do when one or more
+ * files have been uploaded. Optionally pass in __[multiple]__ to allow for
+ * multiple files being uploaded, and/or an __[accept]__ argument, which is a
+ * comma separated list of legal file extensions, such as for instance
+ * _".png,.jpg,.jpeg,.gif"_.
  *
- * Notice, when one or more files have been uploaded, your [.onupload] lambda callback
- * will be invoked, with a [files] list, with each file as physically existing on disc
- * as a child of this list, and its original filename as a child of each physical file.
- * This is necessary to make sure we have unique physical filenames on our server, to avoid
- * having different files overwrite each other. An example of how this might look like can be
- * found below.
+ * All other arguments will become attributes/properties of the actual button
+ * itself. This allows you to for instance override its __[class]__ and
+ * __[style]__ attributes.
  *
+ * Notice, the button will be rendered with a span _"icon-upload2"_ icon as a
+ * child element. If you want to change the icon, you can do this by styling your
+ * widget, by for instance using a custom CSS class.
+ *
+ * Notice, when one or more files have been uploaded, your __[.onupload]__
+ * lambda callback will be evaluated, with a __[files]__ list, with each file
+ * as physically existing on disc as a child of this list, and its original
+ * filename as a child of each physical file. This is necessary to make sure we
+ * have unique physical filenames on our server, to avoid having different files
+ * overwrite each other. An example of how this might look like can be found below.
+ *
+ * ```
  * files
- *  physical-file:/users/root/temp/0efc121b42e241bdb8b5ba6e37deafa2-DUiRsjqXUAAgANI.jpg
- *    original-filename:DUiRsjqXUAAgANI.jpg
- *  physical-file:/users/root/temp/b04e930103bd4fe8a63e247f56cc9af8-todo.txt
- *    original-filename:todo.txt
+ *   physical-file:/users/root/temp/865afc-foo.jpg
+ *     original-filename:foo.jpg
+ *   physical-file:/users/root/temp/fea567-todo.txt
+ *     original-filename:todo.txt
+ * ```
  *
- * The [physical-file] parts above is the file, as it physically exists on your server.
- * The [original-filename] is the name of the file as it was on the client.
- * You are responsible for moving your file yourself, by invoking e.g. [move-file] or something
- * similar, if you want to keep your file somewhere on your server.
+ * The __[physical-file]__ parts above is the file, as it physically exists on
+ * your server, and the __[original-filename]__ is the name of the file as it
+ * was on the client. You are responsible for moving your file yourself, by
+ * invoking e.g. __[move-file]__ or something similar, if you want to keep your
+ * file somewhere on your server. All files are uploaded by default to your user's
+ * _"/temp/"_ folder.
  */
 create-event:micro.widgets.upload-button
 

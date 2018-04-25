@@ -1,14 +1,26 @@
+
 /*
- * Creates a small "information bubble" window, that will be displayed on the page for n seconds,
- * before automatically disappearing.
- * Notice, the user can also click it to make it vanish faster.
+ * Creates the __[micro.windows.info]__ Active Event.
+ */
+
+/*
+ * This event creates a small _"information bubble"_ window, that will be
+ * displayed on the page for some few seconds, before automatically disappearing.
  *
- * Pass in text to display as [_arg].
- * Optionally pass in [parent] as parent widget to where to display window, [class] to override default
- * class or [onclick] to provide a user defined lambda callback that will be invoked when user clicks
- * the bubble window.
+ * Pass in text to display as __[\_arg]__.
+ * Optionally pass in __[parent]__ as the parent widget and __[class]__ to
+ * override its default CSS class.
  */
 create-event:micro.windows.info
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+  micro.lambda.contract.optional:x:/..
+    parent:string
+    class:string
 
   /*
    * Deleting any previously created information bubbles.

@@ -1,8 +1,12 @@
 ﻿
 /*
- * Invoke this to delete all [items] from your widget.
- *
- * [_arg] must be the ID of the main tree widget.
+ * Creates the __[micro.widgets.tree.delete-items]__ Active Event.
+ */
+
+/*
+ * This event allows you to delete all specified __[items]__ from your specified
+ * __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the ID of your
+ * tree widget.
  */
 create-event:micro.widgets.tree.delete-items
 

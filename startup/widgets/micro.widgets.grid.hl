@@ -1,21 +1,25 @@
 
 /*
- * Creates the grid extension widget.
+ * Creates the __[micro.widgets.grid]__ extension widget.
+ */
+
+/*
+ * The widget is the equivalent of a _"datagrid"_ in Micro, and allows you to
+ * create table type of widgets.
  *
- * The [micro.widgets.grid] extension widget is the equivalent of a "datagrid" in Micro, and allows you to create tabular data,
- * and by extending it yourself, creating specialized datagrid widgets.
+ * Optionally pass in a collection of __[columns]__ as your columns, and a
+ * collection of __[rows]__ as your initial data rows. Use __[micro.widgets.grid.databind]__
+ * to databind the grid towards a (different) row collection later.
  *
- * Pass in a collection of [columns] as your columns, and optionally a collection of [rows] as your initial rows.
- * Use [micro.widgets.grid.databind] to databind the grid towards a (different) row collection later.
+ * Both the __[columns]__ and the __[rows]__ arguments to your
+ * __[micro.widgets.grid.databind]__ invocation must be in a similar format as
+ * the arguments supplied during creation. Your __[rows]__ argument is expected
+ * to be a collection of __[item]__ nodes, each having multiple nodes for each
+ * cell in your grid, where the value becomes the displayed text.
  *
- * Both the [columns] and the arguments to [micro.widgets.grid.databind] must be in a similar format, which is a collection
- * of [item] nodes, each having multiple nodes for each cell in your grid, where the value becomes the displayed text.
- * Alternatively, you can supply [widgets] collection to one or more of your cell within an [item], which will render
- * your cell as a container widget, with the supplied [widgets] collection as its content.
- * All other arguments to your cells, becomes properties/attributes to your cells ('td' elements).
- *
- * Your [columns] collection obeys by similar rules, and are by default a simple collection of name strings,
- * which will become the inner value of your cells. If you 
+ * Optionally, you can supply __[widgets]__ collection to one or more of items,
+ * in both your columns and your rows. All other arguments to your cells, becomes
+ * properties/attributes to your cells (_'td'_ elements).
  */
 create-event:micro.widgets.grid
 
@@ -126,11 +130,12 @@ create-event:micro.widgets.grid
 
 
 /*
- * Databinds the [_arg] grid.
+ * Databinds the specified __[\_arg]__ grid.
  *
- * Expects an [item] collection, similarly to the content of the [rows] argument when grid was created.
- * Optionally pass in [keep-items] and set its value to boolean "true" if you don't wish to clear
- * out existing items in grid, but rather add additional items to the grid.
+ * Expects an __[item]__ collection, similarly to the content of the __[rows]__
+ * argument when the grid was created. Optionally pass in __[keep-items]__ and
+ * set its value to boolean _"true"_ if you don't want to clear its existing
+ * items, but rather add additional items to the grid.
  */
 create-event:micro.widgets.grid.databind
 

@@ -1,29 +1,34 @@
+
 /*
- * Helper Active Event to inject a PayPal button, which once clicked, will allow
- * the user to perform a purchase at PayPal, before some action is taken.
+ * Creates the __[micro.widgets.paypal-button]__ extension widget.
+ */
+
+/*
+ * This widget injects a PayPal button on your page, allowing you to accept
+ * payments from your visitors.
  *
- * Requires [.onok] lambda callback, which will be invoked when the purchase has 
- * successfully been accepted - In addition to a [price] and (optionally) a [currency] 
- * argument.
+ * The widget requires an __[.onok]__ lambda callback, which will be invoked when
+ * the purchase has  successfully been accepted - In addition to a __[price]__
+ * and (optionally) a __[currency]__ argument.
  *
- * Optionally pass in a [custom] piece of text, that will be associated with the
+ * Optionally pass in a __[custom]__ piece of text, that will be associated with the
  * payment, in your PayPal report.
  *
- * [currency] defaults to "EUR" if omitted.
+ * The __[currency]__ argument defaults to _"EUR"_ if omitted, implying EUROs.
  *
  * Notice, this will render a PayPal button according to your web.config settings, 
- * and more explicitly the "paypal.xxx" parts of your web.config settings.
- *
+ * and more explicitly the _"paypal.xxx"_ parts of your web.config settings.
  * However, you can override the "paypal.xxx" values if you wish, to rather
  * use specific PayPal keys, instead of the default key values from web.config.
  *
- * If you wish to override the key, provide a [paypal.production] argument, being
- * the PayPal key you wish to use instead of your web.config value.
- * You can also override [paypal.sandbox] and [paypal.type] if you wish.
+ * If you wish to override the key, provide a __[paypal.production]__ argument,
+ * being the PayPal key you wish to use instead of your web.config value.
+ * You can also override __[paypal.sandbox]__ and __[paypal.type]__ if you wish.
+ * If you set the paypal.sandbox argument, and you set paypal.type to _"sandbox"_,
+ * you can test your widget with your PayPal developer test account.
  *
- * Basically, once the PayPal button is clicked, it will open up a modal window,
- * allowing the user to purchase "something", and once that something has been 
- * purchased, your [.onok] lambda callback will be invoked.
+ * The widget will open up a modal window when clicked, using PayPal's JavaScript
+ * API.
  */
 create-event:micro.widgets.paypal-button
 
@@ -158,8 +163,12 @@ paypal.Button.render({{
 
 
 /*
- * Helper file to ensure PayPal's "checkout.js" file is locally cached, to avoid
+ * Helper event to ensure PayPal's _"checkout.js"_ file is locally cached, to avoid
  * CORS problems.
+ *
+ * **Notice**, if you intend to use the __[micro.widgets.paypal-button]__ extension
+ * widget on your page, you _must_ invoke this event during your page's initial
+ * page load, due to the way that PayPal's servers are setup.
  */
 create-event:micro.widgets.paypal-button.ensure-checkout-js
 

@@ -1,14 +1,22 @@
+
 /*
- * An extension widget that will automatically load all Hyperlambda files
- * from the given [folder], and append these as children to itself.
+ * Creates the __[micro.widgets.file]__ extension widget.
+ */
+
+/*
+ * This widget will automatically load all specified Hyperlambda files,
+ * and append these as children to itself. You can supply widgets to it with
+ * the following arguments.
  *
- * Pass in [folder] and/or [files] to declare which files or folder you wish to
- * load your plugins from.
- * All other arguments are passed in "as is".
+ * - __[folder]__ - Will load all Hyperlambda files from a specified folder, and treat these as widgets.
+ * - __[files]__ - Will load all files specified as children arguments, and treat these as widgets
+ * - __[widgets]__ - A plain collection of widgets
  *
- * Notice, you can also add static widgets to this widget, by adding a [widgets]
- * collection, which will also become a part of the widget's children widget
- * collection.
+ * All other arguments are passed in _"as is"_. The arguments above are handled in
+ * order of appearance, allowing you to at least to some extent control the order
+ * of your widgets. All arguments beneath each file, inside your __[files]__ argument,
+ * are appended to the specified files after loading. All arguments to your __[folder]__
+ * argument, are appended into all files that are loaded from your folder.
  */
 create-event:micro.widgets.file
 

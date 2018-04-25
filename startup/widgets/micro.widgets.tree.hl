@@ -1,20 +1,29 @@
+
 /*
- * Creates an Ajax TreeView widget, which allows for hierarchically browsing relational tree structures, such as for instance a file
- * system, etc.
- *
- * Arguments;
+ * Creates the __[micro.widgets.tree]__ extension widget.
+ */
+
+/*
+ * This widget allows for hierarchically browsing relational tree structures,
+ * such as for instance a file system, etc. Below are the most common arguments
+ * for the widget.
  * 
- * [items]            - Collection of items to show initially as "root items".
- *                      The name of its children nodes is what is displayed to the user, and the value is the "id" of the
- *                      item, used to uniquely identify the item, when the item is clicked for instance, etc.
- *                      Optionally you can supply child nodes for each item, declaring the CSS classes used to display it as [_class-close]
- *                      and [_class-open]. Their default values are "icon folder-close" and "icon folder-open".
- * [.onexpand]        - Callback lambda evaluated when the tree need more items.
- *                      Callback will be given [_item-id] for which item to retrieve children of.
- *                      Callback is expected to return an [items] collection, similarly to when the tree is initially created.
- *                      See [items] above to understand the collection the tree widget expects.
- * [.onselect]        - Callback lambda to invoke when an item is selected. Notice, if the same tree item is clicked twice, a [double-click] will
- *                      be passed in, and its value will be boolean true.
+ * - __[items]__ - Collection of items to show initially as _"root items"_.
+ * The name of its children nodes is what is displayed to the user, and the
+ * value is the _"id"_ of the item, used to uniquely identify the item, when
+ * the item is clicked for instance, etc. Optionally you can supply child nodes
+ * for each item, and declare the CSS classes used to display it as __[\_class-close]__
+ * and __[\_class-open]__. Their default values are _"icon folder-close"_ and
+ * _"icon folder-open"_.
+ * - __[.onexpand]__ - An optional callback lambda evaluated when the tree need
+ * more items. The callback will be given an __[\_item-id]__ argument for which
+ * item it wants to retrieve children for. The callback is expected to return
+ * an __[items]__ collection, similar to the one specified when the tree is
+ * initially created.
+ * - __[.onselect]__ - Callback lambda to invoke when an item is selected.
+ *
+ * All other arguments are passed in _"as is"_. The widget's default CSS class,
+ * unless overridden, is _"micro-widgets-tree"_.
  */
 create-event:micro.widgets.tree
 
@@ -23,6 +32,15 @@ create-event:micro.widgets.tree
    */
   .defaults
     class:micro-widgets-tree
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    items
+  micro.lambda.contract.optional:x:/..
+    .onexpand
+    .onselect
 
   /*
    * Making sure caller supplied at the very least one item.

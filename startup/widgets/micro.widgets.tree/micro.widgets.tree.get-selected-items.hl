@@ -1,11 +1,15 @@
 
 /*
- * Invoke this to retrieve currently selected item(s) of widget.
- *
- * [_arg] must be the ID of the main tree widget.
+ * Creates the __[micro.widgets.tree.get-selected-items]__ Active Event.
+ */
+
+/*
+ * This event allows you to retrieve the currently selected item(s) from a
+ * specified __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the
+ * ID of tree widget you want to retrieve the selected items from.
  * 
- * The event will return an [items] coollection, where the name of the nodes, are the IDs of all
- * items that are currently selected in your tree.
+ * The event will return an __[items]__ collection, where the name of the nodes,
+ * are the IDs of all items that are currently selected in your tree.
  */
 create-event:micro.widgets.tree.get-selected-items
 

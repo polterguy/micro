@@ -1,12 +1,16 @@
 /*
- * Creates the Modal extension widget.
+ * Creates the __[micro.widgets.modal]__ extension widget.
+ */
+
+/*
+ * This extension widget allows you to create a _"modal window"_, which prevents
+ * the user from interacting with any widgets on the page, besides the widgets
+ * that are inside of your modal window.
  *
- * Notice, the [widget] collection of this widget, will be appended into the actual content parts
- * of the widget, while all other arguments will be simply appended as is into the root widget,
- * which actually is an "obscurer" that is shown in fixed position, obscuring all other widgets on page.
- *
- * Unless you want to explicitly override the default CSS classes, you should at the very least supply
- * a [class] argument, having a value of "micro-widgets-modal".
+ * It requires a __[widgets]__ collection, being a bunch of widgets that will
+ * occupy the widget's main surface. All other arguments will be passed in
+ * _"as is"_, which implies that they'll be added to the cover widget, which
+ * prevents the user from interacting with other widgets on your page.
  */
 create-event:micro.widgets.modal
 

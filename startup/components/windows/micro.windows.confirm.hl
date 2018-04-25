@@ -1,9 +1,16 @@
+
 /*
- * Creates a modal confirmation window, that asks the user to confirm some action, by
- * clicking a "Yes" button, before some lambda object is evaluated.
+ * Creates the __[micro.windows.confirm]__ Active Event.
+ */
+
+/*
+ * This event creates a convenience wrapper for you around the
+ * __[micro.widgets.modal]__ extension widget, serving as a _"confirmation"_
+ * window.
  *
- * Pass in [header], [body] and [onok] as the lambda object to evaluate if the user
- * clicks the "Yes" button.
+ * The event expects an __[onok]__ lambda callback, which will be invoked only
+ * if the user actually confirms the action. Optionally pass in __[header]__ and
+ * __[body]__ to display some custom header and/or text to the user.
  */
 create-event:micro.windows.confirm
 
