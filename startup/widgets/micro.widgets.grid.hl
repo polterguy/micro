@@ -1,6 +1,6 @@
-
 /*
- * Creates the __[micro.widgets.grid]__ extension widget.
+ * Creates the __[micro.widgets.grid]__ extension widget, and its associated
+ * helper Active Events.
  */
 
 /*
@@ -27,6 +27,14 @@ create-event:micro.widgets.grid
    * Used to separate parameters from the rest of the event.
    */
   .signal
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.optional:x:/..
+    columns
+    rows
+      item
 
   /*
    * Adding columns, if there are any.
@@ -136,6 +144,9 @@ create-event:micro.widgets.grid
  * argument when the grid was created. Optionally pass in __[keep-items]__ and
  * set its value to boolean _"true"_ if you don't want to clear its existing
  * items, but rather add additional items to the grid.
+ *
+ * The latter allows you to among other things implement a _"never ending scrolling"_
+ * type of grid.
  */
 create-event:micro.widgets.grid.databind
 
@@ -143,6 +154,13 @@ create-event:micro.widgets.grid.databind
    * Signal node, to separate arguments from the rest of the lambda object of the event.
    */
   .signal
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+    item
 
   /*
    * Finding the "tbody" element of the grid, and clearing it of its previous items,

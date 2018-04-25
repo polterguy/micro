@@ -1,4 +1,3 @@
-﻿
 /*
  * Creates the __[micro.widgets.tree.refresh-items]__ Active Event.
  */
@@ -6,9 +5,12 @@
 /*
  * This event allows you to _"refresh"_ children items in the specified
  * __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the ID of
- * your main tree widget. This event will delete all specified __[items]__ from
- * your widget, and re-invoke your __[.onexpand]__ lambda for these items,
- * to re-retrieve them, and re-create that particular level in your tree view.
+ * your main tree widget.
+ *
+ * This event will delete all specified __[items]__ from your widget,
+ * and re-invoke your __[.onexpand]__ lambda for these items, to
+ * re-retrieve them, and re-create that particular level in your tree
+ * view.
  */
 create-event:micro.widgets.tree.refresh-items
 
@@ -16,6 +18,7 @@ create-event:micro.widgets.tree.refresh-items
    * Sanity checking arguments.
    */
   micro.lambda.contract.min:x:/..
+    _arg:string
     items
 
   /*

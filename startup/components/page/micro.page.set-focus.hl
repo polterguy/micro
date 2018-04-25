@@ -6,10 +6,16 @@
 /*
  * This event will allow you to set focus to the given __[\_arg]__ widget.
  *
- * If __[no-select]__ is true, it will not select all text in any text widgets,
+ * If __[no-select]__ is true, it will _not_ select all text in any text widgets,
  * which is its default behavior.
  */
 create-event:micro.page.set-focus
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * Checking if caller supplied [no-select].

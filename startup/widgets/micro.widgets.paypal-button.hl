@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.paypal-button]__ extension widget.
  */
@@ -21,14 +20,25 @@
  * However, you can override the "paypal.xxx" values if you wish, to rather
  * use specific PayPal keys, instead of the default key values from web.config.
  *
- * If you wish to override the key, provide a __[paypal.production]__ argument,
- * being the PayPal key you wish to use instead of your web.config value.
+ * If you wish to override the PayPal API key(s), provide a __[paypal.production]__
+ * argument, being the PayPal key you wish to use instead of your web.config value.
  * You can also override __[paypal.sandbox]__ and __[paypal.type]__ if you wish.
- * If you set the paypal.sandbox argument, and you set paypal.type to _"sandbox"_,
- * you can test your widget with your PayPal developer test account.
+ * If you set the paypal.sandbox argument to your _"sandbox"_ PayPal API key,
+ * and you set paypal.type to _"sandbox"_, you can test your widget with your
+ * PayPal developer test account.
  *
  * The widget will open up a modal window when clicked, using PayPal's JavaScript
  * API.
+ *
+ * **Notice**, if you want to use the PayPal button, you'll have to make sure
+ * the PayPal JavaScript file is included on the initial pageload of your page.
+ * You can ensure this by invoking the __[micro.widgets.paypal-button.ensure-checkout-js]__
+ * Active Event during your initial pageload, for then to create your PayPal
+ * button widget in a callback (if you wish).
+ *
+ * The PayPal button widget will however automatically include PayPal's
+ * JavaScript file, so unless you intend to create your PayPal button(s)
+ * during an Ajax callback, the above point is mute.
  */
 create-event:micro.widgets.paypal-button
 

@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.tree.toggle-items]__ Active Event.
  */
@@ -18,7 +17,10 @@ create-event:micro.widgets.tree.toggle-items
    * Sanity checking arguments.
    */
   micro.lambda.contract.min:x:/..
+    _arg:string
     items
+  micro.lambda.contract.optional:x:/..
+    force-expand:bool
 
   /*
    * Looping through all [items] caller wants to toggle.

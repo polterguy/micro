@@ -4,12 +4,20 @@
  */
 
 /*
- * Will minify and bundle all specified CSS files,  and return path to minified 
- * version to caller.
+ * This event will minify and bundle all specified CSS files, and include the
+ * minified and bundled CSS file on your page.
  *
- * All bundles created this way, will be stored in _"/common/documents/public/micro-css-cache/"_,
- * and all relative URLs inside of the CSS file will be updated, and end up having an _"absolute path"_,
- * to avoid breaking relative references to for instance images and other _"url()"_ references.
+ * All bundles created this way, will be stored in your
+ * _"/common/documents/public/micro-css-cache/"_ folder, and all relative URLs
+ * inside of the CSS file will be updated, and end up with an _"absolute path"_,
+ * to avoid breaking relative references to for instance images and other
+ * _"url()"_ type of references.
+ *
+ * The event will determine what filename to use for your bundle by doing a hash
+ * on your filenames, and check if there already exists a cached bundled file,
+ * before performing the actual bundling and minification - Implying that it
+ * will only bundle and minify the same arguments it is given _once_, making it
+ * fairly fast in terms of execution speed.
  */
 create-event:micro.page.minify-and-bundle-css-file
 
@@ -19,6 +27,12 @@ create-event:micro.page.minify-and-bundle-css-file
    * Also used to store all CSS file, as names of children nodes.
    */
   .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * Looping through each CSS file supplied as arguments, and appending into

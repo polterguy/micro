@@ -21,6 +21,14 @@ create-event:micro.widgets.tab
   .signal
 
   /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    view
+      name:string
+      widgets
+
+  /*
    * Adding "hamburger toggle button".
    */
   add:x:/../*/return/**/widgets/=buttons

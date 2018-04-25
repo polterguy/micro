@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.chart.pie]__ _"pie chart extension widget"_.
  */
@@ -12,17 +11,18 @@
  * The label is the name of your data item, and the value is its (number) value.
  *
  * Optionally pass in **[legend]**, and set its value to boolean _"false"_, if you
- * do not want to have a legende associated with your pie chart. By default a legend
+ * do not want to have a legend associated with your pie chart. By default a legend
  * will be created, and it will occupy 40% of your chart's width.
  *
  * All arguments beneath the optional __[legend]__ argument will be appended as
- * arguments to your legend widget, and all arguments beneath the optional __[pie]__
+ * arguments to your legend widget. All arguments beneath the optional __[pie]__
  * argument will be appended to your actual pie widget. This allows you to (for instance)
  * override style properties, both for the pie itself, and the legend.
  *
  * All arguments beneath the main __[micro.widgets.chart.pie]__ node, will be
  * appended to the main root widget, which is a _"div"_ element, allowing you to
- * for instance create DOM events for the widget as a whole, etc.
+ * for instance create DOM events for the widget as a whole, and/or modify its
+ * CSS class, etc.
  *
  * The width of the pie chart is calculated according to its parent element, unless
  * explicitly overridden with for instance a style argument. The chart as a whole

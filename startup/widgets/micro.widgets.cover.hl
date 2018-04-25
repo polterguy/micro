@@ -23,6 +23,12 @@ create-event:micro.widgets.cover
   .signal
 
   /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.optional:x:/..
+    message:string
+
+  /*
    * Defaults.
    */
   .defaults

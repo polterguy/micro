@@ -4,9 +4,9 @@
  */
 
 /*
- * This event allows you to scroll some element into view.
+ * This event allows you to scroll some widget into view.
  *
- * Requires __[\_arg]__ being the ID of element to scroll into view on the client.
+ * Requires __[\_arg]__ being the ID of widget to scroll into view on the client.
  */
 create-event:micro.page.scroll-into-view
 

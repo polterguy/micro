@@ -1,4 +1,3 @@
-﻿
 /*
  * Creates the __[micro.widgets.tree.delete-items]__ Active Event.
  */
@@ -9,6 +8,13 @@
  * tree widget.
  */
 create-event:micro.widgets.tree.delete-items
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+    items
 
   /*
    * Looping through all [items] and deletes them from the tree.

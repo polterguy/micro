@@ -6,7 +6,7 @@
 /*
  * This event creates a convenience wrapper for you around the
  * __[micro.widgets.modal]__ extension widget, serving as a _"confirmation"_
- * window.
+ * type of window.
  *
  * The event expects an __[onok]__ lambda callback, which will be invoked only
  * if the user actually confirms the action. Optionally pass in __[header]__ and

@@ -4,13 +4,15 @@
  */
 
 /*
- * This event requires at the very least an __[\_arg]__ argument, being the text
- * to speak, in addition to optionally a __[voice]__, which defaults to _"en"_.
+ * This event will create a speech utterance object on the client, and speak out
+ * loud your given __[\_arg]__ argument. Optionally pass in a __[voice]__ argument,
+ * to override what voice/language to use. The default value of __[voice]__
+ * is _"en"_, implying _"English"_.
  *
  * The __[voice]__ argument can contain both a locale parts, and a named voice,
- * such as e.g. _"Veronica,en"_, which will use _"Veronica"_ voice, if it exists,
- * and is English. Otherwise, it'll default to the first _"en"_ (English) voice
- * it can find.
+ * such as e.g. _"Veronica,en"_, which will use the _"Veronica"_ voice, if it exists.
+ * If it can't find a _"Veronica"_ voice, it will default to the first _"en"_
+ * (English) voice it can find.
  *
  * Optionally supply __[pitch]__ and __[rate]__ to further parametrize the speech
  * utterance object on the client side.

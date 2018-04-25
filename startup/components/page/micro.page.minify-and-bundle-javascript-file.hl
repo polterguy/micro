@@ -4,10 +4,17 @@
  */
 
 /*
- * Will minify and bundle all specified JavaScript files, and include bundle file
- * on your page.
+ * This event will minify and bundle all specified JavaScript files, and include
+ * the minified and bundled JS file on your page.
  *
- * All bundles created this way, will be stored in _"/common/documents/public/micro-javascript-cache/"_.
+ * All bundles created this way, will be stored in your
+ * _"/common/documents/public/micro-javascript-cache/"_ folder.
+ *
+ * The event will determine what filename to use for your bundle by doing a hash
+ * on your filenames, and check if there already exists a cached bundled file,
+ * before performing the actual bundling and minification - Implying that it
+ * will only bundle and minify the same arguments it is given _once_, making it
+ * fairly fast in terms of execution speed.
  */
 create-event:micro.page.minify-and-bundle-javascript-file
 
@@ -17,6 +24,12 @@ create-event:micro.page.minify-and-bundle-javascript-file
    * Also used to store all CSS file, as names of children nodes.
    */
   .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * Looping through each CSS file supplied as arguments, and appending into

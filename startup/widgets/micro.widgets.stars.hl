@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.stars]__ extension widget.
  */
@@ -15,9 +14,9 @@
  * 5 will be used.
  *
  * In addition, you can optionally pass in __[read-only]__ and set its value to
- * true, at which point it's not possible to modify the value of the widget.
- * All other arguments are added as attributes/properties to your main widget 
- * being rendered.
+ * boolean _"true"_, at which point it's not possible to modify the value of
+ * the widget. All other arguments are added as attributes/properties to your
+ * main widget.
  *
  * The widget's default CSS class, if none is given, is _"micro-widgets-stars"_.
  */

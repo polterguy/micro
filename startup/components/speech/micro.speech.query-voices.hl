@@ -5,18 +5,22 @@
 
 /*
  * This event allows the caller to query what languages and voices exists on the
- * current client.
+ * client for speech utterance, or to use as text to speech languages.
  *
  * The event will invoke the specified __[onfinish]__ lambda callback when voices
  * have been retrieved. Your __[onfinish]__ lambda will be invoked with a
- * __[voices]__ argument being the supported voices for the current client.
+ * __[voices]__ argument being a collection of voices that the client supports.
  *
  * Internally, this might requires a roundtrip to the client, injecting a
  * JavaScript component, which then invokes the server again asynchronously
  * the first time you invoke this event. This is necessary, since the client 
  * is the one who knows which supported voices and languages it has, and there
  * is no ways to determine this, without having the client inform the server
- * about which voices it supports.
+ * about what voices it supports.
+ *
+ * On consecutive invocations, the event will use a server side cached value to
+ * invoke your lambda. This implies that only the first time you invoke this
+ * event, it will actually require a roundtrip to the client.
  */
 create-event:micro.speech.speak.query-voices
 

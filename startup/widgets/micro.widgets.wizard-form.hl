@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.wizard-form]__ extension widget.
  */
@@ -13,6 +12,13 @@
  * - __[checkbox]__ - Creates a checkbox input widget, requires __[info]__ argument.
  * - __[select]__ - Creates a select dropdown widget, requires __[info]__ argument.
  * - __[radio-group]__ - Creates a group of radio buttons.
+ * - __[collection]__ - A nested wizard form.
+ *
+ * All other arguments, except __[visible]__, __[class]__ and __[style]__ are
+ * assumed being custom widgets, and injected into their correctly position,
+ * as plain widgets - Unless it contains a _"."_, at which point it is assumed
+ * to be a hidden attribute/property of your main root wizard widget. Style, class
+ * and visible are assumed to be simple arguments to your main wizard widget.
  *
  * The __[info]__ arguments above becomes your widgets' descriptive labels.
  *
@@ -34,13 +40,13 @@
  * __[micro.form.serialize]__ event to retrieve all values of a specific form
  * in your page.
  *
- * Notice, when used in combination with [micro.form.serialize], you can add
- * a __[.data-field]__ to most widgets, to avoid using the widget ID
- * as a data-field name, for cases when you have multiple form widgets with
- * unpredictable names on your form. If you do, you'll probably want to add a
- * __[.data-value]__ for every __[radio-group]__ option element. The
- * __[.data-field]__ will be what is returned for the specific widget during
- * invocation of __[micro.form.serialize]__.
+ * Notice, when used in combination with the __[micro.form.serialize]__
+ * Active Event, you can add a __[.data-field]__ to most widgets, to avoid
+ * using the widget ID as a data-field name, for cases when you have multiple
+ * form widgets with unpredictable names in your form. If you do, you'll
+ * probably want to add a __[.data-value]__ for every __[radio-group]__
+ * option element. The __[.data-field]__ argument will be what is returned
+ * for the specific widget during invocations to __[micro.form.serialize]__.
  *
  * You don't need to add a __[.data-value]__ for your select widget's option
  * elements, since these values will be taken from the option element's value,

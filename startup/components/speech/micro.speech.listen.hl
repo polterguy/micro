@@ -6,9 +6,9 @@
 /*
  * This event allows you to listen for speech recognition on the client.
  *
- * Will initiate a speech recognition input object on the client, and invoking
- * the specified __[onfinish]__ when some text has been captured, passing the
- * recognized text onwards to your lambda as a __[text]__ argument.
+ * The event will initiate a speech recognition input object on the client,
+ * and invoking the specified __[onfinish]__ when some text has been captured,
+ * passing in the recognized text to your lambda as a __[text]__ argument.
  *
  * Optionally pass in __[lang]__ as language to capture. The default value for
  * __[lang]__ is _"en"_ implying English.

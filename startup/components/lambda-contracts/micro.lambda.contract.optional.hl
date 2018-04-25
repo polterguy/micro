@@ -7,7 +7,7 @@
  * Helper Active Event to verify expected optional _"contract"_ arguments are
  * given (correctly) to lambda object.
  *
- * Loops through the given lambda object, given as [_arg], and verifies that if the expected arguments
+ * Loops through the given lambda object, given as __[\_arg]__, and verifies that if the expected arguments
  * are found in lambda object, that it obeys by the rules for the contract.
  *
  * You can declare the expected type of your argument's value as the value of your contract

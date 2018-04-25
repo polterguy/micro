@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.tree.get-selected-items]__ Active Event.
  */
@@ -6,12 +5,18 @@
 /*
  * This event allows you to retrieve the currently selected item(s) from a
  * specified __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the
- * ID of tree widget you want to retrieve the selected items from.
- * 
+ * ID of the tree widget.
+ *
  * The event will return an __[items]__ collection, where the name of the nodes,
  * are the IDs of all items that are currently selected in your tree.
  */
 create-event:micro.widgets.tree.get-selected-items
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * This is the tree caller requested to retrieve selected items in.

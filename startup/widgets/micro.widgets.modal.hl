@@ -20,6 +20,12 @@ create-event:micro.widgets.modal
   .signal
 
   /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    widgets
+
+  /*
    * Adding all [widgets] into container widget for modal window.
    */
   add:x:/../*/return/**/widgets/=widgets

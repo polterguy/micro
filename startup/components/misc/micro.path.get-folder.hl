@@ -6,10 +6,16 @@
 /*
  * This event allows you to return only the folder parts from a given path.
  *
- * Will strip away the file from a specified path, if there is a file part, and
- * return only the folder of the given path.
+ * Will strip away the filename from a specified path, if there is a file part,
+ * and return only the folder of the given path.
  */
 create-event:micro.path.get-folder
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * First checking if path already is a folder.

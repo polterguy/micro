@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.chart.column]__ _"column chart extension widget"_.
  */
@@ -16,7 +15,8 @@
  *
  * All arguments beneath the main __[micro.widgets.chart.column]__ node, will be
  * appended to the main root widget, which is a _"div"_ element, allowing you to
- * for instance create DOM events for the widget as a whole, etc.
+ * for instance create DOM events for the widget as a whole, or override its CSS
+ * class, etc.
  *
  * The **[data]** items you supply does not need to add up to 100, they can be any numbers
  * you happen to have. The widget will calculate the relative values for each data item,

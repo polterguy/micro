@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.form.serialize]__ Active Event.
  */
@@ -12,11 +11,17 @@
  * for your widget will be the value of your __[.data-field]__ property.
  * If you use a __[.data-field]__ with a grouped radio buttons collection, each
  * radio button should also have a __[.data-value]__. This allows you to use 
- * utomatic IDs for your radio buttons, which is useful if you can't have unique
+ * automatic IDs for your radio buttons, which is useful if you can't have unique
  * IDs for them - While still returning your data for your form in a semantically
  * correct way, according to its data-field's name, instead of some randomly generated ID.
  */
 create-event:micro.form.serialize
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
 
   /*
    * Figuring out [element] of widget, and handling accordingly.
