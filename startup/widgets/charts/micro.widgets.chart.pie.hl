@@ -81,6 +81,7 @@ create-event:micro.widgets.chart.pie
 
     /*
      * Figuring out how much the currently iterated "slice" is of our total sum.
+     * This results in a double between 0 and 1, where 1 == 100% and zero = 0%.
      */
     /:x:/@_dp/#?value.double
       _:x:/@.total?value
@@ -116,23 +117,6 @@ create-event:micro.widgets.chart.pie
             :x:/@.color?value
 
     /*
-     * Adding currently iterated "slice" to SVG return widget.
-     *
-     * Notice, we don't apply any arguments to the pie slices, except the [color]
-     * since these are applied to (only) the "legend" element(s), if caller wants to
-     * have a legend for his pie chart.
-     */
-    eval-x:x:/+/**/style
-    add:x:/../*/return/**/svg/*/widgets
-      src
-        literal
-          element:circle
-          class:slice
-          style:"stroke-dasharray: calc({0:0.####} * 157.07963) 157.07963; stroke-dashoffset:calc(-{1:0.####} * 157.07963);"
-            :x:/..for-each/*/\/?value
-            :x:/@.cur-angle?value
-
-    /*
      * Incrementing current angle by size of slice, and data item
      * iterater count by 1.
      */
@@ -142,6 +126,33 @@ create-event:micro.widgets.chart.pie
     set:x:/@.no?value
       +:x:/@.no?value
         _:1
+
+    /*
+     * Adding currently iterated "slice" to SVG return widget.
+     *
+     * Notice, we don't apply any arguments to the pie slices, except the [color]
+     * since these are applied to (only) the "legend" element(s).
+     */
+    *:x:/..for-each/*/\/?value
+      _:double:157.07963
+    -:double:157.07963
+      _:x:/@*?value
+    *:x:/@.cur-angle?value
+      _:double:157.07963
+    eval-x:x:/+/*/*
+    add:x:/..for-each/*/add/*/*/literal
+      src
+        style:"stroke-dasharray: {0:0.####} {1:0.####}; stroke-dashoffset: {2:0.####}"
+          :x:/@*/@*?value
+          :x:/@-?value
+          :x:/@*?value
+
+    eval-x:x:/+/**/style
+    add:x:/../*/return/**/svg/*/widgets
+      src
+        literal
+          element:circle
+          class:slice
 
   /*
    * Checking if caller wants to have a legend for his pie chart.
