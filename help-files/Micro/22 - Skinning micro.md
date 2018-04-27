@@ -21,7 +21,7 @@ if
 /*
  * Using Hyper IDE's API to open up the "Aztec" CSS skin file.
  */
-hyper-ide.folder-explorer.select-path:/modules/micro/media/skins/aztec.css
+hyper-ide.file-explorer.select-path:/modules/micro/media/skins/aztec.css
 ```
 
 The Aztec skin loads up a Google font, and changes a couple of CSS selectors. However, most of the _"heavy lifting"_,
@@ -77,7 +77,7 @@ of your site's appearance will use the default values from the main Micro CSS fi
 
 **Notice**, Hyper IDE contains a _"create skin wizard"_, which even allows you to follow a graphical user
 interface, with preview, to create your skins. No CSS knowledge (really) required. To use the skin wizard,
-make sure you select the `/micro/media/skins/` folder in Hyper IDE's folder explorer, and click the _"star"_
+make sure you select the `/micro/media/skins/` folder in Hyper IDE's file explorer, and click the _"star"_
 button. At which point your screen will resemble the following.
 
 https://phosphorusfive.files.wordpress.com/2018/03/screenshot-skin-wizard.png
