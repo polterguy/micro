@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.css.include]__ Active Event.
  */
@@ -6,12 +5,13 @@
 /*
  * This event will automatically include all of Micro's CSS files for you, in
  * addition to the user's chosen skin. It will also automatically take care of
- * versioning of Micro, making sure every time you update Micro, the cache in
- * the client is flushed.
+ * flushing your clients browser cache every time you update to a new version Micro.
  *
  * Optionally pass in __[skin]__ being the name of some skin file, e.g. _"aztec"_, etc.
  * __[skin]__ can also be an absolute path to a skin file, you have in some other folder
- * than the default skin folder.
+ * than the default skin folder. If your **[skin]** argument does not contain a _"/"_, it
+ * will be assumed to be a relative path that can be found in your _"/modules/micro/media/skin/"_
+ * folder.
  */
 create-event:micro.css.include
 

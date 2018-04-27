@@ -6,7 +6,7 @@
  * This event will create a _"tab view"_ for you. The widget needs at least one
  * child of type __[view]__. Each view becomes a _"tab view"_ in your widget.
  * Each view must have at least a __[name]__ and a __[widgets]__ collection.
- * The __[name]__ becomes the content of your activate button, and your view's
+ * The __[name]__ becomes the text of your activate button, and your view's
  * __[widgets]__ collection becomes its actual content.
  *
  * All views, except your active view, will be rendered as invisible, implying

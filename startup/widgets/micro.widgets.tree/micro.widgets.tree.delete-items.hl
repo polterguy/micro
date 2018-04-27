@@ -5,7 +5,8 @@
 /*
  * This event allows you to delete all specified __[items]__ from your specified
  * __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the ID of your
- * tree widget.
+ * tree widget, and **[items]** a collection of IDs to items you want to delete,
+ * where the ID of the tree item is assumed to be the node's name.
  */
 create-event:micro.widgets.tree.delete-items
 

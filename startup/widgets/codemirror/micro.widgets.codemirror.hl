@@ -8,26 +8,27 @@
  * also supports AutoCompletion, in addition to a whole range of keyboard shortcuts,
  * such as find, replace, etc. Its arguments are as follows.
  *
- * - __[mode]__ - Language mode for editor, e.g. _"htmlmixed"_ or _"hyperlambda"_, etc. Defaults to _"hyperlambda"_.
  * - __[value]__ - Initial value of editor.
- * - __[theme]__ - Optional theme override. If not given, will use the user's settings. Defaults to _"phosphorus"_.
- * - __[keys]__ - CodeMirror keyboard-shortcuts to JavaScript callbacks. E.g. _"Ctrl-T:function(){alert('x');}"_.
+ * - __[mode]__ - Language mode for editor, e.g. _"htmlmixed"_ or _"hyperlambda"_, etc.
+ * Defaults to _"hyperlambda"_. The supported modes can be found in the _"/modules/micro/media/codemirror/mode/"_
+ * folder.
+ * - __[theme]__ - Optional theme override. If not given, will use the user's settings.
+ * Defaults to _"phosphorus"_. The supported themes can be found in the _"/modules/micro/media/codemirror/theme/"_
+ * folder.
+ * - __[keys]__ - CodeMirror keyboard-shortcuts to JavaScript callbacks, e.g. `Ctrl-T:function(){alert('x');}`.
  * - __[auto-focus]__ - If true, the editor will get initial focus.
- * - __[height]__ - Height in pixels, percent, or any other unit for editor. You can set this to _"auto"_ if you want the editor to be automatically resized according to its content.
- * - __[.data-field]__ - Data field name, used when for instance serialising editor's content. Defaults to _"codemirror"_.
- * - __[font-size]__ - Optional font size for content. If not given, will use user's settings, defaulting to _"9,25pt"_ if no settings exists.
+ * - __[height]__ - Height in pixels, percentage, or any other unit for editor. You can set
+ * this to _"auto"_ if you want the editor to be automatically resized according to its content (LOC).
+ * - __[font-size]__ - Optional font size for content. If not given, will use user's settings,
+ * defaulting to _"9,25pt"_ if no settings exists.
  * - __[tab-size]__ - Optional tab size. Defaults to 2.
  * - __[read-only]__ - If true, widget is read only. Defaults to false.
- * - __[class]__ - CSS class to use for wrapper widget. Defaults to _"micro-codemirror-wrapper"_.
- * - __[style]__ - CSS styles to use for widget. Notice, will add font-size style automatically, to accommodate for CodeMirror settings.
- * - __[oninit]__ - Lambda callback to be evaluated during initialization of widget.
  *
- * All other arguments are appended into the root container for the widget, allowing you to create for instance hidden attributes,
- * etc, on the main container widget wrapping your CodeMirror instance.
+ * All other arguments are appended into the root container for the widget, allowing you to create for
+ * instance hidden attributes, etc, on the main container widget wrapping your CodeMirror instance.
  *
- * Notice, the CodeMirror widget does not support full screen mode if you instantiate it inside of a modal widget.
- *
- * Its default keyboard shortcuts are as follows.
+ * **Notice**, the CodeMirror widget does not support full screen mode if you instantiate it inside
+ * of a modal widget. The default keyboard shortcuts for the widget are as follows.
  *
  * - __Tab__ - Indent code
  * - __Shift+Tab__ - De-indent code
@@ -35,7 +36,7 @@
  * - __Alt+F__ - Persistent search dialog
  * - __Ctrl+F__ or __Cmd+F__ (Mac) - Search in document
  * - __Ctrl+G__ or __Cmd+G__ (Mac) - Go to next search result in document
- * - __Alt+M__ - Maximize CodeMirror widget (fills entire browser surface)
+ * - __Alt+M__ - Maximize CodeMirror widget (fills entire browser surface). This does not work if you instantiate the widget inside a modal widget.
  * - __Shift+Ctrl+F__ or __Shift+Cmd+F__ (Mac) - Replace in document
  * - __Alt+G__ - Go to specified line number
  * - __Ctrl+Z__ or __Cmd+Z__ (Mac) - Undo
@@ -58,13 +59,9 @@ create-event:micro.widgets.codemirror
     keys
     auto-focus:bool
     height:string
-    .data-field:string
     font-size:string
     tab-size:int
     read-only:bool
-    class:string
-    style:string
-    oninit
 
   /*
    * Figuring out settings to use for widget, making sure we use "sane defaults".

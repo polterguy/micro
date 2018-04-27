@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.tree]__ extension widget.
  */
@@ -7,7 +6,7 @@
  * This widget allows for hierarchically browsing relational tree structures,
  * such as for instance a file system, etc. Below are the most common arguments
  * for the widget.
- * 
+ *
  * - __[items]__ - Collection of items to show initially as _"root items"_.
  * The name of its children nodes is what is displayed to the user, and the
  * value is the _"id"_ of the item, used to uniquely identify the item, when
@@ -20,10 +19,14 @@
  * item it wants to retrieve children for. The callback is expected to return
  * an __[items]__ collection, similar to the one specified when the tree is
  * initially created.
- * - __[.onselect]__ - Callback lambda to invoke when an item is selected.
+ * - __[.onselect]__ - Callback lambda to invoke when an item is selected. This
+ * callback will also be given an __[items]__ collection, with one value for
+ * each item that was selected.
  *
  * All other arguments are passed in _"as is"_. The widget's default CSS class,
- * unless overridden, is _"micro-widgets-tree"_.
+ * unless overridden, is _"micro-widgets-tree"_. If you want to render the widget
+ * as a _"menu/navbar"_ type of widget, instead of like a traditional treeview,
+ * you can override its CSS class and set it to `micro-widgets-tree-navbar`.
  */
 create-event:micro.widgets.tree
 

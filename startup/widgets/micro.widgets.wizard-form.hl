@@ -19,14 +19,13 @@
  * as plain widgets - Unless it contains a _"."_, at which point it is assumed
  * to be a hidden attribute/property of your main root wizard widget. Style, class
  * and visible are assumed to be simple arguments to your main wizard widget.
- *
  * The __[info]__ arguments above becomes your widgets' descriptive labels.
  *
  * The __[select]__ and __[radio-group]__ widgets, requires an __[options]__
  * collection, being the options the user can legally select. The __[options]__
  * arguments is a name/value collection, where the name becomes the displayed
  * string, and the value becomes the value for the selected option. All arguments
- * beneath an __[option]__ argument, becomes appended automatically into the
+ * beneath an __[options]__ argument, becomes appended automatically into the
  * specific option/radio-button widget, allowing you to add up for instance a
  * __[checked]__ or __[selected]__ argument to your specified option widget,
  * to make sure it is by default selected or checked for instance.
@@ -45,7 +44,9 @@
  * using the widget ID as a data-field name, for cases when you have multiple
  * form widgets with unpredictable names in your form. If you do, you'll
  * probably want to add a __[.data-value]__ for every __[radio-group]__
- * option element. The __[.data-field]__ argument will be what is returned
+ * option element, where the __[.data-value]__ becomes the value of your
+ * __[.data-field]__ for your grouped radio buttons if that particular radio
+ * button is checked. The __[.data-field]__ argument will be what is returned
  * for the specific widget during invocations to __[micro.form.serialize]__.
  *
  * You don't need to add a __[.data-value]__ for your select widget's option
@@ -69,6 +70,7 @@ create-event:micro.widgets.wizard-form
     checkbox
     select
     radio-group
+    collection
 
   /*
    * Looping through all arguments and handling them accordingly.

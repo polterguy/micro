@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.file]__ extension widget.
  */
@@ -16,7 +15,9 @@
  * order of appearance, allowing you to at least to some extent control the order
  * of your widgets. All arguments beneath each file, inside your __[files]__ argument,
  * are appended to the specified files after loading. All arguments to your __[folder]__
- * argument, are appended into all files that are loaded from your folder.
+ * argument, are appended into all files that are loaded from your folder. The __[files]__
+ * argument expects you to supply all files you want to load as the name parts of your
+ * files collection.
  */
 create-event:micro.widgets.file
 

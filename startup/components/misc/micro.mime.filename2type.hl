@@ -1,4 +1,3 @@
-﻿
 /*
  * Creates the __[micro.mime.filename2type]__ Active Event.
  */
@@ -6,7 +5,8 @@
 /*
  * This event is responsible for returning a MIME type from a filename.
  * The event will look at the specified __[\_arg]__ file's extension, and return
- * the correct MIME type accordingly.
+ * the correct MIME type accordingly. The actual MIME types are mapped in
+ * your _"/modules/configuration/MIME-types.hl"_ file.
  */
 create-event:micro.mime.filename2type
 

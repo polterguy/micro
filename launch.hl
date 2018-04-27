@@ -1,8 +1,8 @@
 /*
  * URL resolver for Micro.
  *
- * Includes support for downloading files using [micro.download.file] and uploading files
- * using the [micro.widgets.upload-button].
+ * Includes support for downloading files using __[micro.download.file]__ and uploading files
+ * using the __[micro.widgets.upload-button]__.
  */
 
 

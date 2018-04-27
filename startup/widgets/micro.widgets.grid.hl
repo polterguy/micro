@@ -1,6 +1,6 @@
 /*
- * Creates the __[micro.widgets.grid]__ extension widget, and its associated
- * helper Active Events.
+ * Creates the __[micro.widgets.grid]__ extension widget, and the
+ * __[micro.widgets.grid.databind]__ helper Active Event.
  */
 
 /*
@@ -161,6 +161,7 @@ create-event:micro.widgets.grid.databind
   micro.lambda.contract.min:x:/..
     _arg:string
     item
+    keep-items:bool
 
   /*
    * Finding the "tbody" element of the grid, and clearing it of its previous items,

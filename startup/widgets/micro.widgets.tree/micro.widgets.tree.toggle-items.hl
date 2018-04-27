@@ -4,7 +4,8 @@
 
 /*
  * This event allows you to _"toggle"_ one or more items, which implies expanding
- * or collapsing some specified collection of __[items]__ in your tree.
+ * or collapsing some specified collection of __[items]__ in your tree,
+ * where the ID of the tree item is assumed to be the node's name..
  *
  * Notice, you can force this event to _only_ expand items, by adding a 
  * __[force-expand]__ argument, and set its value to boolean _"true"_. If you do,

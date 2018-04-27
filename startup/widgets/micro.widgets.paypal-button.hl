@@ -173,12 +173,15 @@ paypal.Button.render({{
 
 
 /*
- * Helper event to ensure PayPal's _"checkout.js"_ file is locally cached, to avoid
- * CORS problems.
+ * This event ensures that the PayPal's _"checkout.js"_ file is included on your page,
+ * to avoid _"CORS"_ problems.
  *
  * **Notice**, if you intend to use the __[micro.widgets.paypal-button]__ extension
  * widget on your page, you _must_ invoke this event during your page's initial
- * page load, due to the way that PayPal's servers are setup.
+ * page load, due to the way that PayPal's servers are setup. Notice, this event
+ * is only relevant if you create or show a PayPal button on your page, in an Ajax
+ * callback - At which point you'll have to explicitly include the _"checkout.js"_
+ * file in your initial pageload.
  */
 create-event:micro.widgets.paypal-button.ensure-checkout-js
 

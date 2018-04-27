@@ -3,12 +3,15 @@
  */
 
 /*
- * This event allows the user to edit his CodeMirror settings. It opens a modal
- * window, from where the user can see and change his general CodeMirror settings.
+ * This event allows the user to edit his CodeMirror settings. The event will open
+ * a modal window, from where the user can see and change his general CodeMirror
+ * settings.
  *
  * The widget uses a __[micro.widgets.wizard-form]__ widget, which you can
  * dynamically add to. All arguments passed in to the event, will be assumed to
- * be wizard form arguments. See how Hyper IDE is using this event for an example
+ * be wizard form arguments. The values for these additional wizard form arguments will be
+ * automatically serialized and stored as _"CodeMirror settings"_ if the user
+ * clicks the _"Save"_ button. See how Hyper IDE is using this event for an example
  * of how to _"extend"_ it with your own custom (additional) settings.
  */
 create-event:micro.codemirror.settings

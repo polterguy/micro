@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.lambda.create-timeout]__ Active Event.
  */
@@ -7,8 +6,11 @@
  * This event allows the user to invoke some piece of Hyperlambda on the server
  * some _'n'_ milliseconds from now.
  *
- * Expects an __[onfinish]__ argument containing the lambda to be evaluated
- * once __[milliseconds]__ number of milliseconds have passed.
+ * The event expects an __[onfinish]__ argument containing the lambda to be evaluated
+ * once __[milliseconds]__ number of milliseconds have passed. This event will
+ * inject a _"setTimeout"_ invocation on your client, which calls your server
+ * after your __[milliseconds]__ have passed, evaluating your __[onfinish]__ lambda
+ * object on the server.
  */
 create-event:micro.lambda.create-timeout
 

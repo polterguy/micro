@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.windows.confirm]__ Active Event.
  */
@@ -10,7 +9,11 @@
  *
  * The event expects an __[onok]__ lambda callback, which will be invoked only
  * if the user actually confirms the action. Optionally pass in __[header]__ and
- * __[body]__ to display some custom header and/or text to the user.
+ * __[body]__ to display some custom header and/or text to the user. The default
+ * values for header and body are as follows.
+ *
+ * - __[header]__ - _"Confirm"_
+ * - __[body]__ - _"Please confirm that you really want to do this."_
  */
 create-event:micro.windows.confirm
 
@@ -19,6 +22,9 @@ create-event:micro.windows.confirm
    */
   micro.lambda.contract.min:x:/..
     onok
+  micro.lambda.contract.optional:x:/..
+    header:string
+    body:string
 
   /*
    * Default arguments.

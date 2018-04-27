@@ -1,17 +1,18 @@
-﻿
 /*
  * Creates the __[micro.speech.listen]__ Active Event.
  */
 
 /*
- * This event allows you to listen for speech recognition on the client.
+ * This event allows you to capture speech on the client, and recognise it as text.
  *
  * The event will initiate a speech recognition input object on the client,
  * and invoking the specified __[onfinish]__ when some text has been captured,
  * passing in the recognized text to your lambda as a __[text]__ argument.
  *
  * Optionally pass in __[lang]__ as language to capture. The default value for
- * __[lang]__ is _"en"_ implying English.
+ * __[lang]__ is _"en"_ implying English. What languages are supported depends
+ * upon the client, but can be determined by invoking the __[micro.speech.speak.query-voices]__
+ * Active Event.
  */
 create-event:micro.speech.listen
 

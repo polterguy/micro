@@ -1,4 +1,3 @@
-﻿
 /*
  * Creates the __[micro.page.minify-and-bundle-javascript-file]__ Active Event.
  */
@@ -13,8 +12,9 @@
  * The event will determine what filename to use for your bundle by doing a hash
  * on your filenames, and check if there already exists a cached bundled file,
  * before performing the actual bundling and minification - Implying that it
- * will only bundle and minify the same arguments it is given _once_, making it
- * fairly fast in terms of execution speed.
+ * will only bundle and minify the same arguments it is given _once_, as long as
+ * the order of your files are the same. This makes the event fairly fast in
+ * terms of execution speed.
  */
 create-event:micro.page.minify-and-bundle-javascript-file
 

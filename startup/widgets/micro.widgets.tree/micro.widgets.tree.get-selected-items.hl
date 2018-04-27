@@ -5,7 +5,7 @@
 /*
  * This event allows you to retrieve the currently selected item(s) from a
  * specified __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the
- * ID of the tree widget.
+ * ID of your tree widget.
  *
  * The event will return an __[items]__ collection, where the name of the nodes,
  * are the IDs of all items that are currently selected in your tree.

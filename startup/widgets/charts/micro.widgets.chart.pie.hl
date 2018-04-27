@@ -5,39 +5,38 @@
 /*
  * The pie chart widget allows you to illustrate a pie chart, with data items,
  * where each value of your data items creates a _"pie slice"_, with a relative size,
- * according to the sum of all data items.
- *
- * Supply your data items as **[data]** collection, with a label/value type of collection.
- * The label is the name of your data item, and the value is its (number) value.
+ * according to the sum of all data items you supply. Supply your data items as **[data]**
+ * collection, with a label/value type of collection. The label is the name of
+ * your data item, and the value is its (number) value.
  *
  * Optionally pass in **[legend]**, and set its value to boolean _"false"_, if you
  * do not want to have a legend associated with your pie chart. By default a legend
- * will be created, and it will occupy 40% of your chart's width.
+ * will be created, and it will occupy 40% of your chart's width. All arguments
+ * beneath the optional __[legend]__ argument will be appended as arguments to your
+ * legend widget. All arguments beneath the optional __[pie]__ argument will be
+ * appended to your actual pie widget. This allows you to (for instance) override
+ * style properties, both for the pie itself, and the legend.
  *
- * All arguments beneath the optional __[legend]__ argument will be appended as
- * arguments to your legend widget. All arguments beneath the optional __[pie]__
- * argument will be appended to your actual pie widget. This allows you to (for instance)
- * override style properties, both for the pie itself, and the legend.
- *
- * All arguments beneath the main __[micro.widgets.chart.pie]__ node, will be
+ * All other arguments beneath the main __[micro.widgets.chart.pie]__ node, will be
  * appended to the main root widget, which is a _"div"_ element, allowing you to
  * for instance create DOM events for the widget as a whole, and/or modify its
- * CSS class, etc.
- *
- * The width of the pie chart is calculated according to its parent element, unless
- * explicitly overridden with for instance a style argument. The chart as a whole
- * will behave roughly like a div - Filling the available space, unless overridden
- * with an explicit style element, or changed by overriding the chart's CSS class.
+ * CSS class, etc. The width of the pie chart is calculated according to its parent
+ * element, unless explicitly overridden with for instance a style argument. The chart
+ * as a whole will behave roughly like a div - Filling the available space, unless
+ * overridden with an explicit style element, or changed by overriding the chart's CSS
+ * class.
  *
  * The **[data]** items you supply does not need to add up to 100, they can be any numbers
  * you happen to have. The widget will calculate the relative values for each data item,
  * in comparison to the total value of all your items, and create a pie slice accordingly,
- * matching your items' values.
- *
- * You can also override the color of each data child, by providing a **[color]** argument
- * to your **[data]** items, at which point your item will be rendered with the specified
- * color. The default colors goes from light gray, to darker gray, and are calculated
- * automatically for you, evenly distributed between light gray to dark gray.
+ * matching your items' relative values. You can also override the color of each data child,
+ * by providing a **[color]** argument to your **[data]** items, at which point your item
+ * will be rendered with the specified color. The default colors goes from light gray, to
+ * darker gray, and are calculated automatically for you, evenly distributed between light
+ * gray to dark gray. All other arguments to your individual **[data]** items will be
+ * appended into (_only_) the label in the legend for your item. If you supply an **[onclick]**
+ * for one or more items, this will result in that your data item's label becomes a link button,
+ * to make sure the chart is rendered semantically correct.
  */
 create-event:micro.widgets.chart.pie
 
@@ -60,6 +59,7 @@ create-event:micro.widgets.chart.pie
     data
   micro.lambda.contract.optional:x:/..
     legend:bool
+    pie
 
   /*
    * Calculating total amount of all [data] element values supplied.

@@ -1,14 +1,12 @@
-
 /*
  * File responsible for initializing Micro.
  *
  * Creates three Active Events __[p5.io.unroll-path.@MICRO]__ - Which evaluates
  * to the _"/micro/"_ folder, and is used as a _"path variable"_.
- *
  * In addition, it creates both of our __[micro.evaluate.xxx]__ events, one
  * called _"file"_ and another caller _"folder"_, which allows you to evaluate
  * a single Hyperlambda file, or evaluate all Hyperlambda files recursively
- * inside of a specified folder.
+ * inside a specified folder.
  */
 
 
@@ -33,7 +31,7 @@ create-event:p5.io.unroll-path.@MICRO
  * This Active Event allows you to execute one or more Hyperlambda files. 
  *
  * The Hyperlambda file(s) you wish to execute is given as __[\_arg]__.
- * All other arguments will be passed into your files as arguments.
+ * All other arguments will be passed into your file(s) as arguments.
  */
 create-event:micro.evaluate.file
 
@@ -80,7 +78,7 @@ create-event:micro.evaluate.file
  * Evaluates all Hyperlambda files within the specified folder(s) recursively.
  *
  * The Hyperlambda folder(s) you wish to execute is given as __[\_arg]__.
- * All other arguments will be passed into your files as they are being evaluated.
+ * All other arguments will be passed into your folders' files as they are being evaluated.
  */
 create-event:micro.evaluate.folder
 

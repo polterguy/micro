@@ -4,21 +4,17 @@
 
 /*
  * This widget allows your users to supply feedback by star rating, allowing
- * them to click 1-x stars, to _"rate"_ some object you want to have your users
+ * them to click 1 through n stars, to _"rate"_ some object you want to have your users
  * provide feedback about.
  *
- * Optionally supply __[max]__ being the number of stars to render, becoming the
- * maximum value of the widget, __[.data-field]__ becoming the data-field name
- * of your widget's value when serialized, and __[value]__ being the widget's
- * initial value. If you don't supply a __[max]__ value, a default max value of
- * 5 will be used.
+ * Optionally supply __[max]__ being the number of stars to render and the
+ * widget's maximum value, and __[value]__ being the widget's initial value.
+ * If you don't supply a __[max]__ value, its default value is 5.
  *
  * In addition, you can optionally pass in __[read-only]__ and set its value to
  * boolean _"true"_, at which point it's not possible to modify the value of
  * the widget. All other arguments are added as attributes/properties to your
  * main widget.
- *
- * The widget's default CSS class, if none is given, is _"micro-widgets-stars"_.
  */
 create-event:micro.widgets.stars
 

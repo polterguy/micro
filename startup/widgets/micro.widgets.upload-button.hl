@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.upload-button]__ extension widget.
  */
@@ -10,18 +9,16 @@
  * files have been uploaded. Optionally pass in __[multiple]__ to allow for
  * multiple files being uploaded, and/or an __[accept]__ argument, which is a
  * comma separated list of legal file extensions, such as for instance
- * _".png,.jpg,.jpeg,.gif"_.
- *
- * All other arguments will become attributes/properties of the actual button
- * itself. This allows you to for instance override its __[class]__ and
- * __[style]__ attributes.
+ * _".png,.jpg,.jpeg,.gif"_. All other arguments will become attributes/properties
+ * of the actual button itself. This allows you to for instance override its
+ * __[class]__ and __[style]__ attributes.
  *
  * Notice, the button will be rendered with a span _"icon-upload2"_ icon as a
  * child element. If you want to change the icon, you can do this by styling your
  * widget, by for instance using a custom CSS class.
  *
  * Notice, when one or more files have been uploaded, your __[.onupload]__
- * lambda callback will be evaluated, with a __[files]__ list, with each file
+ * lambda callback will be evaluated, with a __[files]__ collection, with each file
  * as physically existing on disc as a child of this list, and its original
  * filename as a child of each physical file. This is necessary to make sure we
  * have unique physical filenames on our server, to avoid having different files
@@ -39,7 +36,8 @@
  * your server, and the __[original-filename]__ is the name of the file as it
  * was on the client. You are responsible for moving your file yourself, by
  * invoking e.g. __[move-file]__ or something similar, if you want to keep your
- * file somewhere on your server. All files are uploaded by default to your user's
+ * file somewhere on your server. The **[physical-file]** name is created as a
+ * globally unique random string. All files are uploaded by default to your user's
  * _"/temp/"_ folder.
  */
 create-event:micro.widgets.upload-button

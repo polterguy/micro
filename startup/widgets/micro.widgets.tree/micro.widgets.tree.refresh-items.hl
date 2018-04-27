@@ -4,8 +4,9 @@
 
 /*
  * This event allows you to _"refresh"_ children items in the specified
- * __[\_arg] [micro.widgets.tree]__ widget. __[\_arg]__ must be the ID of
- * your main tree widget.
+ * __[\_arg] [micro.widgets.tree]__ widget.  __[\_arg]__ must be the ID of your
+ * tree widget, and **[items]** a collection of IDs to items you want to refresh,
+ * where the ID of the tree item is assumed to be the node's name.
  *
  * This event will delete all specified __[items]__ from your widget,
  * and re-invoke your __[.onexpand]__ lambda for these items, to

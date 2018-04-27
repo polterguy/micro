@@ -1,6 +1,5 @@
-
 /*
- * File extensions, and their associated MIME types.
+ * This file contains mappings between file extensions and MIME types.
  */
 3dm:x-world/x-3dmf
 3dmf:x-world/x-3dmf

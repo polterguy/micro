@@ -1,4 +1,3 @@
-
 /*
  * Creates the __[micro.widgets.cover]__ extension widget.
  */
@@ -12,8 +11,6 @@
  * to display to the user. If you don't pass in an explicit __[message]__ argument,
  * the default value will be _"Please wait ..."_. All other arguments are passed
  * in as is to the main widget.
- *
- * The default CSS class for the widget is _"micro-widgets-cover"_.
  */
 create-event:micro.widgets.cover
 

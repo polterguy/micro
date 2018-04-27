@@ -1,4 +1,3 @@
-﻿
 /*
  * Creates our __[micro.speech.speak]__ Active Event.
  */
@@ -9,7 +8,7 @@
  * to override what voice/language to use. The default value of __[voice]__
  * is _"en"_, implying _"English"_.
  *
- * The __[voice]__ argument can contain both a locale parts, and a named voice,
+ * The __[voice]__ argument can contain both a locale parts, and/or a named voice,
  * such as e.g. _"Veronica,en"_, which will use the _"Veronica"_ voice, if it exists.
  * If it can't find a _"Veronica"_ voice, it will default to the first _"en"_
  * (English) voice it can find.

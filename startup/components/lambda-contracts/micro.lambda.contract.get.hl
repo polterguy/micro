@@ -1,11 +1,11 @@
-
 /*
  * Creates the __[micro.lambda.contract.get]__ Active Event.
  */
 
 /*
  * This event allows you to retrieve the lambda contract associated with
- * some event(s).
+ * some event(s). Pass in the name of the event(s) you want to retrieve
+ * the contract for as __[\_arg]__.
  */
 create-event:micro.lambda.contract.get
 

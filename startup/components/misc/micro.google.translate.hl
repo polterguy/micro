@@ -1,17 +1,18 @@
-﻿
 /*
- * Creates the event that allows caller to translate a piece of text from one
- * language to another, using Google Translate.
+ * Creates the __[micro.google.translate]__ Active Event.
+ */
+
+/* This event allows you to translate a piece of text from one
+ * language to another using Google Translate.
  *
  * Pass in __[\_arg]__ as whatever you want to have translated, and __[dest-lang]__
- * being the language you wish to have it translated to.
+ * being the language you want to have your text translated into. Optionally pass in
+ * __[src-lang]__, for explicitly declaring what language your source text is in.
+ * If no __[src-lang]__ is specified, then _"auto"_ will be assumed, at which
+ * point Google will attempt to intelligently figure out what your source language
+ * actually is.
  *
- * Optionally pass in __[src-lang]__, for explicitly declaring what language your
- * source text is in. If no __[src-lang]__ is specified, then _"auto"_ will be
- * assumed, at which point Google will attempt to intelligently figure out what
- * your source language actually is.
- *
- * Example of some languages you could use are; _"en"_ English, and _"no"_ for
+ * Examples of some languages you could use are; _"en"_ English, and _"no"_ for
  * Norwegian, or _"nb-NO"_ for Norwegian Bokmål and _"en-US"_ for American English.
  */
 create-event:micro.google.translate
@@ -23,10 +24,13 @@ create-event:micro.google.translate
     src-lang:auto
 
   /*
-   * Sanity check.
+   * Sanity checking invocation.
    */
   micro.lambda.contract.min:x:/..
+    _arg:string
     dest-lang:string
+  micro.lambda.contract.optional:x:/..
+    src-lang:string
 
   /*
    * URL encoding text.

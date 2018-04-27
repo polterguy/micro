@@ -1,10 +1,11 @@
-﻿
 /*
  * Creates the __[micro.url.get-entities]__ Active Event.
  */
 
 /*
  * This event returns the URL entities of the current request back to caller.
+ * It will return a collection of names, where each name is one entity from
+ * your __[p5.web.get-relative-location-url]__ value, split by `/`.
  */
 create-event:micro.url.get-entities
 
