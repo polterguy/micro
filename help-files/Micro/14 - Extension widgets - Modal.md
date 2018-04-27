@@ -1,4 +1,3 @@
-
 ## Extension widgets - Modal
 
 This widget will display a modal window, preventing the user from interacting with anything on the page, except
@@ -38,3 +37,33 @@ create-widgets
       p
         innerValue:Click anywhere outside of me to close me
 ```
+
+### Convenience events
+
+There exists a convenience event for the modal widget, which is useful if all you want to do is
+to have the user _"confirm"_ some action, before some piece of Hyperlambda is evaluated. This event is
+called __[micro.windows.confirm]__, and it takes the following 3 arguments.
+
+* __[header]__ - Optional header for your modal window, defaults to _"Confirm"_.
+* __[body]__ - Optional content for your modal window, defaults to _"Please confirm that you really want to do this."_
+* __[onok]__ - Mandatory lambda object, which is evaluated if the user confirms that he wants to perform the action.
+
+Below is an example of usage.
+
+```hyperlambda-snippet
+/*
+ * Asks the user if he really wants to display
+ * an information bubble window.
+ */
+micro.windows.confirm
+  header:Please confirm action
+  body:Are you sure you want to display an information bubble window?
+  onok
+
+    /*
+     * This piece of Hyperlambda is only evaluated if
+     * the user clicks the 'Yes' button.
+     */
+    micro.windows.info:OK, here's your information bubble window ...
+```
+
