@@ -13,7 +13,7 @@
     --border-color: rgba(0,0,0,.5);
     --border-radius: .75rem;
 
-    --anchor-color: #355828;
+    --anchor-color: #355858;
     --anchor-hover-color: #0b281f;
     --anchor-active-color: #174f3d;
     --form-el-pad: .5rem;
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6, label {
     background-size: 300%;
 }
 pre, code {
-    background-color: #18a779;
+    background-color: rgba(0,0,0,.1);
     color: #004232;
 }
 blockquote {

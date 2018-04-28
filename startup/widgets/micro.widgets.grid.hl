@@ -160,9 +160,9 @@ create-event:micro.widgets.grid.databind
    */
   micro.lambda.contract.min:x:/..
     _arg:string
-    item
   micro.lambda.contract.optional:x:/..
     keep-items:bool
+    item
 
   /*
    * Finding the "tbody" element of the grid, and clearing it of its previous items,

@@ -1,0 +1,387 @@
+
+/*
+ * Creates the __[micro.widgets.mysql.datagrid]__ extension widget.
+ */
+
+/*
+ * This extension widget wraps a MySQL database table, solving most of the things
+ * related to databinding it automatically. The widget supports the following arguments.
+ *
+ * - __[database]__ - Which database to databind your datagrid towards. This argument it mandatory.
+ * - __[table]__ - Which table to databind your datagrid towards. This argument is mandatory.
+ * - __[page-size]__ - How many items your datagrid should fetch and display. This argument is optional, and defaults to 10.
+ * - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
+ *
+ * The database, table, and page-size arguments are pretty self explanatory - But
+ * the __[columns]__ argument require some explanation, since it's really quite
+ * powerful, and allows you to among other things provide a _"widget template"_
+ * for your cells. You can provide your __[columns]__ argument as a simple
+ * collection of named columns from your database, such as the following illustrates.
+ *
+ * ```
+ * columns
+ *   name
+ *   email
+ *   phone
+ * ```
+ *
+ * The above would create your datagrid with three columns, containing the values
+ * from your _"name"_, _"email"_ and _"phone"_ columns from your database table.
+ * However, you can also declare your columns as a _"widget lambda object"_, that
+ * allows you to dynamically create your own cell's content for these columns,
+ * according to the given row. You can do this by instead of adding a
+ * simple column definition such as we did above, provide your column as a
+ * __[.lambda]__ object, which will be evaluated, with the __[row]__ argument for
+ * the currently iterated row from your database. Below is an example.
+ *
+ * ```
+ * columns
+ *   Surname
+ *     .lambda
+ *       eval-x:x:/+/0/0
+ *       return
+ *         button
+ *           innerValue:x:/@name?value
+ * ```
+ *
+ * If you did something such as the above, each _"Surname"_ cell in your table would
+ * create a button, with an __[innerValue]__ matching your row's _"name"_ value.
+ * Your __[.lambda]__ object will be invoked with the currently iterated __[row]__
+ * from your database as an argument, allowing you access to the entire row as
+ * a whole. **Notice**, your __[.lambda]__ columns does not need to match an
+ * existing actual column in your database, since they do not become a part of
+ * your SQL when selecting items from your database.
+ *
+ * You can also supply a __[visible]__ argument to your __[columns]__ items,
+ * and set its value to boolean _"false"_, at which point the column will become
+ * a part of your SQL query, but it will not have a column in your datagrid.
+ * This is useful if you for instance have an ID column you need to fetch in your
+ * SQL, but you do not want to display it in the datagrid as a column.
+ *
+ * All other arguments beneath each of your __[columns]__ will be appended into
+ * your individual cells, allowing you to for instance override the __[class]__
+ * or __[style]__ attributes/properties for your cells, or provide __[onclick]__
+ * event handlers for instance to your individual cells - Although the latter is
+ * arguably more semantically correct implemented by creating a __[.lambda]__ column
+ * that returns a button or a hyperlink.
+ *
+ * ### Databinding your datagrid
+ *
+ * To databind your datagrid, you can invoke the __[micro.widgets.mysql.datagrid.databind]__
+ * widget lambda event. This event takes the following arguments.
+ *
+ * - __[filter]__ - An SQL _"where"_ clause, such as e.g. `name like @name`. Supply SQL arguments as named arguments to your filter. This argument is optional.
+ * - __[page]__ - What _"page"_ in your dataset to databind the datagrid towards. This argument is optional.
+ *
+ * This widget lambda event will return a __[count]__ and a __[more-pages]__ value
+ * to caller, indicating the total number of items with the given (optional) filter
+ * criteria. The __[more-pages]__ return value will only be true if there are more
+ * pages in your dataset, with the given filter. Notice, the datagrid is initially
+ * databound when it is created, so you only need to (re) databind it if you want
+ * to page, or change its filter condition, or something.
+ */
+create-event:micro.widgets.mysql.datagrid
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    database:string
+    table:string
+    columns
+  micro.lambda.contract.optional:x:/..
+    page-size:long
+
+  /*
+   * Default arguments.
+   */
+  .defaults
+    page-size:long:10
+
+  /*
+   * Adding all columns to our databind grid lambda event.
+   */
+  add:x:/../*/return/**/micro.widgets.mysql.datagrid.databind/*/.columns
+    src:x:/../*/columns/*
+
+  /*
+   * Creating columns for our datagrid.
+   */
+  for-each:x:@"/../*/columns/*(!/*/visible/""=:bool:false""/.)"
+
+    /*
+     * Adding column to grid below.
+     */
+    set:x:/+/*/*/foo?name
+      src:x:/@_dp/#?name
+    add:x:/../*/return/*/micro.widgets.grid/*/columns
+      src
+        foo
+
+  /*
+   * Returning widget to caller.
+   */
+  eval-x:x:/+/**/micro.widgets.mysql.datagrid.databind/*(/.table|/.database|/.columns|/.page-size)
+  return
+
+    /*
+     * Our actual grid, containing items from database.
+     */
+    micro.widgets.grid
+      class:hover striped
+      events
+
+        /*
+         * Databinds datagrid.
+         *
+         * Optionally pass in [page] and [filter].
+         * This widget lambda event will return a [count] value, implying how many
+         * items exists in table in total that are matching the (optional) [filter],
+         * in addition to a [more-pages] value, indicating if there are more pages
+         * in the dataset.
+         */
+        micro.widgets.mysql.datagrid.databind
+
+          /*
+           * Making sure invocation is for our current grid.
+           */
+          if:x:/../*/_event?value
+            !=:x:/../*/_arg?value
+
+            /*
+             * Not our guy!
+             */
+            return
+
+          /*
+           * Sanity checking invocation.
+           */
+          micro.lambda.contract.optional:x:/..
+            page:long
+            filter
+
+          /*
+           * Forward declared further up.
+           *
+           * [.columns] contains all columns as declared by caller.
+           */
+          .columns
+          .table:x:/../*/table?value
+          .database:x:/../*/database?value
+          .page-size:x:(/../*/page-size|/../*/.defaults/*/page-size)/$?value.long
+
+          /*
+           * Figuring out which columns to use in our SQL.
+           *
+           * Notice, we only use columns that have no [.lambda] argument in our
+           * SQL.
+           */
+          .database-columns
+          set:x:/-?value
+            join:x:/@.columns/*(!/*/.lambda/.)?name
+              sep:,
+              wrap:`
+
+          /*
+           * Default arguments.
+           */
+          .defaults
+            page:long:0
+
+          /*
+           * Figuring out offset, by multiplying page-size with page.
+           */
+          .offset
+          set:x:/@.offset?value
+            *:x:(/../*/page|/@.defaults/*/page)/$?value.long
+              _:x:/@.page-size?value
+
+          /*
+           * Opening up database connection.
+           */
+          p5.mysql.connect:[{0}]
+            :x:/@.database?value
+
+            /*
+             * Contains our actual SQL.
+             */
+            .sql
+
+            /*
+             * Checking if we should filter results.
+             */
+            if:x:/../*/filter?value
+
+              /*
+               * Filtering our select SQL.
+               */
+              eval-x:x:/+/*
+              set:x:/@.sql?value
+                src:select {0} from `{1}` where {2} limit {3} offset {4}
+                  :x:/@.database-columns?value
+                  :x:/@.table?value
+                  :x:/../*/filter?value
+                  :x:/@.page-size?value
+                  :x:/@.offset?value
+              add:x:/..p5.mysql.connect/*/p5.mysql.select
+                src:x:/../*/filter/*
+
+            else
+
+              /*
+               * No filtering.
+               */
+              eval-x:x:/+/*
+              set:x:/@.sql?value
+                src:select {0} from `{1}` limit {2} offset {3}
+                  :x:/@.database-columns?value
+                  :x:/@.table?value
+                  :x:/@.page-size?value
+                  :x:/@.offset?value
+
+            /*
+             * Selecting records from table.
+             */
+            p5.mysql.select:x:/@.sql?value
+
+            /*
+             * Looping through each resulting [row] from SQL.
+             */
+            for-each:x:/@p5.mysql.select/*
+
+              /*
+               * Adding main row [item] to databind invocation.
+               */
+              add:x:/..p5.mysql.connect/*/micro.widgets.grid.databind
+                src
+                  item
+
+              /*
+               * Looping through each column.
+               */
+              for-each:x:@"/@.columns/*(!/*/visible/""=:bool:false""/.)"
+
+                /*
+                 * Adding root cell node for currently iterated cell.
+                 */
+                add:x:/..p5.mysql.connect/*/micro.widgets.grid.databind/0/-
+                  src:x:/@_dp/#?name
+
+                /*
+                 * Checking type of column.
+                 */
+                if:x:/@_dp/#/*/.lambda
+
+                  /*
+                   * A "lambda" column, which contains a lambda object, expected
+                   * to return some sort of widget hierarchy, given the currently
+                   * iterated row as an argument.
+                   */
+                  add:x:/..if/*/eval
+                    src:x:/..for-each/@_dp/#
+                  eval:x:/@_dp/#/*/.lambda
+                  add:x:/..p5.mysql.connect/*/micro.widgets.grid.databind/0/-/0/-
+                    src:widgets
+                  add:x:/..p5.mysql.connect/*/micro.widgets.grid.databind/0/-/0/-/0
+                    src:x:/@eval/*
+
+                else
+
+                  /*
+                   * A normal "database" column, statically databinded towards
+                   * the currently iterated row.
+                   *
+                   * For these types of columns, we simply set the value of the
+                   * databind node to the value from our select invocation.
+                   */
+                  set:x:/..p5.mysql.connect/*/micro.widgets.grid.databind/0/-/0/-?value
+                    src:x:/..for-each/@_dp/#/*/{0}?value
+                      :x:/@_dp/#?name
+
+                /*
+                 * Adding all attributes and properties to cell.
+                 *
+                 * Notice, we don't add any [.lambda] arguments, since these are
+                 * handled especially further up.
+                 */
+                add:x:/..p5.mysql.connect/*/micro.widgets.grid.databind/0/-/0/-
+                  src:x:/@_dp/#/*(!/.lambda)
+
+            /*
+             * Databinding our grid.
+             */
+            micro.widgets.grid.databind:x:/../*/_event?value
+
+            /*
+             * Figuring out how many items exists matching the specified (optional)
+             * [filter].
+             */
+            .sql
+            if:x:/../*/filter?value
+
+              /*
+               * Filter was specified.
+               */
+              eval-x:x:/+/*
+              set:x:/@.sql?value
+                src:select count(*) from `{0}` where {1}
+                  :x:/@.table?value
+                  :x:/../*/filter?value
+              add:x:/..p5.mysql.connect/*/p5.mysql.scalar
+                src:x:/../*/filter/*
+
+            else
+
+              /*
+               * Filter was not specified.
+               */
+              eval-x:x:/+/*
+              set:x:/@.sql?value
+                src:select count(*) from `{0}`
+                  :x:/@.table?value
+
+            /*
+             * Executing our count SQL.
+             */
+            p5.mysql.scalar:x:/@.sql?value
+
+            /*
+             * Checking if there are more pages in our dataset.
+             */
+            .more-pages
+            +:x:/../*/.page-size?value
+              *:x:/../*/.page-size?value
+                _:x:(/../*/page|/@.defaults/*/page)/$?value.long
+            if:x:/@p5.mysql.scalar?value
+              >:x:/@+?value
+
+              /*
+               * There are more pages in dataset.
+               */
+              set:x:/@.more-pages?value
+                src:bool:true
+
+            else
+
+              /*
+               * There are no more pages in dataset.
+               */
+              set:x:/@.more-pages?value
+                src:bool:false
+
+            /*
+             * Returning [count] and [more-pages] back to caller.
+             */
+            eval-x:x:/+/*
+            return
+              count:x:/@p5.mysql.scalar?value
+              more-pages:x:/@.more-pages?value
+
+      oninit
+
+        /*
+         * Initially databinding grid.
+         */
+        micro.widgets.mysql.datagrid.databind:x:/../*/_event?value
+
+      columns
