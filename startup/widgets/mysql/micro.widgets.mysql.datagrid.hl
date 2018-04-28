@@ -4,19 +4,29 @@
  */
 
 /*
- * This extension widget wraps a MySQL database table, solving most of the things
+ * This extension widget wraps a MySQL table, solving most of the things
  * related to databinding it automatically. The widget supports the following arguments.
  *
  * - __[database]__ - Which database to databind your datagrid towards. This argument it mandatory.
  * - __[table]__ - Which table to databind your datagrid towards. This argument is mandatory.
- * - __[page-size]__ - How many items your datagrid should fetch and display. This argument is optional, and defaults to 10.
  * - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
+ * - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
+ * - __[filter]__ - Filter for _initial_ databind invocation. This argument is optional. See the documentation for the __[micro.widgets.mysql.datagrid.databind]__ widget lambda event further down for details about this argument.
+ * - __[page]__ - Page for _initial_ databind invocation. This argument is optional. See the documentation for the __[micro.widgets.mysql.datagrid.databind]__ widget lambda event further down for details about this argument.
  *
+ * All other arguments are applied to the main __[micro.widgets.grid]__ widget, that's
+ * returned from this Active Event. If no explicit __[class]__ argument is supplied,
+ * a default value of _"striped"_ will be assumed, creating a striped table.
  * The database, table, and page-size arguments are pretty self explanatory - But
  * the __[columns]__ argument require some explanation, since it's really quite
- * powerful, and allows you to among other things provide a _"widget template"_
- * for your cells. You can provide your __[columns]__ argument as a simple
- * collection of named columns from your database, such as the following illustrates.
+ * powerful, and allows you to among other things provide a widget __[.lambda]__
+ * template for your cells.
+ *
+ * ### The [columns] argument explained
+ *
+ * The simplest way to databind your datagrid, is to provide your __[columns]__
+ * argument as a simple collection of named columns from your database, such as
+ * the following illustrates.
  *
  * ```
  * columns
@@ -26,31 +36,33 @@
  * ```
  *
  * The above would create your datagrid with three columns, containing the values
- * from your _"name"_, _"email"_ and _"phone"_ columns from your database table.
+ * from your _"name"_, _"email"_ and _"phone"_ columns from your MySQL table.
  * However, you can also declare your columns as a _"widget lambda object"_, that
- * allows you to dynamically create your own cell's content for these columns,
- * according to the given row. You can do this by instead of adding a
- * simple column definition such as we did above, provide your column as a
- * __[.lambda]__ object, which will be evaluated, with the __[row]__ argument for
- * the currently iterated row from your database. Below is an example.
+ * allows you to dynamically create your own cell's content for these columns as
+ * a __[widgets]__ collection, according to the given row. You can do this by
+ * instead of adding a simple column declaration such as we did above, declare
+ * your column with a __[.lambda]__ argument, which will be evaluated, with the
+ * __[row]__ argument for the currently iterated row from your database. Below
+ * is an example.
  *
  * ```
  * columns
  *   Surname
  *     .lambda
- *       eval-x:x:/+/0/0
+ *
+ *       // Will be evaluated with a [row] argument.
+ *       // Return any widgets you wish here.
  *       return
  *         button
- *           innerValue:x:/@name?value
+ *           innerValue:Some expression leading to your [row] ...?
  * ```
  *
- * If you did something such as the above, each _"Surname"_ cell in your table would
- * create a button, with an __[innerValue]__ matching your row's _"name"_ value.
- * Your __[.lambda]__ object will be invoked with the currently iterated __[row]__
- * from your database as an argument, allowing you access to the entire row as
- * a whole. **Notice**, your __[.lambda]__ columns does not need to match an
+ * If you did something such as the above, you could make your _"Surname"_
+ * become a rich widget hierarchy by itself.
+ * **Notice**, your __[.lambda]__ columns does not need to match an
  * existing actual column in your database, since they do not become a part of
- * your SQL when selecting items from your database.
+ * your SQL when selecting items from your database. See the main documentation
+ * for Micro for an example of creating __[.lambda]__ columns.
  *
  * You can also supply a __[visible]__ argument to your __[columns]__ items,
  * and set its value to boolean _"false"_, at which point the column will become
@@ -70,17 +82,40 @@
  * To databind your datagrid, you can invoke the __[micro.widgets.mysql.datagrid.databind]__
  * widget lambda event. This event takes the following arguments.
  *
- * - __[filter]__ - An SQL _"where"_ clause, such as e.g. `name like @name`. Supply SQL arguments as named arguments to your filter. This argument is optional.
+ * - __[filter]__ - An SQL _"where"_ clause, such as e.g. `name like @name`. Supply your SQL arguments as named arguments to your filter. This argument is optional.
  * - __[page]__ - What _"page"_ in your dataset to databind the datagrid towards. This argument is optional.
  *
- * This widget lambda event will return a __[count]__ and a __[more-pages]__ value
- * to caller, indicating the total number of items with the given (optional) filter
- * criteria. The __[more-pages]__ return value will only be true if there are more
- * pages in your dataset, with the given filter. Notice, the datagrid is initially
- * databound when it is created, so you only need to (re) databind it if you want
- * to page, or change its filter condition, or something.
+ * An example of applying a __[filter]__ and a __[page]__ argument can be found below.
+ *
+ * ```
+ * micro.widgets.mysql.datagrid.databind:your-datagrids-id
+ *   filter:name like @name
+ *     @name:%john%
+ *   page:1
+ * ```
+ *
+ * The above invocation will retrieve only items with a _"name"_ value containing
+ * _"john"_, and it will start fetching from _"page"_ 1 - Which implies that it
+ * will get the records from 10-20 if your __[page-size]__ is 10. The __[page]__
+ * argument implies an _"offset"_ of __[page-size]__ multiplied by __[page]__.
+ * This implies that if you have a __[page-size]__ of 25, and a __[page]__ value
+ * of 2, it will retrieve the items ranging from 50 to 75.
+ *
+ * The __[micro.widgets.mysql.datagrid.databind]__ lambda event will return a
+ * __[count]__ and a __[more-pages]__ value to caller, indicating the total
+ * number of items with the given (optional) filter criteria. The __[more-pages]__
+ * return value will only be true if there are more pages in your dataset, matching
+ * the given (optional) filter.
+ *
+ * **Notice**, the datagrid is initially databound when it is created, so you
+ * only need to (re) databind it if you want to page, or change its filter condition.
  */
 create-event:micro.widgets.mysql.datagrid
+
+  /*
+   * Signal node, to separate arguments from the rest of our lambda.
+   */
+  .signal
 
   /*
    * Sanity checking arguments.
@@ -91,12 +126,17 @@ create-event:micro.widgets.mysql.datagrid
     columns
   micro.lambda.contract.optional:x:/..
     page-size:long
+    filter:string
+    page:long
 
   /*
    * Default arguments.
    */
   .defaults
     page-size:long:10
+    filter
+    page:long:0
+    class:striped
 
   /*
    * Adding all columns to our databind grid lambda event.
@@ -119,16 +159,23 @@ create-event:micro.widgets.mysql.datagrid
         foo
 
   /*
+   * Adding initial [filter] and [page].
+   */
+  add:x:/../*/return/*/*/oninit/*/.initial
+    src:x:(/../*/filter|/../*/page|/@.defaults/*/filter|/@.defaults/*/page)/$
+
+  /*
+   * Adding all other arguments.
+   */
+  add:x:/../*/return/*
+    src:x:(/@.signal/--/<-|/@.defaults/*)(!/columns!/database!/table!/page-size!/filter!/page)/$
+
+  /*
    * Returning widget to caller.
    */
   eval-x:x:/+/**/micro.widgets.mysql.datagrid.databind/*(/.table|/.database|/.columns|/.page-size)
   return
-
-    /*
-     * Our actual grid, containing items from database.
-     */
     micro.widgets.grid
-      class:hover striped
       events
 
         /*
@@ -382,6 +429,9 @@ create-event:micro.widgets.mysql.datagrid
         /*
          * Initially databinding grid.
          */
+        .initial
+        add:x:/+
+          src:x:/@.initial/*
         micro.widgets.mysql.datagrid.databind:x:/../*/_event?value
 
       columns
