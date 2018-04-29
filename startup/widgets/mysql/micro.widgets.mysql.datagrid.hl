@@ -11,8 +11,19 @@
  * - __[table]__ - Which table to databind your datagrid towards. This argument is mandatory.
  * - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
  * - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
- * - __[filter]__ - Filter for _initial_ databind invocation. This argument is optional. See the documentation for the __[micro.widgets.mysql.datagrid.databind]__ widget lambda event further down for details about this argument.
- * - __[page]__ - Page for _initial_ databind invocation. This argument is optional. See the documentation for the __[micro.widgets.mysql.datagrid.databind]__ widget lambda event further down for details about this argument.
+ * - __[databind]__ - If you declare this argument, and set its value to boolean _"false"_, the datagrid will _not_ be initially databound. This argument is optional, and it defaults to _"true"_.
+ *
+ * In addition to the above arguments, this widget also supports the following
+ * optional arguments. These arguments are only used during the _initial_ databind
+ * invocation, and are passed _"as is"_ to __[micro.widgets.mysql.datagrid.databind]__,
+ * as it is being invoked when your datagrid is created. See the documentation
+ * for the __[micro.widgets.mysql.datagrid.databind]__ widget lambda event further
+ * down to understand these arguments.
+ *
+ * - __[filter]__ - Filter for _initial_ databind invocation. This argument is optional.
+ * - __[page]__ - Page for _initial_ databind invocation. This argument is optional.
+ * - __[sort-by]__ - Sorting for _initial_ databind invocation. This argument is optional.
+ * - __[sort-direction]__ - Sorting direction for _initial_ databind invocation. This argument is optional.
  *
  * All other arguments are applied to the main __[micro.widgets.grid]__ widget, that's
  * returned from this Active Event. If no explicit __[class]__ argument is supplied,
@@ -70,6 +81,17 @@
  * This is useful if you for instance have an ID column you need to fetch in your
  * SQL, but you do not want to display it in the datagrid as a column.
  *
+ * In addition to the above arguments, you can also supply a __[.header]__
+ * argument to your __[columns]__ items, which can contain any sub arguments of
+ * itself. These sub arguments will be applied _only_ to the header of your
+ * datagrid, allowing you to change how the headers for your columns are created.
+ * This allows you to override for instance the __[style]__ or __[class]__
+ * properties of your datagrid's headers, in addition to that if you supply a
+ * __[widgets]__ collection as an argument to your __[.header]__ argument, this
+ * widgets collection will be rendered instead of a simple label, allowing you
+ * to for instance create your datagrid's headers as buttons, etc - Which is
+ * useful for implementing things such as sorting, etc.
+ *
  * All other arguments beneath each of your __[columns]__ will be appended into
  * your individual cells, allowing you to for instance override the __[class]__
  * or __[style]__ attributes/properties for your cells, or provide __[onclick]__
@@ -82,16 +104,22 @@
  * To databind your datagrid, you can invoke the __[micro.widgets.mysql.datagrid.databind]__
  * widget lambda event. This event takes the following arguments.
  *
- * - __[filter]__ - An SQL _"where"_ clause, such as e.g. `name like @name`. Supply your SQL arguments as named arguments to your filter. This argument is optional.
- * - __[page]__ - What _"page"_ in your dataset to databind the datagrid towards. This argument is optional.
+ * - __[\_arg]__ - The ID of your datagrid.
+ * - __[filter]__ - An SQL _"where"_ clause, such as e.g. `name like @name` or `email = @email and phone = @phone`. Supply your SQL arguments as named arguments to your __[filter]__ argument.
+ * - __[page]__ - What _"page"_ in your dataset to databind the datagrid towards.
+ * - __[sort-by]__ - What column to order your results by.
+ * - __[sort-direction]__ - What direction to order you results by. This can only be _"asc"_ implying ascending and _"desc"_ implying descending. This argument defaults to _"asc"_.
+ * - __[keep-items]__ - If you declare this, and set its value to boolean _"true"_, the databind operation will instead of deleting the old items, append its new items to the grid.
  *
- * An example of applying a __[filter]__ and a __[page]__ argument can be found below.
+ * An example of applying these arguments to your databind invocation can be found below.
  *
  * ```
  * micro.widgets.mysql.datagrid.databind:your-datagrids-id
  *   filter:name like @name
  *     @name:%john%
  *   page:1
+ *   sort-by:name
+ *   sort-direction:desc
  * ```
  *
  * The above invocation will retrieve only items with a _"name"_ value containing
@@ -99,7 +127,8 @@
  * will get the records from 10-20 if your __[page-size]__ is 10. The __[page]__
  * argument implies an _"offset"_ of __[page-size]__ multiplied by __[page]__.
  * This implies that if you have a __[page-size]__ of 25, and a __[page]__ value
- * of 2, it will retrieve the items ranging from 50 to 75.
+ * of 2, it will retrieve the items ranging from 50 to 75. In addition, the above
+ * invocation will order your results by the _"name"_ column descending.
  *
  * The __[micro.widgets.mysql.datagrid.databind]__ lambda event will return a
  * __[count]__ and a __[more-pages]__ value to caller, indicating the total
@@ -107,7 +136,8 @@
  * return value will only be true if there are more pages in your dataset, matching
  * the given (optional) filter.
  *
- * **Notice**, the datagrid is initially databound when it is created, so you
+ * **Notice**, the datagrid is initially databound when it is created, unless you
+ * supply a __[databind]__ argument, and set its value to boolean _"false"_ - So you
  * only need to (re) databind it if you want to page, or change its filter condition.
  */
 create-event:micro.widgets.mysql.datagrid
@@ -128,6 +158,8 @@ create-event:micro.widgets.mysql.datagrid
     page-size:long
     filter:string
     page:long
+    sort-by:string
+    sort-direction:string
 
   /*
    * Default arguments.
@@ -137,6 +169,7 @@ create-event:micro.widgets.mysql.datagrid
     filter
     page:long:0
     class:striped
+    sort-direction:asc
 
   /*
    * Adding all columns to our databind grid lambda event.
@@ -152,8 +185,10 @@ create-event:micro.widgets.mysql.datagrid
     /*
      * Adding column to grid below.
      */
-    set:x:/+/*/*/foo?name
+    set:x:/+2/*/*/foo?name
       src:x:/@_dp/#?name
+    add:x:/+/*/*
+      src:x:/@_dp/#/*/.header/*
     add:x:/../*/return/*/micro.widgets.grid/*/columns
       src
         foo
@@ -162,13 +197,31 @@ create-event:micro.widgets.mysql.datagrid
    * Adding initial [filter] and [page].
    */
   add:x:/../*/return/*/*/oninit/*/.initial
-    src:x:(/../*/filter|/../*/page|/@.defaults/*/filter|/@.defaults/*/page)/$
+    src:x:(/../*/filter|/@.defaults/*/filter|/../*/page|/@.defaults/*/page|/../*/sort-by|/../*/sort-direction|/@.defaults/*/sort-direction)/$
 
   /*
    * Adding all other arguments.
    */
   add:x:/../*/return/*
-    src:x:(/@.signal/--/<-|/@.defaults/*)(!/columns!/database!/table!/page-size!/filter!/page)/$
+    src:x:(/@.signal/--/<-|/@.defaults/*)(!/columns!/database!/table!/page-size!/filter!/page!/sort-by!/sort-direction!/oninit)/$
+
+  /*
+   * Applying any [oninit] arguments supplied.
+   */
+  add:x:/../*/return/*/*/oninit/*/.oninit
+    src:x:/@.signal/--/oninit/*
+
+  /*
+   * Checking if [databind] was given as a "false" boolean, at which point
+   * we avoid databinding the datagrid initially.
+   */
+  if:x:/../*/databind?value
+    =:bool:false
+
+    /*
+     * No initial databinding should occur.
+     */
+    set:x:/../*/return/*/*/oninit/*/[0,3]
 
   /*
    * Returning widget to caller.
@@ -181,7 +234,8 @@ create-event:micro.widgets.mysql.datagrid
         /*
          * Databinds datagrid.
          *
-         * Optionally pass in [page] and [filter].
+         * Optionally pass in [page], [filter], [sort-by] and [sort-direction].
+         *
          * This widget lambda event will return a [count] value, implying how many
          * items exists in table in total that are matching the (optional) [filter],
          * in addition to a [more-pages] value, indicating if there are more pages
@@ -206,6 +260,15 @@ create-event:micro.widgets.mysql.datagrid
           micro.lambda.contract.optional:x:/..
             page:long
             filter
+            sort-by:string
+            sort-direction:string
+            keep-items:bool
+
+          /*
+           * Defaults if no argument(s) are given.
+           */
+          .defaults
+            sort-direction:asc
 
           /*
            * Forward declared further up.
@@ -250,6 +313,20 @@ create-event:micro.widgets.mysql.datagrid
             :x:/@.database?value
 
             /*
+             * Figuring out our "order by" parts.
+             */
+            .order-by
+            if:x:/../*/sort-by?value
+
+              /*
+               * [sort-by] argument was given.
+               */
+              set:x:/@.order-by?value
+                src:order by `{0}` {1}
+                  :x:/../*/sort-by?value
+                  :x:(/../*/sort-direction|/@.defaults/*/sort-direction)/$?value
+
+            /*
              * Contains our actual SQL.
              */
             .sql
@@ -264,10 +341,11 @@ create-event:micro.widgets.mysql.datagrid
                */
               eval-x:x:/+/*
               set:x:/@.sql?value
-                src:select {0} from `{1}` where {2} limit {3} offset {4}
+                src:select {0} from `{1}` where {2} {3} limit {4} offset {5}
                   :x:/@.database-columns?value
                   :x:/@.table?value
                   :x:/../*/filter?value
+                  :x:/@.order-by?value
                   :x:/@.page-size?value
                   :x:/@.offset?value
               add:x:/..p5.mysql.connect/*/p5.mysql.select
@@ -280,9 +358,10 @@ create-event:micro.widgets.mysql.datagrid
                */
               eval-x:x:/+/*
               set:x:/@.sql?value
-                src:select {0} from `{1}` limit {2} offset {3}
+                src:select {0} from `{1}` {2} limit {3} offset {4}
                   :x:/@.database-columns?value
                   :x:/@.table?value
+                  :x:/@.order-by?value
                   :x:/@.page-size?value
                   :x:/@.offset?value
 
@@ -355,8 +434,11 @@ create-event:micro.widgets.mysql.datagrid
                   src:x:/@_dp/#/*(!/.lambda)
 
             /*
-             * Databinding our grid.
+             * Databinding our grid, making sure we apply [keep-items] if it was
+             * supplied by caller.
              */
+            add:x:/+
+              src:x:/../*/keep-items
             micro.widgets.grid.databind:x:/../*/_event?value
 
             /*
@@ -427,11 +509,17 @@ create-event:micro.widgets.mysql.datagrid
       oninit
 
         /*
-         * Initially databinding grid.
+         * Initially databinding of grid.
          */
         .initial
         add:x:/+
           src:x:/@.initial/*
         micro.widgets.mysql.datagrid.databind:x:/../*/_event?value
+
+        /*
+         * Contains the [oninit] argument supplied by caller during creation.
+         */
+        .oninit
+        eval:x:/-
 
       columns
