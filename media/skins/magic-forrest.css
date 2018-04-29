@@ -45,9 +45,12 @@ h1, h2, h3, h4, h5, h6, label {
     background: linear-gradient(#afd377, #567128);
     background-size: 300%;
 }
-pre, code {
+pre, p>code {
     background-color: rgba(0,0,0,.1);
     color: #004232;
+}
+pre>code {
+    background: transparent;
 }
 blockquote {
     color: #777;
