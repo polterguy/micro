@@ -12,6 +12,7 @@
  * - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
  * - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
  * - __[databind]__ - If you declare this argument, and set its value to boolean _"false"_, the datagrid will _not_ be initially databound. This argument is optional, and it defaults to _"true"_.
+ * - __[headers]__ - If you don't want to render any headers _at all_ for your datagrid, you can provide this argument, and set its value to a boolean _"false"_.
  *
  * In addition to the above arguments, this widget also supports the following
  * optional arguments. These arguments are only used during the _initial_ databind
@@ -161,6 +162,7 @@ create-event:micro.widgets.mysql.datagrid
     sort-by:string
     sort-direction:string
     databind:bool
+    headers:bool
 
   /*
    * Default arguments.
@@ -179,35 +181,61 @@ create-event:micro.widgets.mysql.datagrid
     src:x:/../*/columns/*
 
   /*
-   * Creating columns for our datagrid.
+   * Checking if we should create headers for our datagrid.
    */
-  for-each:x:@"/../*/columns/*(!/*/visible/""=:bool:false""/.)"
+  if:x:/../*/headers?value
+    !=:bool:false
 
     /*
-     * Adding column to grid below.
+     * Adding main [columns] argument to our grid widget.
      */
-    set:x:/+2/*/*/foo?name
-      src:x:/@_dp/#?name
-    add:x:/+/*/*
-      src:x:/@_dp/#/*/.header/*
-    add:x:/../*/return/*/micro.widgets.grid/*/columns
+    add:x:/../*/return/*/micro.widgets.grid
       src
-        foo
+        columns
+
+    /*
+     * Adding all necessary [columns] items to our datagrid, by looping through
+     * each argument given beneath [columns] during invocation.
+     */
+    for-each:x:@"/../*/columns/*(!/*/visible/""=:bool:false""/.)"
+
+      /*
+       * Setting name of column.
+       */
+      set:x:/+2/*/*/foo?name
+        src:x:/@_dp/#?name
+
+      /*
+       * Adding all [.header] arguments, if any.
+       */
+      add:x:/+/*/*
+        src:x:/@_dp/#/*/.header/*
+
+      /*
+       * Adding our actual item to our [micro.widgets.grid]'s [columns]
+       * declaration.
+       */
+      add:x:/../*/return/*/micro.widgets.grid/*/columns
+        src
+          foo
 
   /*
-   * Adding initial [filter] and [page].
+   * Adding [filter], [page], [sort-by] and [sort-direction] to the
+   * initial databind invocation.
    */
   add:x:/../*/return/*/*/oninit/*/.initial
     src:x:(/../*/filter|/@.defaults/*/filter|/../*/page|/@.defaults/*/page|/../*/sort-by|/../*/sort-direction|/@.defaults/*/sort-direction)/$
 
   /*
-   * Adding all other arguments.
+   * Adding all other arguments to main root widget.
    */
   add:x:/../*/return/*
-    src:x:(/@.signal/--/<-|/@.defaults/*)(!/columns!/database!/table!/page-size!/filter!/page!/sort-by!/sort-direction!/oninit)/$
+    src:x:(/@.signal/--/<-|/@.defaults/*)(!/columns!/database!/table!/page-size!/filter!/page!/sort-by!/sort-direction!/oninit!/headers)/$
 
   /*
-   * Applying any [oninit] arguments supplied.
+   * Applying any [oninit] arguments supplied to the [.oninit] lambda
+   * inside of our datagrid's [oninit] event handler, which will be
+   * evaluated as the datagrid is initialized.
    */
   add:x:/../*/return/*/*/oninit/*/.oninit
     src:x:/@.signal/--/oninit/*
@@ -522,5 +550,3 @@ create-event:micro.widgets.mysql.datagrid
          */
         .oninit
         eval:x:/-
-
-      columns

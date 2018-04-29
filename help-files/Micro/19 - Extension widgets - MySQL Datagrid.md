@@ -23,14 +23,14 @@ create-widgets
           name
 ```
 
-The above will create a datagrid wrapping your _"hypereval"_ database, and its _"snippets"_ table, showing _only_
-the _"name"_ column. The __[micro.widgets.mysql.datagrid]__ extension widget expects the following arguments.
+The __[micro.widgets.mysql.datagrid]__ extension widget expects the following arguments.
 
 - __[database]__ - Which database to databind your datagrid towards. This argument it mandatory.
 - __[table]__ - Which table to databind your datagrid towards. This argument is mandatory.
 - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
 - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
 - __[databind]__ - If you declare this argument, and set its value to boolean _"false"_, the datagrid will _not_ be initially databound. This argument is optional, and it defaults to _"true"_.
+- __[headers]__ - If you don't want to render any headers _at all_ for your datagrid, you can provide this argument, and set its value to a boolean _"false"_.
 
 In addition to the above arguments, this widget also supports the following
 optional arguments. These arguments are only used during the _initial_ databind
@@ -42,6 +42,9 @@ as it is being invoked when your datagrid is created.
 - __[sort-by]__ - Sorting for _initial_ databind invocation. This argument is optional.
 - __[sort-direction]__ - Sorting direction for _initial_ databind invocation. This argument is optional.
 
+**Notice**, the above 4 arguments are only relevant if you choose to databind your datagrid during
+its initial instantiation, which is its default behaviour. To avoid databinding your datagrid during its
+initial instantiation, you can pass in `databind:bool:false` as an argument to it.
 All arguments besides those shown above, will be applied to your datagrid's root widget, allowing you
 to for instance override your table's CSS class, etc. Below is an example of changing some of its attributes.
 
@@ -107,13 +110,12 @@ create-widgets
 
 ### Declaring your [columns]
 
-The __[columns]__ argument allows you to literally create your datagrid header and items exactly as
+The __[columns]__ argument allows you to control your datagrid header and items exactly as
 you see fit. In its simplest form, it simply assumes a collection of columns from your database table,
 such as illustrated above. However, you can also declare your columns as a _"widget lambda object"_, that
-allows you to dynamically create your own cell's content for these columns as a __[widgets]__ collection,
-according to the given row. You can do this by instead of adding a simple column declaration such as we
-did above, declare your column with a __[.lambda]__ argument, which will be evaluated, with the __[row]__
-argument for the currently iterated row from your database. Below is an example.
+allows you to dynamically create your own cell's content for these columns as a __[widgets]__ collection.
+You can do this by adding a __[.lambda]__ argument to your columns, which will be evaluated, with
+a __[row]__ argument for the currently iterated row from your database. Below is an example.
 
 ```hyperlambda-snippet
 /*
@@ -221,6 +223,9 @@ create-widgets
                       innerValue:x:/@.name?value
 ```
 
+If we hadn't provided the __[name]__ column above, it wouldn't exist in our __[row]__, inside of our
+__[.lambda]__ object.
+
 Besides from the __[.header]__ argument, which is explained further down, and the __[.lambda]__ argument
 to your columns declarations - All other arguments are applied to every cell of your datagrid, allowing
 you to override for instance the style property of a cell, or its class, etc. Below is an example.
@@ -305,7 +310,7 @@ create-widgets
 ```
 
 You can also create your headers as a __[widgets]__ collection, to allow for having your table's headers
-contain rich widgets. This is useful if you for instance wants to support clicking the headers of your datagrid.
+contain rich widgets. This is useful if you for instance want to support clicking the headers of your datagrid.
 Below is an example.
 
 ```hyperlambda-snippet
@@ -339,6 +344,30 @@ create-widgets
                   innerValue:Click the bunny!
                   onclick
                     micro.windows.info:The 'bunny' header was clicked!
+```
+
+If you want to completely drop the rendering of your headers, you can do this by providing a boolean _"false"_
+value to a __[headers]__ argument. Below is an example.
+
+```hyperlambda-snippet
+/*
+ * Creates a modal widget, with a MySQL datagrid inside of it.
+ */
+create-widgets
+  micro.widgets.modal
+    widgets
+      h3
+        innerValue:Hypereval snippets
+
+      /*
+       * Our actual datagrid.
+       */
+      micro.widgets.mysql.datagrid
+        database:hypereval
+        table:snippets
+        headers:bool:false
+        columns
+          name
 ```
 
 ### Databinding your datagrid
@@ -492,4 +521,74 @@ create-widgets
 
         // Sorting 'descending'.
         sort-direction:desc
+```
+
+### Internals of the datagrid widget
+
+Internally the __[micro.widgets.mysql.datagrid]__ widget uses the __[micro.widgets.grid]__ extension widget. This
+widget renders a simple _"table"_ element, with a _"thead"_ element for your header, and a _"tbody"_ element for your
+content. It adds _zero_ custom JavaScript to your page, but relies entirely upon the Managed Ajax parts from
+the core of Phosphorus Five, making it literally orders of magnitudes smaller in size than most other datagrids
+out there. If you have Hypereval installed, you can try out the [datagrid widget example](/hypereval/widgets-samples-mysql-datagrid)
+and compare its bandwidth usage with any other datagrids out there. If you do, you'll find that it consumes
+ridiculously small amounts of bandwidth, making it highly optimised and well suited for situations where
+you don't have the luxury of consuming huge amounts of bandwidth.
+
+Below is a snippet that shows you a modal dialog, with a chart, illustrating the difference between some
+of the most popular datagrid implementations for .Net. It assumes you're using the
+[datagrid widget example](/hypereval/widgets-samples-mysql-datagrid) from Hypereval to measure the Micro
+datagrid, and it uses the _"Magic Forest"_ skin from Micro, which doesn't include any external fonts.
+The other numbers were among some of the first example pages I found as I Googled _"ExtJS/Infragistics/Telerik/DevExpress
+web datagrid"_.
+
+```hyperlambda-snippet
+/*
+ * Creates a modal widget, with a column chart, illustrating
+ * bandwidth consumption of some of the more popular datagrids
+ * out there, compared to the Micro datagrid.
+ */
+create-widgets
+  micro.widgets.modal
+    widgets
+      h3
+        innerValue:Bandwidth conumption in KB
+      micro.widgets.chart.column
+        data
+          Micro:96.6
+          Telerik:1100
+          Infragistics:1300
+          DevExpress:1600
+          ExtJS:2100
+      label
+        innerValue:Hint, smaller is better ...
+```
+
+So arguably, at least in regards to bandwidth consumption, the Micro MySQL datagrid performs up to 21
+times faster, or at least consumes up to 1/21th of the bandwidth as some of the other datagrids out there does.
+Which of course makes it blistering fast for phones, and other devices that doesn't have the luxury of a high
+bandwidth connection. An although, some of the examples from some of the other datagrid vendors, would arguably
+require some more code to implement in the Micro MySQL datagrid - I don't think I know about one feature from
+their feature set that would not be possible to create using the Micro MySQL datagrid, assuming you're fetching
+your data from a MySQL database of course.
+
+If you'd rather like to see a pie chart, you can find one below, made with the same numbers as the one above.
+
+```hyperlambda-snippet
+/*
+ * Creates a modal widget, with a pie chart, illustrating
+ * bandwidth consumption of some of the more popular datagrids
+ * out there, compared to the Micro datagrid.
+ */
+create-widgets
+  micro.widgets.modal
+    widgets
+      h3
+        innerValue:Bandwidth conumption in KB
+      micro.widgets.chart.pie
+        data
+          Micro:96.6
+          Telerik:1100
+          Infragistics:1300
+          DevExpress:1600
+          ExtJS:2100
 ```
