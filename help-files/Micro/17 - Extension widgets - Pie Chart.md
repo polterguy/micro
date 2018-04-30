@@ -137,7 +137,7 @@ create-widgets
 
 **Notice** - If you provide a __[legend]__ argument, you'll need to make sure its value is set to boolean
 _"true"_, unless you don't want to have a legend at all for your chart. You can also completely drop the
-legend, by providing a **[legend]** argument, and setting its value to boolean _"false"_ as illustrated
+legend, by providing a **[legend]** argument, and set its value to boolean _"false"_ as illustrated
 below.
 
 ```hyperlambda-snippet
@@ -156,6 +156,29 @@ create-widgets
           Howdy:50
           World:25
           No legend:65
+```
+
+And finally, you can also override how the values in your legend is rendered. By default the percentage
+value of your items are rendered - But you can change it to absolute values, and in the process add any
+unit you wish to your legend's labels. This is accomplished by adding a __[values]__ argument to your
+legend, and set its value to your _"unit"_. Below is an example.
+
+```hyperlambda-snippet
+/*
+ * Creates a modal widget, with a pie chart inside of it.
+ */
+create-widgets
+  micro.widgets.modal
+    widgets
+      h3
+        innerValue:Sales
+      micro.widgets.chart.pie
+        legend:bool:true
+          values:EUROs
+        data
+          Thomas:55057
+          Lisbeth:71456
+          Gary:67575
 ```
 
 ### CSS selectors for your pie chart

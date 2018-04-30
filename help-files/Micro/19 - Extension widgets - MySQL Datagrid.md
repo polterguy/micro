@@ -527,17 +527,13 @@ create-widgets
 
 Internally the __[micro.widgets.mysql.datagrid]__ widget uses the __[micro.widgets.grid]__ extension widget. This
 widget renders a simple _"table"_ element, with a _"thead"_ element for your header, and a _"tbody"_ element for your
-content. It adds _zero_ custom JavaScript to your page, but relies entirely upon the Managed Ajax parts from
-the core of Phosphorus Five, making it literally orders of magnitudes smaller in size than most other datagrids
-out there. If you have Hypereval installed, you can try out the [datagrid widget example](/hypereval/widgets-samples-mysql-datagrid)
-and compare its bandwidth usage with any other datagrids out there. If you do, you'll find that it consumes
-ridiculously small amounts of bandwidth, making it highly optimised and well suited for situations where
-you don't have the luxury of consuming huge amounts of bandwidth.
+content. It adds _zero_ custom JavaScript to your page, and relies entirely upon the Managed Ajax parts from
+the core of Phosphorus Five, making it extremely small in regards to bandwidth usage.
 
-Below is a snippet that shows you a modal dialog, with a chart, illustrating the difference between some
+Below is a snippet that shows you a modal widget with a chart, illustrating the difference between some
 of the most popular datagrid implementations for .Net. It assumes you're using the
 [datagrid widget example](/hypereval/widgets-samples-mysql-datagrid) from Hypereval to measure the Micro
-datagrid, and it uses the _"Magic Forest"_ skin from Micro, which doesn't include any external fonts.
+datagrid, and was measured with the _"Magic Forest"_ skin from Micro, which doesn't include any external fonts.
 The other numbers were among some of the first example pages I found as I Googled _"ExtJS/Infragistics/Telerik/DevExpress
 web datagrid"_.
 
@@ -554,22 +550,19 @@ create-widgets
         innerValue:Bandwidth conumption in KB
       micro.widgets.chart.column
         data
-          Micro:96.6
+          Micro:96
           Telerik:1100
           Infragistics:1300
           DevExpress:1600
           ExtJS:2100
-      label
+      p
         innerValue:Hint, smaller is better ...
 ```
 
 So arguably, at least in regards to bandwidth consumption, the Micro MySQL datagrid performs up to 21
 times faster, or at least consumes up to 1/21th of the bandwidth as some of the other datagrids out there does.
 Which of course makes it blistering fast for phones, and other devices that doesn't have the luxury of a high
-bandwidth connection. An although, some of the examples from some of the other datagrid vendors, would arguably
-require some more code to implement in the Micro MySQL datagrid - I don't think I know about one feature from
-their feature set that would not be possible to create using the Micro MySQL datagrid, assuming you're fetching
-your data from a MySQL database of course.
+bandwidth connection.
 
 If you'd rather like to see a pie chart, you can find one below, made with the same numbers as the one above.
 
@@ -583,12 +576,23 @@ create-widgets
   micro.widgets.modal
     widgets
       h3
-        innerValue:Bandwidth conumption in KB
+        innerValue:Bandwidth consumption of some common datagrids
       micro.widgets.chart.pie
+        legend:bool:true
+          values:KB
         data
-          Micro:96.6
+          Micro:96
           Telerik:1100
           Infragistics:1300
           DevExpress:1600
           ExtJS:2100
 ```
+
+And of course, since the Micro MySQL datagrid never retrieves any items besides the items it displays, it supports
+at least in theory an _"infinite amount_" of data records in the database tables you wrap from your MySQL database.
+Due to how it is filtering your items, and building its SQL, it doesn't natively support inner joins, and more
+complex SQLs - But this can be accomplished by creating views on your tables.
+
+The total amount of JavaScript necessary to display the Micro MySQL datagrid is 4.8KB - Which if course
+is in stark contrast to the sometimes several megabytes of JavaScript necessary to render a similar datagrid in
+most other types of Ajax Datagrids implementations.

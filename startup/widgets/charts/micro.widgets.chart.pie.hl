@@ -11,11 +11,15 @@
  *
  * Optionally pass in **[legend]**, and set its value to boolean _"false"_, if you
  * do not want to have a legend associated with your pie chart. By default a legend
- * will be created, and it will occupy 40% of your chart's width. All arguments
- * beneath the optional __[legend]__ argument will be appended as arguments to your
- * legend widget. All arguments beneath the optional __[pie]__ argument will be
- * appended to your actual pie widget. This allows you to (for instance) override
- * style properties, both for the pie itself, and the legend.
+ * will be created, and it will occupy 40% of your chart's width. The labels in your
+ * legend are rendered with a percentage value, but this can be changed by adding
+ * a __[values]__ argument, and set its value to whatever you want to use as a unit
+ * for your label items - At which point the absolute value will be rendered, and your
+ * unit afterwards. All other arguments beneath the optional __[legend]__ argument
+ * will be appended as arguments to your legend widget. All arguments beneath the
+ * optional __[pie]__ argument will be appended to your actual pie widget. This
+ * allows you to (for instance) override style properties, both for the pie itself,
+ * and the legend.
  *
  * All other arguments beneath the main __[micro.widgets.chart.pie]__ node, will be
  * appended to the main root widget, which is a _"div"_ element, allowing you to
@@ -51,6 +55,7 @@ create-event:micro.widgets.chart.pie
   .defaults
     class:micro-widgets-chart-pie
     legend:bool:true
+      values:percentage
 
   /*
    * Sanity checking invocation.
@@ -252,6 +257,34 @@ create-event:micro.widgets.chart.pie
           src:a
 
       /*
+       * Checking how caller wants to have his legend labels rendered.
+       */
+      if:x:(/../*/legend/*/values|/@.defaults/*/legend/*/values)/$?value
+        !=:percentage
+
+        /*
+         * Rendering labels as values of items.
+         */
+        eval-x:x:/+/*/*
+        add:x:/..for-each/*/add/**/literal/[1,2]/*/innerValue
+          src
+            :"{0:#} {1}"
+              :x:/@_dp/#?value?value
+              :x:(/../*/legend/*/values|/@.defaults/*/legend/*/values)/$?value
+
+      else
+
+        /*
+         * Rendering labels as percentage.
+         */
+        eval-x:x:/+/*/*
+        add:x:/..for-each/*/add/**/literal/[1,2]/*/innerValue
+          src
+            :"{0:#}%"
+              :x:/@*?value
+              :x:(/../*/legend/*/labels|/@.defaults/*/legend/*/labels)/$?value
+
+      /*
        * Adding currently iterated legend rect and label to the "legend"
        * root widget.
        *
@@ -271,9 +304,8 @@ create-event:micro.widgets.chart.pie
               literal
                 element:span
                 class:legend-label
-                innerValue:"{0} - {1:#}%"
+                innerValue:"{0} - {1}"
                   :x:/@_dp/#?name
-                  :x:/@*?value
 
       /*
        * Incrementing data item counter.
@@ -286,7 +318,7 @@ create-event:micro.widgets.chart.pie
      * Applying all [legend] arguments.
      */
     add:x:/../*/return/**/element/=ul/.
-      src:x:(/../*/legend|/@.defaults/*/legend)/$/*
+      src:x:(/../*/legend|/@.defaults/*/legend)/$/*(!/values)
 
   /*
    * Applying all [pie] arguments.
