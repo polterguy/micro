@@ -11,6 +11,12 @@
  * inject a _"setTimeout"_ invocation on your client, which calls your server
  * after your __[milliseconds]__ have passed, evaluating your __[onfinish]__ lambda
  * object on the server.
+ *
+ * The timer is created as a hidden input element, with an associated Ajax
+ * event, that is invoked through a `setTimeout` invocation. If you want to explicitly
+ * name your timer, such that you can easily delete it using __[delete-widget]__ for
+ * instance - You can accomplish this by giving your timer an explicit __[\_arg]__ value,
+ * which will become the widget's ID.
  */
 create-event:micro.lambda.create-timeout
 
@@ -20,6 +26,8 @@ create-event:micro.lambda.create-timeout
   micro.lambda.contract.min:x:/..
     onfinish
     milliseconds:long
+  micro.lambda.contract.optional:x:/..
+    _arg
 
   /*
    * Passing in [onfinish] to [.lambda] node inside of our hidden Ajax event.
@@ -32,7 +40,7 @@ create-event:micro.lambda.create-timeout
    * to know how many milliseconds from now we should invoke our [.onback].
    */
   eval-x:x:/+/*/oninit/*/_milliseconds
-  create-widget
+  create-widget:x:/../*/_arg?value
     element:input
     type:hidden
     .ondone
@@ -55,7 +63,7 @@ create-event:micro.lambda.create-timeout
        * from now.
        */
       _milliseconds:x:/../*/milliseconds?value
-      p5.web.send-javascript:@"setTimeout(function(){{p5.$('{0}').raise('.ondone');}}, {1})"
+      p5.web.send-javascript:@"setTimeout(function(){{var el = p5.$('{0}');if (el.el != null){{el.raise('.ondone');}}}}, {1})"
         :x:/../*/_event?value
         :x:/@_milliseconds?value
 

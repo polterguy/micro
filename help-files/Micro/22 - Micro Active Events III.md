@@ -114,8 +114,8 @@ documented your event's lambda contract using **[micro.lambda.contract.min]** an
 
 The **[micro.lambda.create-timeout]** event allows you to supply a **[milliseconds]** argument, in addition to
 an **[onfinish]** argument - And once the milliseconds have passed, your lambda object in onfinish will be
-evaluated. It is hence useful to allow for some piece of Hyperlambda to be evaluatred after some amount of
-seconds, and such _"poll"_ the server for changes. Below is an example.
+evaluated. It is therefor quite useful for allowing for some piece of Hyperlambda to be evaluatred after some
+amount of milliseconds, and such _"poll"_ the server for changes. Below is an example.
 
 ```hyperlambda-snippet
 /*
@@ -125,6 +125,44 @@ micro.lambda.create-timeout
   milliseconds:2000
   onfinish
     micro.windows.info:Hello there, 2 seconds just passed!
+```
+
+If you want to, you can explicitly name your timer. Since the timer is implemented using a hidden input widget,
+this allows you to delete the timer explicitly, by invoking for instance __[delete-widget]__, supplying the
+name you provided as you created your timer. Below is an example that polls the server after 3 seconds, but
+which you can stop, by clicking the button inside of the modal window.
+
+```hyperlambda-snippet
+/*
+ * Shows an info window 3 seconds from now, unless the
+ * caller clicks the "Stop" button inside of the modal widget.
+ */
+micro.lambda.create-timeout:samples-your-timer
+  milliseconds:3000
+  onfinish
+    micro.windows.info:Hello there, 3 seconds just passed!
+
+/*
+ * Creates a modal widget with a "Stop timer" button inside of it.
+ */
+create-widgets
+  micro.widgets.modal:samples-timer-modal-window
+    widgets
+      button
+        innerValue:Stop timer!
+        onclick
+
+          /*
+           * By deleting the timer widget, we stop the timer
+           * from evaluating.
+           */
+          delete-widget:samples-your-timer
+
+          /*
+           * Deleting the modal widget, to prevent user
+           * from trying to stop timer twice.
+           */
+          delete-widget:samples-timer-modal-window
 ```
 
 ### Browser scrolling
