@@ -29,23 +29,10 @@ The __[micro.widgets.mysql.datagrid]__ extension widget expects the following ar
 - __[table]__ - Which table to databind your datagrid towards. This argument is mandatory.
 - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
 - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
-- __[databind]__ - If you declare this argument, and set its value to boolean _"false"_, the datagrid will _not_ be initially databound. This argument is optional, and it defaults to _"true"_.
+- __[databind]__ - Whether or not the datagrid should be initially databound. This argument is optional, and it defaults to _"true"_.
 - __[headers]__ - If you don't want to render any headers _at all_ for your datagrid, you can provide this argument, and set its value to a boolean _"false"_.
 
-In addition to the above arguments, this widget also supports the following
-optional arguments. These arguments are only used during the _initial_ databind
-invocation, and are passed _"as is"_ to __[micro.widgets.mysql.datagrid.databind]__,
-as it is being invoked when your datagrid is created.
-
-- __[filter]__ - Filter for _initial_ databind invocation. This argument is optional.
-- __[page]__ - Page for _initial_ databind invocation. This argument is optional.
-- __[sort-by]__ - Sorting for _initial_ databind invocation. This argument is optional.
-- __[sort-direction]__ - Sorting direction for _initial_ databind invocation. This argument is optional.
-
-**Notice**, the above 4 arguments are only relevant if you choose to databind your datagrid during
-its initial instantiation, which is its default behaviour. To avoid databinding your datagrid during its
-initial instantiation, you can pass in `databind:bool:false` as an argument to it.
-All arguments besides those shown above, will be applied to your datagrid's root widget, allowing you
+All arguments besides the above, will be applied to your datagrid's root widget, allowing you
 to for instance override your table's CSS class, etc. Below is an example of changing some of its attributes.
 
 ```hyperlambda-snippet
@@ -252,31 +239,8 @@ create-widgets
             style:"background-color:yellow; font-family: Comic Sans MS;"
 ```
 
-The above allows you to for instance provide event handlers for your cells if you want to. Below is an example.
-
-```hyperlambda-snippet
-/*
- * Creates a modal widget, with a MySQL datagrid inside of it,
- * handling the [onmouseover] event for each cell.
- */
-create-widgets
-  micro.widgets.modal
-    widgets
-      h3
-        innerValue:Hypereval snippets
-
-      /*
-       * Our actual datagrid.
-       */
-      micro.widgets.mysql.datagrid
-        database:hypereval
-        table:snippets
-        columns
-          name
-            onmouseover
-              set-widget-property:x:/../*/_event?value
-                innerValue:Do you want to play hide and seek?
-```
+The above allows you to for instance provide event handlers for your cells if you want to, allowing
+you to handle for instance __[onclick]__ on individual cells.
 
 ### Modifying your headers
 
@@ -343,7 +307,8 @@ create-widgets
                 button
                   innerValue:Click the bunny!
                   onclick
-                    micro.windows.info:The 'bunny' header was clicked!
+                    set-widget-property:x:/../*/_event?value
+                      innerValue:The Bunny was here!
 ```
 
 If you want to completely drop the rendering of your headers, you can do this by providing a boolean _"false"_
@@ -391,7 +356,7 @@ create-widgets
         columns
           name
       button
-        innerValue:Databind towards 'widgets' items
+        innerValue:Databind towards '%widgets%' items
         onclick
 
           /*
@@ -404,17 +369,21 @@ create-widgets
 
 The __[micro.widgets.mysql.datagrid.databind]__ widget lambda event can be given the following arguments.
 
+- __[\_arg]__ - Mandatory argument that declares which datagrid you want to databind.
 - __[filter]__ - Optional filter for your databind operation.
 - __[page]__ - Optional page for your databind operation.
-- __[sort-by]__ - Optional sorting column for your databind operation.
-- __[sort-direction]__ - Optional sorting direction for your databind operation. Defaults to _"asc"_.
+- __[order-by]__ - Optional sorting column for your databind operation.
+- __[order-dir]__ - Optional sorting direction for your databind operation. Defaults to _"asc"_.
 - __[keep-items]__ - If you declare this, and set its value to boolean _"true"_, the databind operation will instead of deleting its old items, append its new items to the datagrid.
 
-The above arguments obeys by the same set of rules as they do when you initially create your datagrid.
-The __[keep-items]__ above though, is the only argument that does not also exist when initially creating
-your datagrid. This argument allows you to instead of re-databinding your datagrid, append your items to
+Except for the __[\_arg]__ and __[keep-items]__ arguments above, all of the above arguments can also be applied
+during your initial databind operation for your datagrid. This is done by adding these arguments up as a child to
+your __[databind]__ argument - At which point (obviously) you'll need to set databind's value to boolean _"true"_,
+to make sure the datagrid is initially databound.
+
+The __[keep-items]__ argument allows you to instead of re-databinding your datagrid, append your items to
 its existing items. This feature allows you to (among other things) create a _"never ending scrolling"_
-feeling for your datagrid, where as the user scrolls to the bottom of his page, you can handle the scroll
+experience for your datagrid - Where as the user scrolls to the bottom of his page, you can handle the scroll
 event, and feed your datagrid with more items. Below is a simple example, not illustrating never ending
 scrolling, but rather simply appending a bunch of items to your datagrid.
 
@@ -488,15 +457,18 @@ create-widgets
         columns
           name
 
-        // Page 1.
-        page:1
-
-        // Select only 6 items.
+        // Only fetch 6 items during databind invocations.
         page-size:6
+
+        // Making sure we parametrize our initial databind invocation.
+        databind:bool:true
+
+          // Page 1.
+          page:1
 ```
 
-__[sort-by]__ is a reference to a column in your database table, which you want to order your results
-by, and __[sort-direction]__ can be either _"asc"_ or _"desc"_, implying _"ascending"_ and _"descending"_.
+__[order-by]__ is a reference to a column in your database table, which you want to order your results
+by, and __[order-dir]__ can be either _"asc"_ or _"desc"_, implying _"ascending"_ and _"descending"_.
 Below is an example of sorting descending by _"name"_, effectively showing you the last 10 items in your
 Hypereval snippets table.
 
@@ -515,12 +487,13 @@ create-widgets
         table:snippets
         columns
           name
+        databind:bool:true
 
-        // Sorting results by the 'name' column.
-        sort-by:name
+          // Sorting results by the 'name' column.
+          order-by:name
 
-        // Sorting 'descending'.
-        sort-direction:desc
+          // Sorting 'descending'.
+          order-dir:desc
 ```
 
 ### Internals of the datagrid widget
@@ -547,7 +520,7 @@ create-widgets
   micro.widgets.modal
     widgets
       h3
-        innerValue:Bandwidth conumption in KB
+        innerValue:Bandwidth consumption in KB
       micro.widgets.chart.column
         data
           Micro:96
@@ -558,11 +531,6 @@ create-widgets
       p
         innerValue:Hint, smaller is better ...
 ```
-
-So arguably, at least in regards to bandwidth consumption, the Micro MySQL datagrid performs up to 21
-times faster, or at least consumes up to 1/21th of the bandwidth as some of the other datagrids out there does.
-Which of course makes it blistering fast for phones, and other devices that doesn't have the luxury of a high
-bandwidth connection.
 
 If you'd rather like to see a pie chart, you can find one below, made with the same numbers as the one above.
 
@@ -589,10 +557,39 @@ create-widgets
 ```
 
 And of course, since the Micro MySQL datagrid never retrieves any items besides the items it displays, it supports
-at least in theory an _"infinite amount_" of data records in the database tables you wrap from your MySQL database.
+at least in theory an _"infinite amount_" of data records from your MySQL database.
 Due to how it is filtering your items, and building its SQL, it doesn't natively support inner joins, and more
-complex SQLs - But this can be accomplished by creating views on your tables.
+complex SQLs - But this can be accomplished by creating views on your tables. And due to its internals of applying
+your __[filter]__ arguments as MySQL arguments, it by default avoids any SQL injection attacks, and is highly
+secure - Assuming you don't consume it mindlessly, but consume it the way it is supposed to be consumed.
 
 The total amount of JavaScript necessary to display the Micro MySQL datagrid is 4.8KB - Which if course
 is in stark contrast to the sometimes several megabytes of JavaScript necessary to render a similar datagrid in
-most other types of Ajax Datagrids implementations.
+most other types of Ajax libraries and frameworks. Below is a visual representation of what this difference implies.
+
+```hyperlambda-snippet
+/*
+ * Creates a modal widget, with a column chart, illustrating
+ * the JavaScript size of some of the more popular datagrids
+ * out there, compared to the Micro datagrid.
+ */
+create-widgets
+  micro.widgets.modal
+    widgets
+      h3
+        innerValue:Kilobytes of JavaScript necessary to render a datagrid
+      micro.widgets.chart.column
+        data
+          Micro:4.8
+          Telerik:715
+          Infragistics:724
+          DevExpress:863
+          ExtJS:1100
+```
+
+For the record, some of the examples from Infragistics, Telerik, DevExpress and Sencha were also downloading
+unrelated JavaScript files and resources, such as for instance Google Analytics and images - However, even if you
+removed 50% of all the JavaScript, we still end up with a difference in bandwidth load of almost 2 orders of magnitude.
+
+So for the price of a slightly higher resource usage on the server, your datagrids becomes 1/100th the size
+in regards to bandwidth usage, and hence for most practical concerns 100 times faster and more responsive.
