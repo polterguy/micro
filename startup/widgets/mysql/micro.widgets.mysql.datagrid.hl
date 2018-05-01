@@ -7,9 +7,9 @@
  * related to databinding it automatically. The widget supports the following arguments.
  *
  * - __[database]__ - What database to databind your datagrid towards. This argument it mandatory, and must be a database in your MySQL instance.
- * - __[table]__ - What table to databind your datagrid towards. This argument is mandatory, and must be an existing table in your database.
+ * - __[table]__ - What table to databind your datagrid towards. This argument is mandatory, and must be an existing table (or view) in your database.
  * - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
- * - __[columns]__ - Collection of which columns your datagrid should have. This argument is mandatory.
+ * - __[columns]__ - Collection of columns in your datagrid. This argument is mandatory.
  * - __[databind]__ - Whether or not the datagrid should be initially databound. This argument is optional, and it defaults to _"true"_.
  * - __[headers]__ - If you don't want to render any headers _at all_ for your datagrid, you can provide this argument, and set its value to a boolean _"false"_.
  *

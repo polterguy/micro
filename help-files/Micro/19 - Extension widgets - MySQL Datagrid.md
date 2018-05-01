@@ -577,14 +577,34 @@ create-widgets
   micro.widgets.modal
     widgets
       h3
-        innerValue:Kilobytes of JavaScript necessary to render a datagrid
-      micro.widgets.chart.column
-        data
-          Micro:4.8
-          Telerik:715
-          Infragistics:724
-          DevExpress:863
-          ExtJS:1100
+        innerValue:JavaScript necessary to render a datagrid
+      div
+        class:row
+        widgets
+          div
+            class:col
+            widgets
+              micro.widgets.chart.column
+                data
+                  Micro:4.8
+                  Telerik:715
+                  Infragistics:724
+                  DevExpress:863
+                  ExtJS:1100
+          div
+            class:col
+            widgets
+              micro.widgets.chart.pie
+                legend:bool:true
+                  units:KB
+                data
+                  Micro:4.8
+                  Telerik:715
+                  Infragistics:724
+                  DevExpress:863
+                  ExtJS:1100
+      p
+        innerValue:Notice, Micro doesn't even show in the above Pie Chart!
 ```
 
 For the record, some of the examples from Infragistics, Telerik, DevExpress and Sencha were also downloading
