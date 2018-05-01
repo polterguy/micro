@@ -15,7 +15,9 @@
  * legend are rendered with a percentage value, but this can be changed by adding
  * a __[units]__ argument, and set its value to whatever you want to use as a unit
  * for your label items - At which point the absolute value will be rendered, and your
- * unit afterwards. All other arguments beneath the optional __[legend]__ argument
+ * unit afterwards. The default value for __[units]__ is `%`.
+ *
+ * All other arguments beneath the optional __[legend]__ argument
  * will be appended as arguments to your legend widget. All arguments beneath the
  * optional __[pie]__ argument will be appended to your actual pie widget. This
  * allows you to (for instance) override style properties, both for the pie itself,
@@ -55,7 +57,7 @@ create-event:micro.widgets.chart.pie
   .defaults
     class:micro-widgets-chart-pie
     legend:bool:true
-      units:percentage
+      units:%
 
   /*
    * Sanity checking invocation.
@@ -260,7 +262,7 @@ create-event:micro.widgets.chart.pie
        * Checking how caller wants to have his legend labels rendered.
        */
       if:x:(/../*/legend/*/units|/@.defaults/*/legend/*/units)/$?value
-        !=:percentage
+        !=:%
 
         /*
          * Rendering labels as values of items.

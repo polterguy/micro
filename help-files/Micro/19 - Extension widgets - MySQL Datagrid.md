@@ -604,7 +604,7 @@ create-widgets
                   DevExpress:863
                   ExtJS:1100
       p
-        innerValue:Notice, Micro doesn't even show in the above Pie Chart!
+        innerValue:<strong>Notice</strong>, Micro doesn't even show in the above Pie Chart!
 ```
 
 For the record, some of the examples from Infragistics, Telerik, DevExpress and Sencha were also downloading

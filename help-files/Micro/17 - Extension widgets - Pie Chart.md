@@ -160,7 +160,7 @@ create-widgets
 
 And finally, you can also override how the values in your legend is rendered. By default the percentage
 value of your items are rendered - But you can change it to absolute values, and in the process add any
-unit you wish to your legend's labels. This is accomplished by adding a __[values]__ argument to your
+unit you wish to your legend's labels. This is accomplished by adding a __[units]__ argument to your
 legend, and set its value to your _"unit"_. Below is an example.
 
 ```hyperlambda-snippet
