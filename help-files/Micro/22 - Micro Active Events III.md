@@ -165,6 +165,11 @@ create-widgets
           delete-widget:samples-timer-modal-window
 ```
 
+**Notice**, you can also explicity override your timer's parent widget, by supplying a __[parent]__
+widget ID. The latter allows for _"auto destruction"_ of your timer, as its parent widget is deleted.
+This allows you to have your timer associated with a specific widget, and automatically deleted if
+its __[container]__ widget is somehow deleted.
+
 ### Browser scrolling
 
 The **[micro.page.scroll-into-view]** event will (smoothly) scroll some element into view on the client. Specify
