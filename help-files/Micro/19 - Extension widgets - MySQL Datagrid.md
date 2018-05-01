@@ -90,6 +90,7 @@ create-widgets
            * when 3 seconds have passed.
            */
           micro.lambda.create-timeout
+            parent:examples-mysql-datagrid
             milliseconds:3000
             onfinish
               micro.widgets.mysql.datagrid.databind:examples-mysql-datagrid

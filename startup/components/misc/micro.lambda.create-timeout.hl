@@ -16,7 +16,10 @@
  * event, that is invoked through a `setTimeout` invocation. If you want to explicitly
  * name your timer, such that you can easily delete it using __[delete-widget]__ for
  * instance - You can accomplish this by giving your timer an explicit __[\_arg]__ value,
- * which will become the widget's ID.
+ * which will become the widget's ID. You can also control which parent this widget
+ * is created within, by supplying a __[parent]__ argument - Which is useful if your
+ * timer for instance is associated with some widget, such as a modal widget, and should
+ * be _"automatically deleted"_ if its parent widget is deleted.
  */
 create-event:micro.lambda.create-timeout
 
@@ -28,12 +31,19 @@ create-event:micro.lambda.create-timeout
     milliseconds:long
   micro.lambda.contract.optional:x:/..
     _arg
+    parent:string
 
   /*
    * Passing in [onfinish] to [.lambda] node inside of our hidden Ajax event.
    */
   add:x:/../*/create-widget/*/.ondone/*/.lambda
     src:x:/../*/onfinish/*
+
+  /*
+   * Applying the (optional) [parent] argument.
+   */
+  add:x:/../*/create-widget
+    src:x:/../*/parent
 
   /*
    * Then forward evaluating [_milliseconds], to make sure we are able
