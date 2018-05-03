@@ -31,6 +31,7 @@ The __[micro.widgets.mysql.datagrid]__ extension widget expects the following ar
 - __[page-size]__ - How many items your datagrid should retrieve during databind invocations. This argument is optional, and defaults to 10.
 - __[databind]__ - Whether or not the datagrid should be initially databound. This argument is optional, and it defaults to _"true"_.
 - __[headers]__ - If you don't want to render any headers _at all_ for your datagrid, you can provide this argument, and set its value to a boolean _"false"_.
+- __[.row]__ - An optional collection of arguments supplied to your rows as a whole during databind invocations.
 
 All arguments besides the above, will be applied to your datagrid's root widget, allowing you
 to for instance override your table's CSS class, etc. Below is an example of changing some of its attributes.
@@ -60,7 +61,10 @@ create-widgets
 
 If you don't want to initially databind your datagrid, you can supply a __[databind]__ argument, and set its value
 to boolean _"false"_ - At which point the datagrid will not be initially databound. Below is an example that avoids
-initial databinding, and creates a timeout, that databinds the datagrid after 3 seconds.
+initial databinding, and creates a timeout, that databinds the datagrid after 3 seconds. Notice, this example also
+illustrates how to use the __[.row]__ argument, with a simple __[onclick]__ event handler for your rows as a whole.
+All event handlers inside of your __[.row]__ argument will automatically be given the entire row as a __[.row]__
+argument.
 
 ```hyperlambda-snippet
 /*
@@ -83,6 +87,18 @@ create-widgets
         databind:bool:false
         columns
           name
+        .row
+
+          /*
+           * Making sure we display a dummy information bubble window
+           * when a row is clicked, in addition to that its cursor becomes
+           * a pointer.
+           */
+          style:"cursor:pointer;"
+          onclick
+            micro.windows.info:Item {0} was clicked!
+              :x:/../*/.row/*/name?value
+
         oninit
 
           /*
@@ -339,6 +355,8 @@ create-widgets
 ### Databinding your datagrid
 
 To databind your datagrid, you can use the __[micro.widgets.mysql.datagrid.databind]__ widget lambda event.
+This event will return __[count]__ being total number of items matching your optional filter, and __[more-pages]__
+being a boolean value indicating if it is possible to continue paging forwards in the datagrid.
 Below is an example of dynamically databinding your grid. This snippet assumes you've got Hypereval installed.
 
 ```hyperlambda-snippet

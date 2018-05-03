@@ -12,6 +12,7 @@
  * - __[columns]__ - Collection of columns in your datagrid. This argument is mandatory.
  * - __[databind]__ - Whether or not the datagrid should be initially databound. This argument is optional, and it defaults to _"true"_.
  * - __[headers]__ - If you don't want to render any headers _at all_ for your datagrid, you can provide this argument, and set its value to a boolean _"false"_.
+ * - __[.rows]__ - Optional argument collection that is applied to each of your rows in your datagrid during databinding.
  *
  * All other arguments are applied to the main __[micro.widgets.grid]__ widget, that's
  * returned from this Active Event. If no explicit __[class]__ argument is supplied,
@@ -75,6 +76,11 @@
  * widgets collection will be rendered instead of a simple label, allowing you
  * to for instance create your datagrid's headers as buttons, etc - Which is
  * useful for implementing things such as sorting, etc.
+ *
+ * If you want to add properties for your row as a whole, you can do this by
+ * adding a __[.row]__ argument to your __[micro.widgets.mysql.datagrid]__,
+ * at which point these arguments will be applied to each of your rows, as a
+ * whole.
  *
  * All other arguments beneath each of your __[columns]__ will be appended into
  * your individual cells, allowing you to for instance override the __[class]__
@@ -165,6 +171,7 @@ create-event:micro.widgets.mysql.datagrid
     page-size:long
     databind:bool
     headers:bool
+    .row
 
   /*
    * Default arguments.
@@ -177,10 +184,28 @@ create-event:micro.widgets.mysql.datagrid
     order-dir:asc
 
   /*
-   * Adding all columns to our databind grid lambda event.
+   * Adding all columns to our databind datagrid lambda event.
    */
   add:x:/../*/return/**/micro.widgets.mysql.datagrid.databind/*/.columns
     src:x:/../*/columns/*
+
+  /*
+   * Adding all [.row] arguments to our databind datagrid lambda event.
+   */
+  if:x:/../*/.row
+
+    /*
+     * [.row] argument was supplied.
+     */
+    add:x:/../*/return/**/micro.widgets.mysql.datagrid.databind/*/.row
+      src:x:/../*/.row/*
+
+  else
+
+    /*
+     * [.row] argument was not supplied.
+     */
+    set:x:/../*/return/**/micro.widgets.mysql.datagrid.databind/*/.row
 
   /*
    * Checking if we should create headers for our datagrid.
@@ -229,18 +254,18 @@ create-event:micro.widgets.mysql.datagrid
     src:x:(/../*/databind/*(/filter|/page|/order-by|/order-dir)|/@.defaults/*(/filter|/page|/order-by|/order-dir))/$
 
   /*
-   * Adding all other arguments to main root widget.
-   */
-  add:x:/../*/return/*
-    src:x:(/@.signal/--/<-|/@.defaults/*)(!/columns!/database!/table!/databind!/page-size!/oninit!/headers)/$
-
-  /*
    * Applying any optional [oninit] arguments supplied to the [.oninit] lambda
    * inside of our datagrid's [oninit] event handler, which will be
    * evaluated as the datagrid is initialized.
    */
   add:x:/../*/return/*/*/oninit/*/.oninit
     src:x:/../*/oninit/*
+
+  /*
+   * Adding all other arguments to main root widget.
+   */
+  add:x:/../*/return/*
+    src:x:(/@.signal/--/<-|/@.defaults/*)(!/database!/table!/columns!/databind!/page-size!/oninit!/headers!/.row)/$
 
   /*
    * Checking if [databind] was given as a "false" boolean, at which point
@@ -305,6 +330,7 @@ create-event:micro.widgets.mysql.datagrid
           .table:x:/../*/table?value
           .page-size:x:(/../*/page-size|/../*/.defaults/*/page-size)/$?value.long
           .columns
+          .row
 
           /*
            * Defaults if no argument(s) are given.
@@ -413,6 +439,39 @@ create-event:micro.widgets.mysql.datagrid
              * Looping through each resulting [row] from SQL.
              */
             for-each:x:/@p5.mysql.select/*
+
+              /*
+               * Making sure we parametrise any event handlers inside of our [.row]
+               * argument, supplied during instantiation of datagrid.
+               */
+              if:x:/../*/.row
+
+                /*
+                 * [.row] arguments exists, making sure we pass entire row into every
+                 * event handler inside of [.row]
+                 */
+                .row
+                add:x:/@.row
+                  src:x:/../*/.row/*
+                for-each:x:/@.row/*
+                  if
+                    starts-with:x:/@_dp/#?name
+                      src:on
+
+                    /*
+                     * This is an event handler.
+                     */
+                    add:x:/+/*/*
+                      src:x:/..for-each/@_dp/#/*
+                    insert-before:x:/@_dp/#/0
+                      src
+                        .row
+
+                /*
+                 * Adding [.row] argument to [item] below.
+                 */
+                add:x:/..for-each/*/add/[0,1]/*/*
+                  src:x:/@.row
 
               /*
                * Adding main row [item] to databind invocation.
