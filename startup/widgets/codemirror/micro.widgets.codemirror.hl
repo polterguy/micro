@@ -23,6 +23,7 @@
  * defaulting to _"9,25pt"_ if no settings exists.
  * - __[tab-size]__ - Optional tab size. Defaults to 2.
  * - __[read-only]__ - If true, widget is read only. Defaults to false.
+ * - __[track-dirty]__ - If false, widget will not track its dirty state.
  *
  * All other arguments are appended into the root container for the widget, allowing you to create for
  * instance hidden attributes, etc, on the main container widget wrapping your CodeMirror instance.
@@ -54,7 +55,7 @@ create-event:micro.widgets.codemirror
    */
   micro.lambda.contract.optional:x:/..
     mode:string
-    value:string
+    value
     theme:string
     keys
     auto-focus:bool
@@ -62,6 +63,7 @@ create-event:micro.widgets.codemirror
     font-size:string
     tab-size:int
     read-only:bool
+    track-dirty:bool
 
   /*
    * Figuring out settings to use for widget, making sure we use "sane defaults".
@@ -83,13 +85,24 @@ create-event:micro.widgets.codemirror
    * Decorating widget with arguments.
    */
   add:x:/../*/return/*/container
-    src:x:/@.signal/--(!/_arg!/value!/.data-field!/auto-focus!/height!/mode!/keys!/read-only!/class!/oninit)
+    src:x:/@.signal/--(!/_arg!/value!/.data-field!/auto-focus!/height!/mode!/keys!/read-only!/class!/oninit!/track-dirty)
   add:x:/../*/return/*/container/*/widgets/*/literal
     src:x:(/@.signal/--(/value|/.data-field)|/@.defaults/*/.data-field)/$
   add:x:/../*/return/*/container/*/widgets/*/literal/*/oninit/*/.oninit
     src:x:/@.signal/--/oninit/*
   add:x:/../*/return/*/container
     src:x:(/@.signal/--/class|/@.defaults/*/class)/$
+
+  /*
+   * Checking if caller does not care about tracking dirty flag on editor.
+   */
+  if:x:(/../*/track-dirty|/@.defaults/*/track-dirty)/$?value
+    =:bool:false
+
+    /*
+     * Removing dirty tracking hidden input field from widget.
+     */
+    set:x:/../*/return/*/container/*/widgets/*/input/*/type/=hidden/.
 
   /*
    * Passing in [keys] to [oninit], which are additional keyboard shortcuts.
