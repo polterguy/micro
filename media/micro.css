@@ -129,6 +129,7 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
     text-align: center;
     cursor: pointer;
     padding: var(--form-el-pad) calc(var(--form-el-pad) * 2);
+    white-space: nowrap;
 }
 button.toggled, .button.toggled {
     background: var(--button-toggled-bg);
