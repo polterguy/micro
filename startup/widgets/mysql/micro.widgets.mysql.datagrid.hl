@@ -625,4 +625,6 @@ create-event:micro.widgets.mysql.datagrid
          * Contains the [oninit] argument supplied by caller during creation.
          */
         .oninit
-        eval:x:/-
+        eval-x:x:/+/*
+        eval:x:/-2
+          _event:x:/../*/_event?value
