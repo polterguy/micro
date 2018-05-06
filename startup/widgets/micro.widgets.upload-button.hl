@@ -142,6 +142,6 @@ create-event:micro.widgets.upload-button
              * added to this lambda further up, before widget was created.
              */
             add:x:/../*/eval
-              src:x:/../*/files
+              src:x:/../*(/files|/_event)
             eval:x:/../*/.onupload
               files
