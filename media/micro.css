@@ -6,19 +6,15 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 /* CSS variables for most things that are "skin related", to make it easier to create custom skins */
 :root {
     /*
-     * The ONLY pixel based value in Micro. Change this variable to increase the font-size of your pages.
-     * Basically, all other sizes are "derived" from this one, one way or another indirectly.
-     * So if you cange this value, you change the size of all form controls, and everything on your page
-     * will resize accordingly.
-     *
-     * Notice, the TreeView uses pixel based font-size, since it relies upon images to draw its lines.
-     * In a future release, I might consider fixing this, however for these reasons, the treeview cannot
-     * be resized, without overriding it in a skin file or something similar.
+     * The ONLY pixel based value in Micro is "font-size". Change this variable to increase/decrease
+     * the font-size of your skin.
+     * Basically, all other sizes are "derived" from this one, one way or another, indirectly often.
+     * So if you cange the "font-size" property, you change the size of all form controls, and
+     * everything on your page will resize accordingly.
      */
-    /* VARIABLES_BEGIN */
-    --font-family: sans-serif;
     --font-size: 16px;
     --font-break-size: var(--font-size);
+    --font-family: sans-serif;
     --color: #555;
     --background: #fbfbfb;
     --button-color: #777;
@@ -44,7 +40,6 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
     --table-selected-bg: rgba(0,0,0,.1);
     --table-hover-bg: rgba(0,0,0,.1);
     --code-bg: var(--background);
-    /* VARIABLES_END */
 }
 
 
