@@ -158,10 +158,10 @@ create-widgets
           No legend:65
 ```
 
-And finally, you can also override how the values in your legend is rendered. By default the percentage
+And finally, you can also override how the values in your legend are rendered. By default the percentage
 value of your items are rendered - But you can change it to absolute values, and in the process add any
 unit you wish to your legend's labels. This is accomplished by adding a __[units]__ argument to your
-legend, and set its value to your _"unit"_. Below is an example.
+legend, and set its value to your choice of _"unit"_. Below is an example.
 
 ```hyperlambda-snippet
 /*
@@ -174,7 +174,7 @@ create-widgets
         innerValue:Sales
       micro.widgets.chart.pie
         legend:bool:true
-          values:EUROs
+          units:EUROs
         data
           Thomas:55057
           Lisbeth:71456

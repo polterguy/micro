@@ -83,6 +83,7 @@ create-widgets
        */
       micro.widgets.mysql.datagrid:examples-mysql-datagrid
         database:hypereval
+        class:hover
         table:snippets
         databind:bool:false
         columns
@@ -566,7 +567,7 @@ create-widgets
         innerValue:Bandwidth consumption of some common datagrids
       micro.widgets.chart.pie
         legend:bool:true
-          values:KB
+          units:KB
         data
           Micro:96
           Telerik:1100
@@ -631,4 +632,7 @@ unrelated JavaScript files and resources, such as for instance Google Analytics 
 removed 50% of all the JavaScript, we still end up with a difference in bandwidth load of almost 2 orders of magnitude.
 
 So for the price of a slightly higher resource usage on the server, your datagrids becomes 1/100th the size
-in regards to bandwidth usage, and hence for most practical concerns 100 times faster and more responsive.
+in regards to bandwidth usage compared to most other datagrids.
+
+In fact, Camphora Five is almost entirely created exclusively using the __[micro.widgets.mysql.datagrid]__
+datagrid, which illustrates both this widget's power, and its flexibility.
