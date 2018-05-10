@@ -8,7 +8,7 @@
  *
  * Supply your data items as **[data]** collection, with a label/value type of collection.
  * The label is the name of your data item, and the value is its (number) value.
- * Optionally pass in **[name-labels]**, and set its value to boolean _"false"_, if you
+ * Optionally pass in **[labels]**, and set its value to boolean _"false"_, if you
  * do not want to have name labels associated with your chart. By default name
  * labels will be added beneath your columns.
  *
@@ -43,7 +43,7 @@ create-event:micro.widgets.chart.column
   micro.lambda.contract.min:x:/..
     data
   micro.lambda.contract.optional:x:/..
-    name-labels:bool
+    labels:bool
 
   /*
    * Finding max and min value of [data] values, such that we know what scale to use
@@ -221,7 +221,7 @@ create-event:micro.widgets.chart.column
     /*
      * Checking if caller explicitly does not want to add name labels.
      */
-    if:x:/../*/name-labels?value
+    if:x:/../*/labels?value
       =:bool:false
 
       /*

@@ -131,7 +131,7 @@ create-widgets
 
 The column chart widget is rendered as a div element, with an _"svg"_ element for your actual graphics.
 
-If you provide a **[name-labels]** argument to your chart, and set its value to boolean _"false"_, no name labels
+If you provide a **[labels]** argument to your chart, and set its value to boolean _"false"_, no name labels
 will be added to your chart - At which point you'll be free to add your own description for each column. Below is
 an example.
 
@@ -145,7 +145,7 @@ create-widgets
       h3
         innerValue:Column chart example
       micro.widgets.chart.column
-        name-labels:bool:false
+        labels:bool:false
         data
           John:50
           Peter:25
