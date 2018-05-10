@@ -1,0 +1,130 @@
+/*
+ * Creates the __[micro.markdown.markdown2html]__ Active Event.
+ */
+
+/*
+ * This event will create HTML out of your specified __[\_arg]__ Markdown,
+ * and make sure all image URLs and YouTube video URLs that are embedded
+ * inside a paragraph, without any other content in that paragraph are
+ * transformed into their HTML content counterpart.
+ *
+ * All YouTube videos that are embedded using the above logic will be
+ * given the CSS class of `micro-youtube-video`, and all images replaced
+ * with the above logic will be given the CSS class of `micro-image`.
+ *
+ * The event optionally can be given a list of legal HTML elements as
+ * __[elements]__, and any HTML elements found in the resulting markdown
+ * that are not in this list, will be removed. The latter makes it easy
+ * for you to avoid injections of malicious HTML tags.
+ *
+ * Notice, the above __[elements]__ list must also contain your legal
+ * attributes, prepended with a _"@"_. If you for instance wants to allow
+ * for the _"src"_ attribute, you'll need to supply a __[@src]__ argument
+ * to __[elements]__. This allows you to declare a list of legal HTML tag
+ * names, in addition to a list of legal attribute names, and have all other
+ * attributes and elements removed.
+ */
+create-event:micro.markdown.markdown2html
+
+  /*
+   * Signal node to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+  micro.lambda.contract.optional:x:/..
+    elements
+
+  /*
+   * Transforming Markdownto HTML, and then transforming HTML to lambda,
+   * to make it easy to semantically parse the HTML.
+   */
+  markdown2html:x:/../*/_arg?value
+  html2lambda:x:/-?value
+
+  /*
+   * Checking if caller supplied an [elements] argument, at which point
+   * we use this list of elements as a "whitewash" argument, and remove
+   * all HTML elements not found in this list.
+   */
+  if:x:/../*/elements/*
+
+    /*
+     * Iterating through each HTML tag.
+     */
+    for-each:x:/@html2lambda/**(!/\#text)
+
+      /*
+       * Checking that tag exists in our [elements] list.
+       */
+      if:x:@"/../*/elements/*/""{0}"""
+        :x:/@_dp/#?name
+        not
+
+        /*
+         * Removing element entirely, since it's not in our list.
+         */
+        set:x:/@_dp/#
+
+  /*
+   * Making sure we transform all YouTube links, that are the only content
+   * in a paragraph, such that they're replaced by an embedded preview of the
+   * video.
+   */
+  for-each:x:@"/@html2lambda/*/p/*/#text/""=:regex:/^https:\\/\\/www.youtube.com\\/watch/"""
+
+    /*
+     * Replacing entire paragraph with a preview of YouTube video.
+     */
+    split:x:/@_dp/#?value
+      =:?v=
+    split:x:/@split/0/-?name
+      =:&
+    eval-x:x:/+/**/\@src
+    insert-before:x:/@_dp/#/.
+      src
+        div
+          @class:micro-youtube-video
+          div
+            iframe
+              @type:text/html
+              @allowfullscreen
+              @src:@"https://www.youtube.com/embed/{0}?modestbranding=1&autohide=1&showinfo=0"
+                :x:/@split/0?name
+
+    /*
+     * Removing paragraph containing YouTube video URL.
+     */
+    set:x:/@_dp/#/.
+
+  /*
+   * Making sure we transform all images linked to in paragraphs, such that they're replaced by
+   * an img HTML tag.
+   */
+  for-each:x:@"/@html2lambda/*/p/*/#text/""=:regex:/^https{0,1}:\\/\\/.+\\.[png|jpg|jpeg|gif|svg]/i"""
+
+    /*
+     * Replacing entire paragraph with an image tag.
+     */
+    eval-x:x:/+/*/*/*
+    insert-before:x:/@_dp/#/.
+      src
+        img
+          @class:micro-image
+          @src:x:/@_dp/#?value
+          alt:Image
+
+    /*
+     * Removing paragraph containing image URL.
+     */
+    set:x:/@_dp/#/.
+
+  /*
+   * Transforming lambda to HTML, and returning it as HTML to caller.
+   */
+  lambda2html:x:/@html2lambda/*
+  return:x:/-?value
