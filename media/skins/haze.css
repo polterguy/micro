@@ -220,6 +220,11 @@ select, textarea, button, .button {
     padding-left: 20px;
     padding-right: 20px;
 }
+
+input:not([type=radio]):not([type=checkbox]):not([type=button]):not([type=submit]),
+select, textarea {
+    line-height: 1.2rem;
+}
 .strip, textarea {
 }
 
