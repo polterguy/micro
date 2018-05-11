@@ -117,9 +117,9 @@ textarea {
 button, input[type=button], input[type=submit], input[type=reset], .button {
     color: var(--button-color);
     background: var(--button-bg);
-    background-size: 1px calc(200% + 2px);
-    background-position: 0 -1px;
-    transition: background-position .2s ease-out;
+    background-size: 1px 200%;
+    background-position: 0 0;
+    transition: background-position .2s ease;
     min-width: 1rem;
     text-align: center;
     cursor: pointer;
@@ -128,25 +128,25 @@ button, input[type=button], input[type=submit], input[type=reset], .button {
 }
 button.toggled, .button.toggled {
     background: var(--button-toggled-bg);
-    background-size: 1px calc(200% + 2px);
-    background-position: 0 -1px;
+    background-size: 1px 200%;
+    background-position: 0 0;
 }
 button:active, input[type=button]:active, input[type=submit]:active, input[type=reset]:active, .button:active,
 button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=reset]:focus, .button:focus {
-    background-position: 0 50%;
-    transition: background-position .2s ease-out;
+    background-position: 0 95%;
+    transition: background-position .2s ease;
     color: var(--button-color);
 }
 button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
-    background-position: 0 calc(100% + 1px);
-    transition: background-position .2s ease-out;
+    background-position: 0 95%;
+    transition: background-position .2s ease;
     color: var(--button-color);
 }
-button[disabled], .button[disabled], 
+button[disabled], .button[disabled],
 input[type=button][disabled], input[type=submit][disabled], input[type=reset][disabled] {
     color: var(--form-el-dis-color);
     cursor: not-allowed;
-    background-position: 0 -1px;
+    background-position: 0 0;
     cursor: not-allowed;
 }
 
@@ -1262,12 +1262,12 @@ button.micro-widgets-tab-active:hover {
 
 /* License info */
 .license-info {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-left: 1rem;
-    margin-top: 1rem;
-    font-size: .8rem;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Embedded YouTube videos created by Micro */
