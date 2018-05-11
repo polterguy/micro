@@ -1,4 +1,3 @@
-
 ## Micro Active Events I
 
 Micro also contains a whole range of additional Active Events, solving particular tasks in your
@@ -93,6 +92,12 @@ create-widgets
         onclick
           micro.download.file:@MICRO/README.md
 ```
+
+**Notice** - If you intend to allow non-root users to be able to download files using the
+__[micro.download.file]__ Active Event, you'll have to give these users _"module access"_ to Micro.
+The reason for this, is because this event will redirect the client to _"/micro/download"_, at which
+point the main URL resolver in the Desktop will require the user to have `p5.module` access to that
+folder. To do this, you can use the wizard in _"Peeples"_.
 
 ### Serializing forms
 

@@ -66,6 +66,24 @@ create-event:micro.widgets.upload-button
     src:x:/@.onupload
 
   /*
+   * Checking if (another) upload-button widget has previously created a "cover" widget,
+   * and if not, making sure we create one, to use during uploads.
+   */
+  if
+    fetch:x:/0/0?value
+      widget-exists:micro-widgets-upload-button-common-cover
+    =:bool:false
+
+    /*
+     * Creating a common "cover" widget, which is initially created invisible,
+     * and only shown as an import is initiated.
+     */
+    create-widgets
+      micro.widgets.cover:micro-widgets-upload-button-common-cover
+        message:Please wait while your file is uploaded and processed ...
+        style:"display:none;"
+
+  /*
    * Returning actual button to caller.
    */
   return
@@ -92,13 +110,16 @@ create-event:micro.widgets.upload-button
       if (this.status == 200) {
         var responseText = this.responseText;
         p5.$(self).raise('.onupload',{
-          onbefore: function (pars, evt){pars.push(['micro.widgets.upload-widget.files', responseText]);}
+          onbefore: function (pars, evt){pars.push(['micro.widgets.upload-widget.files', responseText]);},
+          onsuccess: function () {p5.$('micro-widgets-upload-button-common-cover').el.style.display = 'none';},
+          onerror: function (serverReturn) {p5.$('micro-widgets-upload-button-common-cover').el.style.display = 'none';alert(serverReturn);}
         });
       } else {
         alert(this.responseText);
       }
     }
   };
+  p5.$('micro-widgets-upload-button-common-cover').el.style.display = 'block';
   xhr.open('POST', '/micro/upload', true);
   var fd = new FormData();
   for (var i = 0; i < self.files.length; i++) {
