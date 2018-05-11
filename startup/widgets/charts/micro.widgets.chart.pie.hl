@@ -159,6 +159,9 @@ create-event:micro.widgets.chart.pie
       src
         literal
           element:circle
+          r:25%
+          cx:50%
+          cy:50%
           class:slice
 
   /*
