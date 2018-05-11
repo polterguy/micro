@@ -420,6 +420,12 @@ table td>p:last-child {
     border-radius: var(--border-radius);
     width: fit-content;
     overflow: hidden; /* Otherwise border-radius won't work! */
+    overflow-x: hidden !important; /* Otherwise FireFox will add scrollbars during loading */
+    -webkit-mask-image: -webkit-radial-gradient (white, black);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 }
 .strip:not(.fill) {
     margin-left: var(--form-el-pad);
@@ -433,6 +439,13 @@ table td>p:last-child {
 }
 .strip>*:first-child {
     border-left: none;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+.strip>*:last-child {
+    margin-right: -1px;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
 }
 .strip>label {
     background: var(--button-bg);
@@ -1114,14 +1127,14 @@ button.micro-widgets-tab-active:hover {
     stroke: rgba(0,0,0,.1);
     stroke-width: .2;
 }
-@keyframes animate-bar {
-  from {opacity:0;fill:yellow;}
-  to {opacity:1;fill;}
+@keyframes animate-column {
+  from {opacity:0;fill:yellow;height:0;width:0;}
+  to {opacity:1;fill;height;width;}
 }
 .micro-widgets-chart-column rect.column {
-    stroke: rgba(0,0,0,.3);
+    stroke: transparent;
     stroke-width: .2;
-    animation: animate-bar 1s ease;
+    animation: animate-column 1s ease;
     animation-fill-mode: forwards;
     opacity:0;
 }
@@ -1142,15 +1155,9 @@ button.micro-widgets-tab-active:hover {
 }
 .micro-widgets-chart-column rect.column:not([fill]) {
     fill: var(--color);
-    transition: fill .2s ease;
 }
 .micro-widgets-chart-column rect.column.negative:not([fill]) {
     fill: var(--negative-color);
-}
-.micro-widgets-chart-column rect.column:hover,
-.micro-widgets-chart-column rect.column.negative:hover{
-    fill: var(--hover-color);
-    transition: fill .2s ease;
 }
 .micro-widgets-chart-column foreignObject.name-label span,
 .micro-widgets-chart-column foreignObject.name-label a {

@@ -276,22 +276,6 @@ select, textarea, button, .button {
     padding-left: 20px;
     padding-right: 20px;
 }
-.strip, textarea {
-    transition: box-shadow .2s ease-out;
-    box-shadow: 2px 2px 2px var(--shadow-color);
-    margin-right: .75rem;
-}
-.strip:hover, textarea:hover {
-    box-shadow: 5px 5px 2px var(--shadow-color);
-    transition: box-shadow .2s ease-out;
-}
-
-.strip>label {
-    color: #555555;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 .micro-widgets-modal-content {
     background: linear-gradient(#fefefe, #c5e5f7);
     box-shadow: 2px 2px 2px var(--shadow-color);
