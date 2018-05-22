@@ -30,7 +30,7 @@ The most important arguments to the CodeMirror widget is as follows.
 * __[auto-focus]__ - If true, the editor will get initial focus
 * __[height]__ - Height in pixels, percent or any other unit for editor, e.g. _"300px"_
 * __[mode]__ - Language mode for editor, e.g. _"htmlmixed"_, _"hyperlambda"_ or _"javascript"_, etc. Defaults to _"hyperlambda"_
-* __[keys]__ - CodeMirror keyboard-shortcut to JavaScript callback list. E.g. `Ctrl-T:function(){alert('x');}`
+* __[keys]__ - CodeMirror keyboard-shortcut to JavaScript callback function. E.g. `Ctrl-T:alert('x');`
 * __[value]__ - Initial value of editor
 * __[.data-field]__ - Data field name, used when for instance serialising editor's content
 * __[theme]__ - Optional theme override. If not given, will use the user's settings, defaulting to _"phosphorus"_
