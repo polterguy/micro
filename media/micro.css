@@ -953,7 +953,7 @@ button.micro-widgets-tab-active:hover {
 
 /* CodeMirror widget */
 .micro-codemirror-wrapper {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
 }
 .CodeMirror {
     border-radius: var(--border-radius);
