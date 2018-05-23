@@ -308,6 +308,27 @@ create-event:micro.widgets.codemirror
                   @MICRO/media/codemirror/mode/xml/xml.js
                 micro.page.minify-and-bundle-javascript-file:x:/@.files/*?name
 
+              case:sql
+              case:text/x-mysql
+              case:text/x-sql
+              case:text/x-mariadb
+              case:text/x-cassandra
+              case:text/x-plsql
+              case:text/x-mssql
+              case:text/x-hive
+              case:text/x-pgsql
+              case:text/x-gql
+              case:text/x-gpsql
+              case:text/x-esper
+
+                /*
+                 * Including additional dependencies for SQL mode.
+                 */
+                .files
+                  @MICRO/media/codemirror/mode/sql/sql.js
+                  @MICRO/media/codemirror/addon/hint/sql-hint.js
+                micro.page.minify-and-bundle-javascript-file:x:/@.files/*?name
+
               default
 
                 /*
@@ -348,10 +369,10 @@ create-event:micro.widgets.codemirror
 
             /*
              * CodeMirror depends upon having its "root path".
-             * Hence, we figure out the root path of Hypereval, and make sure
+             * Hence, we figure out the root path of Micro, and make sure
              * we pass in media path while creating our CodeMirror instance.
              */
-            p5.io.unroll-path:@HYPEREVAL/
+            p5.io.unroll-path:@MICRO/
 
             /*
              * Transforming input textarea to CodeMirror instance.
@@ -361,7 +382,7 @@ create-event:micro.widgets.codemirror
   theme:'{2}',
   lineNumbers:{3},
   styleActiveLine:true,
-  path:'{1}/media/codemirror/',
+  path:'{1}media/codemirror/',
   autofocus:{4},
   tabSize:{8},
   indentUnit:{8},
