@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Creates the __[micro.page.minify-and-bundle-javascript-file]__ Active Event.
  */
 
@@ -45,7 +45,7 @@ create-event:micro.page.minify-and-bundle-javascript-file
    * Creating a SHA1 hash from all file path arguments, to have a unique filename for
    * our bundled CSS file.
    */
-  p5.crypto.hash.create-sha1:x:/@.signal/*?name
+  p5.crypto.sha1.hash:x:/@.signal/*?name
     hex:true
 
   /*
@@ -67,7 +67,7 @@ create-event:micro.page.minify-and-bundle-javascript-file
   if
     fetch:x:/0/0?value
       file-exists:/common/documents/public/micro-javascript-cache/bundle-{0}.js
-        :x:/@p5.crypto.hash.create-sha1?value
+        :x:/@p5.crypto.sha1.hash?value
     not
 
     /*
@@ -85,11 +85,11 @@ create-event:micro.page.minify-and-bundle-javascript-file
     join:x:/@p5.web.javascript.minify/*?value
       sep:";"
     save-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
-      :x:/@p5.crypto.hash.create-sha1?value
+      :x:/@p5.crypto.sha1.hash?value
       src:x:/@join?value
 
   /*
    * Including minified (and bundled) resulting single JavaScript file on page.
    */
   p5.web.include-javascript-file:/common/documents/public/micro-javascript-cache/bundle-{0}.js
-    :x:/@p5.crypto.hash.create-sha1?value
+    :x:/@p5.crypto.sha1.hash?value

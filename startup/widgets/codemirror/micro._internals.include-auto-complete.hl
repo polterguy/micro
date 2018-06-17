@@ -1,4 +1,4 @@
-
+﻿
 /*
  * Includes JSON necessary to implement AutoComplete on page.
  *
@@ -23,7 +23,7 @@ create-event:micro.widgets.codemirror._include-auto-complete
    * inclusion file, which will be the name of our AutoComplete JSON JavaScript file
    * to include on our page.
    */
-  p5.crypto.hash.create-sha1:x:/@vocabulary
+  p5.crypto.sha1.hash:x:/@vocabulary
     hex:true
 
   /*
@@ -48,7 +48,7 @@ create-event:micro.widgets.codemirror._include-auto-complete
   if
     fetch:x:/0/0?value
       file-exists:/common/documents/public/micro-codemirror-cache/autocomplete_{0}.js
-        :x:/@p5.crypto.hash.create-sha1?value
+        :x:/@p5.crypto.sha1.hash?value
     not
 
     /*
@@ -58,7 +58,7 @@ create-event:micro.widgets.codemirror._include-auto-complete
       sep:,
       wrap:'
     save-file:/common/documents/public/micro-codemirror-cache/autocomplete_{0}.js
-      :x:/@p5.crypto.hash.create-sha1?value
+      :x:/@p5.crypto.sha1.hash?value
       src:@"CodeMirror._hyperlambdaKeywords = [{0}];"
         :x:/@join?value
 
@@ -66,4 +66,4 @@ create-event:micro.widgets.codemirror._include-auto-complete
    * Including JavaScript file on page.
    */
   p5.web.include-javascript-file:/common/documents/public/micro-codemirror-cache/autocomplete_{0}.js
-    :x:/@p5.crypto.hash.create-sha1?value
+    :x:/@p5.crypto.sha1.hash?value

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Creates the __[micro.page.minify-and-bundle-css-file]__ Active Event.
  */
 
@@ -48,7 +48,7 @@ create-event:micro.page.minify-and-bundle-css-file
    * Creating a SHA1 hash from all file path arguments, to have a unique filename for
    * our bundled CSS file.
    */
-  p5.crypto.hash.create-sha1:x:/@.signal/*?name
+  p5.crypto.sha1.hash:x:/@.signal/*?name
     hex:true
 
   /*
@@ -70,7 +70,7 @@ create-event:micro.page.minify-and-bundle-css-file
   if
     fetch:x:/0/0?value
       file-exists:/common/documents/public/micro-css-cache/bundle-{0}.css
-        :x:/@p5.crypto.hash.create-sha1?value
+        :x:/@p5.crypto.sha1.hash?value
     not
 
     /*
@@ -114,11 +114,11 @@ create-event:micro.page.minify-and-bundle-css-file
     p5.web.css.minify:x:/@load-file/*?value
     join:x:/@p5.web.css.minify/*?value
     save-file:/common/documents/public/micro-css-cache/bundle-{0}.css
-      :x:/@p5.crypto.hash.create-sha1?value
+      :x:/@p5.crypto.sha1.hash?value
       src:x:/@join?value
 
   /*
    * Including minified (and bundled) resulting single CSS file on page.
    */
   p5.web.include-css-file:/common/documents/public/micro-css-cache/bundle-{0}.css
-    :x:/@p5.crypto.hash.create-sha1?value
+    :x:/@p5.crypto.sha1.hash?value
