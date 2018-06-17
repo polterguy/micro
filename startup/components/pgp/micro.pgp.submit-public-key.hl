@@ -1,0 +1,80 @@
+/*
+ * Creates the __[micro.pgp.submit-public-key]__ Active Event.
+ */
+
+/*
+ * This event allows you to to submit a public PGP key to your chosen keyserver.
+ *
+ * The event requires you to pass in one or more __[fingerprint]__ arguments, which it
+ * will use to lookup the public key from your PGP context, and submit the public PGP
+ * key to the PGP server you have declared in your web.config.
+ */
+create-event:micro.pgp.submit-public-key
+
+  /*
+   * Sanity check.
+   */
+  micro.lambda.contract.min:x:/..
+    fingerprint:string
+
+  /*
+   * Retrieving key server from configuration file, and making sure we make the URI
+   * become an HTTPS URI.
+   */
+  p5.config.get:p5.crypto.key-server
+  replace:x:/@p5.config.get/*?value
+    src:"hkp://"
+    dest:"https://"
+
+  /*
+   * Iterating all supplied [fingerprint] arguments given.
+   */
+  for-each:x:/../*/fingerprint?value
+
+    /*
+     * Retrieving currently iterated public key, URL encoding it,
+     * and submitting it to key server.
+     */
+    p5.crypto.pgp-keys.public.get:x:/@_dp?value
+
+    /*
+     * Verifying key actually exists in PGP context.
+     */
+    if:x:/@p5.crypto.pgp-keys.public.get/0?value
+      not
+
+      /*
+       * Key doesn't exist.
+       */
+      throw:Key '{0}' doesn't exist.
+        :x:/@_dp?value
+
+    /*
+     * Verifying caller actually supplied a fingerprint, and not some identity,
+     * to avoid submitting random gibberish keys to key server by accident.
+     */
+    if:x:/@p5.crypto.pgp-keys.public.get/0?name
+      !=:x:/@_dp?value
+
+      /*
+       * Not a valid fingerprint.
+       */
+      throw:'{0}' is not a valid fingerprint for a PGP key.
+        :x:/@_dp?value
+
+    /*
+     * URL encoding key, and submitting it to key server.
+     */
+    p5.html.url-encode:x:/@p5.crypto.pgp-keys.public.get/0?value
+    p5.http.post:{0}/pks/add
+      :x:/@replace?value
+      content:keytext={0}
+        :x:/@p5.html.url-encode?value
+
+    /*
+     * Checking that submitting key was a success.
+     */
+    if:x:/@p5.http.post/*/*/status?value
+      !=:OK
+      throw:Something went wrong while trying to submit your PGP key. Message from server was; '{0}'
+        :x:/@p5.http.post/*/*/Status-Description?value
