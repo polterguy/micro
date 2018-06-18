@@ -45,7 +45,7 @@ if:x:/@split/1?name
     p5.web.response.set-status-code:404
     p5.web.echo:Oops 404, the place where URLs go to die!
 
-if:x:/@split/1?name
+else-if:x:/@split/1?name
   =:upload
 
   /*
@@ -53,6 +53,10 @@ if:x:/@split/1?name
    *
    * Verifying that user has previously created an upload button, to avoid drowning
    * server in fake uploads.
+   *
+   * Notice, since we persist all uploads in the same folder, there is no need
+   * to implement this for each button - Rather simply verify that an upload button
+   * has been previously created is enough ...
    */
   if
     fetch:x:/0/0?value
@@ -61,7 +65,7 @@ if:x:/@split/1?name
     /*
      * Uploads allowed.
      *
-     * First parsing mime message, using "/temp/" folder as attachment folder.
+     * First parsing mime message, using "~/temp/" folder as attachment folder.
      */
     p5.web.request.parse-mime
       attachment-folder:~/temp/
@@ -90,6 +94,46 @@ if:x:/@split/1?name
      */
     p5.web.response.set-status-code:404
     p5.web.echo:Oops 404, the place where URLs go to die!
+
+else-if:x:/@split/1?name
+  =:pgp
+
+  /*
+   * Some sort of PGP key retrieval request.
+   *
+   * Checking first it it was not parametrised at all, at which point we assume
+   * the caller is requesting the server's main public PGP key.
+   */
+  if:x:/@split/*?count
+    =:int:2
+
+    /*
+     * Returning server's main public PGP key.
+     */
+    p5.auth.pgp.get-fingerprint
+    p5.crypto.pgp-keys.public.get:x:/-/0?name
+    p5.web.echo:x:/-/0?value
+
+  else-if:x:/@split/2?name
+    =:list
+
+    /*
+     * Listing all public PGP keys server has access to.
+     */
+    p5.crypto.pgp-keys.public.list
+    p5.crypto.pgp-keys.get-details:x:/-/*?name
+    lambda2hyper:x:/-/*
+    p5.web.echo:x:/-?value
+
+  else
+
+    /*
+     * Assuming third argument is some sort of search criteria for looking up PGP keys.
+     */
+    p5.crypto.pgp-keys.public.get:x:/@split/2?name
+    join:x:/-/*?value
+      sep:"\r\n"
+    p5.web.echo:x:/-?value
 
 else
 
