@@ -1,0 +1,269 @@
+/*
+ * Creates the __[micro.web-service.invoke]__ Active Event.
+ */
+
+/*
+ * This event allows you to invoke a lambda web service, passing in lambda to be executed
+ * on the web service's endpoint.
+ *
+ * Pass in the URL to web service endpoint as __[\_arg]__, the lambda you want
+ * to execute on the web service endpoint as __[lambda]__, and the web service endpoint's
+ * PGP key's fingerprint as __[fingerprint]__. Optionally you can also pass in one or
+ * more __[file]__ argument, which are references to local files you want to transfer
+ * to the web service endpoint.
+ *
+ * Your server's private PGP key will be used to cryptographically sign the invocation,
+ * and the returned results from the web service endpoint will be verified
+ * that it was successfully cryptographically signed with the __[fingerprint]__PGP key,
+ * and if not, the result will not be accepted. You can also optionally choose to
+ * have both the request and the result encrypted by passing in an __[encrypt]__ argument,
+ * and setting its value to boolean _"true"_.
+ *
+ * You can pass in multiple __[lambda]__ arguments, and also optionally give each lambda argument
+ * a unique ID as the value of the argument, allowing you to identify what snippet returned what.
+ *
+ * If you pass in one or more __[file]__ arguments, you should specify which __[Content-Type]__
+ * each file have, such as _"text:plain"_ or _"application:x-hyperlambda"_ etc.
+ *
+ * The Active Event will return the result of each __[lambda]__ as a __[result]__ node, with
+ * the ID if any as the value, and its actual returned value as __[content]__.
+ * Depending upon what your __[lambda]__ argument returns, the __[content]__ might be either
+ * a simple value, or a lambda structure by itself.
+ *
+ * If your web service invocation for some reasons returns an attachment, these will be returned
+ * as __[filename]__ arguments to caller, with a [prefix] and [folder] sub-argument, which combined
+ * is the complete local reference of where the file was serialized locally on your client.
+ */
+create-event:micro.web-service.invoke
+
+  /*
+   * Used to separate the arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking arguments.
+   */
+  micro.lambda.contract.min:x:/..
+    _arg:string
+    fingerprint:string
+    lambda
+  micro.lambda.contract.optional:x:/..
+    file:string
+    encrypt:bool
+
+  /*
+   * Decorating HTTP POST request, first adding each [lambda] arguments.
+   * Notice, the [.mime] node is temporarily used to hole each MIME leaf entity
+   * of our request, and later used to decorate our actual [p5.http.post] invocation.
+   */
+  .mime
+  for-each:x:/../*/lambda
+
+    /*
+     * Adding root hyperlambda part.
+     */
+    add:x:/@.mime
+      src
+        application:x-hyperlambda
+          content
+
+    /*
+     * Checking if caller supplied an ID for currently iterated lambda.
+     */
+    if:x:/@_dp/#?value
+      eval-x:x:/+/*/*
+      add:x:/@.mime/0/-
+        src
+          X-Hyperlambda-ID:x:/@_dp/#?value
+
+    /*
+     * Adding actual lambda.
+     */
+    add:x:/@.mime/0/-/*/content
+      src:x:/@_dp/#/*
+
+  /*
+   * Adding each [file] to [.mime].
+   */
+  for-each:x:/@.signal/--/<-/file
+
+    /*
+     * Sanity checking currently iterated [file] argument.
+     */
+    if:x:/@_dp/#/*/Content-Type?value
+      not
+      throw:No [Content-Type] supplied for one of your [file] attachments.
+
+    /*
+     * Adding root MIME attachment leaf entity.
+     */
+    split:x:/@_dp/#/*/Content-Type?value
+      =:/
+    eval-x:x:/+/*
+    add:x:/@.mime
+      src:"{0}:{1}"
+        :x:/@split/0?name
+        :x:/@split/1?name
+
+    /*
+     * Adding [filename] reference.
+     */
+    eval-x:x:/+/*/*
+    add:x:/@.mime/0/-
+      src
+        filename:x:/@_dp/#?value
+
+  /*
+   * Checking if we have more than one MIME leaf entity, at which point we'll have to wrap
+   * the entire invocation inside a "multipart:mixed" part.
+   */
+  if:x:/@.mime/*?count
+    >:int:1
+
+    /*
+     * Multiple parts.
+     */
+    add:x:/../*/p5.http.post/*/.onrequest/*/.p5.mime.serialize-to-stream
+      src
+        multipart:mixed
+    add:x:/../*/p5.http.post/*/.onrequest/*/.p5.mime.serialize-to-stream/0
+      src:x:/@.mime/*
+
+  else
+
+    /*
+     * Single part.
+     */
+    add:x:/../*/p5.http.post/*/.onrequest/*/.p5.mime.serialize-to-stream
+      src:x:/@.mime/*
+
+  /*
+   * Making sure we cryptographically sign the envelope for the web service endpoint's PGP key.
+   */
+  add:x:/../*/p5.http.post/*/.onrequest/*/.p5.mime.serialize-to-stream/*
+    src:sign
+
+  /*
+   * Checking if caller wants to encrypt invocation, and if so, encrypting it for the specified
+   * [fingerprint] PGP key.
+   */
+  if:x:/@.signal/--/encrypt?value.bool
+    =:bool:true
+
+    /*
+     * Caller wants to use encryption.
+     */
+    eval-x:x:/+/*/*/*
+    add:x:/../*/p5.http.post/*/.onrequest/*/.p5.mime.serialize-to-stream/*
+      src
+        encrypt
+          fingerprint:x:/@.signal/--/fingerprint?value
+
+  /*
+   * Invoking web service.
+   */
+  p5.http.post:x:/../*/_arg?value
+    Content-Type:application/X-MIME-Envelope
+    .onrequest
+      .p5.mime.serialize-to-stream
+    .onresponse
+      .p5.mime.load-from-stream
+        attachment-folder:~/temp/
+
+  /*
+   * Checking that invocation was a success.
+   */
+  if:x:/@p5.http.post/*/result/*/status?value
+    !=:OK
+
+    /*
+     * Not a successful request, throwing an exception with either the first MIME part's
+     * content, or the [Status-Description], if no MIME envelope was returned.
+     */
+    if:x:/@p5.http.post/*/result/*/content/**/text/=plain/*/content?value
+      throw:x:/@p5.http.post/*/result/*/content/**/text/=plain/*/content?value
+    else
+      throw:x:/@p5.http.post/*/result/*/Status-Description?value
+
+  /*
+   * Verifying that returned MIME envelope was cryptographically signed with the [fingerprint]
+   * supplied by caller.
+   */
+  if:x:/@p5.http.post/*/result/*/content/*?name
+    !=:multipart
+    or:x:/@p5.http.post/*/result/*/content/*?value
+      !=:signed
+    or:x:/@p5.http.post/*/result/*/content/*/*/*?value
+      !=:bool:true
+    or:x:/@p5.http.post/*/result/*/content/*/*/*/*?value
+      !=:x:/@.signal/--/fingerprint?value
+
+      /*
+       * Signature from web service endpoint was not accepted for some reasons.
+       */
+      throw:Result returned from web service endpoint was not correctly cryptographically signed.
+
+  /*
+   * Looping through each returned leaf MIME entity that is not an attachment, and making
+   * sure we return its result to caller.
+   *
+   * Notice, depending upon whether or not the server returned a single leaf MIME part, or multiple
+   * leaf parts (inside a "multipart/mixed"), we'll find the actual results in slightly different locations.
+   */
+  for-each:x:/@p5.http.post/*/result/*/content/*((/multipart/*/*/content/.)|(/multipart/*/multipart/=mixed/*/*/content/.))
+
+    /*
+     * Adding root [result] node.
+     */
+    add:x:/../*/return
+      src
+        result
+          content
+
+    /*
+     * Checking if we have an ID header.
+     */
+    if:x:/@_dp/#/*/X-Hyperlambda-ID?value
+
+      /*
+       * Currently iterated result has an ID.
+       */
+      set:x:/../*/return/0/-?value
+        src:x:/@_dp/#/*/X-Hyperlambda-ID?value
+
+    /*
+     * Checking type of MIME entity, which might be "text/plain", or "application/x-hyperlambda",
+     * depending upon what the lambda snippet actually returned.
+     */
+    if:x:/@_dp/#?name
+      =:application
+      and:x:/@_dp/#?value
+        =:x-hyperlambda
+
+      /*
+       * Hyperlambda result.
+       */
+      add:x:/../*/return/0/-/*/content
+        src:x:/@_dp/#/*/content/*
+
+    else
+
+      /*
+       * Simple value.
+       */
+      set:x:/../*/return/0/-/*/content?value
+        src:x:/@_dp/#/*/content?value
+
+  /*
+   * Looping through each attachment returned from web service, and making sure we return its local
+   * filename to caller.
+   */
+  for-each:x:/@p5.http.post/*/result/*/content/*((/multipart/*/*/filename)|(/multipart/*/multipart/=mixed/*/*/filename))
+    add:x:/../*/return
+      src:x:/@_dp/#
+
+  /*
+   * Returning result to caller.
+   */
+  return
