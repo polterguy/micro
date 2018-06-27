@@ -112,7 +112,7 @@ create-event:micro.widgets.upload-button
         p5.$(self).raise('.onupload',{
           onbefore: function (pars, evt){pars.push(['micro.widgets.upload-widget.files', responseText]);},
           onsuccess: function () {p5.$('micro-widgets-upload-button-common-cover').el.style.display = 'none';},
-          onerror: function (serverReturn) {p5.$('micro-widgets-upload-button-common-cover').el.style.display = 'none';alert(serverReturn);}
+          onerror: function (serverReturn, code, response) {p5.$('micro-widgets-upload-button-common-cover').el.style.display = 'none';alert(response);}
         });
       } else {
         alert(this.responseText);
@@ -146,14 +146,14 @@ create-event:micro.widgets.upload-button
             p5.web.post.get:micro.widgets.upload-widget.files
             json2lambda:x:/-/*?value
             for-each:x:/@json2lambda/*/*?value
-              add:x:/../*/eval/*/files
+              add:x:/../*/try/*/eval/*/files
                 src:@"physical-file:""{0}"""
                   :x:/@_dp?value
               split:x:/@_dp?value
                 =:/
               split:x:/@split/0/-?name
                 =:int:33
-              add:x:/../*/eval/*/files/0/-
+              add:x:/../*/try/*/eval/*/files/0/-
                 src:@"original-filename:""{0}"""
                   :x:/@split/0/-?name
 
@@ -162,7 +162,12 @@ create-event:micro.widgets.upload-button
              * Notice, [.onupload] is the widget's lambda callback that was automatically
              * added to this lambda further up, before widget was created.
              */
-            add:x:/../*/eval
+            add:x:/../*/try/*/eval
               src:x:/../*(/files|/_event)
-            eval:x:/../*/.onupload
-              files
+            try
+              eval:x:/../*/.onupload
+                files
+            catch
+              p5.web.response.set-status-code:406
+              p5.web.echo:x:/@message?value
+              return
