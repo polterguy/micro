@@ -183,12 +183,12 @@ create-event:micro.widgets.wizard-form
           template
             label
               widgets
-                span
-                  {innerValue}:x:?name
                 {input}:x:?value
                   type:radio
                   {value}:x:?value
                   {@eval}:x:/@.exe
+                span
+                  {innerValue}:x:?name
         add:x:/../*/return/*/container/*/widgets
           src
 
@@ -209,10 +209,10 @@ create-event:micro.widgets.wizard-form
             label
               class:input-label
               widgets
-                span
-                  innerValue:x:/@_dp/#/*/info?value
                 input:x:/@_dp/#?value
                   type:checkbox
+                span
+                  innerValue:x:/@_dp/#/*/info?value
 
       case:br
 
