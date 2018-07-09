@@ -1,0 +1,74 @@
+/*
+ * Creates the __[micro.widgets.checkbox]__ extension widget, that wraps a simple checkbox,
+ * with a descriptive label.
+ */
+create-event:micro.widgets.checkbox
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    label:string
+
+  /*
+   * Applying arguments.
+   *
+   * Notice, we apply all arguments to the main label widget, except [onchange] and [.data-field],
+   * which we apply to the input element itself. We also do some "trickery" to make sure we pass
+   * in the "checked" argument to any (optional) [onchange] events.
+   */
+  add:x:/../*/return/*/*/*/input
+    src:x:/../*(/.data-field|/disabled|/checked)
+  add:x:/../*/return/*
+    src:x:/../*(!/.data-field!/onchange!/checked)
+
+  /*
+   * "Trickery" to pass in [checked] value as a boolean to [onchange].
+   *
+   * We do this by retrieving the checked state of the checkbox in our own [onchange] wrapper,
+   * for then to evaluate the user defined [onchange] lambda with a boolean value, indicating if
+   * the checkbox was checked or not.
+   */
+  if:x:/../*/onchange
+    add:x:/+/*/*/*/.onchange
+      src:x:/../*/onchange/*
+    add:x:/../*/return/*/*/*/input
+      src
+        onchange
+
+          /*
+           * Contains user defined lambda callback for [onchange].
+           */
+          .onchange
+
+          /*
+           * Retrieving checked state of checkbox, and parametrising our [eval] invocation below accordingly.
+           */
+          get-widget-property:x:/../*/_event?value
+            checked
+          if:x:/-/*/*
+            set:x:/../*/eval/*/checked?value
+              src:bool:true
+          else
+            set:x:/../*/eval/*/checked?value
+              src:bool:false
+
+          /*
+           * Forward evaluating the [_event] argument, and evaluating our above [.onchange] lambda.
+           */
+          eval-x:x:/+/*
+          eval:x:/@.onchange
+            checked
+            _event:x:/../*/_event?value
+
+  /*
+   * Returning the widget to caller.
+   */
+  eval-x:x:/+/*/*/*/span/*/innerValue
+  return
+    label
+      widgets
+        input
+          type:checkbox
+        span
+          innerValue:x:/../*/label?value

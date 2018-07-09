@@ -108,7 +108,7 @@ input, button, textarea, select, .button {
 
 /* Textarea specifics to allow for rows attribute to define height */
 textarea {
-    height: inherit;
+    min-height: 5.5rem;
 }
 
 
@@ -252,6 +252,15 @@ input[type=checkbox]:not(.slider), input[type=radio]:not(.slider) {
 input[type=checkbox]:not(.slider):checked:after, input[type=radio]:not(.slider):checked:after {
     position: absolute;
     display: block;
+}
+
+
+
+/* Select lists */
+select {
+    background-image: url(chevron-down.svg) !important;
+    background-repeat: no-repeat !important;
+    background-position: center right !important;
 }
 
 
@@ -458,6 +467,30 @@ table td>p:last-child {
 .strip>select,
 .strip>input:not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]) {
     min-width: 5rem;
+}
+
+
+
+/* Select panel */
+.select-panel {
+    margin-bottom: 1rem;
+}
+.select-panel label {
+    display: block;
+    border: solid 1px var(--border-color);
+    padding-left: .75rem;
+    padding-right: .75rem;
+    border-radius: 10px;
+    font-weight: 400;
+    margin-right: 0;
+    padding-top: var(--form-el-pad);
+    padding-bottom: var(--form-el-pad);
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+.select-panel label:hover {
+    background-color: rgba(0,0,0,.02);
+    box-shadow: 2px 2px 2px var(--shadow-color);
 }
 
 
@@ -1210,6 +1243,43 @@ button.micro-widgets-tab-active:hover {
     background: var(--warning-bg);
     overflow-y: auto;
     margin-bottom:1rem;
+}
+
+
+
+/* Placeholder text overrides */
+input.warning::-webkit-input-placeholder {
+    color: rgba(255, 20, 20, .3) !important;
+}
+input.warning::-moz-placeholder {
+    color: rgba(255, 20, 20, .3) !important;
+}
+input.warning::-ms-input-placeholder {
+    color: rgba(255, 20, 20, .3) !important;
+}
+textarea.warning::-webkit-input-placeholder {
+    color: rgba(255, 20, 20, .3) !important;
+}
+textarea.warning::-moz-placeholder {
+    color: rgba(255, 20, 20, .3) !important;
+}
+textarea.warning::-ms-input-placeholder {
+    color: rgba(255, 20, 20, .3) !important;
+}
+input.warning, select.warning, textarea.warning,
+input.warning, select.warning, textarea.warning {
+    overflow-y: inherit;
+    background: var(--form-el-bg);
+    border-color: #ff9090;
+    color: #ff3030 !important;
+}
+input.warning:active,
+select.warning:active,
+textarea.warning:active,
+input.warning:focus,
+select.warning:focus,
+textarea.warning:focus {
+    background: var(--form-el-active-bg);
 }
 .left {
     text-align: left;

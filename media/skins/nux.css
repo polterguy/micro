@@ -537,42 +537,6 @@ button:hover:not([disabled]) {
 
 
 
-/* Placeholder text overrides */
-input.warning::-webkit-input-placeholder {
-    color: rgba(255, 20, 20, .3) !important;
-}
-input.warning::-moz-placeholder {
-    color: rgba(255, 20, 20, .3) !important;
-}
-input.warning::-ms-input-placeholder {
-    color: rgba(255, 20, 20, .3) !important;
-}
-textarea.warning::-webkit-input-placeholder {
-    color: rgba(255, 20, 20, .3) !important;
-}
-textarea.warning::-moz-placeholder {
-    color: rgba(255, 20, 20, .3) !important;
-}
-textarea.warning::-ms-input-placeholder {
-    color: rgba(255, 20, 20, .3) !important;
-}
-input.warning, select.warning, textarea.warning {
-    overflow-y: inherit;
-    background: var(--form-el-bg);
-    border-color: #ff9090;
-    color: #ff3030 !important;
-}
-input.warning:active,
-select.warning:active,
-textarea.warning:active,
-input.warning:focus,
-select.warning:focus,
-textarea.warning:focus {
-    background: var(--form-el-active-bg);
-}
-
-
-
 /* Textarea */
 textarea {
     height: 5.5rem;
@@ -686,38 +650,6 @@ input[type=radio]:not(.slider):disabled:checked:after {
 
 
 
-/* Select lists */
-select{
-    background-image: url(nux/icons/chevron-down.svg) !important;
-    background-repeat: no-repeat !important;
-    background-position: center right !important;
-}
-
-
-
-/* Select panel */
-.select-panel {
-    margin-bottom: 1rem;
-}
-.select-panel label {
-    display: block;
-    border: solid 1px #e0e0e0;
-    padding-left: .75rem;
-    padding-right: .75rem;
-    border-radius: 10px;
-    font-weight: 400;
-    margin-right: 0;
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-.select-panel label:hover {
-    border-color: #909090;
-    background-color: #fafafa;
-    box-shadow: 2px 2px 2px rgba(0,0,255,.3);
-}
-
-
-
 /* Strips */
 .strip:hover {
     box-shadow: 2px 2px 2px rgba(0,0,255,.3);
@@ -768,10 +700,10 @@ select{
     content: none;
 }
 .micro-widgets-tree li:not(.tree-leaf)>a.item-label>.folder-open {
-    background:url(nux/icons/chevron-up.svg);
+    background:url(../chevron-up.svg);
 }
 .micro-widgets-tree li:not(.tree-leaf)>a.item-label>.folder-close {
-    background-image:url(nux/icons/chevron-down.svg);
+    background-image:url(../chevron-down.svg);
 }
 
 

@@ -1,0 +1,65 @@
+/*
+ * Creates the __[micro.widgets.radiobuttons]__ extension widget, that wraps a collection
+ * of radiobuttons.
+ */
+create-event:micro.widgets.radiobuttons
+
+  /*
+   * Signal node to separate arguments from the rest of our lambda.
+   */
+  .signal
+
+  /*
+   * Sanity checking invocation.
+   */
+  micro.lambda.contract.min:x:/..
+    .data-field:string
+    option
+      label:string
+      .data-value:string
+  micro.lambda.contract.optional:x:/..
+    onchange
+
+  /*
+   * Iterating through each [option], and creating a radiobutton accordingly.
+   */
+  for-each:x:/../*/option
+    add:x:/..for-each/*/add/*/*
+      src:x:/@_dp/#/*(!/.data-value!/.data-field!/checked)
+    add:x:/..for-each/*/add/*/*/*/*/input
+      src:x:/@_dp/#/*(/.data-value|/.data-field|/checked|/disabled)
+    if:x:/../*/onchange
+      add:x:/+2/*/*/*/.onchange
+        src:x:/../*/onchange/*
+      eval-x:x:/+/*/*/*/eval/*/value
+      add:x:/..for-each/*/add/*/*/*/*/input
+        src
+          onchange
+            .onchange
+            eval-x:x:/+/*/_event
+            eval:x:/@.onchange
+              _event:x:/../*/_event?value
+              value:x:/@_dp/#/*/.data-value?value
+    eval-x:x:/+/*/*/*/*(/span/*/innerValue|/input/*/name)
+    add:x:/../*/return/*/*/widgets
+      src
+        label
+          widgets
+            input
+              type:radio
+              name:x:/../*/.data-field?value
+            span
+              innerValue:x:/@_dp/#/*/label?value
+
+  /*
+   * Parametrising main widget.
+   */
+  add:x:/../*/return/*
+    src:x:/@.signal/--(!/option)
+
+  /*
+   * Returning the widget to caller.
+   */
+  return
+    container
+      widgets
