@@ -686,11 +686,3 @@ input[type=radio]:not(.slider):disabled:checked:after {
 /* Tree widget */
 .micro-widgets-tree li.item a {
     color: var(--color);
-}
-
-
-
-/* Misc */
-.top-spacing {
-    margin-top: 3rem;
-}
