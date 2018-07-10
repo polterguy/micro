@@ -683,32 +683,6 @@ input[type=radio]:not(.slider):disabled:checked:after {
 
 
 
-/* Tree widget */
-.micro-widgets-tree li.item {
-    padding-left: 18px;
-}
-.micro-widgets-tree a.item-label > span {
-    display: inline-block;
-    height: 24px;
-    vertical-align: text-bottom;
-}
-.micro-widgets-tree a.item-label .folder {
-    display: inline-block;
-    width: 24px;
-    margin-right: 0;
-}
-.micro-widgets-tree a.item-label .folder:before {
-    content: none;
-}
-.micro-widgets-tree li:not(.tree-leaf)>a.item-label>.folder-open {
-    background:url(../chevron-up.svg);
-}
-.micro-widgets-tree li:not(.tree-leaf)>a.item-label>.folder-close {
-    background-image:url(../chevron-down.svg);
-}
-
-
-
 /* Misc */
 .top-spacing {
     margin-top: 3rem;
