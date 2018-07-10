@@ -458,6 +458,7 @@
     --color: #3F3832;
     --background: #ffffff;
     --border-radius: 5px;
+    --button-bg: linear-gradient(#f9f9f9, #e0e0e0);
 }
 .container {
     padding: 1rem 1rem 0 0;
@@ -574,10 +575,10 @@ button:focus, input[type=button]:focus, input[type=submit]:focus, input[type=res
 button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, .button:hover {
     transition: none;
 }
-button.main, input[type=button].main, input[type=submit].main, input[type=reset].main, .button.main {
-    background-image: linear-gradient(#7db9e8, #0069e3);
-    color: #ffffff;
-}
+    button.main, input[type=button].main, input[type=submit].main, input[type=reset].main, .button.main {
+        background-image: var(--button-bg);
+        color: #ffffff;
+    }
 button[disabled],
 .button[disabled],
 input[type=button][disabled],

@@ -480,7 +480,7 @@ table td>p:last-child {
     border: solid 1px var(--border-color);
     padding-left: .75rem;
     padding-right: .75rem;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     font-weight: 400;
     margin-right: 0;
     padding-top: var(--form-el-pad);
