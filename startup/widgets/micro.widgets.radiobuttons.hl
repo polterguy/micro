@@ -13,16 +13,16 @@ create-event:micro.widgets.radiobuttons
    * Sanity checking invocation.
    */
   micro.lambda.contract.min:x:/..
-    .data-field:string
     option
       label:string
-      .data-value:string
   micro.lambda.contract.optional:x:/..
+    .data-field:string
     onchange
 
   /*
    * Iterating through each [option], and creating a radiobutton accordingly.
    */
+  p5.types.guid.new
   for-each:x:/../*/option
     add:x:/..for-each/*/add/*/*
       src:x:/@_dp/#/*(!/.data-value!/.data-field!/checked)
@@ -47,7 +47,7 @@ create-event:micro.widgets.radiobuttons
           widgets
             input
               type:radio
-              name:x:/../*/.data-field?value
+              name:x:(/../*/.data-field|/@p5.types.guid.new)/[0,1]?value
             span
               innerValue:x:/@_dp/#/*/label?value
 
