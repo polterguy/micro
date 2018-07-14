@@ -459,17 +459,7 @@
     --background: #ffffff;
     --border-radius: 5px;
     --button-bg: linear-gradient(#f9f9f9, #e0e0e0);
-}
-.container {
-    padding: 1rem 1rem 0 0;
-    margin-bottom: 2rem;
-}
-@media screen and (min-width:800px) {
-.container {
-    padding: 2rem 3rem;
-    width: 100%;
-    max-width: 100%;
-}
+    --viewport-width: 100vw;
 }
 
 

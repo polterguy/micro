@@ -29,47 +29,52 @@ create-event:micro.css.toggle
     trim:true
 
   /*
-   * Retrieving CSS class of specified widget.
+   * Looping through each widget provided.
    */
-  get-widget-property:x:/../*/_arg?value
-    class
-
-  /*
-   * Splitting each CSS class already in widget, such that we can figure out if class(es)
-   * caller wants to toggle already exists or not.
-   */
-  split:x:/@get-widget-property/*/*?value
-    =:" "
-
-  /*
-   * Looping through each class supplied.
-   */
-  for-each:x:/../*/split/[0,1]/*/$
+  for-each:x:/../*/_arg?value
 
     /*
-     * Checking if currently iterated CSS class is in [split] result.
+     * Retrieving CSS class of specified widget.
      */
-    if:x:/@split/*/{0}
-      :x:/@_dp/#?name
+    get-widget-property:x:/@_dp?value
+      class
+
+    /*
+     * Splitting each CSS class already in widget, such that we can figure out if class(es)
+     * caller wants to toggle already exists or not.
+     */
+    split:x:/@get-widget-property/*/*?value
+      =:" "
+
+    /*
+     * Looping through each class supplied.
+     */
+    for-each:x:/../*/split/[0,1]/*/$
 
       /*
-       * Class exists, deleting it.
+       * Checking if currently iterated CSS class is in [split] result.
        */
-      set:x:/@split/*/{0}
+      if:x:/@split/*/{0}
         :x:/@_dp/#?name
 
-    else
+        /*
+         * Class exists, deleting it.
+         */
+        set:x:/@split/*/{0}
+          :x:/@_dp/#?name
 
-      /*
-       * Class does NOT exist, adding it.
-       */
-      add:x:/@split
-        src:x:/@_dp/#?name
+      else
 
-  /*
-   * Invoking [join] on [split] results, before setting new class value.
-   */
-  join:x:/@split/*?name
-    sep:" "
-  set-widget-property:x:/../*/_arg?value
-    class:x:/@join?value
+        /*
+         * Class does NOT exist, adding it.
+         */
+        add:x:/@split
+          src:x:/@_dp/#?name
+
+    /*
+     * Invoking [join] on [split] results, before setting new class value.
+     */
+    join:x:/@split/*?name
+      sep:" "
+    set-widget-property:x:/@_dp?value
+      class:x:/@join?value
