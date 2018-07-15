@@ -139,7 +139,7 @@ If you resize the width of your browser below 800px, then all `col` classes, reg
 initial width, will _"pop"_, and fill 100% of the available width. To see this effect, try to resize
 your browser, and watch how these examples _"pops"_ when the width becomes less than 800px.
 
-This makes the process of supporting mobile devices, and devices width smaller viewports, almost automatically.
+This makes the process of supporting mobile devices, and devices width smaller viewports, almost automatic.
 However, you should test your apps, also on mobile devices, to make sure they render nicely.
 
 

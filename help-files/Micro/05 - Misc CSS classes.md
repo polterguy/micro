@@ -1,4 +1,4 @@
-## Misc classes
+## Misc CSS classes
 
 Micro contains several helper CSS classes for your convenience. We have already used some of these, 
 such as the `bg` class, `shaded` class, and `air-inner` class. Below is a complete list of these 
