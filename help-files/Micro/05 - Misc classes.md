@@ -19,3 +19,8 @@ extra classes.
 * `hide` - Hides an element
 * `button` - Makes for instance a hyperlink resemble a button in its appearance
 * `jumbo-button` - Declares a large button, similar to the Desktop icons for your modules
+* `select-panel` - Useful for creating a group of radio buttons, or for wrapping one or more checkboxes together
+
+Notice, some of these CSS classes might have been overridden in your skin, depending upon which skin you are using.
+It might be smart to check out your apps with all the skins from Micro, or at least all the skins you choose to
+distribute your app with, to make sure it renders correctly with all possible skins the user might want to use.
